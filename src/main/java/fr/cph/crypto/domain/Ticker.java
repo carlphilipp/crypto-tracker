@@ -23,6 +23,7 @@ public class Ticker implements Serializable {
 	private FiatCurrency currency;
 	private String name;
 	private Double price;
+	private Double priceBtc;
 	private Double percentChange1h;
 	private Double percentChange24h;
 	private Double percentChange7d;
