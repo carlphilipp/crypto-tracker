@@ -1,0 +1,39 @@
+buildscript {
+    ext {
+        springBootVersion = '1.5.8.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+/*plugins {
+    id 'net.ltgt.apt' version '0.8'
+}*/
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+group = 'fr.cph'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile(
+            [group: 'org.springframework.boot', name: 'spring-boot-starter-web'],
+            [group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'],
+            [group: 'org.mapstruct', name: 'mapstruct-jdk8', version: '1.2.0.Final'],
+            [group: 'org.mapstruct', name: 'mapstruct-processor', version: '1.2.0.Final'],
+    )
+    runtime('com.h2database:h2')
+    compileOnly('org.projectlombok:lombok')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
