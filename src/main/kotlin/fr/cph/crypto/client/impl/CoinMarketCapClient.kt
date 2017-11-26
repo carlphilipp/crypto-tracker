@@ -1,27 +1,20 @@
 package fr.cph.crypto.client.impl
 
+import fr.cph.crypto.client.TickerClient
+import fr.cph.crypto.domain.Currency
+import fr.cph.crypto.domain.Ticker
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.UriComponentsBuilder
-
-import java.util.Arrays
-import java.util.Optional
-
-import fr.cph.crypto.client.TickerClient
-import fr.cph.crypto.domain.Currency
-import fr.cph.crypto.domain.Ticker
+import java.util.*
 
 @Component
-class CoinMarketCapClient : TickerClient {
+class CoinMarketCapClient @Autowired
+constructor(private val restTemplate: RestTemplate) : TickerClient {
 
-    @Autowired
-    private val restTemplate: RestTemplate? = null
-
-    override fun getTicker(currency: Currency, ticker: String): Optional<Ticker> {
-        return getAllTickers(currency).stream()
-                .filter { (currency1) -> currency1.code == ticker }
-                .findAny()
+    override fun getTicker(currency: Currency, ticker: String): Ticker? {
+        return getAllTickers(currency).firstOrNull { (currency1) -> currency1.code == ticker }
     }
 
     override fun getTickers(currency: Currency, vararg tickers: String): List<Ticker> {
@@ -31,7 +24,7 @@ class CoinMarketCapClient : TickerClient {
     override fun getTickers(currency: Currency, tickers: List<String>): List<Ticker> {
         return getAllTickers(currency)
                 .filter { (currency1) -> tickers.contains(currency1.code) }
-                .toMutableList()
+                .toList()
     }
 
     private fun getAllTickers(currency: Currency): List<Ticker> {
@@ -43,10 +36,10 @@ class CoinMarketCapClient : TickerClient {
                 .queryParam("limit", "0")
                 .build()
 
-        val responses = restTemplate!!.getForObject(uriComponents.toUri(), Array<Response>::class.java)
+        val responses = restTemplate.getForObject(uriComponents.toUri(), Array<Response>::class.java)
         return responses
                 .map { response -> TickerMapper.responseToTicker(response, currency) }
                 .filter { (currency1) -> currency1 != Currency.UNKNOWN }
-                .toMutableList()
+                .toList()
     }
 }

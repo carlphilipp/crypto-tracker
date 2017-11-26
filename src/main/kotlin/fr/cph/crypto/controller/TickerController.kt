@@ -1,13 +1,12 @@
 package fr.cph.crypto.controller
 
+import fr.cph.crypto.domain.Currency
+import fr.cph.crypto.domain.Ticker
+import fr.cph.crypto.repository.TickerRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-
-import fr.cph.crypto.domain.Currency
-import fr.cph.crypto.domain.Ticker
-import fr.cph.crypto.repository.TickerRepository
 
 @RequestMapping(value = "/ticker")
 @RestController

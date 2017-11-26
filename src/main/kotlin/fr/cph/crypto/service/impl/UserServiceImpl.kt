@@ -11,22 +11,15 @@ import fr.cph.crypto.repository.TickerRepository
 import fr.cph.crypto.service.UserService
 
 @Service
-class UserServiceImpl : UserService {
-
-    @Autowired
-    private val client: CoinMarketCapClient? = null
-    @Autowired
-    private val positionRepository: PositionRepository? = null
-    @Autowired
-    private val tickerRepository: TickerRepository? = null
+class UserServiceImpl @Autowired
+constructor(val client: CoinMarketCapClient, val positionRepository: PositionRepository, val tickerRepository: TickerRepository) : UserService {
 
     override fun updatePosition(position: Position): Position {
 
         // Update ticker in DB from client
-        client!!.getTickers(Currency.USD, "BTC", "ETH", "LTC", "VTC", "GRS")
-                .stream()
-                .forEach { ticker -> tickerRepository!!.save(ticker) }
-        val ticker = tickerRepository!!.findOne(position.currency.toString() + "-" + position.costPriceCurrency)
+        client.getTickers(Currency.USD, "BTC", "ETH", "LTC", "VTC", "GRS")
+                .forEach { ticker -> tickerRepository.save(ticker) }
+        val ticker = tickerRepository.findOne(position.currency.toString() + "-" + position.costPriceCurrency)
         ////////////////////////////////////
 
         val quantity = position.quantity
@@ -41,7 +34,7 @@ class UserServiceImpl : UserService {
         position.gain = gain
         position.gainPercentage = gainPercentage
 
-        positionRepository!!.save(position)
+        positionRepository.save(position)
         return position
     }
 }

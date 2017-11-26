@@ -16,21 +16,21 @@ import java.util.*
 class DatabaseLoader : CommandLineRunner {
 
     @Autowired
-    private val tickerRepository: TickerRepository? = null
+    private lateinit var tickerRepository: TickerRepository
     @Autowired
-    private val userRepository: UserRepository? = null
+    private lateinit var userRepository: UserRepository
     @Autowired
-    private val positionRepository: PositionRepository? = null
+    private lateinit var positionRepository: PositionRepository
 
     @Throws(Exception::class)
     override fun run(vararg strings: String) {
-        tickerRepository!!.deleteAll()
-        userRepository!!.deleteAll()
-        positionRepository!!.deleteAll()
+        tickerRepository.deleteAll()
+        userRepository.deleteAll()
+        positionRepository.deleteAll()
         val ticker = Ticker(Currency.BTC, 6000.0, 0.0, 0.0, 0.0, "")
         ticker.id = "BTC-USD"
 
-        tickerRepository!!.save(ticker)
+        tickerRepository.save(ticker)
 
         val positions = ArrayList<Position>()
 
@@ -46,9 +46,9 @@ class DatabaseLoader : CommandLineRunner {
         position.gain = gain
         position.gainPercentage = gainPercentage
         positions.add(position)
-        positionRepository!!.save(position)
+        positionRepository.save(position)
         val user = User("cp.harmant@gmail.com")
         user.positions = positions
-        userRepository!!.save(user)
+        userRepository.save(user)
     }
 }
