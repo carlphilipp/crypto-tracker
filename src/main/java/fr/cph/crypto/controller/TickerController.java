@@ -9,10 +9,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import fr.cph.crypto.domain.CryptoCurrency;
-import fr.cph.crypto.domain.FiatCurrency;
+import fr.cph.crypto.domain.Currency;
 import fr.cph.crypto.domain.Ticker;
-import fr.cph.crypto.domain.TickerId;
 import fr.cph.crypto.repository.TickerRepository;
 
 @RequestMapping(value = "/ticker")
@@ -31,10 +29,10 @@ public class TickerController {
 		return StreamSupport.stream(repository.findAll().spliterator(), false).collect(Collectors.toList());
 	}
 
-	@RequestMapping(value = "/{ticker}/{fiatCurrency}")
+	@RequestMapping(value = "/{baseCurrency}/{quoteCurrency}")
 	public Ticker getTicker(
-			@PathVariable("ticker") final String ticker,
-			@PathVariable("fiatCurrency") final FiatCurrency fiatCurrency) {
-		return repository.findOne(new TickerId(ticker, fiatCurrency));
+			@PathVariable("baseCurrency") final Currency baseCurrency,
+			@PathVariable("quoteCurrency") final Currency quoteCurrency) {
+		return repository.findOne(baseCurrency.getCode() + "-" + quoteCurrency.getCode());
 	}
 }

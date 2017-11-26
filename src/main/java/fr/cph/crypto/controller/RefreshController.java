@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.cph.crypto.client.impl.CoinMarketCapClient;
-import fr.cph.crypto.domain.FiatCurrency;
+import fr.cph.crypto.domain.Currency;
 import fr.cph.crypto.repository.TickerRepository;
 
 @RestController
@@ -20,7 +20,8 @@ public class RefreshController {
 
 	@RequestMapping(value = "/refresh")
 	public ResponseEntity<String> refreshAll() {
-		client.getTickers(FiatCurrency.USD, "BTC", "ETH", "LTC")
+		client.getTickers(Currency.USD, "BTC", "ETH", "LTC", "VTC", "GRS")
+				.stream()
 				.forEach(ticker -> {
 					repository.save(ticker);
 				});

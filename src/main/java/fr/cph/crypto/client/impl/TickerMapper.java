@@ -3,11 +3,11 @@ package fr.cph.crypto.client.impl;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-import fr.cph.crypto.domain.FiatCurrency;
+import fr.cph.crypto.domain.Currency;
 import fr.cph.crypto.domain.Ticker;
 
-import static fr.cph.crypto.domain.FiatCurrency.EUR;
-import static fr.cph.crypto.domain.FiatCurrency.USD;
+import static fr.cph.crypto.domain.Currency.EUR;
+import static fr.cph.crypto.domain.Currency.USD;
 
 @Mapper
 public interface TickerMapper {
@@ -16,9 +16,10 @@ public interface TickerMapper {
 
 	Ticker responseToTicker(Response response);
 
-	default Ticker responseToTicker(final Response response, final FiatCurrency currency) {
+	default Ticker responseToTicker(final Response response, final Currency currency) {
 		final Ticker ticker = responseToTicker(response);
-		ticker.setCurrency(currency);
+		ticker.setId(response.getSymbol() + "-" + currency.name());
+		ticker.setCurrency(Currency.findCurrency(response.getSymbol()));
 		if (currency == USD) {
 			ticker.setPrice(Double.valueOf(response.getPriceUsd()));
 		} else if (currency == EUR) {

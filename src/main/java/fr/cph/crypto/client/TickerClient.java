@@ -3,14 +3,14 @@ package fr.cph.crypto.client;
 import java.util.List;
 import java.util.Optional;
 
-import fr.cph.crypto.domain.FiatCurrency;
+import fr.cph.crypto.domain.Currency;
 import fr.cph.crypto.domain.Ticker;
 
 public interface TickerClient {
 
-	List<Ticker> getTickers(FiatCurrency currency, String... tickers);
+	List<Ticker> getTickers(Currency currency, String... tickers);
 
-	List<Ticker> getTickers(FiatCurrency currency, List<String> tickers);
+	List<Ticker> getTickers(Currency currency, List<String> tickers);
 
-	Optional<Ticker> getTicker(FiatCurrency currency, String ticker);
+	Optional<Ticker> getTicker(Currency currency, String ticker);
 }
