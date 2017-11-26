@@ -29,7 +29,7 @@ public class CoinMarketCapClient implements TickerClient {
 	}
 
 	@Override
-	public List<Ticker> getTickers(final Currency currency, String... tickers) {
+	public List<Ticker> getTickers(final Currency currency, final String... tickers) {
 		return getTickers(currency, Arrays.asList(tickers));
 	}
 
