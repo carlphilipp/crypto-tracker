@@ -1,13 +1,7 @@
 package fr.cph.crypto.client.impl
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter
-import com.fasterxml.jackson.annotation.JsonAnySetter
-import com.fasterxml.jackson.annotation.JsonIgnore
-import com.fasterxml.jackson.annotation.JsonInclude
-import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.annotation.JsonPropertyOrder
-
-import java.util.HashMap
+import com.fasterxml.jackson.annotation.*
+import java.util.*
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder("id", "name", "symbol", "rank", "price_usd", "price_btc", "24h_volume_usd", "market_cap_usd", "available_supply", "total_supply", "max_supply", "percent_change_1h", "percent_change_24h", "percent_change_7d", "last_updated", "price_eur", "24h_volume_eur", "market_cap_eur")
@@ -40,7 +34,7 @@ class Response {
     @JsonProperty("24h_volume_usd")
     @get:JsonProperty("24h_volume_usd")
     @set:JsonProperty("24h_volume_usd")
-    var _24hVolumeUsd:String? = null
+    var _24hVolumeUsd: String? = null
     @JsonProperty("market_cap_usd")
     @get:JsonProperty("market_cap_usd")
     @set:JsonProperty("market_cap_usd")
@@ -80,7 +74,7 @@ class Response {
     @JsonProperty("24h_volume_eur")
     @get:JsonProperty("24h_volume_eur")
     @set:JsonProperty("24h_volume_eur")
-    var _24hVolumeEur:String? = null
+    var _24hVolumeEur: String? = null
     @JsonProperty("market_cap_eur")
     @get:JsonProperty("market_cap_eur")
     @set:JsonProperty("market_cap_eur")

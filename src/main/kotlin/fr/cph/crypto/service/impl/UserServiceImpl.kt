@@ -23,7 +23,7 @@ constructor(val client: CoinMarketCapClient, val positionRepository: PositionRep
         ////////////////////////////////////
 
         val quantity = position.quantity
-        val costPrice = position.costPrice
+        val costPrice = position.unitCostPrice
         val originalValue = quantity * costPrice
         val value = quantity * ticker.price
         val gain = value - originalValue

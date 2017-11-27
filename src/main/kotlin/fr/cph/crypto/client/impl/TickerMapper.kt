@@ -19,6 +19,7 @@ object TickerMapper {
         val result = Ticker(
                 Currency.findCurrency(response.symbol!!),
                 price,
+                java.lang.Double.valueOf(response.priceBtc),
                 percentChange1h,
                 percentChange24h,
                 percentChange7d,

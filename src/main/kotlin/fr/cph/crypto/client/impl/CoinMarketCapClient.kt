@@ -14,7 +14,7 @@ class CoinMarketCapClient @Autowired
 constructor(private val restTemplate: RestTemplate) : TickerClient {
 
     override fun getTicker(currency: Currency, ticker: String): Ticker? {
-        return getAllTickers(currency).firstOrNull { (currency1) -> currency1.code == ticker }
+        return getAllTickers(currency).firstOrNull { (curr) -> curr.code == ticker }
     }
 
     override fun getTickers(currency: Currency, vararg tickers: String): List<Ticker> {
@@ -23,7 +23,7 @@ constructor(private val restTemplate: RestTemplate) : TickerClient {
 
     override fun getTickers(currency: Currency, tickers: List<String>): List<Ticker> {
         return getAllTickers(currency)
-                .filter { (currency1) -> tickers.contains(currency1.code) }
+                .filter { (curr) -> tickers.contains(curr.code) }
                 .toList()
     }
 
@@ -39,7 +39,7 @@ constructor(private val restTemplate: RestTemplate) : TickerClient {
         val responses = restTemplate.getForObject(uriComponents.toUri(), Array<Response>::class.java)
         return responses
                 .map { response -> TickerMapper.responseToTicker(response, currency) }
-                .filter { (currency1) -> currency1 != Currency.UNKNOWN }
+                .filter { (curr) -> curr != Currency.UNKNOWN }
                 .toList()
     }
 }

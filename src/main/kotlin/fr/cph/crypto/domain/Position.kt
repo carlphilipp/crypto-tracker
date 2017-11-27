@@ -6,11 +6,11 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder("id", "currency", "quantity", "costPrice", "costPriceCurrency", "originalValue", "value", "gain", "gainPercentage")
+@JsonPropertyOrder("id", "currency", "quantity", "unitCostPrice", "costPriceCurrency", "originalValue", "value", "gain", "gainPercentage")
 @Document
 data class Position(val currency: Currency,
                     val quantity: Double,
-                    val costPrice: Double,
+                    val unitCostPrice: Double,
                     val costPriceCurrency: Currency) {
 
     @Id
