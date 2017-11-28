@@ -25,13 +25,13 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore
 class SecurityConfig : WebSecurityConfigurerAdapter() {
 
     @Value("\${security.signing-key}")
-    private val signingKey: String? = null
+    private lateinit var signingKey: String
 
     @Autowired
-    private val encoder: ShaPasswordEncoder? = null
+    private lateinit var encoder: ShaPasswordEncoder
 
     @Autowired
-    private val userService: UserService? = null
+    private lateinit var userService: UserService
 
     @Bean
     @Throws(Exception::class)
@@ -60,7 +60,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
     @Bean
     fun accessTokenConverter(): JwtAccessTokenConverter {
         val converter = JwtAccessTokenConverter()
-        converter.setSigningKey(signingKey!!)
+        converter.setSigningKey(signingKey)
         return converter
     }
 
@@ -71,7 +71,6 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
 
     @Bean
     @Primary
-            //Making this primary to avoid any accidental duplication with another token service instance of the same name
     fun tokenServices(): DefaultTokenServices {
         val defaultTokenServices = DefaultTokenServices()
         defaultTokenServices.setTokenStore(tokenStore())

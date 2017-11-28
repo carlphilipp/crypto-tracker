@@ -14,14 +14,13 @@ import org.springframework.security.oauth2.provider.token.ResourceServerTokenSer
 class ResourceServerConfig : ResourceServerConfigurerAdapter() {
 
     @Autowired
-    private val tokenServices: ResourceServerTokenServices? = null
+    private lateinit var tokenServices: ResourceServerTokenServices
 
     @Value("\${security.jwt.resource-ids}")
-    private val resourceIds: String? = null
+    private lateinit var resourceIds: String
 
-    @Throws(Exception::class)
-    override fun configure(resources: ResourceServerSecurityConfigurer?) {
-        resources!!.resourceId(resourceIds).tokenServices(tokenServices)
+    override fun configure(resources: ResourceServerSecurityConfigurer) {
+        resources.resourceId(resourceIds).tokenServices(tokenServices)
     }
 
     @Throws(Exception::class)

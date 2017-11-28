@@ -1,6 +1,5 @@
 package fr.cph.crypto.config
 
-import java.util.Arrays
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Configuration
@@ -18,51 +17,48 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 class AuthorizationServerConfig : AuthorizationServerConfigurerAdapter() {
 
     @Value("\${security.jwt.client-id}")
-    private val clientId: String? = null
+    private lateinit var clientId: String
 
     @Value("\${security.jwt.client-secret}")
-    private val clientSecret: String? = null
+    private lateinit var clientSecret: String
 
     @Value("\${security.jwt.grant-type}")
-    private val grantType: String? = null
+    private lateinit var grantType: String
 
     @Value("\${security.jwt.scope-read}")
-    private val scopeRead: String? = null
+    private lateinit var scopeRead: String
 
     @Value("\${security.jwt.scope-write}")
-    private val scopeWrite = "write"
+    private lateinit var scopeWrite: String
 
     @Value("\${security.jwt.resource-ids}")
-    private val resourceIds: String? = null
+    private lateinit var resourceIds: String
 
     @Autowired
-    private val tokenStore: TokenStore? = null
+    private lateinit var tokenStore: TokenStore
 
     @Autowired
-    private val accessTokenConverter: JwtAccessTokenConverter? = null
+    private lateinit var accessTokenConverter: JwtAccessTokenConverter
 
     @Autowired
-    private val authenticationManager: AuthenticationManager? = null
+    private lateinit var authenticationManager: AuthenticationManager
 
-    @Throws(Exception::class)
-    override fun configure(configurer: ClientDetailsServiceConfigurer?) {
-        configurer!!
+    override fun configure(configurer: ClientDetailsServiceConfigurer) {
+        configurer
                 .inMemory()
                 .withClient(clientId)
                 .secret(clientSecret)
-                .authorizedGrantTypes(grantType!!)
+                .authorizedGrantTypes(grantType, "client_credentials")
                 .scopes(scopeRead, scopeWrite)
-                .resourceIds(resourceIds!!)
+                .resourceIds(resourceIds)
     }
 
-    @Throws(Exception::class)
-    override fun configure(endpoints: AuthorizationServerEndpointsConfigurer?) {
+    override fun configure(endpoints: AuthorizationServerEndpointsConfigurer) {
         val enhancerChain = TokenEnhancerChain()
-        enhancerChain.setTokenEnhancers(listOf(accessTokenConverter!!))
-        endpoints!!.tokenStore(tokenStore)
+        enhancerChain.setTokenEnhancers(listOf(accessTokenConverter))
+        endpoints.tokenStore(tokenStore)
                 .accessTokenConverter(accessTokenConverter)
                 .tokenEnhancer(enhancerChain)
                 .authenticationManager(authenticationManager)
     }
-
 }

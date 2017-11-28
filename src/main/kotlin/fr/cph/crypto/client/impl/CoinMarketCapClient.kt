@@ -31,12 +31,8 @@ constructor(private val restTemplate: RestTemplate) : TickerClient {
     }
 
     private fun getAllTickers(currency: Currency): List<Ticker> {
-        val uriComponents = UriComponentsBuilder.newInstance()
-                .scheme("https")
-                .host("api.coinmarketcap.com")
-                .path("/v1/ticker")
+        val uriComponents = URI_COMPONENT_BUILDER
                 .queryParam("convert", currency.code)
-                .queryParam("limit", "0")
                 .build()
 
         LOGGER.debug("HTTP request: {}", uriComponents.toUri())
@@ -49,5 +45,10 @@ constructor(private val restTemplate: RestTemplate) : TickerClient {
 
     companion object {
         private val LOGGER = LoggerFactory.getLogger(CoinMarketCapClient::class.java)
+        private val URI_COMPONENT_BUILDER = UriComponentsBuilder.newInstance()
+                .scheme("https")
+                .host("api.coinmarketcap.com")
+                .path("/v1/ticker")
+                .queryParam("limit", "0")
     }
 }

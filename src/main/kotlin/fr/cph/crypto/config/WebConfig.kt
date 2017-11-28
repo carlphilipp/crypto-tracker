@@ -13,12 +13,12 @@ import org.springframework.web.client.RestTemplate
 class WebConfig {
 
     @Value("\${security.encoding-strength}")
-    private val encodingStrength: Int? = null
+    private lateinit var encodingStrength: String
 
 
     @Bean
     fun shaPasswordEncoder(): ShaPasswordEncoder {
-        return ShaPasswordEncoder(encodingStrength!!)
+        return ShaPasswordEncoder(encodingStrength.toInt())
     }
 
     @Bean
