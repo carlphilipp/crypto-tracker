@@ -1,8 +1,11 @@
 package fr.cph.crypto.service
 
 import fr.cph.crypto.domain.Position
+import fr.cph.crypto.domain.User
 
 interface UserService {
+
+    fun createUser(user: User): User
 
     fun refreshUserPositions(id: String): List<Position>
 

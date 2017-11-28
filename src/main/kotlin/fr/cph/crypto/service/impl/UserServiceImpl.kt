@@ -3,6 +3,7 @@ package fr.cph.crypto.service.impl
 import fr.cph.crypto.client.impl.CoinMarketCapClient
 import fr.cph.crypto.domain.Currency
 import fr.cph.crypto.domain.Position
+import fr.cph.crypto.domain.User
 import fr.cph.crypto.repository.PositionRepository
 import fr.cph.crypto.repository.TickerRepository
 import fr.cph.crypto.repository.UserRepository
@@ -16,6 +17,10 @@ constructor(private val client: CoinMarketCapClient,
             private val positionRepository: PositionRepository,
             private val tickerRepository: TickerRepository,
             private val userRepository: UserRepository) : UserService {
+
+    override fun createUser(user: User): User {
+        return userRepository.save(user)
+    }
 
     override fun refreshUserPositions(id: String): List<Position> {
         val user = userRepository.findOne(id)

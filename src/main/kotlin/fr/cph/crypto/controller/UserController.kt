@@ -1,16 +1,11 @@
 package fr.cph.crypto.controller
 
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RestController
-
 import fr.cph.crypto.domain.Position
 import fr.cph.crypto.domain.User
 import fr.cph.crypto.repository.UserRepository
 import fr.cph.crypto.service.UserService
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.bind.annotation.*
 
 @RequestMapping(value = "/user")
 @RestController
@@ -18,8 +13,13 @@ class UserController @Autowired
 constructor(private val repository: UserRepository, private val userService: UserService) {
 
     val all: List<User>
-        @RequestMapping
+        @RequestMapping(method = arrayOf(RequestMethod.GET))
         get() = repository.findAll().toList()
+
+    @RequestMapping(method = arrayOf(RequestMethod.POST))
+    fun createUser(@RequestBody user: User): User {
+        return userService.createUser(user)
+    }
 
     @RequestMapping(value = "/{id}", method = arrayOf(RequestMethod.GET))
     fun getUser(@PathVariable("id") id: String): User {
