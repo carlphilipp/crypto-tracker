@@ -13,9 +13,9 @@ import java.util.*
 @Component
 class CoinMarketCapClient @Autowired
 constructor(private val restTemplate: RestTemplate) : TickerClient {
-    
+
     override fun getTicker(currency: Currency, ticker: String): Ticker? {
-        LOGGER.debug("Search ticker: " + ticker)
+        LOGGER.debug("Search ticker: {}", ticker)
         return getAllTickers(currency).firstOrNull { (curr) -> curr.code == ticker }
     }
 
@@ -24,7 +24,7 @@ constructor(private val restTemplate: RestTemplate) : TickerClient {
     }
 
     override fun getTickers(currency: Currency, tickers: List<String>): List<Ticker> {
-        LOGGER.debug("Search tickers: " + tickers)
+        LOGGER.debug("Search tickers: {}", tickers)
         return getAllTickers(currency)
                 .filter { (curr) -> tickers.contains(curr.code) }
                 .toList()
@@ -35,13 +35,14 @@ constructor(private val restTemplate: RestTemplate) : TickerClient {
                 .scheme("https")
                 .host("api.coinmarketcap.com")
                 .path("/v1/ticker")
-                .queryParam("convert", currency.toString())
+                .queryParam("convert", currency.code)
                 .queryParam("limit", "0")
                 .build()
 
+        LOGGER.debug("HTTP request: {}", uriComponents.toUri())
         val responses = restTemplate.getForObject(uriComponents.toUri(), Array<Response>::class.java)
         return responses
-                .map { response -> TickerMapper.responseToTicker(response, currency) }
+                .map { response -> TickerMapper.responseToTicker(currency, response) }
                 .filter { (curr) -> curr != Currency.UNKNOWN }
                 .toList()
     }

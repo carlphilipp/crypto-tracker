@@ -27,8 +27,8 @@ constructor(private val repository: UserRepository, private val userService: Use
     }
 
     @RequestMapping(value = "/{id}/position/refresh", method = arrayOf(RequestMethod.GET))
-    fun refreshUser(@PathVariable("id") id: String): User {
-        return userService.refreshUser(id)
+    fun refreshUser(@PathVariable("id") id: String): List<Position> {
+        return userService.refreshUserPositions(id)
     }
 
     @RequestMapping(value = "/{id}/position/{positionId}", method = arrayOf(RequestMethod.PUT))

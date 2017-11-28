@@ -2,19 +2,16 @@ package fr.cph.crypto.domain
 
 import java.util.*
 
-enum class Currency constructor(val currencyName: String, val symbol: String, val type: Type) {
-    BTC("Bitcoin", "฿", Type.CRYPTO),
-    ETH("Ether", "Ξ", Type.CRYPTO),
-    GRS("Groestlcoin", "GRS", Type.CRYPTO),
-    LTC("Litecoin", "Ł", Type.CRYPTO),
-    VTC("Vertcoin", "VTC", Type.CRYPTO),
+enum class Currency constructor(val code: String, val currencyName: String, val symbol: String, val type: Type) {
+    BTC("BTC", "Bitcoin", "฿", Type.CRYPTO),
+    ETH("ETH", "Ether", "Ξ", Type.CRYPTO),
+    GRS("GRS", "Groestlcoin", "GRS", Type.CRYPTO),
+    LTC("LTC", "Litecoin", "Ł", Type.CRYPTO),
+    VTC("VTC", "Vertcoin", "VTC", Type.CRYPTO),
 
-    USD("United States Dollar", "$", Type.FIAT),
-    EUR("Euro", "€", Type.FIAT),
-    UNKNOWN("Unknown", "U", Type.FIAT);
-
-    val code: String
-        get() = this.name
+    USD("USD", "United States Dollar", "$", Type.FIAT),
+    EUR("EUR", "Euro", "€", Type.FIAT),
+    UNKNOWN("UNKNOWN", "Unknown", "U", Type.FIAT);
 
     internal enum class Type {
         FIAT,
@@ -24,7 +21,7 @@ enum class Currency constructor(val currencyName: String, val symbol: String, va
     companion object {
         fun findCurrency(str: String): Currency {
             return Arrays.stream(Currency.values())
-                    .filter { currency -> currency.name == str }
+                    .filter { currency -> currency.code == str }
                     .findAny()
                     .orElse(Currency.UNKNOWN)
         }
@@ -32,7 +29,7 @@ enum class Currency constructor(val currencyName: String, val symbol: String, va
         fun cryptoCurrenciesAsListOfString(): List<String> {
             return Currency.values()
                     .filter { currency -> currency.type == Currency.Type.CRYPTO }
-                    .map { currency -> currency.name }
+                    .map { currency -> currency.code }
                     .toList()
         }
     }

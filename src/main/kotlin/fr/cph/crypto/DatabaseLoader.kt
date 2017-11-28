@@ -39,44 +39,15 @@ class DatabaseLoader : CommandLineRunner {
         val vtcTicker = tickerRepository.findOne("VTC-USD")
 
         val positions = ArrayList<Position>()
-        val positionBtc = buildBtcPosition(btcTicker)
-        val positionVtc = buildVtcPosition(vtcTicker)
+        val positionBtc = Position.buildPosition(btcTicker, 0.06564277, 7616.98508457)
+        val positionVtc = Position.buildPosition(vtcTicker, 122.10096277, 4.3)
         positions.add(positionBtc)
         positions.add(positionVtc)
         positionRepository.save(positionBtc)
         positionRepository.save(positionVtc)
         val user = User("cp.harmant@gmail.com")
+        user.id = "1"
         user.positions = positions
         userRepository.save(user)
-    }
-
-    private fun buildBtcPosition(ticker: Ticker): Position {
-        val quantity = 0.06564277
-        val unitCostPrice = 7616.98508457
-        val originalValue = quantity * unitCostPrice
-        val value = quantity * ticker.price
-        val gain = value - originalValue
-        val gainPercentage = value * 100 / originalValue - 100
-        val position = Position(Currency.BTC, Currency.USD, quantity, unitCostPrice)
-        position.originalValue = originalValue
-        position.value = value
-        position.gain = gain
-        position.gainPercentage = gainPercentage
-        return position
-    }
-
-    private fun buildVtcPosition(ticker: Ticker): Position {
-        val quantity = 122.10096277
-        val unitCostPrice = 4.3
-        val originalValue = quantity * unitCostPrice
-        val value = quantity * ticker.price
-        val gain = value - originalValue
-        val gainPercentage = value * 100 / originalValue - 100
-        val position = Position(Currency.VTC, Currency.USD, quantity, unitCostPrice)
-        position.originalValue = originalValue
-        position.value = value
-        position.gain = gain
-        position.gainPercentage = gainPercentage
-        return position
     }
 }

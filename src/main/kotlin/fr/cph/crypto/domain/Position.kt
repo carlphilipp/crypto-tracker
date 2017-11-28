@@ -8,11 +8,11 @@ import org.springframework.data.mongodb.core.mapping.Document
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder("id", "currency1", "currency2", "quantity", "value", "gain", "gainPercentage", "unitCostPrice", "originalValue")
 @Document
-data class Position(val currency1: Currency,
-                    val currency2: Currency,
-                    val quantity: Double,
-                    val unitCostPrice: Double
-) {
+data class Position private constructor(
+        val currency1: Currency,
+        val currency2: Currency,
+        val quantity: Double,
+        val unitCostPrice: Double) {
 
     @Id
     var id: String? = null
@@ -22,4 +22,19 @@ data class Position(val currency1: Currency,
     var value: Double? = null
     var gain: Double? = null
     var gainPercentage: Double? = null
+
+    companion object {
+        fun buildPosition(ticker: Ticker, quantity: Double, unitCostPrice: Double): Position {
+            val originalValue = quantity * unitCostPrice
+            val value = quantity * ticker.price
+            val gain = value - originalValue
+            val gainPercentage = value * 100 / originalValue - 100
+            val position = Position(ticker.currency1, ticker.currency2, quantity, unitCostPrice)
+            position.originalValue = originalValue
+            position.value = value
+            position.gain = gain
+            position.gainPercentage = gainPercentage
+            return position
+        }
+    }
 }

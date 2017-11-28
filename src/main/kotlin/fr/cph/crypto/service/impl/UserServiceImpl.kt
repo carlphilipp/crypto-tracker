@@ -3,8 +3,6 @@ package fr.cph.crypto.service.impl
 import fr.cph.crypto.client.impl.CoinMarketCapClient
 import fr.cph.crypto.domain.Currency
 import fr.cph.crypto.domain.Position
-import fr.cph.crypto.domain.Ticker
-import fr.cph.crypto.domain.User
 import fr.cph.crypto.repository.PositionRepository
 import fr.cph.crypto.repository.TickerRepository
 import fr.cph.crypto.repository.UserRepository
@@ -19,17 +17,26 @@ constructor(private val client: CoinMarketCapClient,
             private val tickerRepository: TickerRepository,
             private val userRepository: UserRepository) : UserService {
 
-    override fun refreshUser(id: String): User {
+    override fun refreshUserPositions(id: String): List<Position> {
         val user = userRepository.findOne(id)
         updateAllTickers()
         user.positions.forEach { position -> refreshPosition(position) }
-        return userRepository.findOne(id)
+        return userRepository.findOne(id).positions
     }
 
-    override fun refreshPosition(position: Position): Position {
+    override fun updatePosition(position: Position): Position {
+        // Update ticker in DB from client
+        updateAllTickers()
+        return refreshPosition(position)
+    }
 
-        val ticker = tickerRepository.findOne(position.currency1.name + "-" + position.currency2.name)
-        ////////////////////////////////////
+    private fun updateAllTickers() {
+        client.getTickers(Currency.USD, "BTC", "ETH", "LTC", "VTC", "GRS")
+                .forEach { ticker -> tickerRepository.save(ticker) }
+    }
+
+    private fun refreshPosition(position: Position): Position {
+        val ticker = tickerRepository.findOne(position.currency1.code + "-" + position.currency2.code)
 
         val quantity = position.quantity
         val costPrice = position.unitCostPrice
@@ -46,15 +53,6 @@ constructor(private val client: CoinMarketCapClient,
         positionRepository.save(position)
         return position
     }
-
-    override fun updatePosition(position: Position): Position {
-        // Update ticker in DB from client
-        updateAllTickers()
-        return refreshPosition(position)
-    }
-
-    private fun updateAllTickers() {
-        client.getTickers(Currency.USD, "BTC", "ETH", "LTC", "VTC", "GRS")
-                .forEach { ticker -> tickerRepository.save(ticker) }
-    }
 }
+
+

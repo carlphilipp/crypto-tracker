@@ -7,10 +7,10 @@ import fr.cph.crypto.domain.Ticker
 
 object TickerMapper {
 
-    fun responseToTicker(response: Response, currency: Currency): Ticker {
+    fun responseToTicker(currency: Currency, response: Response): Ticker {
         val price: Double = when (currency) {
-            USD -> java.lang.Double.valueOf(response.priceUsd)
-            EUR -> java.lang.Double.valueOf(response.priceEur)
+            USD -> response.priceUsd!!.toDouble()
+            EUR -> response.priceEur!!.toDouble()
             else -> 0.0
         }
         val percentChange1h = if (response.percentChange1h == null) 0.0 else response.percentChange1h!!.toDouble()
@@ -18,7 +18,7 @@ object TickerMapper {
         val percentChange7d = if (response.percentChange7d == null) 0.0 else response.percentChange7d!!.toDouble()
         val result = Ticker(
                 Currency.findCurrency(response.symbol!!),
-                Currency.findCurrency(currency.name),
+                currency,
                 price,
                 "coinmarketcap",
                 percentChange1h,
@@ -26,7 +26,7 @@ object TickerMapper {
                 percentChange7d,
                 response.lastUpdated!!.toLong()
         )
-        result.id = response.symbol + "-" + currency.name
+        result.id = response.symbol + "-" + currency.code
         return result
     }
 }
