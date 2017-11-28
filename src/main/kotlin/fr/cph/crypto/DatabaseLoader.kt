@@ -67,12 +67,12 @@ class DatabaseLoader : CommandLineRunner {
 
     private fun buildVtcPosition(ticker: Ticker): Position {
         val quantity = 122.10096277
-        val unitCostPrice = 0.00056788
+        val unitCostPrice = 4.3
         val originalValue = quantity * unitCostPrice
-        val value = quantity * ticker.priceBtc
+        val value = quantity * ticker.price
         val gain = value - originalValue
         val gainPercentage = value * 100 / originalValue - 100
-        val position = Position(Currency.VTC, quantity, unitCostPrice, Currency.BTC)
+        val position = Position(Currency.VTC, quantity, unitCostPrice, Currency.USD)
         position.originalValue = originalValue
         position.value = value
         position.gain = gain

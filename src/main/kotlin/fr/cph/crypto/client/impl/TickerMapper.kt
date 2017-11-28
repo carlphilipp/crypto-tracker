@@ -18,12 +18,13 @@ object TickerMapper {
         val percentChange7d = if (response.percentChange7d == null) 0.0 else java.lang.Double.valueOf(response.percentChange7d)
         val result = Ticker(
                 Currency.findCurrency(response.symbol!!),
+                Currency.findCurrency(currency.name),
                 price,
-                java.lang.Double.valueOf(response.priceBtc),
+                "coinmarketcap",
                 percentChange1h,
                 percentChange24h,
                 percentChange7d,
-                response.lastUpdated!!
+                response.lastUpdated!!.toLong()
         )
         result.id = response.symbol + "-" + currency.name
         return result
