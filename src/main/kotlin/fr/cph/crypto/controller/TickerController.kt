@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
-@RequestMapping(value = "/api/ticker")
+@RequestMapping(value = ["/api/ticker"])
 @RestController
 class TickerController @Autowired
 constructor(private val repository: TickerRepository) {
@@ -17,7 +17,7 @@ constructor(private val repository: TickerRepository) {
         @RequestMapping
         get() = repository.findAll().toMutableList()
 
-    @RequestMapping(value = "/{baseCurrency}/{quoteCurrency}")
+    @RequestMapping(value = ["/{baseCurrency}/{quoteCurrency}"])
     fun getTicker(
             @PathVariable("baseCurrency") baseCurrency: Currency,
             @PathVariable("quoteCurrency") quoteCurrency: Currency): Ticker {
