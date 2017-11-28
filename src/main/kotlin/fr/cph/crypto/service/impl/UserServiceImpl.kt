@@ -9,16 +9,32 @@ import fr.cph.crypto.repository.TickerRepository
 import fr.cph.crypto.repository.UserRepository
 import fr.cph.crypto.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Service
+import java.util.*
+
 
 @Service
 class UserServiceImpl @Autowired
 constructor(private val client: CoinMarketCapClient,
             private val positionRepository: PositionRepository,
             private val tickerRepository: TickerRepository,
-            private val userRepository: UserRepository) : UserService {
+            private val userRepository: UserRepository,
+            private val passwordEncoder: ShaPasswordEncoder) : UserService {
+
+    override fun loadUserByUsername(username: String): UserDetails {
+        val user = userRepository.findOneByEmail(username)
+        val authorities = ArrayList<GrantedAuthority>()
+        authorities.add(SimpleGrantedAuthority(user.role.name))
+        return org.springframework.security.core.userdetails.User(user.email, user.password, authorities)
+    }
 
     override fun createUser(user: User): User {
+        val passwordEncoded = passwordEncoder.encodePassword(user.password, null)
+        user.password = passwordEncoded
         return userRepository.save(user)
     }
 

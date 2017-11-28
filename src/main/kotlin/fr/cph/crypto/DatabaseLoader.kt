@@ -1,15 +1,14 @@
 package fr.cph.crypto
 
 import fr.cph.crypto.client.impl.CoinMarketCapClient
+import fr.cph.crypto.domain.*
 import fr.cph.crypto.domain.Currency
-import fr.cph.crypto.domain.Position
-import fr.cph.crypto.domain.Ticker
-import fr.cph.crypto.domain.User
 import fr.cph.crypto.repository.PositionRepository
 import fr.cph.crypto.repository.TickerRepository
 import fr.cph.crypto.repository.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder
 import org.springframework.stereotype.Component
 import java.util.*
 
@@ -20,6 +19,8 @@ class DatabaseLoader : CommandLineRunner {
     private lateinit var tickerRepository: TickerRepository
     @Autowired
     private lateinit var userRepository: UserRepository
+    @Autowired
+    private lateinit var passwordEncoder: ShaPasswordEncoder
     @Autowired
     private lateinit var positionRepository: PositionRepository
     @Autowired
@@ -45,9 +46,11 @@ class DatabaseLoader : CommandLineRunner {
         positions.add(positionVtc)
         positionRepository.save(positionBtc)
         positionRepository.save(positionVtc)
-        val user = User("cp.harmant@gmail.com")
+        val user = User("cp.harmant@gmail.com", "PASSWORD", Role.ADMIN)
         user.id = "1"
         user.positions = positions
+        val passwordEncoded = passwordEncoder.encodePassword(user.password, null)
+        user.password = passwordEncoded
         userRepository.save(user)
     }
 }

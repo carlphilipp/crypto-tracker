@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 class RefreshController @Autowired
 constructor(private val tickerRepository: TickerRepository, private val client: CoinMarketCapClient) {
 
-    @RequestMapping(value = "/refresh")
+    @RequestMapping(value = "/api/refresh")
     fun refreshAll(): ResponseEntity<String> {
         client.getTickers(Currency.USD, Currency.cryptoCurrenciesAsListOfString())
                 .forEach { ticker -> tickerRepository.save<Ticker>(ticker) }

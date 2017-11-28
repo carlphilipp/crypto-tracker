@@ -9,4 +9,6 @@ interface PositionRepository : MongoRepository<Position, Long>
 
 interface TickerRepository : MongoRepository<Ticker, String>
 
-interface UserRepository : MongoRepository<User, String>
+interface UserRepository : MongoRepository<User, String> {
+    fun findOneByEmail(email: String) : User
+}

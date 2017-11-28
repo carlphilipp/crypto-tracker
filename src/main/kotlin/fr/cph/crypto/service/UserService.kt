@@ -2,8 +2,9 @@ package fr.cph.crypto.service
 
 import fr.cph.crypto.domain.Position
 import fr.cph.crypto.domain.User
+import org.springframework.security.core.userdetails.UserDetailsService
 
-interface UserService {
+interface UserService : UserDetailsService {
 
     fun createUser(user: User): User
 
