@@ -3,6 +3,7 @@ package fr.cph.crypto.client.impl
 import fr.cph.crypto.client.TickerClient
 import fr.cph.crypto.domain.Currency
 import fr.cph.crypto.domain.Ticker
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
@@ -12,8 +13,9 @@ import java.util.*
 @Component
 class CoinMarketCapClient @Autowired
 constructor(private val restTemplate: RestTemplate) : TickerClient {
-
+    
     override fun getTicker(currency: Currency, ticker: String): Ticker? {
+        LOGGER.debug("Search ticker: " + ticker)
         return getAllTickers(currency).firstOrNull { (curr) -> curr.code == ticker }
     }
 
@@ -22,6 +24,7 @@ constructor(private val restTemplate: RestTemplate) : TickerClient {
     }
 
     override fun getTickers(currency: Currency, tickers: List<String>): List<Ticker> {
+        LOGGER.debug("Search tickers: " + tickers)
         return getAllTickers(currency)
                 .filter { (curr) -> tickers.contains(curr.code) }
                 .toList()
@@ -41,5 +44,9 @@ constructor(private val restTemplate: RestTemplate) : TickerClient {
                 .map { response -> TickerMapper.responseToTicker(response, currency) }
                 .filter { (curr) -> curr != Currency.UNKNOWN }
                 .toList()
+    }
+
+    companion object {
+        private val LOGGER = LoggerFactory.getLogger(CoinMarketCapClient::class.java)
     }
 }

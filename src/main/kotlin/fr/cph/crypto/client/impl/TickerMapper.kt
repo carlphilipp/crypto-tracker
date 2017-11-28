@@ -13,9 +13,9 @@ object TickerMapper {
             EUR -> java.lang.Double.valueOf(response.priceEur)
             else -> 0.0
         }
-        val percentChange1h = if (response.percentChange1h == null) 0.0 else java.lang.Double.valueOf(response.percentChange1h)
-        val percentChange24h = if (response.percentChange24h == null) 0.0 else java.lang.Double.valueOf(response.percentChange24h)
-        val percentChange7d = if (response.percentChange7d == null) 0.0 else java.lang.Double.valueOf(response.percentChange7d)
+        val percentChange1h = if (response.percentChange1h == null) 0.0 else response.percentChange1h!!.toDouble()
+        val percentChange24h = if (response.percentChange24h == null) 0.0 else response.percentChange24h!!.toDouble()
+        val percentChange7d = if (response.percentChange7d == null) 0.0 else response.percentChange7d!!.toDouble()
         val result = Ticker(
                 Currency.findCurrency(response.symbol!!),
                 Currency.findCurrency(currency.name),

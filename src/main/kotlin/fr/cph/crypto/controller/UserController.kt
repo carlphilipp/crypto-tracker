@@ -19,11 +19,16 @@ constructor(private val repository: UserRepository, private val userService: Use
 
     val all: List<User>
         @RequestMapping
-        get() = repository.findAll().toMutableList()
+        get() = repository.findAll().toList()
 
     @RequestMapping(value = "/{id}", method = arrayOf(RequestMethod.GET))
     fun getUser(@PathVariable("id") id: String): User {
         return repository.findOne(id)
+    }
+
+    @RequestMapping(value = "/{id}/position/refresh", method = arrayOf(RequestMethod.GET))
+    fun refreshUser(@PathVariable("id") id: String): User {
+        return userService.refreshUser(id)
     }
 
     @RequestMapping(value = "/{id}/position/{positionId}", method = arrayOf(RequestMethod.PUT))

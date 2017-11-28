@@ -2,7 +2,7 @@ package fr.cph.crypto.domain
 
 import java.util.*
 
-enum class Currency private constructor(val currencyName: String, val symbol: String, val type: Type) {
+enum class Currency constructor(val currencyName: String, val symbol: String, val type: Type) {
     BTC("Bitcoin", "฿", Type.CRYPTO),
     ETH("Ether", "Ξ", Type.CRYPTO),
     GRS("Groestlcoin", "GRS", Type.CRYPTO),
@@ -27,6 +27,13 @@ enum class Currency private constructor(val currencyName: String, val symbol: St
                     .filter { currency -> currency.name == str }
                     .findAny()
                     .orElse(Currency.UNKNOWN)
+        }
+
+        fun cryptoCurrenciesAsListOfString(): List<String> {
+            return Currency.values()
+                    .filter { currency -> currency.type == Currency.Type.CRYPTO }
+                    .map { currency -> currency.name }
+                    .toList()
         }
     }
 }

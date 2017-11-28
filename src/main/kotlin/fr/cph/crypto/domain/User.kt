@@ -14,10 +14,7 @@ data class User(@Indexed(unique = true) val email: String) {
 
     @Id
     var id: String? = null
-        set(id) {
-            field = this.id
-        }
 
     @DBRef
-    var positions: List<Position>? = null
+    var positions: List<Position> = listOf()
 }

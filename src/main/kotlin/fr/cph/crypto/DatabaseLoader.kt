@@ -57,7 +57,7 @@ class DatabaseLoader : CommandLineRunner {
         val value = quantity * ticker.price
         val gain = value - originalValue
         val gainPercentage = value * 100 / originalValue - 100
-        val position = Position(Currency.BTC, quantity, unitCostPrice, Currency.USD)
+        val position = Position(Currency.BTC, Currency.USD, quantity, unitCostPrice)
         position.originalValue = originalValue
         position.value = value
         position.gain = gain
@@ -72,7 +72,7 @@ class DatabaseLoader : CommandLineRunner {
         val value = quantity * ticker.price
         val gain = value - originalValue
         val gainPercentage = value * 100 / originalValue - 100
-        val position = Position(Currency.VTC, quantity, unitCostPrice, Currency.USD)
+        val position = Position(Currency.VTC, Currency.USD, quantity, unitCostPrice)
         position.originalValue = originalValue
         position.value = value
         position.gain = gain
