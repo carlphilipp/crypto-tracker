@@ -7,16 +7,18 @@ import fr.cph.crypto.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
+import java.security.Principal
 
 @RequestMapping(value = ["/api/user"])
 @RestController
 class UserController @Autowired
 constructor(private val repository: UserRepository, private val userService: UserService) {
 
-    val all: List<User>
-        @PreAuthorize("hasAuthority('ADMIN')")
-        @RequestMapping(method = [RequestMethod.GET])
-        get() = repository.findAll().toList()
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @RequestMapping(method = [RequestMethod.GET])
+    fun getAllUsers(@RequestHeader(value = "Authorization") bearerToken: String): List<User> {
+        return repository.findAll().toList()
+    }
 
     @RequestMapping(method = [RequestMethod.POST])
     fun createUser(@RequestBody user: User): User {
@@ -24,8 +26,13 @@ constructor(private val repository: UserRepository, private val userService: Use
     }
 
     @RequestMapping(value = ["/{id}"], method = [RequestMethod.GET])
-    fun getUser(@PathVariable("id") id: String): User {
-        return repository.findOne(id)
+    fun getUser(@PathVariable("id") id: String, principal: Principal): User {
+        val user = repository.findOne(id)
+        if (principal.name == user.email) {
+            return user
+        } else {
+            throw RuntimeException()
+        }
     }
 
     @RequestMapping(value = ["/{id}/position/refresh"], method = [RequestMethod.GET])
