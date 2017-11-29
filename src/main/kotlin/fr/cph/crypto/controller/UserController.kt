@@ -26,9 +26,11 @@ constructor(private val repository: UserRepository, private val userService: Use
         return userService.createUser(user)
     }
 
-    @PostAuthorize("hasPermission(returnObject, 'read')")
+    //@PostAuthorize("hasPermission(returnObject, 'read')")
+    @PostAuthorize("returnObject.email == authentication.name")
     @RequestMapping(value = ["/{id}"], method = [RequestMethod.GET])
     fun getUser(@PathVariable("id") id: String, principal: Principal): User {
+        //val user: User = principal as User
         return repository.findOne(id)
     }
 

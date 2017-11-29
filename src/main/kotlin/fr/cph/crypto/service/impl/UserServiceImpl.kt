@@ -27,8 +27,7 @@ constructor(private val client: CoinMarketCapClient,
 
     override fun loadUserByUsername(username: String): UserDetails {
         val user = userRepository.findOneByEmail(username)
-        val authorities = ArrayList<GrantedAuthority>()
-        authorities.add(SimpleGrantedAuthority(user.role.name))
+        val authorities = listOf<GrantedAuthority>(SimpleGrantedAuthority(user.role.name))
         return org.springframework.security.core.userdetails.User(user.email, user.password, authorities)
     }
 

@@ -18,6 +18,10 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices
 import org.springframework.security.oauth2.provider.token.TokenStore
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore
+import org.springframework.security.oauth2.provider.token.DefaultUserAuthenticationConverter
+import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter
+
+
 
 @Configuration
 @EnableWebSecurity
@@ -33,6 +37,9 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
     @Autowired
     private lateinit var userService: UserService
 
+    @Autowired
+    private lateinit var userAuthenticationConverter: DefaultUserAuthenticationConverter
+
     @Bean
     @Throws(Exception::class)
     override fun authenticationManager(): AuthenticationManager {
@@ -40,8 +47,8 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
     }
 
     @Throws(Exception::class)
-    override fun configure(auth: AuthenticationManagerBuilder?) {
-        auth!!.userDetailsService<UserService>(userService).passwordEncoder(encoder)
+    override fun configure(auth: AuthenticationManagerBuilder) {
+        auth.userDetailsService<UserService>(userService).passwordEncoder(encoder)
     }
 
     @Throws(Exception::class)
@@ -61,6 +68,10 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
     fun accessTokenConverter(): JwtAccessTokenConverter {
         val converter = JwtAccessTokenConverter()
         converter.setSigningKey(signingKey)
+        val accessTokenConverter = DefaultAccessTokenConverter()
+        accessTokenConverter.setUserTokenConverter(userAuthenticationConverter)
+        converter.accessTokenConverter = accessTokenConverter
+
         return converter
     }
 
