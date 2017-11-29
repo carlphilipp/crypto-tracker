@@ -5,6 +5,7 @@ import fr.cph.crypto.domain.User
 import fr.cph.crypto.repository.UserRepository
 import fr.cph.crypto.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.access.prepost.PostAuthorize
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import java.security.Principal
@@ -25,14 +26,10 @@ constructor(private val repository: UserRepository, private val userService: Use
         return userService.createUser(user)
     }
 
+    @PostAuthorize("hasPermission(returnObject, 'read')")
     @RequestMapping(value = ["/{id}"], method = [RequestMethod.GET])
     fun getUser(@PathVariable("id") id: String, principal: Principal): User {
-        val user = repository.findOne(id)
-        if (principal.name == user.email) {
-            return user
-        } else {
-            throw RuntimeException()
-        }
+        return repository.findOne(id)
     }
 
     @RequestMapping(value = ["/{id}/position/refresh"], method = [RequestMethod.GET])
