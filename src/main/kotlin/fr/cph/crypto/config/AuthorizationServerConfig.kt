@@ -62,6 +62,4 @@ class AuthorizationServerConfig : AuthorizationServerConfigurerAdapter() {
                 .tokenEnhancer(enhancerChain)
                 .authenticationManager(authenticationManager)
     }
-
-
 }

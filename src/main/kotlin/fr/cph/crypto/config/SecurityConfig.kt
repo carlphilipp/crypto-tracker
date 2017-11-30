@@ -45,7 +45,6 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
         auth.userDetailsService<UserService>(userService).passwordEncoder(encoder)
     }
 
-    @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
         http
                 .sessionManagement()

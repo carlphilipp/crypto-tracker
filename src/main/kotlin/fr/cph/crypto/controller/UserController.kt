@@ -2,7 +2,6 @@ package fr.cph.crypto.controller
 
 import fr.cph.crypto.domain.Position
 import fr.cph.crypto.domain.User
-import fr.cph.crypto.repository.UserRepository
 import fr.cph.crypto.service.UserService
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,14 +14,15 @@ import java.security.Principal
 @RequestMapping(value = ["/api/user"])
 @RestController
 class UserController @Autowired
-constructor(private val repository: UserRepository, private val userService: UserService) {
+constructor(private val userService: UserService) {
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(method = [RequestMethod.GET])
     fun getAllUsers(): List<User> {
-        return repository.findAll().toList()
+        return userService.getAllUsers();
     }
 
+    @PreAuthorize("authentication.details.decodedDetails['id'] == null or hasRole('ADMIN')")
     @RequestMapping(method = [RequestMethod.POST])
     fun createUser(@RequestBody user: User): User {
         return userService.createUser(user)
@@ -31,7 +31,7 @@ constructor(private val repository: UserRepository, private val userService: Use
     @PostAuthorize("returnObject.email == authentication.name")
     @RequestMapping(value = ["/{id}"], method = [RequestMethod.GET])
     fun getUser(@PathVariable("id") id: String): User {
-        return repository.findOne(id)
+        return userService.getOneUser(id)
     }
 
     @PreAuthorize("#id == authentication.details.decodedDetails['id']")

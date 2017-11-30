@@ -8,6 +8,10 @@ interface UserService : UserDetailsService {
 
     fun createUser(user: User): User
 
+    fun getOneUser(id: String): User
+
+    fun getAllUsers(): List<User>
+
     fun refreshUserPositions(id: String): List<Position>
 
     fun updatePosition(position: Position): Position
