@@ -5,17 +5,15 @@ import fr.cph.crypto.domain.Ticker
 import fr.cph.crypto.service.TickerService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.access.prepost.PreAuthorize
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
+@CrossOrigin(origins = ["http://localhost:3000"])
 @RequestMapping(value = ["/api/ticker"])
 @RestController
 class TickerController @Autowired
 constructor(private val service: TickerService) {
 
-    @PreAuthorize("hasAuthority('ADMIN') or authentication.details.decodedDetails['id'] == null")
+    //@PreAuthorize("hasAuthority('ADMIN') or authentication.details.decodedDetails['id'] == null")
     @RequestMapping(method = [RequestMethod.GET])
     fun getAllTickers(): List<Ticker> {
         return service.findAll()

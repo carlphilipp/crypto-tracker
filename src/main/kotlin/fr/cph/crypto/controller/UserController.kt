@@ -11,12 +11,13 @@ import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.*
 import java.security.Principal
 
+@CrossOrigin(origins = ["http://localhost:3000"])
 @RequestMapping(value = ["/api/user"])
 @RestController
 class UserController @Autowired
 constructor(private val userService: UserService) {
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(method = [RequestMethod.GET])
     fun getAllUsers(): List<User> {
         return userService.findAll()
@@ -28,7 +29,7 @@ constructor(private val userService: UserService) {
         return userService.create(user)
     }
 
-    @PostAuthorize("returnObject.email == authentication.name")
+    //@PostAuthorize("returnObject.email == authentication.name")
     @RequestMapping(value = ["/{id}"], method = [RequestMethod.GET])
     fun getUser(@PathVariable("id") id: String): User {
         return userService.findOne(id)
