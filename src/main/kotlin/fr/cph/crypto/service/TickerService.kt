@@ -4,7 +4,9 @@ import fr.cph.crypto.domain.Ticker
 
 interface TickerService {
 
-    fun getOneTicker(id: String): Ticker
+    fun findOne(id: String): Ticker
 
-    fun updateAllTickers()
+    fun findAll(): List<Ticker>
+
+    fun updateAll()
 }

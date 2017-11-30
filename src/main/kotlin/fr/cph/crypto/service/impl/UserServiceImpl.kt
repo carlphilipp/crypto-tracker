@@ -27,34 +27,34 @@ constructor(private val positionRepository: PositionRepository,
         return org.springframework.security.core.userdetails.User(user.email, user.password, authorities)
     }
 
-    override fun createUser(user: User): User {
+    override fun create(user: User): User {
         val passwordEncoded = passwordEncoder.encodePassword(user.password, null)
         user.password = passwordEncoded
         return userRepository.save(user)
     }
 
-    override fun getOneUser(id: String): User {
+    override fun findOne(id: String): User {
         return userRepository.findOne(id)
     }
 
-    override fun getAllUsers(): List<User> {
+    override fun findAll(): List<User> {
         return userRepository.findAll().toList()
     }
 
     override fun refreshUserPositions(id: String): List<Position> {
         val user = userRepository.findOne(id)
-        tickerService.updateAllTickers()
+        tickerService.updateAll()
         user.positions.forEach { position -> refreshPosition(position) }
         return userRepository.findOne(id).positions
     }
 
     override fun updatePosition(position: Position): Position {
-        tickerService.updateAllTickers()
+        tickerService.updateAll()
         return refreshPosition(position)
     }
 
     private fun refreshPosition(position: Position): Position {
-        val ticker = tickerService.getOneTicker(position.currency1.code + "-" + position.currency2.code)
+        val ticker = tickerService.findOne(position.currency1.code + "-" + position.currency2.code)
 
         val quantity = position.quantity
         val costPrice = position.unitCostPrice

@@ -7,6 +7,7 @@ import fr.cph.crypto.repository.TickerRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController
 class RefreshController @Autowired
 constructor(private val tickerRepository: TickerRepository, private val client: CoinMarketCapClient) {
 
+    @PreAuthorize("hasAuthority('ADMIN') or authentication.details.decodedDetails['id'] == null")
     @RequestMapping(value = ["/api/refresh"])
     fun refreshAll(): ResponseEntity<String> {
         client.getTickers(Currency.USD, Currency.cryptoCurrenciesAsListOfString())

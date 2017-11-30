@@ -2,25 +2,29 @@ package fr.cph.crypto.controller
 
 import fr.cph.crypto.domain.Currency
 import fr.cph.crypto.domain.Ticker
-import fr.cph.crypto.repository.TickerRepository
+import fr.cph.crypto.service.TickerService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RestController
 
 @RequestMapping(value = ["/api/ticker"])
 @RestController
 class TickerController @Autowired
-constructor(private val repository: TickerRepository) {
+constructor(private val service: TickerService) {
 
-    val all: List<Ticker>
-        @RequestMapping
-        get() = repository.findAll().toMutableList()
+    @PreAuthorize("hasAuthority('ADMIN') or authentication.details.decodedDetails['id'] == null")
+    @RequestMapping(method = [RequestMethod.GET])
+    fun getAllTickers(): List<Ticker> {
+        return service.findAll()
+    }
 
-    @RequestMapping(value = ["/{baseCurrency}/{quoteCurrency}"])
-    fun getTicker(
-            @PathVariable("baseCurrency") baseCurrency: Currency,
-            @PathVariable("quoteCurrency") quoteCurrency: Currency): Ticker {
-        return repository.findOne(baseCurrency.code + "-" + quoteCurrency.code)
+    @PreAuthorize("hasAuthority('ADMIN') or authentication.details.decodedDetails['id'] == null")
+    @RequestMapping(value = ["/{currency1}/{currency2}"], method = [RequestMethod.GET])
+    fun getTicker(@PathVariable("currency1") currency1: Currency,
+                  @PathVariable("currency2") currency2: Currency): Ticker {
+        return service.findOne(currency1.code + "-" + currency2.code)
     }
 }

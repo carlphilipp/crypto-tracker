@@ -16,22 +16,22 @@ import java.security.Principal
 class UserController @Autowired
 constructor(private val userService: UserService) {
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(method = [RequestMethod.GET])
     fun getAllUsers(): List<User> {
-        return userService.getAllUsers();
+        return userService.findAll()
     }
 
-    @PreAuthorize("authentication.details.decodedDetails['id'] == null or hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN') or authentication.details.decodedDetails['id'] == null")
     @RequestMapping(method = [RequestMethod.POST])
     fun createUser(@RequestBody user: User): User {
-        return userService.createUser(user)
+        return userService.create(user)
     }
 
     @PostAuthorize("returnObject.email == authentication.name")
     @RequestMapping(value = ["/{id}"], method = [RequestMethod.GET])
     fun getUser(@PathVariable("id") id: String): User {
-        return userService.getOneUser(id)
+        return userService.findOne(id)
     }
 
     @PreAuthorize("#id == authentication.details.decodedDetails['id']")

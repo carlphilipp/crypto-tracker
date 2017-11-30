@@ -6,11 +6,11 @@ import org.springframework.security.core.userdetails.UserDetailsService
 
 interface UserService : UserDetailsService {
 
-    fun createUser(user: User): User
+    fun create(user: User): User
 
-    fun getOneUser(id: String): User
+    fun findOne(id: String): User
 
-    fun getAllUsers(): List<User>
+    fun findAll(): List<User>
 
     fun refreshUserPositions(id: String): List<Position>
 
