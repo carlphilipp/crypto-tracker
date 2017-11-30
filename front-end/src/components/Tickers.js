@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import Nav from './Nav';
 import { getAllTickers } from '../utils/api';
-
+import { isLoggedIn } from '../utils/AuthService';
 
 class Tickers extends Component {
 
@@ -50,16 +50,12 @@ class Tickers extends Component {
           ))}
 
         <div className="col-sm-12">
-          <div className="jumbotron text-center">
-            <h2>Get Access to Celebrity Jokes By Logging In</h2>
-          </div>
-        </div>
-
-        <div className="col-sm-12">
+          { isLoggedIn() ?
             <div className="jumbotron text-center">
-              <h2>View Celebrity Jokes</h2>
-              <Link className="btn btn-lg btn-success" to='/special'> Celebrity Jokes </Link>
-            </div>
+              <h2>View your account</h2>
+              <Link className="btn btn-lg btn-success" to='/account'>Account</Link>
+            </div> : <div className="jumbotron text-center"><h2>Get Access to your account by logging in</h2></div>
+          }
         </div>
       </div>
     );
