@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
-import {isLoggedIn, login, logout} from '../utils/AuthService';
+import {isLoggedIn, logout} from '../utils/AuthService';
 import Login from './Login'
 import SignUp from './SignUp'
 import '../App.css';

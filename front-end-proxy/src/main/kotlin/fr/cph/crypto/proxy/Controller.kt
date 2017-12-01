@@ -1,5 +1,6 @@
 package fr.cph.crypto.proxy
 
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
@@ -22,6 +23,7 @@ class Controller(private val restTemplate: RestTemplate, private val restTemplat
               @RequestBody(required = false) body: String?,
               method: HttpMethod,
               request: HttpServletRequest): ResponseEntity<String>? {
+        LOGGER.debug("Request! {}", request.requestURI)
         val uri = URI("http", null, server, port, request.requestURI, request.queryString, null)
         val headers = buildHeaders(authorization)
         val entity = HttpEntity(body, headers)
@@ -50,6 +52,10 @@ class Controller(private val restTemplate: RestTemplate, private val restTemplat
     private fun getNewToken(): Token {
         val uri = URI("http", null, server, port, "/oauth/token", "grant_type=client_credentials", null)
         return restTemplateAuth.postForObject(uri, null, Token::class.java)
+    }
+
+    companion object {
+        private val LOGGER = LoggerFactory.getLogger(Controller::class.java)
     }
 }
 

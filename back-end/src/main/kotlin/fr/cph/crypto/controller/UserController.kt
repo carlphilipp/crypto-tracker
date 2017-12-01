@@ -5,7 +5,6 @@ import fr.cph.crypto.domain.User
 import fr.cph.crypto.service.UserService
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.security.access.prepost.PostAuthorize
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.*
@@ -25,6 +24,7 @@ constructor(private val userService: UserService) {
     @PreAuthorize("hasAuthority('ADMIN') or authentication.details.decodedDetails['id'] == null")
     @RequestMapping(method = [RequestMethod.POST], produces = ["application/json"])
     fun createUser(@RequestBody user: User): User {
+        LOGGER.debug("Create user {}", user)
         return userService.create(user)
     }
 

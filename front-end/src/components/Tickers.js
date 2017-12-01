@@ -23,9 +23,7 @@ class Tickers extends Component {
     }
 
     render() {
-
         const {tickers} = this.state;
-
         return (
             <div>
                 <Nav/>
@@ -44,8 +42,8 @@ class Tickers extends Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {tickers.map((ticker) => (
-                        <tr>
+                    {tickers.map((ticker, index) => (
+                        <tr key={index}>
                             <th scope="row">{ticker.id}</th>
                             <td>{ticker.price}</td>
                             <td>{ticker.percentChange1h}%</td>
@@ -63,8 +61,7 @@ class Tickers extends Component {
                             <h2>View your account</h2>
                             <Link className="btn btn-lg btn-success" to='/account'>Account</Link>
                         </div> :
-                        <div className="jumbotron text-center"><h2>Get Access to your account by
-                            logging in</h2></div>
+                        <div className="jumbotron text-center"><h2>Get Access to your account by logging in</h2></div>
                     }
                 </div>
                 {/*<Footer />*/}

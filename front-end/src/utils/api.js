@@ -14,13 +14,14 @@ function getOneUser() {
     return axios.get(url).then(response => response.data);
 }
 
-function createUser() {
+function createUser(email, password) {
     const url = `${BASE_URL}/api/user`;
     return axios.post(url, {
-        email: 'cp.derp2@gmail.com',
-        password: 'password',
-    }).then(response => response.data)
-    .catch(function (error) {
-    console.log(error);
-  });
+        email: email,
+        password: password,
+    })
+        .then(response => response.data)
+        .catch(function (error) {
+            console.log(error);
+        });
 }
