@@ -1,0 +1,13 @@
+dependencies {
+    compile(
+            [group: 'org.springframework.boot', name: 'spring-boot-starter-web'],
+            [group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb'],
+            [group: 'org.springframework.boot', name: 'spring-boot-starter-security'],
+            [group: 'org.springframework.security', name: 'spring-security-jwt'],
+            [group: 'org.springframework.security.oauth', name: 'spring-security-oauth2'],
+
+            [group: 'com.fasterxml.jackson.module', name: 'jackson-module-kotlin'],
+            [group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib']
+    )
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
