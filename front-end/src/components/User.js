@@ -1,44 +1,60 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router';
+import React, {Component} from 'react';
 import Nav from './Nav';
-import { getOneUser } from '../utils/api';
+import {getOneUser} from '../utils/api';
+import {Table} from 'reactstrap';
 
 class User extends Component {
 
-  constructor() {
-    super()
-    this.state = { user: [] };
-  }
+    constructor() {
+        super()
+        this.state = {user: []};
+    }
 
-  getUser() {
-    getOneUser().then((user) => {
-      this.setState({ user });
-    });
-  }
+    getUser() {
+        getOneUser().then((user) => {
+            this.setState({user});
+        });
+    }
 
-  componentDidMount() {
-    this.getUser();
-  }
+    componentDidMount() {
+        this.getUser();
+    }
 
-  render() {
-
-    const { user }  = this.state;
+    render() {
+        const {user} = this.state;
         return (
-          <div>
-            <Nav />
-            <h3 className="text-center">Account</h3>
-            <hr/>
-            <div className="col-sm-6">
-              <div className="panel panel-primary">
-                <div className="panel-heading">
-                  <h3 className="panel-title"> <span className="btn">#{ user.id }</span></h3>
-                </div>
-                <div className="panel-body">
-                  <p> { user.email } </p>
-                </div>
-              </div>
+            <div>
+                <Nav/>
+                <h3 className="text-center">{user.email}</h3>
+                <hr/>
+                <Table hover>
+                    <thead>
+                    <tr>
+                        <th>Currency</th>
+                        <th>Quantity</th>
+                        <th>Value</th>
+                        <th>Original Value</th>
+                        <th>Gain</th>
+                        <th>Gain Percentage</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {
+                        (user.positions != null) ?
+                            user.positions.map((position) => (
+                                <tr>
+                                    <th scope="row">{position.currency1}</th>
+                                    <td>{position.quantity}</td>
+                                    <td>{position.value}$</td>
+                                    <td>{position.originalValue}$</td>
+                                    <td>{position.gain}$</td>
+                                    <td>{position.gainPercentage}%</td>
+                                </tr>))
+                            : ''
+                    }
+                    </tbody>
+                </Table>
             </div>
-          </div>
         );
     }
 }

@@ -8,7 +8,7 @@ It will start the server on `http://localhost:8080`
 To start the frontend:
 
 ```
-cd front-end && npm start
+cd front-end && npm install && npm start
 ```
 
 The browser should be started on `http://localhost:3000`

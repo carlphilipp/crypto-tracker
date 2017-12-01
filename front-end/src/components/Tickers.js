@@ -1,65 +1,76 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router';
+import React, {Component} from 'react';
+import {Link} from 'react-router';
 import Nav from './Nav';
-import { getAllTickers } from '../utils/api';
-import { isLoggedIn } from '../utils/AuthService';
+import {Table} from 'reactstrap';
+import {getAllTickers} from '../utils/api';
+import {isLoggedIn} from '../utils/AuthService';
 
 class Tickers extends Component {
 
-  constructor() {
-    super()
-    this.state = { tickers: [] };
-  }
+    constructor() {
+        super()
+        this.state = {tickers: []};
+    }
 
-  getTickers() {
-    getAllTickers().then((tickers) => {
-      this.setState({ tickers });
-    });
-  }
+    getTickers() {
+        getAllTickers().then((tickers) => {
+            this.setState({tickers});
+        });
+    }
 
-  componentDidMount() {
-    this.getTickers();
-  }
+    componentDidMount() {
+        this.getTickers();
+    }
 
-  render() {
+    render() {
 
-    const { tickers }  = this.state;
+        const {tickers} = this.state;
 
-    return (
-      <div>
-        <Nav />
-        <h3 className="text-center">Tickers</h3>
-        <hr/>
+        return (
+            <div>
+                <Nav/>
+                <h3 className="text-center">Tickers</h3>
+                <hr/>
 
-        { tickers.map((ticker, index) => (
-              <div className="col-sm-6" key={index}>
-                <div className="panel panel-primary">
-                  <div className="panel-heading">
-                    <h3 className="panel-title"> <span className="btn">#{ ticker.id }</span></h3>
-                  </div>
-                  <div className="panel-body">
-                    <p> { ticker.price } </p>
-                    <p> { ticker.exchange } </p>
-                    <p> { ticker.percentChange1h } </p>
-                    <p> { ticker.percentChange24h } </p>
-                    <p> { ticker.percentChange7d } </p>
-                    <p> { ticker.lastUpdated } </p>
-                  </div>
+                <Table hover>
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Price</th>
+                        <th>1h</th>
+                        <th>24h</th>
+                        <th>7d</th>
+                        <th>updated</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {tickers.map((ticker) => (
+                        <tr>
+                            <th scope="row">{ticker.id}</th>
+                            <td>{ticker.price}</td>
+                            <td>{ticker.percentChange1h}%</td>
+                            <td>{ticker.percentChange24h}%</td>
+                            <td>{ticker.percentChange7d}%</td>
+                            <td>{ticker.lastUpdated}</td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </Table>
+
+                <div className="col-sm-12">
+                    {isLoggedIn() ?
+                        <div className="jumbotron text-center">
+                            <h2>View your account</h2>
+                            <Link className="btn btn-lg btn-success" to='/account'>Account</Link>
+                        </div> :
+                        <div className="jumbotron text-center"><h2>Get Access to your account by
+                            logging in</h2></div>
+                    }
                 </div>
-              </div>
-          ))}
-
-        <div className="col-sm-12">
-          { isLoggedIn() ?
-            <div className="jumbotron text-center">
-              <h2>View your account</h2>
-              <Link className="btn btn-lg btn-success" to='/account'>Account</Link>
-            </div> : <div className="jumbotron text-center"><h2>Get Access to your account by logging in</h2></div>
-          }
-        </div>
-      </div>
-    );
-  }
+                {/*<Footer />*/}
+            </div>
+        );
+    }
 }
 
 export default Tickers;
