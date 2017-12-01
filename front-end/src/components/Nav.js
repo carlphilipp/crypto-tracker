@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 import {isLoggedIn, login, logout} from '../utils/AuthService';
+import Login from './Login'
+import SignUp from './SignUp'
 import '../App.css';
 
 class Nav extends Component {
@@ -16,19 +18,14 @@ class Nav extends Component {
                         <Link to="/">Tickers</Link>
                     </li>
                     <li>
-                        {
-                            (isLoggedIn()) ? <Link to="/account">Account</Link> : ''
-                        }
+                        {(isLoggedIn()) ? <Link to="/account">Account</Link> : ''}
                     </li>
                 </ul>
                 <ul className="nav navbar-nav navbar-right">
-                    {
-                        (isLoggedIn()) ? (
-                            <button className="btn btn-danger log" onClick={() => logout()}>Log
-                                out </button>) : (
-                            <button className="btn btn-info log" onClick={() => login()}>Log
-                                In</button>)
-                    }
+                {<Login buttonLabel="Login"/>}
+                <button className="btn btn-danger log" onClick={() => logout()}>Log out </button>
+
+                {<SignUp buttonLabel="Sign Up"/>}
                 </ul>
             </nav>
         );

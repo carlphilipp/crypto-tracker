@@ -38,6 +38,7 @@ class Controller(private val restTemplate: RestTemplate, private val restTemplat
             }
             headers.add("Authorization", "Bearer " + currentToken!!.access_token)
         }
+        headers.add("Content-Type", "application/json")
         return headers
     }
 

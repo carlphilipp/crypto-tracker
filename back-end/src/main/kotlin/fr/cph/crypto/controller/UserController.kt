@@ -23,7 +23,7 @@ constructor(private val userService: UserService) {
     }
 
     @PreAuthorize("hasAuthority('ADMIN') or authentication.details.decodedDetails['id'] == null")
-    @RequestMapping(method = [RequestMethod.POST])
+    @RequestMapping(method = [RequestMethod.POST], produces = ["application/json"])
     fun createUser(@RequestBody user: User): User {
         return userService.create(user)
     }
