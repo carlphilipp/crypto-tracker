@@ -7,13 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
-@CrossOrigin(origins = ["http://localhost:3000"])
 @RequestMapping(value = ["/api/ticker"])
 @RestController
 class TickerController @Autowired
 constructor(private val service: TickerService) {
 
-    //@PreAuthorize("hasAuthority('ADMIN') or authentication.details.decodedDetails['id'] == null")
+    @PreAuthorize("hasAuthority('ADMIN') or authentication.details.decodedDetails['id'] == null")
     @RequestMapping(method = [RequestMethod.GET])
     fun getAllTickers(): List<Ticker> {
         return service.findAll()

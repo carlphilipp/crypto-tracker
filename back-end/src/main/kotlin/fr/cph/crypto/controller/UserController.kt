@@ -11,7 +11,6 @@ import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.*
 import java.security.Principal
 
-@CrossOrigin(origins = ["http://localhost:3000"])
 @RequestMapping(value = ["/api/user"])
 @RestController
 class UserController @Autowired
