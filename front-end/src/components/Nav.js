@@ -9,9 +9,15 @@ class Nav extends Component {
     constructor(props) {
         super(props);
         this.handler = this.handler.bind(this);
+        this.logout = this.logout.bind(this);
     }
 
     handler() {
+        this.setState({});
+    }
+
+    logout() {
+        logout()
         this.setState({});
     }
 
@@ -26,12 +32,12 @@ class Nav extends Component {
                         <Link to="/">Tickers</Link>
                     </li>
                     <li>
-                        {(isLoggedIn) ? <Link to="/account">Account</Link> : ''}
+                        {(isLoggedIn()) ? <Link to="/account">Account</Link> : ''}
                     </li>
                 </ul>
                 <ul className="nav navbar-nav navbar-right">
                 {(!isLoggedIn()) ?<Login handler={this.handler} buttonLabel="Login"/>: ''}
-                {(isLoggedIn()) ?<button className="btn btn-danger log" onClick={() => logout()}>Log out </button>: ''}
+                {(isLoggedIn()) ?<button className="btn btn-danger log" onClick={this.logout}>Log out </button>: ''}
                 {(!isLoggedIn()) ?<SignUp buttonLabel="Sign Up"/>: ''}
                 </ul>
             </nav>

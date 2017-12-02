@@ -2,7 +2,6 @@ const TOKEN = 'token';
 
 export function isLoggedIn(inc) {
     let token = localStorage.getItem(TOKEN)
-    console.log("isLoggedIn " + token)
     return token != null;
 }
 
@@ -11,7 +10,6 @@ export function getToken() {
 }
 
 export function storeToken(token) {
-    console.log("Store token:   " + token)
     localStorage.setItem(TOKEN, token)
 }
 
@@ -19,6 +17,7 @@ export function login() {
 }
 
 export function logout() {
+    localStorage.removeItem(TOKEN)
 }
 
 export function setIdToken() {
