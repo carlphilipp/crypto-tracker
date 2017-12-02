@@ -22,9 +22,9 @@ class Nav extends Component {
                     </li>
                 </ul>
                 <ul className="nav navbar-nav navbar-right">
-                {<Login buttonLabel="Login"/>}
+                {(!isLoggedIn()) ?<Login buttonLabel="Login"/>: ''}
                 {(isLoggedIn()) ?<button className="btn btn-danger log" onClick={() => logout()}>Log out </button>: ''}
-                {<SignUp buttonLabel="Sign Up"/>}
+                {(!isLoggedIn()) ?<SignUp buttonLabel="Sign Up"/>: ''}
                 </ul>
             </nav>
         );

@@ -8,8 +8,8 @@ class SignUp extends React.Component {
         super(props);
         this.state = {
             modal: false,
-            password: null,
             email: null,
+            password: null,
             success: false,
             failure: false,
         };
@@ -42,7 +42,7 @@ class SignUp extends React.Component {
                 success: true
                 }))
             .catch(error => {
-                console.log(error)
+                console.log(error);
                 this.setState({
                     failure: true
                 })

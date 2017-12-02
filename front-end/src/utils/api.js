@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const BASE_URL = 'http://localhost:8180';
 
-export {getAllTickers, getOneUser, createUser};
+export {getAllTickers, getOneUser, createUser, login};
 
 function getAllTickers() {
     const url = `${BASE_URL}/api/ticker`;
@@ -20,8 +20,10 @@ function createUser(email, password) {
         email: email,
         password: password,
     })
-        .then(response => response.data)
-        .catch(function (error) {
-            console.log(error);
-        });
+        .then(response => response.data);
+}
+
+function login(email, password) {
+    const url = `${BASE_URL}/oauth/token?grant_type=password&username=cp.harmant@gmail.com&password=PASSWORD`;
+    return axios.post(url).then(response => response.data);
 }

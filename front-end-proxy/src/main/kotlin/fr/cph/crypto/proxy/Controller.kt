@@ -30,6 +30,16 @@ class Controller(private val restTemplate: RestTemplate, private val restTemplat
         return restTemplate.exchange(uri, method, entity, String::class.java)
     }
 
+    @RequestMapping(value = ["/oauth/**"], produces = ["application/json"])
+    fun proxyOauth(method: HttpMethod, request: HttpServletRequest): ResponseEntity<String>? {
+        LOGGER.debug("Request OAuth! {}", request.requestURI)
+        val uri = URI("http", null, server, port, request.requestURI, request.queryString, null)
+        val headers = HttpHeaders()
+        headers.add("Content-Type", "application/json")
+        val entity = HttpEntity(null, headers)
+        return restTemplateAuth.exchange(uri, method, entity, String::class.java)
+    }
+
     private fun buildHeaders(authorization: String?): HttpHeaders {
         val headers = HttpHeaders()
         if (authorization != null) {

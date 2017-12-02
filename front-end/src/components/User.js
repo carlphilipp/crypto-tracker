@@ -6,7 +6,7 @@ import {Table} from 'reactstrap';
 class User extends Component {
 
     constructor() {
-        super()
+        super();
         this.state = {user: []};
     }
 
