@@ -1,10 +1,17 @@
 const TOKEN = 'token';
 
-export function isLoggedIn() {
-    return localStorage.getItem(TOKEN) != null;
+export function isLoggedIn(inc) {
+    let token = localStorage.getItem(TOKEN)
+    console.log("isLoggedIn " + token)
+    return token != null;
 }
 
-export function storeToken(token){
+export function getToken() {
+    return localStorage.getItem(TOKEN)
+}
+
+export function storeToken(token) {
+    console.log("Store token:   " + token)
     localStorage.setItem(TOKEN, token)
 }
 

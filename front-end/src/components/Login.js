@@ -12,10 +12,10 @@ class Login extends React.Component {
             password: null,
             success: false,
             failure: false,
+            refresh: false,
         };
         this.toggle = this.toggle.bind(this);
         this.loginUser = this.loginUser.bind(this);
-        this.saveToken = this.saveToken.bind(this);
     }
 
     toggle() {
@@ -39,30 +39,16 @@ class Login extends React.Component {
     loginUser() {
         login(this.state.email, this.state.password)
             .then((token) => {
-                console.log("Token: " + token.access_token);
+                storeToken(token);
                 this.toggle();
-                this.saveToken(token)
             })
-            .then(this.setState({
-                success: true
-            }))
-            .catch(error => {
-                console.log(error);
-                this.setState({
-                    failure: true
-                })
-            })
-    }
-
-    saveToken(token) {
-        storeToken(token)
     }
 
     render() {
         return (
             <div>
                 <Button color="primary" onClick={this.toggle}>{this.props.buttonLabel}</Button>
-                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+                <Modal onClosed={this.props.handler} isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>Login</ModalHeader>
                     <ModalBody>
                         <Form>

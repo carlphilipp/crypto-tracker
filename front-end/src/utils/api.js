@@ -24,6 +24,6 @@ function createUser(email, password) {
 }
 
 function login(email, password) {
-    const url = `${BASE_URL}/oauth/token?grant_type=password&username=cp.harmant@gmail.com&password=PASSWORD`;
+    const url = `${BASE_URL}/oauth/token?grant_type=password&username=` + email + `&password=` + password;
     return axios.post(url).then(response => response.data);
 }
