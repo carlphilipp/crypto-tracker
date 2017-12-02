@@ -13,7 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 @Document
 data class User(@Indexed(unique = true) val email: String,
                 @JsonIgnore var password: String,
-                val role: Role = Role.USER) {
+                @JsonIgnore val role: Role = Role.USER) {
 
     @Id
     var id: String? = null

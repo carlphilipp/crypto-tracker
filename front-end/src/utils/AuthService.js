@@ -1,6 +1,6 @@
 const TOKEN = 'token';
 
-export function isLoggedIn(inc) {
+export function isLoggedIn() {
     let token = localStorage.getItem(TOKEN)
     return token != null;
 }

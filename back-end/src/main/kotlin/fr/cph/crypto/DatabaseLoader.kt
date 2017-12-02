@@ -37,14 +37,19 @@ class DatabaseLoader : CommandLineRunner {
                 .forEach { ticker -> tickerRepository.save<Ticker>(ticker) }
 
         val btcTicker = tickerRepository.findOne("BTC-USD")
+        val ethTicker = tickerRepository.findOne("ETH-USD")
         val vtcTicker = tickerRepository.findOne("VTC-USD")
+
 
         val positions = ArrayList<Position>()
         val positionBtc = Position.buildPosition(btcTicker, 0.06564277, 7616.98508457)
         val positionVtc = Position.buildPosition(vtcTicker, 122.10096277, 4.3)
+        val positionEth = Position.buildPosition(ethTicker, 1.57128061, 335.0)
         positions.add(positionBtc)
+        positions.add(positionEth)
         positions.add(positionVtc)
         positionRepository.save(positionBtc)
+        positionRepository.save(positionEth)
         positionRepository.save(positionVtc)
         val user = User("cp.harmant@gmail.com", "PASSWORD", Role.ADMIN)
         user.id = "1"

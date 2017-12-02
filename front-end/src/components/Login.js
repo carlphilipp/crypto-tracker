@@ -41,7 +41,10 @@ class Login extends React.Component {
             .then((token) => {
                 storeToken(token);
                 this.toggle();
-            })
+                return token
+            }).then((token) => {
+
+        })
     }
 
     render() {
