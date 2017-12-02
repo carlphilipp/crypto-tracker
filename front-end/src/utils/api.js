@@ -9,7 +9,8 @@ function getAllTickers() {
     return axios.get(url).then(response => response.data);
 }
 
-function getOneUser() {
+function getOneUser(userId) {
+    console.log("Get One User with User Id: " + userId);
     const url = `${BASE_URL}/api/user/1`;
     return axios.get(url).then(response => response.data);
 }

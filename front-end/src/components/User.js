@@ -10,7 +10,7 @@ class User extends Component {
         this.state = {user: []};
     }
 
-    getUser() {
+    getUser(userId) {
         getOneUser().then((user) => {
             this.setState({user});
         });
@@ -25,7 +25,7 @@ class User extends Component {
         return (
             <div>
                 <Nav/>
-                <h3 className="text-center">{user.email}</h3>
+                <h3 className="text-center">{user.id} {user.email}</h3>
                 <hr/>
                 <Table hover>
                     <thead>

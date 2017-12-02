@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 import {login} from '../utils/api';
-import {storeToken} from '../utils/AuthService';
+import {getUserId, storeToken} from '../utils/AuthService';
 
 class Login extends React.Component {
     constructor(props) {
@@ -36,18 +36,26 @@ class Login extends React.Component {
         });
     }
 
+    updateUserId(id) {
+        this.setState({
+            userId: id
+        });
+    }
+
     loginUser() {
         login(this.state.email, this.state.password)
             .then((token) => {
                 storeToken(token);
-                this.toggle();
-                return token
-            }).then((token) => {
+                let userId = getUserId()
+                console.log("Access token: " + userId);
+                this.updateUserId(userId)
 
-        })
+                this.toggle();
+            })
     }
 
     render() {
+        var handleToUpdate = this.props.handleToUpdate;
         return (
             <div>
                 <Button color="primary" onClick={this.toggle}>{this.props.buttonLabel}</Button>

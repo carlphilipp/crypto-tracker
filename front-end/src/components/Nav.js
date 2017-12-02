@@ -8,16 +8,22 @@ import '../App.css';
 class Nav extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            userId: null,
+        };
         this.handler = this.handler.bind(this);
         this.logout = this.logout.bind(this);
     }
 
-    handler() {
-        this.setState({});
+    handler(userId) {
+        console.log("Handle with user id " + userId);
+        this.setState({
+            userId: userId
+        });
     }
 
     logout() {
-        logout()
+        logout();
         this.setState({});
     }
 
@@ -36,9 +42,9 @@ class Nav extends Component {
                     </li>
                 </ul>
                 <ul className="nav navbar-nav navbar-right">
-                {(!isLoggedIn()) ?<Login handler={this.handler} buttonLabel="Login"/>: ''}
-                {(isLoggedIn()) ?<button className="btn btn-danger log" onClick={this.logout}>Log out </button>: ''}
-                {(!isLoggedIn()) ?<SignUp buttonLabel="Sign Up"/>: ''}
+                    {(!isLoggedIn()) ? <Login handler={this.handler} buttonLabel="Login"/> : ''}
+                    {(isLoggedIn()) ? <button className="btn btn-danger log" onClick={this.logout}>Log out </button> : ''}
+                    {(!isLoggedIn()) ? <SignUp buttonLabel="Sign Up"/> : ''}
                 </ul>
             </nav>
         );

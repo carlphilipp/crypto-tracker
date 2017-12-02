@@ -1,3 +1,4 @@
+const jwtDecode = require('jwt-decode');
 const TOKEN = 'token';
 
 export function isLoggedIn() {
@@ -9,8 +10,13 @@ export function getToken() {
     return localStorage.getItem(TOKEN)
 }
 
+export function getUserId() {
+    let accessToken = JSON.parse(localStorage.getItem(TOKEN)).access_token;
+    return jwtDecode(accessToken).id;
+}
+
 export function storeToken(token) {
-    localStorage.setItem(TOKEN, token)
+    localStorage.setItem(TOKEN, JSON.stringify(token))
 }
 
 export function login() {
