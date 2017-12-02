@@ -38,11 +38,10 @@ class User extends Component {
                         <th>Gain Percentage</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    {
-                        (user.positions != null) ?
-                            user.positions.map((position) => (
-                                <tr>
+                    <tbody>{
+                        (user.positions != null)
+                            ? user.positions.map((position, index) => (
+                                <tr key={index}>
                                     <th scope="row">{position.currency1}</th>
                                     <td>{position.quantity}</td>
                                     <td>{position.value}$</td>
@@ -51,8 +50,7 @@ class User extends Component {
                                     <td>{position.gainPercentage}%</td>
                                 </tr>))
                             : ''
-                    }
-                    </tbody>
+                    }</tbody>
                 </Table>
             </div>
         );
