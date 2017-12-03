@@ -1,2 +1,2 @@
-include ':front-end-proxy'
 include ':back-end'
+include ':gateway'
