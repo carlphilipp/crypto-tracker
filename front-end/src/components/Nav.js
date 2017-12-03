@@ -6,6 +6,7 @@ import SignUp from './SignUp'
 import '../App.css';
 
 class Nav extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -23,21 +24,21 @@ class Nav extends Component {
     }
 
     onRegister(status) {
-        console.log("register in nav")
-        this.props.onRegister(status)
+        console.log("register in nav");
+        this.props.onRegister(status);
     }
 
     home() {
-        this.props.onUpdate('home')
+        this.props.onUpdate('home');
     }
 
     user() {
-        this.props.onUpdate('user')
+        this.props.onUpdate('user');
     }
 
     logout() {
         logout();
-        this.home()
+        this.home();
     }
 
     render() {
