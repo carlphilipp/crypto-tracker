@@ -1,7 +1,7 @@
 import React from 'react';
 import { Alert } from 'reactstrap';
 
-class SignUpSuccess extends React.Component {
+class SignUpFailure extends React.Component {
     constructor(props) {
         super(props);
 
@@ -18,11 +18,11 @@ class SignUpSuccess extends React.Component {
 
     render() {
         return (
-            <Alert color="success" isOpen={this.state.visible} toggle={this.onDismiss}>
-                Successfully registered! You can now login!
+            <Alert color="danger" isOpen={this.state.visible} toggle={this.onDismiss}>
+                Something failed while registering. Please try again
             </Alert>
         );
     }
 }
 
-export default SignUpSuccess;
+export default SignUpFailure;

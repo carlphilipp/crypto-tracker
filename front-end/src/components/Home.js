@@ -1,35 +1,45 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router';
 import Nav from './Nav';
 import Tickers from './Tickers';
 import User from './User';
-import {Table} from 'reactstrap';
-import {getAllTickers} from '../utils/api';
-import {isLoggedIn} from '../utils/AuthService';
+import SignUpSuccess from './SignUpSuccess'
+import SignUpFailure from './SignUpFailure'
 
 class Home extends Component {
 
     constructor() {
-        super()
+        super();
         this.state = {
-          page: 'home'
+            page: 'home',
+            registerSuccess: false,
+            registerFailure: false
         };
     }
 
-    onUpdate (page) {
-      console.log("on update " + page)
-      this.setState({ page: page })
+    onUpdate(page) {
+        console.log("on update " + page);
+        this.setState({page: page})
+    }
+
+    onRegister(status) {
+        console.log("on register " + status);
+        this.setState({
+            registerSuccess: status,
+            registerFailure: !status
+        })
     }
 
     render() {
         const {page} = this.state;
         return (
             <div>
-                <Nav onUpdate={this.onUpdate.bind(this)}/>
+                <Nav onUpdate={this.onUpdate.bind(this)} onRegister={this.onRegister.bind(this)}/>
+                {(this.state.registerSuccess) ? <SignUpSuccess/> : ''}
+                {(this.state.registerFailure) ? <SignUpFailure/> : ''}
                 {
-                  (page === 'home')
-                  ? <Tickers/>
-                  : <User/>
+                    (page === 'home')
+                        ? <Tickers/>
+                        : <User/>
                 }
                 {/* TODO add Footer*/}
             </div>

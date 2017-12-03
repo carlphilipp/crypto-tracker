@@ -22,12 +22,17 @@ class Nav extends Component {
         });
     }
 
+    onRegister(status) {
+        console.log("register in nav")
+        this.props.onRegister(status)
+    }
+
     home() {
-      this.props.onUpdate('home')
+        this.props.onUpdate('home')
     }
 
     user() {
-      this.props.onUpdate('user')
+        this.props.onUpdate('user')
     }
 
     logout() {
@@ -52,7 +57,7 @@ class Nav extends Component {
                 <ul className="nav navbar-nav navbar-right">
                     {(!isLoggedIn()) ? <Login handler={this.handler} buttonLabel="Login"/> : ''}
                     {(isLoggedIn()) ? <button className="btn btn-danger log" onClick={this.logout}>Log out </button> : ''}
-                    {(!isLoggedIn()) ? <SignUp buttonLabel="Sign Up"/> : ''}
+                    {(!isLoggedIn()) ? <SignUp buttonLabel="Sign Up" onRegister={this.onRegister.bind(this)}/> : ''}
                 </ul>
             </nav>
         );

@@ -10,8 +10,6 @@ class SignUp extends React.Component {
             modal: false,
             email: null,
             password: null,
-            success: false,
-            failure: false,
         };
         this.toggle = this.toggle.bind(this);
         this.create = this.create.bind(this);
@@ -35,17 +33,20 @@ class SignUp extends React.Component {
         });
     }
 
+    onRegister(status) {
+        console.log("register in singup")
+        this.props.onRegister(status)
+    }
+
     create() {
         createUser(this.state.email, this.state.password)
             .then(this.toggle())
-            .then(this.setState({
-                success: true
-                }))
+            .then(() => {
+                this.onRegister(true);
+            })
             .catch(error => {
                 console.log(error);
-                this.setState({
-                    failure: true
-                })
+                this.onRegister(false);
             })
     }
 
@@ -53,8 +54,6 @@ class SignUp extends React.Component {
         return (
             <div>
                 <Button color="danger" onClick={this.toggle}>{this.props.buttonLabel}</Button>
-                {(this.state.success) ? <SignUpSuccess /> : ''}
-                {(this.state.failure) ? <SignUpSuccess /> : ''}
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>Login</ModalHeader>
                     <ModalBody>

@@ -1,14 +1,11 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router';
-import Nav from './Nav';
 import {Table} from 'reactstrap';
 import {getAllTickers} from '../utils/api';
-import {isLoggedIn} from '../utils/AuthService';
 
 class Tickers extends Component {
 
     constructor() {
-        super()
+        super();
         this.state = {tickers: []};
     }
 
@@ -22,8 +19,8 @@ class Tickers extends Component {
         this.getTickers();
     }
 
-    update () {
-      this.props.onUpdate('user')
+    update() {
+        this.props.onUpdate('user')
     }
 
     render() {
