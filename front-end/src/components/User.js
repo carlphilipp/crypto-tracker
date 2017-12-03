@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {getOneUser} from '../utils/api';
 import {getUserId} from '../utils/AuthService';
 import {Table} from 'reactstrap';
+import {FormattedNumber}  from 'react-intl'
+import {IntlProvider} from 'react-intl';
 
 class User extends Component {
 
@@ -40,20 +42,22 @@ class User extends Component {
                         <tr key={index}>
                             <th scope="row">{position.currency1}</th>
                             <td>{position.quantity}</td>
-                            <td>${position.value}</td>
-                            <td>${position.originalValue}</td>
-                            <td>${position.gain}</td>
-                            <td>{position.gainPercentage}%</td>
+                            <td><FormattedNumber value={position.value} style="currency" currency="USD"/></td>
+                            <td><FormattedNumber value={position.originalValue} style="currency" currency="USD"/></td>
+                            <td><FormattedNumber value={position.gain} style="currency" currency="USD"/></td>
+                            <td><FormattedNumber value={position.gainPercentage} style="percent"/></td>
                         </tr>))
               }</tbody>
           </Table>;
         }
         return (
-            <div>
-                <h3 className="text-center">{user.id} {user.email}</h3>
-                <hr/>
-                {table}
-            </div>
+            <IntlProvider locale="en">
+              <div>
+                  <h3 className="text-center">{user.id} {user.email}</h3>
+                  <hr/>
+                  {table}
+              </div>
+            </IntlProvider>
         );
     }
 }

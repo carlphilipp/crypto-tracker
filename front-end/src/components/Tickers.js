@@ -36,7 +36,7 @@ class Tickers extends Component {
                 <Table hover>
                     <thead>
                     <tr>
-                        <th>#</th>
+                        <th>Name</th>
                         <th>Price</th>
                         <th>1h</th>
                         <th>24h</th>
