@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 @JsonPropertyOrder("id", "currency1", "currency2", "price", "exchange", "percentChange1h", "percentChange24h", "percentChange7d", "lastUpdated")
 @Document
 data class Ticker(@Indexed val currency1: Currency,
+                  val currencyName1: String,
                   val currency2: Currency,
                   val price: Double,
                   val exchange: String,

@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import {Table} from 'reactstrap';
 import {getAllTickers} from '../utils/api';
+import {formatDate} from '../utils/DateUtils';
 
 class Tickers extends Component {
 
     constructor() {
         super();
         this.state = {tickers: []};
+        //this.format = this.formatDate.bind(this)
     }
 
     getTickers() {
@@ -25,6 +27,7 @@ class Tickers extends Component {
 
     render() {
         const {tickers} = this.state;
+
         return (
             <div>
                 <h3 className="text-center">Tickers</h3>
@@ -44,12 +47,12 @@ class Tickers extends Component {
                     <tbody>
                     {tickers.map((ticker, index) => (
                         <tr key={index}>
-                            <th scope="row">{ticker.id}</th>
+                            <th scope="row">{ticker.currencyName1}</th>
                             <td>{ticker.price}</td>
                             <td>{ticker.percentChange1h}%</td>
                             <td>{ticker.percentChange24h}%</td>
                             <td>{ticker.percentChange7d}%</td>
-                            <td>{ticker.lastUpdated}</td>
+                            <td>{formatDate(ticker.lastUpdated)}</td>
                         </tr>
                     ))}
                     </tbody>

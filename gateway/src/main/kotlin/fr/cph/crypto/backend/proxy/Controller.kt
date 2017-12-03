@@ -1,10 +1,7 @@
 package fr.cph.crypto.backend.proxy
 
 import org.slf4j.LoggerFactory
-import org.springframework.http.HttpEntity
-import org.springframework.http.HttpHeaders
-import org.springframework.http.HttpMethod
-import org.springframework.http.ResponseEntity
+import org.springframework.http.*
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.client.RestTemplate
 import java.net.URI
@@ -27,7 +24,18 @@ class Controller(private val restTemplate: RestTemplate, private val restTemplat
         val uri = URI("http", null, server, port, request.requestURI, request.queryString, null)
         val headers = buildHeaders(authorization)
         val entity = HttpEntity(body, headers)
-        return restTemplate.exchange(uri, method, entity, String::class.java)
+        val result: ResponseEntity<String>? = restTemplate.exchange(uri, method, entity, String::class.java)
+        return if (result!!.statusCode == HttpStatus.UNAUTHORIZED && authorization == null) {
+            LOGGER.warn("Unauthorized code received, attempt to get new web token")
+            val headers2 = HttpHeaders()
+            currentToken = getNewToken()
+            headers.add("Authorization", "Bearer " + currentToken!!.access_token)
+            headers.add("Content-Type", "application/json")
+            val entity2 = HttpEntity(null, headers2)
+            return restTemplate.exchange(uri, method, entity2, String::class.java)
+        } else {
+            result
+        }
     }
 
     @RequestMapping(value = ["/oauth/**"], produces = ["application/json"])
