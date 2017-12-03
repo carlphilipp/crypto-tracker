@@ -11,7 +11,6 @@ class Header extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userId: null,
             isOpen: false
         };
         this.logout = this.logout.bind(this);
@@ -25,7 +24,6 @@ class Header extends Component {
     }
 
     onLogin(userId) {
-        //this.setState({userId: userId})
         console.log("login in nav");
         this.props.onLogin(userId);
     }
