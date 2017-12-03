@@ -37,26 +37,34 @@ class Login extends React.Component {
         });
     }
 
-    updateUserId(userId) {
+    onLogin(userId) {
+      console.log("login in login.js")
         this.props.onLogin(userId)
     }
 
     loginUser() {
         login(this.state.email, this.state.password)
             .then((token) => {
+                this.toggle()
                 storeToken(token);
                 let userId = getUserId();
                 console.log("Access token: " + userId);
-                this.updateUserId(userId);
+                // FIXME: Should not have to use a timer
+                this.later(300, userId).then(userId => {
+                    this.onLogin(userId)
+                });
             })
-            .then(this.toggle())
+    }
+
+    later(delay, value) {
+        return new Promise(resolve => setTimeout(resolve, delay, value));
     }
 
     render() {
         return (
             <div>
                 <Button color="secondary" size="lg" onClick={this.toggle}>{this.props.buttonLabel}</Button>
-                <Modal onClosed={this.props.handler} isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>Login</ModalHeader>
                     <ModalBody>
                         <Form>

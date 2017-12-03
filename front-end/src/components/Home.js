@@ -23,6 +23,7 @@ class Home extends Component {
     }
 
     onLogin(userId) {
+        console.log("on login " + userId);
         this.setState({userId: userId})
     }
 
