@@ -37,9 +37,9 @@ class Login extends React.Component {
         });
     }
 
-    onLogin(userId) {
+    onLogin() {
       console.log("login in login.js")
-        this.props.onLogin(userId)
+        this.props.onLogin()
     }
 
     loginUser() {
@@ -50,14 +50,12 @@ class Login extends React.Component {
                 let userId = getUserId();
                 console.log("Access token: " + userId);
                 // FIXME: Should not have to use a timer
-                this.later(300, userId).then(userId => {
-                    this.onLogin(userId)
-                });
+                this.delay(300).then(() => {this.onLogin()});
             })
     }
 
-    later(delay, value) {
-        return new Promise(resolve => setTimeout(resolve, delay, value));
+    delay(time) {
+        return new Promise(resolve => setTimeout(resolve, time));
     }
 
     render() {

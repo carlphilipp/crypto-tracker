@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {getOneUser} from '../utils/api';
+import {getUserId} from '../utils/AuthService';
 import {Table} from 'reactstrap';
 
 class User extends Component {
@@ -16,7 +17,7 @@ class User extends Component {
     }
 
     componentDidMount() {
-        this.getUser(this.props.userId);
+        this.getUser(getUserId());
     }
 
     render() {

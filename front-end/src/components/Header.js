@@ -25,7 +25,7 @@ class Header extends Component {
 
     onLogin(userId) {
         console.log("login in nav");
-        this.props.onLogin(userId);
+        this.setState({})
     }
 
     onRegister(status) {
