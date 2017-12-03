@@ -2,3 +2,17 @@ body {
     font-family: sans-serif;
     font-size: 14px;
 }
+
+.btn-lg {
+    font-size: 1.4rem;
+    padding: 0.6rem 1.6rem;
+}
+
+.navbar-brand {
+    padding-top: 1.4rem;
+    font-size: 2rem;
+}
+
+.navbar-menu {
+    padding-top: 0.5em;
+}

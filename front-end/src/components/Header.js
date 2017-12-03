@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 import {isLoggedIn, logout} from '../utils/AuthService';
 import Login from './Login'
 import SignUp from './SignUp'
-import { Button, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import { Button, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem } from 'reactstrap';
 import '../App.css';
 
 class Header extends Component {
@@ -54,15 +54,15 @@ class Header extends Component {
         return (
             <div>
                 <Navbar color="faded" light expand="md">
-                    <NavbarBrand href="#" onClick={this.home.bind(this)} className="mx-auto">crypto tracker</NavbarBrand>
+                    <NavbarBrand href="#" onClick={this.home.bind(this)}>crypto tracker</NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
-                            <NavItem>
+                            <NavItem className="navbar-menu">
                               {(isLoggedIn()) ? <Link to="#" onClick={this.home.bind(this)}>Tickers</Link>: ''}
                             </NavItem>
                             &nbsp;&nbsp;&nbsp;
-                            <NavItem>
+                            <NavItem className="navbar-menu">
                               {(isLoggedIn()) ? <Link to="#" onClick={this.user.bind(this)}>Account</Link> : ''}
                             </NavItem>
                             <NavItem>
