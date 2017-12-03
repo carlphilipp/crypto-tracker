@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Nav from './Nav';
+import Header from './Header';
 import Tickers from './Tickers';
 import User from './User';
 import SignUpSuccess from './SignUpSuccess'
@@ -33,7 +33,7 @@ class Home extends Component {
         const {page} = this.state;
         return (
             <div>
-                <Nav onUpdate={this.onUpdate.bind(this)} onRegister={this.onRegister.bind(this)}/>
+                <Header onUpdate={this.onUpdate.bind(this)} onRegister={this.onRegister.bind(this)}/>
                 {(this.state.registerSuccess) ? <SignUpSuccess/> : ''}
                 {(this.state.registerFailure) ? <SignUpFailure/> : ''}
                 {
