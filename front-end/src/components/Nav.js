@@ -22,23 +22,31 @@ class Nav extends Component {
         });
     }
 
+    home() {
+      this.props.onUpdate('home')
+    }
+
+    user() {
+      this.props.onUpdate('user')
+    }
+
     logout() {
         logout();
-        this.setState({});
+        this.home()
     }
 
     render() {
         return (
             <nav className="navbar navbar-default">
                 <div className="navbar-header">
-                    <Link className="navbar-brand" to="/">Home</Link>
+                    <Link className="navbar-brand" to="#" onClick={this.home.bind(this)}>Home</Link>
                 </div>
                 <ul className="nav navbar-nav">
                     <li>
-                        <Link to="/">Tickers</Link>
+                        <Link to="#" onClick={this.home.bind(this)}>Tickers</Link>
                     </li>
                     <li>
-                        {(isLoggedIn()) ? <Link to="/account">Account</Link> : ''}
+                        {(isLoggedIn()) ? <Link to="#" onClick={this.user.bind(this)}>Account</Link> : ''}
                     </li>
                 </ul>
                 <ul className="nav navbar-nav navbar-right">

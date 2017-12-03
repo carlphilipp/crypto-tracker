@@ -22,11 +22,14 @@ class Tickers extends Component {
         this.getTickers();
     }
 
+    update () {
+      this.props.onUpdate('user')
+    }
+
     render() {
         const {tickers} = this.state;
         return (
             <div>
-                <Nav/>
                 <h3 className="text-center">Tickers</h3>
                 <hr/>
 
@@ -54,16 +57,6 @@ class Tickers extends Component {
                     ))}
                     </tbody>
                 </Table>
-
-                <div className="col-sm-12">
-                    {isLoggedIn() ?
-                        <div className="jumbotron text-center">
-                            <h2>View your account</h2>
-                            <Link className="btn btn-lg btn-success" to='/account'>Account</Link>
-                        </div> :
-                        <div className="jumbotron text-center"><h2>Get Access to your account by logging in</h2></div>
-                    }
-                </div>
                 {/*<Footer />*/}
             </div>
         );

@@ -46,16 +46,15 @@ class Login extends React.Component {
         login(this.state.email, this.state.password)
             .then((token) => {
                 storeToken(token);
-                let userId = getUserId()
+                let userId = getUserId();
                 console.log("Access token: " + userId);
-                this.updateUserId(userId)
+                this.updateUserId(userId);
 
                 this.toggle();
             })
     }
 
     render() {
-        var handleToUpdate = this.props.handleToUpdate;
         return (
             <div>
                 <Button color="primary" onClick={this.toggle}>{this.props.buttonLabel}</Button>

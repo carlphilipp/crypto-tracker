@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Nav from './Nav';
 import {getOneUser} from '../utils/api';
 import {Table} from 'reactstrap';
 
@@ -24,7 +23,6 @@ class User extends Component {
         const {user} = this.state;
         return (
             <div>
-                <Nav/>
                 <h3 className="text-center">{user.id} {user.email}</h3>
                 <hr/>
                 <Table hover>
