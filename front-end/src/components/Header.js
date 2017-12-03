@@ -73,7 +73,7 @@ class Header extends Component {
                                   {(!isLoggedIn()) ? <SignUp buttonLabel="Sign Up" onRegister={this.onRegister.bind(this)}/> : ''}
                             </NavItem>
                             <NavItem>
-                                  {(isLoggedIn()) ? <Button className="danger" onClick={this.logout}>Log out</Button> : ''}
+                                  {(isLoggedIn()) ? <Button size="lg" className="danger" onClick={this.logout}>Log out</Button> : ''}
                             </NavItem>
                         </Nav>
                     </Collapse>

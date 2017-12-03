@@ -53,7 +53,7 @@ class SignUp extends React.Component {
     render() {
         return (
             <div>
-                <Button color="primary" onClick={this.toggle}>{this.props.buttonLabel}</Button>
+                <Button color="primary" size="lg" onClick={this.toggle}>{this.props.buttonLabel}</Button>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>Login</ModalHeader>
                     <ModalBody>
@@ -73,8 +73,8 @@ class SignUp extends React.Component {
                         </Form>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={this.create}>Sign Up!</Button>{' '}
-                        <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                        <Button color="primary" size="lg" onClick={this.create}>Sign Up!</Button>{' '}
+                        <Button color="secondary" size="lg" onClick={this.toggle}>Cancel</Button>
                     </ModalFooter>
                 </Modal>
             </div>
