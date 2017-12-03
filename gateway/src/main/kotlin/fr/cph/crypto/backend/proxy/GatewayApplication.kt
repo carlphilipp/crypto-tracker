@@ -15,7 +15,11 @@ class GatewayApplication {
 
     @Qualifier(value = "restTemplate")
     @Bean
-    fun restTemplate() = RestTemplate()
+    fun restTemplate(): RestTemplate {
+        val restTemplate = RestTemplate()
+        restTemplate.errorHandler = GatewayResponseErrorHandler()
+        return restTemplate
+    }
 
     @Qualifier(value = "restTemplateAuth")
     @Bean

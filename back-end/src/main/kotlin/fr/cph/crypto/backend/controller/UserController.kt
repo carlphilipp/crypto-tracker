@@ -15,7 +15,7 @@ import java.security.Principal
 class UserController @Autowired
 constructor(private val userService: UserService) {
 
-    //@PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(method = [RequestMethod.GET])
     fun getAllUsers(): List<User> {
         return userService.findAll()
