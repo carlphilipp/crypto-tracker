@@ -11,14 +11,23 @@ class Home extends Component {
         super();
         this.state = {
             page: 'home',
+            userId: null,
             registerSuccess: false,
-            registerFailure: false
+            registerFailure: false,
         };
     }
 
     onUpdate(page) {
         console.log("on update " + page);
         this.setState({page: page})
+    }
+
+    onLogin(userId) {
+        this.setState({userId: userId})
+    }
+
+    onLogout() {
+      this.setState({userId: null})
     }
 
     onRegister(status) {
@@ -33,13 +42,13 @@ class Home extends Component {
         const {page} = this.state;
         return (
             <div>
-                <Header onUpdate={this.onUpdate.bind(this)} onRegister={this.onRegister.bind(this)}/>
+                <Header onUpdate={this.onUpdate.bind(this)} onRegister={this.onRegister.bind(this)} onLogin={this.onLogin.bind(this)} onLogout={this.onLogout.bind(this)}/>
                 {(this.state.registerSuccess) ? <SignUpSuccess/> : ''}
                 {(this.state.registerFailure) ? <SignUpFailure/> : ''}
                 {
                     (page === 'home')
                         ? <Tickers/>
-                        : <User/>
+                        : <User userId={this.state.userId}/>
                 }
                 {/* TODO add Footer*/}
             </div>

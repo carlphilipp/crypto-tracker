@@ -4,19 +4,19 @@ import {Table} from 'reactstrap';
 
 class User extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {user: []};
     }
 
     getUser(userId) {
-        getOneUser().then((user) => {
+        getOneUser(userId).then((user) => {
             this.setState({user});
         });
     }
 
     componentDidMount() {
-        this.getUser();
+        this.getUser(this.props.userId);
     }
 
     render() {

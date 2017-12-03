@@ -4,6 +4,7 @@ import {login} from '../utils/api';
 import {getUserId, storeToken} from '../utils/AuthService';
 
 class Login extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -36,10 +37,8 @@ class Login extends React.Component {
         });
     }
 
-    updateUserId(id) {
-        this.setState({
-            userId: id
-        });
+    updateUserId(userId) {
+        this.props.onLogin(userId)
     }
 
     loginUser() {
@@ -49,9 +48,8 @@ class Login extends React.Component {
                 let userId = getUserId();
                 console.log("Access token: " + userId);
                 this.updateUserId(userId);
-
-                this.toggle();
             })
+            .then(this.toggle())
     }
 
     render() {

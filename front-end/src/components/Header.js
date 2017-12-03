@@ -14,7 +14,6 @@ class Header extends Component {
             userId: null,
             isOpen: false
         };
-        this.handler = this.handler.bind(this);
         this.logout = this.logout.bind(this);
         this.toggle = this.toggle.bind(this);
     }
@@ -25,11 +24,9 @@ class Header extends Component {
       });
     }
 
-    handler(userId) {
-        console.log("Handle with user id " + userId);
-        this.setState({
-            userId: userId
-        });
+    onLogin(userId) {
+        this.setState({userId: userId})
+        this.props.onLogin(userId);
     }
 
     onRegister(status) {
@@ -48,6 +45,7 @@ class Header extends Component {
     logout() {
         logout();
         this.home();
+        this.props.onLogout();
     }
 
     render() {
@@ -66,7 +64,7 @@ class Header extends Component {
                               {(isLoggedIn()) ? <Link to="#" onClick={this.user.bind(this)}>Account</Link> : ''}
                             </NavItem>
                             <NavItem>
-                                {(!isLoggedIn()) ? <Login handler={this.handler} buttonLabel="Login"/> : ''}
+                                {(!isLoggedIn()) ? <Login onLogin={this.onLogin.bind(this)} buttonLabel="Login"/> : ''}
                             </NavItem>
                             &nbsp;&nbsp;&nbsp;
                             <NavItem>
