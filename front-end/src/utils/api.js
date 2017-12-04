@@ -1,7 +1,5 @@
 import axios from 'axios';
-
 const BASE_URL = 'http://localhost:8180';
-
 export {getAllTickers, getOneUser, createUser, login};
 
 function getAllTickers() {
@@ -9,10 +7,10 @@ function getAllTickers() {
     return axios.get(url).then(response => response.data);
 }
 
-function getOneUser(userId) {
-    console.log("Get One User with User Id: " + userId);
+function getOneUser(accessToken, userId) {
     const url = `${BASE_URL}/api/user/` + userId;
-    return axios.get(url).then(response => response.data);
+    const config = {headers: {'Authorization': 'Bearer ' + accessToken}};
+    return axios.get(url, config).then(response => response.data);
 }
 
 function createUser(email, password) {

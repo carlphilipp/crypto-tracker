@@ -53,18 +53,13 @@ class Controller(private val restTemplate: RestTemplate, private val restTemplat
         if (authorization != null) {
             headers.add("Authorization", authorization)
         } else {
-            if (currentToken == null || tokenNotValid()) {
+            if (currentToken == null) {
                 currentToken = getNewToken()
             }
             headers.add("Authorization", "Bearer " + currentToken!!.access_token)
         }
         headers.add("Content-Type", "application/json")
         return headers
-    }
-
-    private fun tokenNotValid(): Boolean {
-        // TODO Implement
-        return false
     }
 
     private fun getNewToken(): Token {

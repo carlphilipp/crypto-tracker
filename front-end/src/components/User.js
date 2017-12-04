@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {getOneUser} from '../utils/api';
-import {getUserId} from '../utils/AuthService';
+import {getUserId, getAccessToken} from '../utils/AuthService';
 import {Table} from 'reactstrap';
-import {FormattedNumber}  from 'react-intl'
+import {FormattedNumber, FormattedTime}  from 'react-intl'
 import {IntlProvider} from 'react-intl';
 
 class User extends Component {
@@ -12,14 +12,14 @@ class User extends Component {
         this.state = {user: []};
     }
 
-    getUser(userId) {
-        getOneUser(userId).then((user) => {
+    getUser(accessToken, userId) {
+        getOneUser(accessToken, userId).then((user) => {
             this.setState({user});
         });
     }
 
     componentDidMount() {
-        this.getUser(getUserId());
+        this.getUser(getAccessToken(), getUserId());
     }
 
     render() {
@@ -35,6 +35,7 @@ class User extends Component {
                   <th>Original Value</th>
                   <th>Gain</th>
                   <th>Gain Percentage</th>
+                  <th>Last Updated</th>
               </tr>
               </thead>
               <tbody>{
@@ -46,6 +47,7 @@ class User extends Component {
                             <td><FormattedNumber value={position.originalValue} style="currency" currency="USD"/></td>
                             <td><FormattedNumber value={position.gain} style="currency" currency="USD"/></td>
                             <td><FormattedNumber value={position.gainPercentage} style="percent"/></td>
+                            <td><FormattedTime value={new Date(position.lastUpdated * 1000)} format="hhmm" /></td>
                         </tr>))
               }</tbody>
           </Table>;
@@ -53,7 +55,7 @@ class User extends Component {
         return (
             <IntlProvider locale="en">
               <div>
-                  <h3 className="text-center">{user.id} {user.email}</h3>
+                  <h3 className="text-center">{user.email}</h3>
                   <hr/>
                   {table}
               </div>

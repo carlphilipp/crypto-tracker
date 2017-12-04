@@ -50,7 +50,7 @@ constructor(private val positionRepository: PositionRepository,
             val originalValue = position.quantity * position.unitCostPrice
             val value = position.quantity * ticker.price
             val gain = value - originalValue
-            val gainPercentage = value * 100 / originalValue - 100
+            val gainPercentage = (value * 100 / originalValue - 100) / 100
             position.originalValue = originalValue
             position.value = value
             position.gain = gain

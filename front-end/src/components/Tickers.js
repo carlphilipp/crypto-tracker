@@ -41,7 +41,7 @@ class Tickers extends Component {
                         <th>1h</th>
                         <th>24h</th>
                         <th>7d</th>
-                        <th>updated</th>
+                        <th>Last updated</th>
                     </tr>
                     </thead>
                     <tbody>

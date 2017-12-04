@@ -15,6 +15,10 @@ export function getUserId() {
     return jwtDecode(accessToken).id;
 }
 
+export function getAccessToken() {
+    return JSON.parse(localStorage.getItem(TOKEN)).access_token;
+}
+
 export function storeToken(token) {
     localStorage.setItem(TOKEN, JSON.stringify(token))
 }
