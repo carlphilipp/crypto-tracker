@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory
 import org.springframework.http.client.support.BasicAuthorizationInterceptor
 import org.springframework.web.client.RestTemplate
 
@@ -16,7 +17,7 @@ class GatewayApplication {
     @Qualifier(value = "restTemplate")
     @Bean
     fun restTemplate(): RestTemplate {
-        val restTemplate = RestTemplate()
+        val restTemplate = RestTemplate(HttpComponentsClientHttpRequestFactory())
         restTemplate.errorHandler = GatewayResponseErrorHandler()
         return restTemplate
     }
@@ -24,7 +25,8 @@ class GatewayApplication {
     @Qualifier(value = "restTemplateAuth")
     @Bean
     fun restTemplateAuth(): RestTemplate {
-        val restTemplate = RestTemplate()
+        val restTemplate = RestTemplate(HttpComponentsClientHttpRequestFactory())
+        restTemplate.errorHandler = GatewayResponseErrorHandler()
         restTemplate.interceptors.add(BasicAuthorizationInterceptor("testjwtclientid", "XY7kmzoNzl100"))
         return restTemplate
     }

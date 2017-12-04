@@ -80,8 +80,9 @@ class User extends Component {
                             <CardTitle>Portfolio</CardTitle>
                             <CardSubtitle></CardSubtitle>
                             <CardText>
-                            Total value: <FormattedNumber value={user.value} style="currency" currency="USD"/><br/>
-                            Performance: <FormattedNumber value={user.gain} style="currency" currency="USD"/> (<FormattedNumber value={user.gainPercentage} style="percent"/>)
+                            Total value: {(user.value != null)? <FormattedNumber value={user.value} style="currency" currency="USD"/> : ''}<br/>
+                            Performance: {(user.gain != null)? <FormattedNumber value={user.gain} style="currency" currency="USD"/>  : ''} {' '}
+                            ({(user.gainPercentage != null)? <FormattedNumber value={user.gainPercentage} style="percent"/> : ''})
                             </CardText>
                           </CardBody>
                         </Card>

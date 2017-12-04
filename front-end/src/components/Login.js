@@ -3,6 +3,7 @@ import {Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, Mo
 import {login} from '../utils/ApiClient';
 import {getUserId, storeToken} from '../service/AuthService';
 import {delay} from '../utils/Utils';
+import LoginFailure from './LoginFailure';
 
 class Login extends React.Component {
 
@@ -12,7 +13,6 @@ class Login extends React.Component {
             modal: false,
             email: null,
             password: null,
-            success: false,
             failure: false,
             refresh: false,
         };
@@ -26,15 +26,17 @@ class Login extends React.Component {
         });
     }
 
-    updateEmail(evt) {
+    updateFormEmail(evt) {
         this.setState({
-            email: evt.target.value
+            email: evt.target.value,
+            failure: false
         });
     }
 
-    updatePassword(evt) {
+    updateFormPassword(evt) {
         this.setState({
-            password: evt.target.value
+            password: evt.target.value,
+            failure: false
         });
     }
 
@@ -48,10 +50,12 @@ class Login extends React.Component {
             .then((token) => {
                 this.toggle()
                 storeToken(token);
-                let userId = getUserId();
-                console.log("Access token: " + userId);
                 // FIXME: Should not have to use a timer
                 delay(300).then(() => {this.onLogin()});
+            })
+            .catch((error) => {
+              console.log("Error: " + error)
+              this.setState({failure:true})
             })
     }
 
@@ -65,14 +69,15 @@ class Login extends React.Component {
                         <Form>
                             <FormGroup>
                                 <Label for="exampleEmail">Email</Label>
-                                <Input type="email" name="email" id="exampleEmail" onChange={evt => this.updateEmail(evt)} placeholder="your email"/>
+                                <Input type="email" name="email" id="exampleEmail" onChange={evt => this.updateFormEmail(evt)} placeholder="your email"/>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="examplePassword">Password</Label>
-                                <Input type="password" name="password" onChange={evt => this.updatePassword(evt)} id="examplePassword" placeholder="your password"/>
+                                <Input type="password" name="password" onChange={evt => this.updateFormPassword(evt)} id="examplePassword" placeholder="your password"/>
                             </FormGroup>
                         </Form>
                     </ModalBody>
+                    {(this.state.failure) ? <LoginFailure /> : ''}
                     <ModalFooter>
                         <Button color="success" size="lg" onClick={this.loginUser}>Login</Button>{' '}
                         <Button color="secondary" size="lg" onClick={this.toggle}>Cancel</Button>
