@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {getOneUser, refreshTickers} from '../utils/api';
 import {getUserId, getAccessToken} from '../utils/AuthService';
-import {Table, Button, Badge, Fade} from 'reactstrap';
+import {Table, Badge, Fade, Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button, Row, Col} from 'reactstrap';
 import {FormattedNumber, FormattedTime, IntlProvider}  from 'react-intl'
 import RefreshSuccess from './RefreshSuccess';
 import {delay} from '../utils/utils';
@@ -71,6 +71,23 @@ class User extends Component {
                   <h3 className="text-center">{user.email}</h3>
                   <Button size="lg" color="info" onClick={this.refreshTickers.bind(this)}>Refresh</Button>
                   <RefreshSuccess fadeIn={this.state.refreshFadeIn}/>
+                  <hr/>
+                  <div>
+                    <Row>
+                      <Col sm="6">
+                        <Card>
+                          <CardBody>
+                            <CardTitle>Portfolio</CardTitle>
+                            <CardSubtitle></CardSubtitle>
+                            <CardText>
+                            Total value: <FormattedNumber value={user.value} style="currency" currency="USD"/><br/>
+                            Performance: <FormattedNumber value={user.gain} style="currency" currency="USD"/> (<FormattedNumber value={user.gainPercentage} style="percent"/>)
+                            </CardText>
+                          </CardBody>
+                        </Card>
+                      </Col>
+                    </Row>
+                  </div>
                   <hr/>
                   {table}
               </div>
