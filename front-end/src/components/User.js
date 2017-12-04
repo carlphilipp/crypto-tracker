@@ -4,6 +4,7 @@ import {getUserId, getAccessToken} from '../service/AuthService';
 import {Table, Card, CardText, CardBody, CardTitle, CardSubtitle, Button, Row, Col} from 'reactstrap';
 import {FormattedNumber, FormattedTime, IntlProvider}  from 'react-intl'
 import RefreshSuccess from './RefreshSuccess';
+import AddPosition from './AddPosition';
 import {delay} from '../utils/Utils';
 
 class User extends Component {
@@ -14,6 +15,10 @@ class User extends Component {
           user: [],
           refreshFadeIn: false
         };
+    }
+
+    updateUserInState(user) {
+        this.setState({user: user});
     }
 
     getUser(accessToken, userId) {
@@ -69,6 +74,7 @@ class User extends Component {
             <IntlProvider locale="en">
               <div>
                   <h3 className="text-center">{user.email}</h3>
+                  <AddPosition buttonLabel="Add" user={user} updateUserInState={this.updateUserInState.bind(this)}/>{' '}
                   <Button size="lg" color="info" onClick={this.refreshTickers.bind(this)}>Refresh</Button>
                   <RefreshSuccess fadeIn={this.state.refreshFadeIn}/>
                   <hr/>

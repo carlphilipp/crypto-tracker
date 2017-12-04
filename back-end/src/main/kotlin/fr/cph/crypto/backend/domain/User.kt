@@ -29,5 +29,5 @@ data class User(@Indexed(unique = true) val email: String,
     var gainPercentage: Double? = null
 
     @DBRef
-    var positions: List<Position> = listOf()
+    var positions: MutableList<Position> = mutableListOf()
 }

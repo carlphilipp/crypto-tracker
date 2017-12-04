@@ -69,6 +69,14 @@ constructor(private val positionRepository: PositionRepository,
         return user
     }
 
+    override fun addPosition(id: String, position: Position): User {
+        val user = userRepository.findOne(id)
+        positionRepository.save(position)
+        user.positions.add(position)
+        userRepository.save(user)
+        return enrich(user)
+    }
+
     override fun updatePosition(position: Position): Position {
         tickerService.updateAll()
         return refreshPosition(position)

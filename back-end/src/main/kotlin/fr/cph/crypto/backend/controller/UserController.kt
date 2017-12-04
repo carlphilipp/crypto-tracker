@@ -36,8 +36,14 @@ constructor(private val userService: UserService) {
     }
 
     @PreAuthorize("#id == authentication.details.decodedDetails['id']")
+    @RequestMapping(value = ["/{id}/position"], method = [RequestMethod.POST], produces = ["application/json"])
+    fun addPosition(@PathVariable("id") id: String, @RequestBody position: Position): User {
+        return userService.addPosition(id, position)
+    }
+
+    @PreAuthorize("#id == authentication.details.decodedDetails['id']")
     @RequestMapping(value = ["/{id}/position/{positionId}"], method = [RequestMethod.PUT], produces = ["application/json"])
-    fun updatePosition(@PathVariable("id") id: String, @RequestBody position: Position, auth: Authentication, principal: Principal): Position {
+    fun updatePosition(@PathVariable("id") id: String, @RequestBody position: Position): Position {
         // TODO verify that the position is own by that user
         return userService.updatePosition(position)
     }

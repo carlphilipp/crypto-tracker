@@ -8,7 +8,6 @@ class Tickers extends Component {
     constructor() {
         super();
         this.state = {tickers: []};
-        //this.format = this.formatDate.bind(this)
     }
 
     getTickers() {
