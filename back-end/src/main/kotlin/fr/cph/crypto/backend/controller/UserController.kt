@@ -35,12 +35,6 @@ constructor(private val userService: UserService) {
     }
 
     @PreAuthorize("#id == authentication.details.decodedDetails['id']")
-    @RequestMapping(value = ["/{id}/position/refresh"], method = [RequestMethod.GET])
-    fun refreshUser(@PathVariable("id") id: String): List<Position> {
-        return userService.refreshUserPositions(id)
-    }
-
-    @PreAuthorize("#id == authentication.details.decodedDetails['id']")
     @RequestMapping(value = ["/{id}/position/{positionId}"], method = [RequestMethod.PUT])
     fun updatePosition(@PathVariable("id") id: String, @RequestBody position: Position, auth: Authentication, principal: Principal): Position {
         // TODO verify that the position is own by that user

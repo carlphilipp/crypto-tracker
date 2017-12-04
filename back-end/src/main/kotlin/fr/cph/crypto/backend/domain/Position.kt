@@ -12,30 +12,26 @@ data class Position private constructor(
         val currency1: Currency,
         val currency2: Currency,
         val quantity: Double,
-        val unitCostPrice: Double,
-        val lastUpdated: Long) {
+        val unitCostPrice: Double) {
 
     @Id
     var id: String? = null
 
     // Calculated fields
+    @Transient
     var originalValue: Double? = null
+    @Transient
     var value: Double? = null
+    @Transient
     var gain: Double? = null
+    @Transient
     var gainPercentage: Double? = null
+    @Transient
+    var lastUpdated: Long? = null
 
     companion object {
         fun buildPosition(ticker: Ticker, quantity: Double, unitCostPrice: Double): Position {
-            val originalValue = quantity * unitCostPrice
-            val value = quantity * ticker.price
-            val gain = value - originalValue
-            val gainPercentage = value * 100 / originalValue - 100
-            val position = Position(ticker.currency1, ticker.currency2, quantity, unitCostPrice, ticker.lastUpdated)
-            position.originalValue = originalValue
-            position.value = value
-            position.gain = gain
-            position.gainPercentage = gainPercentage
-            return position
+            return Position(ticker.currency1, ticker.currency2, quantity, unitCostPrice)
         }
     }
 }

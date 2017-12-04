@@ -33,18 +33,31 @@ constructor(private val positionRepository: PositionRepository,
     }
 
     override fun findOne(id: String): User {
-        return userRepository.findOne(id)
+        return enrich(userRepository.findOne(id))
     }
 
     override fun findAll(): List<User> {
-        return userRepository.findAll().toList()
+        return userRepository
+                .findAll()
+                .map { user -> enrich(user) }
+                .toList()
     }
 
-    override fun refreshUserPositions(id: String): List<Position> {
-        val user = userRepository.findOne(id)
-        tickerService.updateAll()
-        user.positions.forEach { position -> refreshPosition(position) }
-        return userRepository.findOne(id).positions
+    private fun enrich(user: User): User {
+        // TODO optimize that code to do only one request into DB
+        for (position in user.positions) {
+            val ticker = tickerService.findOne(position.currency1.code + "-" + position.currency2.code)
+            val originalValue = position.quantity * position.unitCostPrice
+            val value = position.quantity * ticker.price
+            val gain = value - originalValue
+            val gainPercentage = value * 100 / originalValue - 100
+            position.originalValue = originalValue
+            position.value = value
+            position.gain = gain
+            position.gainPercentage = gainPercentage
+            position.lastUpdated = ticker.lastUpdated
+        }
+        return user
     }
 
     override fun updatePosition(position: Position): Position {
