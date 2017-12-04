@@ -1,6 +1,6 @@
 import axios from 'axios';
 const BASE_URL = 'http://localhost:8180';
-export {getAllTickers, getOneUser, createUser, login};
+export {getAllTickers, getOneUser, createUser, login, refreshTickers};
 
 function getAllTickers() {
     const url = `${BASE_URL}/api/ticker`;
@@ -20,6 +20,11 @@ function createUser(email, password) {
         password: password,
     })
         .then(response => response.data);
+}
+
+function refreshTickers() {
+    const url = `${BASE_URL}/api/refresh`;
+    return axios.get(url);
 }
 
 function login(email, password) {

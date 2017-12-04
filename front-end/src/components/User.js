@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import {getOneUser} from '../utils/api';
+import {getOneUser, refreshTickers} from '../utils/api';
 import {getUserId, getAccessToken} from '../utils/AuthService';
-import {Table} from 'reactstrap';
-import {FormattedNumber, FormattedTime}  from 'react-intl'
-import {IntlProvider} from 'react-intl';
+import {Table, Button} from 'reactstrap';
+import {FormattedNumber, FormattedTime, IntlProvider}  from 'react-intl'
 
 class User extends Component {
 
@@ -20,6 +19,11 @@ class User extends Component {
 
     componentDidMount() {
         this.getUser(getAccessToken(), getUserId());
+    }
+
+    refreshTickers() {
+      refreshTickers()
+        .then(() => this.getUser(getAccessToken(), getUserId()))
     }
 
     render() {
@@ -47,7 +51,7 @@ class User extends Component {
                             <td><FormattedNumber value={position.originalValue} style="currency" currency="USD"/></td>
                             <td><FormattedNumber value={position.gain} style="currency" currency="USD"/></td>
                             <td><FormattedNumber value={position.gainPercentage} style="percent"/></td>
-                            <td><FormattedTime value={new Date(position.lastUpdated * 1000)} format="hhmm" /></td>
+                            <td><FormattedTime value={new Date(position.lastUpdated * 1000)}/></td>
                         </tr>))
               }</tbody>
           </Table>;
@@ -56,6 +60,7 @@ class User extends Component {
             <IntlProvider locale="en">
               <div>
                   <h3 className="text-center">{user.email}</h3>
+                  <Button size="lg" className="success" onClick={this.refreshTickers.bind(this)}>Refresh</Button>
                   <hr/>
                   {table}
               </div>
