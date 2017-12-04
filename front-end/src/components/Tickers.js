@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Table} from 'reactstrap';
-import {getAllTickers} from '../utils/api';
+import {getAllTickers} from '../utils/ApiClient';
 import {formatDate} from '../utils/DateUtils';
 
 class Tickers extends Component {

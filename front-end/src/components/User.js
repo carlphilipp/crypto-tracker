@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {getOneUser, refreshTickers} from '../utils/api';
-import {getUserId, getAccessToken} from '../utils/AuthService';
-import {Table, Badge, Fade, Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button, Row, Col} from 'reactstrap';
+import {getOneUser, refreshTickers} from '../utils/ApiClient';
+import {getUserId, getAccessToken} from '../service/AuthService';
+import {Table, Card, CardText, CardBody, CardTitle, CardSubtitle, Button, Row, Col} from 'reactstrap';
 import {FormattedNumber, FormattedTime, IntlProvider}  from 'react-intl'
 import RefreshSuccess from './RefreshSuccess';
-import {delay} from '../utils/utils';
+import {delay} from '../utils/Utils';
 
 class User extends Component {
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
-import {createUser} from '../utils/api';
+import {createUser} from '../utils/ApiClient';
 
 class SignUp extends React.Component {
     constructor(props) {

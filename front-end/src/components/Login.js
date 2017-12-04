@@ -1,8 +1,8 @@
 import React from 'react';
 import {Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
-import {login} from '../utils/api';
-import {getUserId, storeToken} from '../utils/AuthService';
-import {delay} from '../utils/utils';
+import {login} from '../utils/ApiClient';
+import {getUserId, storeToken} from '../service/AuthService';
+import {delay} from '../utils/Utils';
 
 class Login extends React.Component {
 

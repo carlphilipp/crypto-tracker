@@ -4,7 +4,7 @@ import Tickers from './Tickers';
 import User from './User';
 import SignUpSuccess from './SignUpSuccess'
 import SignUpFailure from './SignUpFailure'
-import {getCurrentPage, saveCurrentPage} from '../utils/AuthService';
+import {getCurrentPage, saveCurrentPage} from '../service/PageService';
 
 class Home extends Component {
 

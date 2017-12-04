@@ -1,12 +1,7 @@
 import React, {Component} from 'react';
-import { Button, Fade, Badge } from 'reactstrap';
+import { Fade, Badge } from 'reactstrap';
 
-class RefreshSuccess extends React.Component {
-
-  constructor(props) {
-      super(props);
-  }
-
+class RefreshSuccess extends Component {
   render() {
       return (
         <Fade in={this.props.fadeIn} tag="h4" className="mt-3">

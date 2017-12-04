@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
-import {isLoggedIn, logout} from '../utils/AuthService';
+import {isLoggedIn, logout} from '../service/AuthService';
+import {removePage} from '../service/PageService';
 import Login from './Login'
 import SignUp from './SignUp'
 import { Button, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem } from 'reactstrap';
@@ -39,6 +40,7 @@ class Header extends Component {
 
     logout() {
         logout();
+        removePage();
         this.home();
         this.props.onLogout();
     }
@@ -66,7 +68,7 @@ class Header extends Component {
                                   {(!isLoggedIn()) ? <SignUp buttonLabel="Sign Up" onRegister={this.onRegister.bind(this)}/> : ''}
                             </NavItem>
                             <NavItem>
-                                  {(isLoggedIn()) ? <Button size="lg" className="danger" onClick={this.logout}>Log out</Button> : ''}
+                                  {(isLoggedIn()) ? <Button size="lg" color="success" onClick={this.logout}>Log out</Button> : ''}
                             </NavItem>
                         </Nav>
                     </Collapse>
