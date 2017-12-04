@@ -2,6 +2,7 @@ import React from 'react';
 import {Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 import {login} from '../utils/api';
 import {getUserId, storeToken} from '../utils/AuthService';
+import {delay} from '../utils/utils';
 
 class Login extends React.Component {
 
@@ -50,18 +51,14 @@ class Login extends React.Component {
                 let userId = getUserId();
                 console.log("Access token: " + userId);
                 // FIXME: Should not have to use a timer
-                this.delay(300).then(() => {this.onLogin()});
+                delay(300).then(() => {this.onLogin()});
             })
-    }
-
-    delay(time) {
-        return new Promise(resolve => setTimeout(resolve, time));
     }
 
     render() {
         return (
             <div>
-                <Button color="secondary" size="lg" onClick={this.toggle}>{this.props.buttonLabel}</Button>
+                <Button color="success" size="lg" onClick={this.toggle}>{this.props.buttonLabel}</Button>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>Login</ModalHeader>
                     <ModalBody>
@@ -77,7 +74,7 @@ class Login extends React.Component {
                         </Form>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" size="lg" onClick={this.loginUser}>Login</Button>{' '}
+                        <Button color="success" size="lg" onClick={this.loginUser}>Login</Button>{' '}
                         <Button color="secondary" size="lg" onClick={this.toggle}>Cancel</Button>
                     </ModalFooter>
                 </Modal>

@@ -1,19 +1,24 @@
 import React, {Component} from 'react';
 import {getOneUser, refreshTickers} from '../utils/api';
 import {getUserId, getAccessToken} from '../utils/AuthService';
-import {Table, Button} from 'reactstrap';
+import {Table, Button, Badge, Fade} from 'reactstrap';
 import {FormattedNumber, FormattedTime, IntlProvider}  from 'react-intl'
+import RefreshSuccess from './RefreshSuccess';
+import {delay} from '../utils/utils';
 
 class User extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {user: []};
+        this.state = {
+          user: [],
+          refreshFadeIn: false
+        };
     }
 
     getUser(accessToken, userId) {
         getOneUser(accessToken, userId).then((user) => {
-            this.setState({user});
+            this.setState({user: user});
         });
     }
 
@@ -24,6 +29,10 @@ class User extends Component {
     refreshTickers() {
       refreshTickers()
         .then(() => this.getUser(getAccessToken(), getUserId()))
+        .then(() => {
+          this.setState({refreshFadeIn: true})
+          delay(3000).then(() => {this.setState({refreshFadeIn: false})});
+        })
     }
 
     render() {
@@ -60,7 +69,8 @@ class User extends Component {
             <IntlProvider locale="en">
               <div>
                   <h3 className="text-center">{user.email}</h3>
-                  <Button size="lg" className="success" onClick={this.refreshTickers.bind(this)}>Refresh</Button>
+                  <Button size="lg" color="info" onClick={this.refreshTickers.bind(this)}>Refresh</Button>
+                  <RefreshSuccess fadeIn={this.state.refreshFadeIn}/>
                   <hr/>
                   {table}
               </div>

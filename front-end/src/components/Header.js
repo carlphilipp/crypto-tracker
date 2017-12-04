@@ -33,13 +33,9 @@ class Header extends Component {
         this.props.onRegister(status);
     }
 
-    home() {
-        this.props.onUpdate('home');
-    }
+    home() { this.props.onUpdate('home'); }
 
-    user() {
-        this.props.onUpdate('user');
-    }
+    user() { this.props.onUpdate('user'); }
 
     logout() {
         logout();
