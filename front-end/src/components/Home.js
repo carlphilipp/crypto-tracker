@@ -4,13 +4,14 @@ import Tickers from './Tickers';
 import User from './User';
 import SignUpSuccess from './SignUpSuccess'
 import SignUpFailure from './SignUpFailure'
+import {getCurrentPage, saveCurrentPage} from '../utils/AuthService';
 
 class Home extends Component {
 
     constructor() {
         super();
         this.state = {
-            page: 'home',
+            page: getCurrentPage(),
             registerSuccess: false,
             registerFailure: false,
         };
@@ -19,6 +20,7 @@ class Home extends Component {
     onUpdate(page) {
         console.log("on update " + page);
         this.setState({page: page})
+        saveCurrentPage(page)
     }
 
     onLogout() {

@@ -1,5 +1,6 @@
 const jwtDecode = require('jwt-decode');
 const TOKEN = 'token';
+const PAGE = 'page'
 
 export function isLoggedIn() {
     let token = localStorage.getItem(TOKEN)
@@ -28,10 +29,25 @@ export function login() {
 
 export function logout() {
     localStorage.removeItem(TOKEN)
+    localStorage.removeItem(PAGE)
 }
 
 export function setIdToken() {
 }
 
 export function setAccessToken() {
+}
+
+// TODO create other file with local storage accessToken
+export function getCurrentPage() {
+  let page = localStorage.getItem(PAGE)
+  if(page != null) {
+    return page;
+  } else {
+    return 'home'
+  }
+}
+
+export function saveCurrentPage(page) {
+  localStorage.setItem(PAGE, page);
 }
