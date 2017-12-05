@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
-import {isLoggedIn, logout} from '../service/AuthService';
-import {removePage} from '../service/PageService';
+import {isLoggedIn} from '../service/AuthService';
 import Login from './Login'
 import SignUp from './SignUp'
 import { Button, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem } from 'reactstrap';
