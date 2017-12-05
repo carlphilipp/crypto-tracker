@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {getOneUser, refreshTickers} from '../utils/ApiClient';
 import {getUserId, getAccessToken} from '../service/AuthService';
 import {Table, Card, CardText, CardBody, CardTitle, CardSubtitle, Button, Row, Col} from 'reactstrap';
-import {FormattedNumber, FormattedTime, IntlProvider}  from 'react-intl'
+import {FormattedNumber, FormattedTime, IntlProvider, FormattedMessage}  from 'react-intl'
 import RefreshSuccess from './RefreshSuccess';
 import AddPosition from './AddPosition';
 import {delay} from '../utils/Utils';
@@ -42,18 +42,21 @@ class User extends Component {
 
     render() {
         const {user} = this.state;
+        const red = 'red'
+        const green = 'green'
         let table = null;
-        if(user.positions != null){
+        if(user.positions != null) {
           table = <Table hover>
               <thead>
               <tr>
                   <th>Currency</th>
                   <th>Quantity</th>
-                  <th>Value</th>
                   <th>Original Value</th>
                   <th>Gain</th>
                   <th>Gain Percentage</th>
+                  <th>Value</th>
                   <th>Last Updated</th>
+                  <th></th>
               </tr>
               </thead>
               <tbody>{
@@ -61,13 +64,25 @@ class User extends Component {
                         <tr key={index}>
                             <th scope="row">{position.currency1}</th>
                             <td>{position.quantity}</td>
-                            <td><FormattedNumber value={position.value} style="currency" currency="USD"/></td>
                             <td><FormattedNumber value={position.originalValue} style="currency" currency="USD"/></td>
                             <td><FormattedNumber value={position.gain} style="currency" currency="USD"/></td>
-                            <td><FormattedNumber value={position.gainPercentage} style="percent"/></td>
+                            <td><font color={(position.gainPercentage > 0) ? green : red}><FormattedNumber value={position.gainPercentage} style="percent"/></font></td>
+                            <td><FormattedNumber value={position.value} style="currency" currency="USD"/></td>
                             <td><FormattedTime value={new Date(position.lastUpdated * 1000)}/></td>
-                        </tr>))
-              }</tbody>
+                            <td><Button size="lg" color="secondary">Update</Button></td>
+                        </tr>))}
+                        {
+                        <tr>
+                        <th scope="row">Total</th>
+                        <td></td>
+                        <td><FormattedNumber value={user.originalValue} style="currency" currency="USD"/></td>
+                        <td><FormattedNumber value={user.gain} style="currency" currency="USD"/></td>
+                        <td><font color={(user.gainPercentage > 0) ? green : red}><FormattedNumber value={user.gainPercentage} style="percent"/></font></td>
+                        <td><FormattedNumber value={user.value} style="currency" currency="USD"/></td>
+                        <td></td>
+                        </tr>
+                      }
+              </tbody>
           </Table>;
         }
         return (
@@ -77,24 +92,6 @@ class User extends Component {
                   <AddPosition buttonLabel="Add" user={user} updateUserInState={this.updateUserInState.bind(this)}/>{' '}
                   <Button size="lg" color="info" onClick={this.refreshTickers.bind(this)}>Refresh</Button>
                   <RefreshSuccess fadeIn={this.state.refreshFadeIn}/>
-                  <hr/>
-                  <div>
-                    <Row>
-                      <Col sm="6">
-                        <Card>
-                          <CardBody>
-                            <CardTitle>Portfolio</CardTitle>
-                            <CardSubtitle></CardSubtitle>
-                            <CardText>
-                            Total value: {(user.value != null)? <FormattedNumber value={user.value} style="currency" currency="USD"/> : ''}<br/>
-                            Performance: {(user.gain != null)? <FormattedNumber value={user.gain} style="currency" currency="USD"/>  : ''} {' '}
-                            ({(user.gainPercentage != null)? <FormattedNumber value={user.gainPercentage} style="percent"/> : ''})
-                            </CardText>
-                          </CardBody>
-                        </Card>
-                      </Col>
-                    </Row>
-                  </div>
                   <hr/>
                   {table}
               </div>

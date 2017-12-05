@@ -59,7 +59,7 @@ class AddPosition extends React.Component {
                         <Form>
                             <FormGroup>
                                 <Label for="ticker">Ticker</Label>
-                                <Input type="select" name="select" id="ticker" onChange={evt => this.updateFormTicker(evt)} >
+                                <Input size="lg" type="select" name="select" id="ticker" onChange={evt => this.updateFormTicker(evt)} >
                                 {/* TODO get that list from API */}
                                   <option>BTC</option>
                                   <option>ETH</option>
@@ -69,11 +69,11 @@ class AddPosition extends React.Component {
                             </FormGroup>
                             <FormGroup>
                                 <Label for="quantity">Quantity</Label>
-                                <Input type="text" name="quantity" onChange={evt => this.updateFormQuantity(evt)} id="quantity" placeholder="1.0"/>
+                                <Input size="lg" type="text" name="quantity" onChange={evt => this.updateFormQuantity(evt)} id="quantity" placeholder="1.0"/>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="unitCostPrice">Unit Cost Price</Label>
-                                <Input type="text" name="unitCostPrice" id="unitCostPrice" onChange={evt => this.updateUnitCostPrice(evt)} placeholder="100"/>
+                                <Input size="lg" type="text" name="unitCostPrice" id="unitCostPrice" onChange={evt => this.updateUnitCostPrice(evt)} placeholder="100"/>
                             </FormGroup>
                         </Form>
                     </ModalBody>

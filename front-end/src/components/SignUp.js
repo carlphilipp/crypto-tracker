@@ -54,15 +54,15 @@ class SignUp extends React.Component {
                         <Form>
                             <FormGroup>
                                 <Label for="email">Email</Label>
-                                <Input type="email" name="email" onBlur={evt => this.handleUserInput(evt)} id="email" placeholder="your email" autoFocus="true"/>
+                                <Input size="lg" type="email" name="email" onBlur={evt => this.handleUserInput(evt)} id="email" placeholder="your email" autoFocus="true"/>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="password">Password</Label>
-                                <Input type="password" name="password" onBlur={evt => this.handleUserInput(evt)} id="password" placeholder="your password"/>
+                                <Input size="lg" type="password" name="password" onBlur={evt => this.handleUserInput(evt)} id="password" placeholder="your password"/>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="password2">Retype Password</Label>
-                                <Input type="password" name="password2" onBlur={evt => this.handleUserInput(evt)} id="password2" placeholder="your password"/>
+                                <Input size="lg" type="password" name="password2" onBlur={evt => this.handleUserInput(evt)} id="password2" placeholder="your password"/>
                             </FormGroup>
                         </Form>
                     </ModalBody>
