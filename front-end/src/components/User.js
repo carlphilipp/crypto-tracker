@@ -78,29 +78,29 @@ class User extends Component {
                               <Button size="lg" color="secondary">Modify</Button>{' '}
                               <Button size="lg" color="danger">Delete</Button>
                             </td>
-                            <th scope="row">{position.currency1}</th>
-                            <td className="text-right">{position.quantity}</td>
-                            <td className="text-right"><FormattedNumber value={position.unitCostPrice} style={`currency`} currency="USD"/></td>
-                            <td className="text-right"><FormattedNumber value={position.originalValue} style={`currency`} currency="USD"/></td>
-                            <td className="text-right"><FormattedNumber value={position.value} style={`currency`} currency="USD"/></td>
-                            <td className="text-right">
+                            <th scope="row" className="align-middle">{position.currency1}</th>
+                            <td className="text-right align-middle">{position.quantity}</td>
+                            <td className="text-right align-middle"><FormattedNumber value={position.unitCostPrice} style={`currency`} currency="USD"/></td>
+                            <td className="text-right align-middle"><FormattedNumber value={position.originalValue} style={`currency`} currency="USD"/></td>
+                            <td className="text-right align-middle"><FormattedNumber value={position.value} style={`currency`} currency="USD"/></td>
+                            <td className="text-right align-middle">
                               <FormattedNumber value={position.gain} style={`currency`} currency="USD"/>{'   '}
                               <font color={(position.gainPercentage > 0) ? green : red}>
                                 {(position.gainPercentage > 0) ? '+' : ''}
                                 <FormattedNumber value={position.gainPercentage} style={`percent`} minimumFractionDigits={2} maximumFractionDigits={2}/>
                               </font>
                             </td>
-                            <td className="text-right"><FormattedTime value={new Date(position.lastUpdated * 1000)}/></td>
+                            <td className="text-right align-middle"><FormattedTime value={new Date(position.lastUpdated * 1000)}/></td>
                         </tr>))}
                         {
                         <tr>
-                          <th scope="row">Total</th>
+                          <th scope="row" className="align-middle">Total</th>
                           <td></td>
                           <td></td>
                           <td></td>
-                          <td className="text-right"><FormattedNumber value={user.originalValue} style={`currency`} currency="USD"/></td>
-                          <td className="text-right"><FormattedNumber value={user.value} style={`currency`} currency="USD"/></td>
-                          <td className="text-right">
+                          <td className="text-right align-middle"><FormattedNumber value={user.originalValue} style={`currency`} currency="USD"/></td>
+                          <td className="text-right align-middle"><FormattedNumber value={user.value} style={`currency`} currency="USD"/></td>
+                          <td className="text-right align-middle">
                             <FormattedNumber value={user.gain} style={`currency`} currency="USD"/>{'   '}
                             <font color={(user.gainPercentage > 0) ? green : red}>
                               {(user.gainPercentage > 0) ? '+' : ''}

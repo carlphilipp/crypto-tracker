@@ -52,13 +52,35 @@ class Tickers extends Component {
                 {tickers.map((ticker, index) => (
                     <tr key={index}>
                         <th scope="row">{ticker.currencyName1}</th>
-                        <td className="text-right"><FormattedNumber value={ticker.price} style={`currency`} currency="USD" minimumFractionDigits={this.getMinimumFractionDigits(ticker.price)}/></td>
-                        <td className="text-right"><FormattedNumber value={ticker.marketCap} style={`currency`} currency="USD" minimumFractionDigits={0}/></td>
-                        <td className="text-right"><FormattedNumber value={ticker.volume24h} style={`currency`} currency="USD" minimumFractionDigits={0}/></td>
-                        <td className="text-right"><font color={(ticker.percentChange1h > 0) ? green : red}><FormattedNumber value={ticker.percentChange1h} style={`percent`} minimumFractionDigits={2} maximumFractionDigits={2}/></font></td>
-                        <td className="text-right"><font color={(ticker.percentChange24h > 0) ? green : red}><FormattedNumber value={ticker.percentChange24h} style={`percent`} minimumFractionDigits={2} maximumFractionDigits={2}/></font></td>
-                        <td className="text-right"><font color={(ticker.percentChange7d > 0) ? green : red}><FormattedNumber value={ticker.percentChange7d} style={`percent`} minimumFractionDigits={2} maximumFractionDigits={2}/></font></td>
-                        <td className="text-right"><FormattedTime value={new Date(ticker.lastUpdated * 1000)}/></td>
+                        <td className="text-right">
+                          <FormattedNumber value={ticker.price} style={`currency`} currency="USD" minimumFractionDigits={this.getMinimumFractionDigits(ticker.price)}/>
+                        </td>
+                        <td className="text-right">
+                          <FormattedNumber value={ticker.marketCap} style={`currency`} currency="USD" minimumFractionDigits={0}/>
+                        </td>
+                        <td className="text-right">
+                          <FormattedNumber value={ticker.volume24h} style={`currency`} currency="USD" minimumFractionDigits={0}/>
+                        </td>
+                        <td className="text-right">
+                          <font color={(ticker.percentChange1h > 0) ? green : red}>
+                            {(ticker.percentChange1h > 0) ? '+' : ''}
+                            <FormattedNumber value={ticker.percentChange1h} style={`percent`} minimumFractionDigits={2} maximumFractionDigits={2}/>
+                          </font>
+                        </td>
+                        <td className="text-right">
+                          <font color={(ticker.percentChange24h > 0) ? green : red}>
+                            {(ticker.percentChange24h > 0) ? '+' : ''}
+                            <FormattedNumber value={ticker.percentChange24h} style={`percent`} minimumFractionDigits={2} maximumFractionDigits={2}/>
+                          </font>
+                        </td>
+                        <td className="text-right">
+                          <font color={(ticker.percentChange7d > 0) ? green : red}>
+                            {(ticker.percentChange7d > 0) ? '+' : ''}
+                            <FormattedNumber value={ticker.percentChange7d} style={`percent`} minimumFractionDigits={2} maximumFractionDigits={2}/>
+                            </font>
+                        </td>
+                        <td className="text-right">
+                          <FormattedTime value={new Date(ticker.lastUpdated * 1000)}/></td>
                     </tr>
                 ))}
                 </tbody>
