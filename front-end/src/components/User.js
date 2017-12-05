@@ -21,10 +21,22 @@ class User extends Component {
         this.setState({user: user});
     }
 
+    logout() {
+        this.props.onLogout();
+    }
+
     getUser(accessToken, userId) {
         getOneUser(accessToken, userId).then((user) => {
             this.setState({user: user});
-        });
+        })
+        .catch((error) => {
+          if(error.response.status === 401 && error.response.data.error_description.includes("expired")){
+            console.log("Token expired, logging out...")
+            this.logout()
+          } else {
+            console.log("Unhandled error: " + error)
+          }
+        })
     }
 
     componentDidMount() {

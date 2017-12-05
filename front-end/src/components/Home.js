@@ -5,6 +5,8 @@ import User from './User';
 import SignUpSuccess from './SignUpSuccess'
 import SignUpFailure from './SignUpFailure'
 import {getCurrentPage, saveCurrentPage} from '../service/PageService';
+import {logout} from '../service/AuthService';
+import {removePage} from '../service/PageService';
 
 class Home extends Component {
 
@@ -24,6 +26,9 @@ class Home extends Component {
     }
 
     onLogout() {
+      this.onUpdate('home')
+      logout();
+      removePage();
       this.setState({})
     }
 
@@ -45,7 +50,7 @@ class Home extends Component {
                 {
                     (page === 'home')
                         ? <Tickers/>
-                        : <User />
+                        : <User onLogout={this.onLogout.bind(this)}/>
                 }
                 {/* TODO add Footer*/}
             </div>

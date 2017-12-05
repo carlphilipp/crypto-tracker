@@ -40,9 +40,6 @@ class Header extends Component {
     user() { this.props.onUpdate('user'); }
 
     logout() {
-        logout();
-        removePage();
-        this.home();
         this.props.onLogout();
     }
 
