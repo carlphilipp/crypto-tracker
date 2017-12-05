@@ -6,6 +6,7 @@ import fr.cph.crypto.backend.domain.Currency
 import fr.cph.crypto.backend.repository.PositionRepository
 import fr.cph.crypto.backend.repository.TickerRepository
 import fr.cph.crypto.backend.repository.UserRepository
+import fr.cph.crypto.backend.service.TickerService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder
@@ -24,7 +25,7 @@ class DatabaseLoader : CommandLineRunner {
     @Autowired
     private lateinit var positionRepository: PositionRepository
     @Autowired
-    private lateinit var client: CoinMarketCapClient
+    private lateinit var tickerService: TickerService
 
     @Throws(Exception::class)
     override fun run(vararg strings: String) {
@@ -32,9 +33,7 @@ class DatabaseLoader : CommandLineRunner {
         userRepository.deleteAll()
         positionRepository.deleteAll()
 
-        client.getTickers(Currency.USD, "BTC", "ETH", "LTC", "VTC", "GRS")
-                .stream()
-                .forEach { ticker -> tickerRepository.save<Ticker>(ticker) }
+        tickerService.updateAll()
 
         val btcTicker = tickerRepository.findOne("BTC-USD")
         val ethTicker = tickerRepository.findOne("ETH-USD")

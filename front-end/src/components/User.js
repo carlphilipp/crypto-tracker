@@ -66,7 +66,7 @@ class User extends Component {
                             <td>{position.quantity}</td>
                             <td><FormattedNumber value={position.originalValue} style="currency" currency="USD"/></td>
                             <td><FormattedNumber value={position.gain} style="currency" currency="USD"/></td>
-                            <td><font color={(position.gainPercentage > 0) ? green : red}><FormattedNumber value={position.gainPercentage} style="percent"/></font></td>
+                            <td><font color={(position.gainPercentage > 0) ? green : red}><FormattedNumber value={position.gainPercentage} style="percent" minimumFractionDigits="2" maximumFractionDigits="2"/></font></td>
                             <td><FormattedNumber value={position.value} style="currency" currency="USD"/></td>
                             <td><FormattedTime value={new Date(position.lastUpdated * 1000)}/></td>
                             <td><Button size="lg" color="secondary">Update</Button></td>
@@ -77,7 +77,7 @@ class User extends Component {
                         <td></td>
                         <td><FormattedNumber value={user.originalValue} style="currency" currency="USD"/></td>
                         <td><FormattedNumber value={user.gain} style="currency" currency="USD"/></td>
-                        <td><font color={(user.gainPercentage > 0) ? green : red}><FormattedNumber value={user.gainPercentage} style="percent"/></font></td>
+                        <td><font color={(user.gainPercentage > 0) ? green : red}><FormattedNumber value={user.gainPercentage} style="percent"  minimumFractionDigits="2" maximumFractionDigits="2"/></font></td>
                         <td><FormattedNumber value={user.value} style="currency" currency="USD"/></td>
                         <td></td>
                         </tr>
@@ -86,16 +86,16 @@ class User extends Component {
           </Table>;
         }
         return (
-            <IntlProvider locale="en">
-              <div>
-                  <h3 className="text-center">{user.email}</h3>
-                  <AddPosition buttonLabel="Add" user={user} updateUserInState={this.updateUserInState.bind(this)}/>{' '}
-                  <Button size="lg" color="info" onClick={this.refreshTickers.bind(this)}>Refresh</Button>
-                  <RefreshSuccess fadeIn={this.state.refreshFadeIn}/>
-                  <hr/>
-                  {table}
-              </div>
-            </IntlProvider>
+              <IntlProvider locale="en">
+                <div>
+                    <h3 className="text-center">{user.email}</h3>
+                    <AddPosition buttonLabel="Add" user={user} updateUserInState={this.updateUserInState.bind(this)}/>{' '}
+                    <Button size="lg" color="info" onClick={this.refreshTickers.bind(this)}>Refresh</Button>
+                    <RefreshSuccess fadeIn={this.state.refreshFadeIn}/>
+                    <hr/>
+                    {table}
+                </div>
+              </IntlProvider>
         );
     }
 }

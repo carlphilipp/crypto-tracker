@@ -22,9 +22,9 @@ object TickerMapper {
                 currency,
                 price,
                 "coinmarketcap",
-                percentChange1h,
-                percentChange24h,
-                percentChange7d,
+                percentChange1h / 100,
+                percentChange24h / 100,
+                percentChange7d / 100,
                 response.lastUpdated!!.toLong()
         )
         result.id = response.symbol + "-" + currency.code
