@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {getOneUser, refreshTickers} from '../utils/ApiClient';
 import {getUserId, getAccessToken} from '../service/AuthService';
-import {Table, Card, CardText, CardBody, CardTitle, CardSubtitle, Button, Row, Col} from 'reactstrap';
-import {FormattedNumber, FormattedTime, IntlProvider, FormattedMessage}  from 'react-intl'
+import {Table, Button} from 'reactstrap';
+import {FormattedNumber, FormattedTime, IntlProvider}  from 'react-intl'
 import RefreshSuccess from './RefreshSuccess';
 import AddPosition from './AddPosition';
 import {delay} from '../utils/Utils';
