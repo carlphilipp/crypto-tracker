@@ -26,17 +26,12 @@ class Login extends React.Component {
         });
     }
 
-    updateFormEmail(evt) {
+    handleUserInput(e) {
+        const name = e.target.name;
+        const value = e.target.value;
         this.setState({
-            email: evt.target.value,
-            failure: false
-        });
-    }
-
-    updateFormPassword(evt) {
-        this.setState({
-            password: evt.target.value,
-            failure: false
+          [name]: value,
+          failure: false
         });
     }
 
@@ -69,11 +64,11 @@ class Login extends React.Component {
                         <Form>
                             <FormGroup>
                                 <Label for="exampleEmail">Email</Label>
-                                <Input type="email" name="email" id="exampleEmail" onChange={evt => this.updateFormEmail(evt)} placeholder="your email"/>
+                                <Input type="email" name="email" id="exampleEmail" onChange={evt => this.handleUserInput(evt)} placeholder="your email" autoFocus="true"/>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="examplePassword">Password</Label>
-                                <Input type="password" name="password" onChange={evt => this.updateFormPassword(evt)} id="examplePassword" placeholder="your password"/>
+                                <Input type="password" name="password" onChange={evt => this.handleUserInput(evt)} id="examplePassword" placeholder="your password"/>
                             </FormGroup>
                         </Form>
                     </ModalBody>

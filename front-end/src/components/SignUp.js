@@ -9,6 +9,7 @@ class SignUp extends React.Component {
             modal: false,
             email: null,
             password: null,
+            password2: null,
         };
         this.toggle = this.toggle.bind(this);
         this.create = this.create.bind(this);
@@ -20,16 +21,10 @@ class SignUp extends React.Component {
         });
     }
 
-    updateEmail(evt) {
-        this.setState({
-            email: evt.target.value
-        });
-    }
-
-    updatePassword(evt) {
-        this.setState({
-            password: evt.target.value
-        });
+    handleUserInput(e) {
+        const name = e.target.name;
+        const value = e.target.value;
+        this.setState({[name]: value});
     }
 
     onRegister(status) {
@@ -54,20 +49,20 @@ class SignUp extends React.Component {
             <div>
                 <Button color="primary" size="lg" onClick={this.toggle}>{this.props.buttonLabel}</Button>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-                    <ModalHeader toggle={this.toggle}>Login</ModalHeader>
+                    <ModalHeader toggle={this.toggle}>Sign Up</ModalHeader>
                     <ModalBody>
                         <Form>
                             <FormGroup>
-                                <Label for="exampleEmail">Email</Label>
-                                <Input type="email" name="email" onChange={evt => this.updateEmail(evt)} id="exampleEmail" placeholder="your email"/>
+                                <Label for="email">Email</Label>
+                                <Input type="email" name="email" onBlur={evt => this.handleUserInput(evt)} id="email" placeholder="your email" autoFocus="true"/>
                             </FormGroup>
                             <FormGroup>
-                                <Label for="examplePassword">Password</Label>
-                                <Input type="password" name="password" onChange={evt => this.updatePassword(evt)} id="examplePassword" placeholder="your password"/>
+                                <Label for="password">Password</Label>
+                                <Input type="password" name="password" onBlur={evt => this.handleUserInput(evt)} id="password" placeholder="your password"/>
                             </FormGroup>
                             <FormGroup>
-                                <Label for="examplePassword">Password</Label>
-                                <Input type="password" name="password" id="examplePassword" placeholder="your password"/>
+                                <Label for="password2">Retype Password</Label>
+                                <Input type="password" name="password2" onBlur={evt => this.handleUserInput(evt)} id="password2" placeholder="your password"/>
                             </FormGroup>
                         </Form>
                     </ModalBody>
