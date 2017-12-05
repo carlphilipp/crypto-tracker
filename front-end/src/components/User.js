@@ -60,16 +60,16 @@ class User extends Component {
         if(user.positions != null) {
           table = <Table hover>
               <thead>
-              <tr>
-                  <th>Currency</th>
-                  <th>Quantity</th>
-                  <th>Original Value</th>
-                  <th>Gain</th>
-                  <th>Gain Percentage</th>
-                  <th>Value</th>
-                  <th>Last Updated</th>
-                  <th></th>
-              </tr>
+                <tr>
+                    <th>Currency</th>
+                    <th>Quantity</th>
+                    <th>Original Value</th>
+                    <th>Gain</th>
+                    <th>Gain Percentage</th>
+                    <th>Value</th>
+                    <th>Last Updated</th>
+                    <th>Update</th>
+                </tr>
               </thead>
               <tbody>{
                     user.positions.map((position, index) => (
@@ -91,6 +91,7 @@ class User extends Component {
                           <td><FormattedNumber value={user.gain} style={`currency`} currency="USD"/></td>
                           <td><font color={(user.gainPercentage > 0) ? green : red}><FormattedNumber value={user.gainPercentage} style={`percent`} minimumFractionDigits={2} maximumFractionDigits={2}/></font></td>
                           <td><FormattedNumber value={user.value} style={`currency`} currency="USD"/></td>
+                          <td></td>
                           <td></td>
                         </tr>
                       }

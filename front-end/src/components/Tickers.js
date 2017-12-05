@@ -24,6 +24,10 @@ class Tickers extends Component {
         this.props.onUpdate('user')
     }
 
+    getMinimumFractionDigits(price) {
+      return price < 1 ? 6 : 2
+    }
+
     render() {
         const {tickers} = this.state;
         const red = 'red'
@@ -35,22 +39,26 @@ class Tickers extends Component {
                 <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Price</th>
-                    <th>Change 1h</th>
-                    <th>Change 24h</th>
-                    <th>Change 7d</th>
-                    <th>Last updated</th>
+                    <th className="text-right">Price</th>
+                    <th className="text-right">Market Cap</th>
+                    <th className="text-right">Volume 24h</th>
+                    <th className="text-right">Change 1h</th>
+                    <th className="text-right">Change 24h</th>
+                    <th className="text-right">Change 7d</th>
+                    <th className="text-right">Last updated</th>
                 </tr>
                 </thead>
                 <tbody>
                 {tickers.map((ticker, index) => (
                     <tr key={index}>
                         <th scope="row">{ticker.currencyName1}</th>
-                        <td><FormattedNumber value={ticker.price} style={`currency`} currency="USD"/></td>
-                        <td><font color={(ticker.percentChange1h > 0) ? green : red}><FormattedNumber value={ticker.percentChange1h} style={`percent`} minimumFractionDigits={2} maximumFractionDigits={2}/></font></td>
-                        <td><font color={(ticker.percentChange24h > 0) ? green : red}><FormattedNumber value={ticker.percentChange24h} style={`percent`} minimumFractionDigits={2} maximumFractionDigits={2}/></font></td>
-                        <td><font color={(ticker.percentChange7d > 0) ? green : red}><FormattedNumber value={ticker.percentChange7d} style={`percent`} minimumFractionDigits={2} maximumFractionDigits={2}/></font></td>
-                        <td><FormattedTime value={new Date(ticker.lastUpdated * 1000)}/></td>
+                        <td className="text-right"><FormattedNumber value={ticker.price} style={`currency`} currency="USD" minimumFractionDigits={this.getMinimumFractionDigits(ticker.price)}/></td>
+                        <td className="text-right"><FormattedNumber value={ticker.marketCap} style={`currency`} currency="USD" minimumFractionDigits={0}/></td>
+                        <td className="text-right"><FormattedNumber value={ticker.volume24h} style={`currency`} currency="USD" minimumFractionDigits={0}/></td>
+                        <td className="text-right"><font color={(ticker.percentChange1h > 0) ? green : red}><FormattedNumber value={ticker.percentChange1h} style={`percent`} minimumFractionDigits={2} maximumFractionDigits={2}/></font></td>
+                        <td className="text-right"><font color={(ticker.percentChange24h > 0) ? green : red}><FormattedNumber value={ticker.percentChange24h} style={`percent`} minimumFractionDigits={2} maximumFractionDigits={2}/></font></td>
+                        <td className="text-right"><font color={(ticker.percentChange7d > 0) ? green : red}><FormattedNumber value={ticker.percentChange7d} style={`percent`} minimumFractionDigits={2} maximumFractionDigits={2}/></font></td>
+                        <td className="text-right"><FormattedTime value={new Date(ticker.lastUpdated * 1000)}/></td>
                     </tr>
                 ))}
                 </tbody>

@@ -7,13 +7,15 @@ import org.springframework.data.mongodb.core.index.Indexed
 import org.springframework.data.mongodb.core.mapping.Document
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder("id", "currency1", "currency2", "price", "exchange", "percentChange1h", "percentChange24h", "percentChange7d", "lastUpdated")
+@JsonPropertyOrder("id", "currency1", "currency2", "price", "exchange", "volume24h", "marketCap", "percentChange1h", "percentChange24h", "percentChange7d", "lastUpdated")
 @Document
 data class Ticker(@Indexed val currency1: Currency,
                   val currencyName1: String,
                   val currency2: Currency,
                   val price: Double,
                   val exchange: String,
+                  val volume24h: Double,
+                  val marketCap: Double,
                   val percentChange1h: Double,
                   val percentChange24h: Double,
                   val percentChange7d: Double,
