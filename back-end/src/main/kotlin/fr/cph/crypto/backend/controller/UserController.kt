@@ -4,14 +4,13 @@ import fr.cph.crypto.backend.domain.Position
 import fr.cph.crypto.backend.domain.User
 import fr.cph.crypto.backend.service.UserService
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.access.prepost.PostAuthorize
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
 @RequestMapping(value = ["/api/user"])
 @RestController
-class UserController @Autowired
+class UserController
 constructor(private val userService: UserService) {
 
     @PreAuthorize("hasAuthority('ADMIN')")

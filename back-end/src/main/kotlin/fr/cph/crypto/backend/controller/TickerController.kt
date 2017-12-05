@@ -3,7 +3,6 @@ package fr.cph.crypto.backend.controller
 import fr.cph.crypto.backend.domain.Currency
 import fr.cph.crypto.backend.domain.Ticker
 import fr.cph.crypto.backend.service.TickerService
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RequestMapping(value = ["/api/ticker"])
 @RestController
-class TickerController @Autowired
+class TickerController
 constructor(private val service: TickerService) {
 
     @PreAuthorize("hasAuthority('ADMIN') or authentication.details.decodedDetails['id'] == null")

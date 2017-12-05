@@ -4,7 +4,6 @@ import fr.cph.crypto.backend.client.impl.CoinMarketCapClient
 import fr.cph.crypto.backend.domain.Currency
 import fr.cph.crypto.backend.domain.Ticker
 import fr.cph.crypto.backend.repository.TickerRepository
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class RefreshController @Autowired
+class RefreshController
 constructor(private val tickerRepository: TickerRepository, private val client: CoinMarketCapClient) {
 
     @PreAuthorize("hasAuthority('ADMIN') or authentication.details.decodedDetails['id'] == null")

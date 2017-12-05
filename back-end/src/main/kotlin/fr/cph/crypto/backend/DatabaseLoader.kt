@@ -1,33 +1,27 @@
 package fr.cph.crypto.backend
 
-import fr.cph.crypto.backend.client.impl.CoinMarketCapClient
-import fr.cph.crypto.backend.domain.*
-import fr.cph.crypto.backend.domain.Currency
+import fr.cph.crypto.backend.domain.Position
+import fr.cph.crypto.backend.domain.Role
+import fr.cph.crypto.backend.domain.User
 import fr.cph.crypto.backend.repository.PositionRepository
 import fr.cph.crypto.backend.repository.TickerRepository
 import fr.cph.crypto.backend.repository.UserRepository
 import fr.cph.crypto.backend.service.TickerService
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder
 import org.springframework.stereotype.Component
 import java.util.*
 
 @Component
-class DatabaseLoader : CommandLineRunner {
+class DatabaseLoader
+constructor(
+        private val tickerRepository: TickerRepository,
+        private val userRepository: UserRepository,
+        private val passwordEncoder: ShaPasswordEncoder,
+        private val positionRepository: PositionRepository,
+        private val tickerService: TickerService) : CommandLineRunner {
 
-    @Autowired
-    private lateinit var tickerRepository: TickerRepository
-    @Autowired
-    private lateinit var userRepository: UserRepository
-    @Autowired
-    private lateinit var passwordEncoder: ShaPasswordEncoder
-    @Autowired
-    private lateinit var positionRepository: PositionRepository
-    @Autowired
-    private lateinit var tickerService: TickerService
 
-    @Throws(Exception::class)
     override fun run(vararg strings: String) {
         tickerRepository.deleteAll()
         userRepository.deleteAll()

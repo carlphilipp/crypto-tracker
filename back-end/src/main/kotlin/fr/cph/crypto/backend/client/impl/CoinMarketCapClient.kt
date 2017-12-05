@@ -11,7 +11,7 @@ import org.springframework.web.util.UriComponentsBuilder
 import java.util.*
 
 @Component
-class CoinMarketCapClient @Autowired
+class CoinMarketCapClient
 constructor(private val restTemplate: RestTemplate) : TickerClient {
 
     override fun getTicker(currency: Currency, ticker: String): Ticker? {

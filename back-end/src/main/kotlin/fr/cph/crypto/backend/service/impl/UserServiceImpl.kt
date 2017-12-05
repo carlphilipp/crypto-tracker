@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Service
 
 @Service
-class UserServiceImpl @Autowired
+class UserServiceImpl
 constructor(private val positionRepository: PositionRepository,
             private val userRepository: UserRepository,
             private val tickerService: TickerService,
