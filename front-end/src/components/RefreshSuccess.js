@@ -1,12 +1,21 @@
 import React, {Component} from 'react';
-import { Fade, Badge } from 'reactstrap';
+import { Alert } from 'reactstrap';
 
 class RefreshSuccess extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {visible: true};
+  }
+
+  onDismiss() {
+    this.setState({ visible: false });
+  }
+
   render() {
       return (
-        <Fade in={this.props.fadeIn} tag="h4" className="mt-3">
-          <Badge color="success">Done!</Badge>
-        </Fade>
+        <Alert color="success" isOpen={this.state.visible}>
+          Done!
+        </Alert>
       );
   }
 }

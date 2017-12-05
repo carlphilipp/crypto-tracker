@@ -61,6 +61,7 @@ class User extends Component {
           table = <Table hover>
               <thead>
                 <tr>
+                    <th></th>
                     <th>Currency</th>
                     <th>Quantity</th>
                     <th>Original Value</th>
@@ -68,12 +69,15 @@ class User extends Component {
                     <th>Gain Percentage</th>
                     <th>Value</th>
                     <th>Last Updated</th>
-                    <th>Update</th>
                 </tr>
               </thead>
               <tbody>{
                     user.positions.map((position, index) => (
                         <tr key={index}>
+                            <td>
+                              <Button size="lg" color="secondary">Modify</Button>{' '}
+                              <Button size="lg" color="danger">Delete</Button>
+                            </td>
                             <th scope="row">{position.currency1}</th>
                             <td>{position.quantity}</td>
                             <td><FormattedNumber value={position.originalValue} style={`currency`} currency="USD"/></td>
@@ -81,11 +85,12 @@ class User extends Component {
                             <td><font color={(position.gainPercentage > 0) ? green : red}><FormattedNumber value={position.gainPercentage} style={`percent`} minimumFractionDigits={2} maximumFractionDigits={2}/></font></td>
                             <td><FormattedNumber value={position.value} style={`currency`} currency="USD"/></td>
                             <td><FormattedTime value={new Date(position.lastUpdated * 1000)}/></td>
-                            <td><Button size="lg" color="secondary">Update</Button></td>
+
                         </tr>))}
                         {
                         <tr>
                           <th scope="row">Total</th>
+                          <td></td>
                           <td></td>
                           <td><FormattedNumber value={user.originalValue} style={`currency`} currency="USD"/></td>
                           <td><FormattedNumber value={user.gain} style={`currency`} currency="USD"/></td>
@@ -98,13 +103,27 @@ class User extends Component {
               </tbody>
           </Table>;
         }
+
+        let refresh = null;
+        if (this.state.refreshFadeIn) {
+          refresh = <RefreshSuccess fadeIn={this.state.refreshFadeIn}/>
+        }
+
         return (
               <IntlProvider locale="en">
                 <div>
                     <h3 className="text-center">{user.email}</h3>
-                    <AddPosition buttonLabel="Add" user={user} updateUserInState={this.updateUserInState.bind(this)}/>{' '}
-                    <Button size="lg" color="info" onClick={this.refreshTickers.bind(this)}>Refresh</Button>
-                    <RefreshSuccess fadeIn={this.state.refreshFadeIn}/>
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td><AddPosition buttonLabel="Add" user={user} updateUserInState={this.updateUserInState.bind(this)}/></td>
+                          <td className="pl-1"><Button size="lg" color="info" onClick={this.refreshTickers.bind(this)}>Refresh</Button></td>
+                        </tr>
+                        <tr>
+                          <td colSpan="2" className="pt-2">{refresh}</td>
+                        </tr>
+                      </tbody>
+                    </table>
                     <hr/>
                     {table}
                 </div>
