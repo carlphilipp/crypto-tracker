@@ -37,11 +37,5 @@ enum class Currency constructor(val code: String, val currencyName: String, val 
                     .map { currency -> currency.code }
                     .toList()
         }
-
-        fun cryptoCurrenciesAsList(): List<Currency> {
-            return Currency.values()
-                    .filter { currency -> currency.type == Currency.Type.CRYPTO }
-                    .toList()
-        }
     }
 }

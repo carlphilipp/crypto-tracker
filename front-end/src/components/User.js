@@ -16,15 +16,12 @@ class User extends Component {
           user: [],
           refreshFadeIn: false
         };
+        this.getCurrentPrice = this.getCurrentPrice.bind(this);
     }
 
-    updateUserInState(user) {
-        this.setState({user: user});
-    }
+    updateUserInState(user) { this.setState({user: user}); }
 
-    logout() {
-        this.props.onLogout();
-    }
+    logout() { this.props.onLogout(); }
 
     getUser(accessToken, userId) {
         getOneUser(accessToken, userId).then((user) => {
@@ -40,9 +37,7 @@ class User extends Component {
         })
     }
 
-    componentDidMount() {
-        this.getUser(getAccessToken(), getUserId());
-    }
+    componentDidMount() { this.getUser(getAccessToken(), getUserId()); }
 
     refreshTickers() {
       refreshTickers()
@@ -53,24 +48,16 @@ class User extends Component {
         })
     }
 
-    renderderp(index) {
-      let derpderp = (
-          <tr key={index + '_2nd'} className={'show'}>
-            <td colSpan="8">
-                <Button size="lg" color="secondary">Modify</Button>{' '}
-                <Button size="lg" color="danger">Delete</Button>
-            </td>
-          </tr>
-        )
-       return derpderp
-    }
-
     showHideSecondLine(index) {
       if(this.refs[index].className === 'show') {
         this.refs[index].className = "hidden";
       } else {
         this.refs[index].className = "show";
       }
+    }
+
+    getCurrentPrice(currencyCode1, currencyCode2) {
+      return this.props.tickers.find(ticker => ticker.id === currencyCode1 + '-' + currencyCode2).price;
     }
 
     render() {
@@ -84,6 +71,7 @@ class User extends Component {
                 <tr>
                     <th>Currency</th>
                     <th className="text-right">Quantity</th>
+                    <th className="text-right">Price</th>
                     <th className="text-right">Average Cost</th>
                     <th className="text-right">Original Value</th>
                     <th className="text-right">Current Value</th>
@@ -103,6 +91,7 @@ class User extends Component {
                               </div>
                             </th>
                             <td className="text-right align-text-top">{position.quantity}</td>
+                            <td className="text-right align-text-top"><FormattedNumber value={this.getCurrentPrice(position.currency1.code, position.currency2.code)} style={`currency`} currency="USD"/></td>
                             <td className="text-right align-text-top"><FormattedNumber value={position.unitCostPrice} style={`currency`} currency="USD"/></td>
                             <td className="text-right align-text-top"><FormattedNumber value={position.originalValue} style={`currency`} currency="USD"/></td>
                             <td className="text-right align-text-top"><FormattedNumber value={position.value} style={`currency`} currency="USD"/></td>
@@ -123,6 +112,7 @@ class User extends Component {
                         {
                         <tr>
                           <th scope="row" className="align-middle">Total</th>
+                          <td />
                           <td />
                           <td />
                           <td className="text-right align-middle"><FormattedNumber value={user.originalValue} style={`currency`} currency="USD"/></td>

@@ -17,30 +17,20 @@ class Header extends Component {
         this.toggle = this.toggle.bind(this);
     }
 
-    toggle() {
-      this.setState({
-        isOpen: !this.state.isOpen
-      });
-    }
+    toggle() { this.setState({ isOpen: !this.state.isOpen }); }
 
     onLogin(userId) {
-        console.log("login in nav");
         this.setState({});
         this.user();
     }
 
-    onRegister(status) {
-        console.log("register in nav");
-        this.props.onRegister(status);
-    }
+    onRegister(status) { this.props.onRegister(status); }
 
     home() { this.props.onUpdate('home'); }
 
     user() { this.props.onUpdate('user'); }
 
-    logout() {
-        this.props.onLogout();
-    }
+    logout() { this.props.onLogout(); }
 
     render() {
         return (
