@@ -4,7 +4,6 @@ import fr.cph.crypto.backend.client.TickerClient
 import fr.cph.crypto.backend.domain.Currency
 import fr.cph.crypto.backend.domain.Ticker
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.UriComponentsBuilder
@@ -31,7 +30,11 @@ constructor(private val restTemplate: RestTemplate) : TickerClient {
     }
 
     private fun getAllTickers(currency: Currency): List<Ticker> {
-        val uriComponents = URI_COMPONENT_BUILDER
+        val uriComponents = UriComponentsBuilder.newInstance()
+                .scheme("https")
+                .host("api.coinmarketcap.com")
+                .path("/v1/ticker")
+                .queryParam("limit", "0")
                 .queryParam("convert", currency.code)
                 .build()
 
@@ -45,10 +48,5 @@ constructor(private val restTemplate: RestTemplate) : TickerClient {
 
     companion object {
         private val LOGGER = LoggerFactory.getLogger(CoinMarketCapClient::class.java)
-        private val URI_COMPONENT_BUILDER = UriComponentsBuilder.newInstance()
-                .scheme("https")
-                .host("api.coinmarketcap.com")
-                .path("/v1/ticker")
-                .queryParam("limit", "0")
     }
 }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 @Component
 class TickerScheduler(private val tickerService: TickerService) {
 
-    @Scheduled(fixedRate = 300000)
+    @Scheduled(fixedRate = 300000, initialDelay = 5000)
     fun reportCurrentTime() {
         log.info("Update all tickers")
         tickerService.updateAll()
