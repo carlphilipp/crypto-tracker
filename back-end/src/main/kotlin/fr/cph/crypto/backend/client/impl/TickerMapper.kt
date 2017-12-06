@@ -20,7 +20,6 @@ object TickerMapper {
         val percentChange7d = if (response.percentChange7d == null) 0.0 else response.percentChange7d!!.toDouble()
         val result = Ticker(
                 Currency.findCurrency(response.symbol!!),
-                Currency.findCurrency(response.symbol!!).currencyName,
                 currency,
                 price,
                 "coinmarketcap",

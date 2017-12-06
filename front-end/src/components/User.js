@@ -78,7 +78,7 @@ class User extends Component {
                               <Button size="lg" color="secondary">Modify</Button>{' '}
                               <Button size="lg" color="danger">Delete</Button>
                             </td>
-                            <th scope="row" className="align-middle">{position.currency1}</th>
+                            <th scope="row" className="align-middle">{position.currency1.currencyName}</th>
                             <td className="text-right align-middle">{position.quantity}</td>
                             <td className="text-right align-middle"><FormattedNumber value={position.unitCostPrice} style={`currency`} currency="USD"/></td>
                             <td className="text-right align-middle"><FormattedNumber value={position.originalValue} style={`currency`} currency="USD"/></td>

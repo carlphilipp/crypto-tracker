@@ -51,7 +51,7 @@ class Tickers extends Component {
                 <tbody>
                 {tickers.map((ticker, index) => (
                     <tr key={index}>
-                        <th scope="row">{ticker.currencyName1}</th>
+                        <th scope="row">{ticker.currency1.currencyName}</th>
                         <td className="text-right">
                           <FormattedNumber value={ticker.price} style={`currency`} currency="USD" minimumFractionDigits={this.getMinimumFractionDigits(ticker.price)}/>
                         </td>
