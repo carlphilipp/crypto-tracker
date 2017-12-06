@@ -33,6 +33,9 @@ constructor(
         val ethTicker = tickerRepository.findOne("ETH-USD")
         val vtcTicker = tickerRepository.findOne("VTC-USD")
         val grsTicker = tickerRepository.findOne("GRS-USD")
+        val ethosTicker = tickerRepository.findOne("ETHOS-USD")
+        val cardanoTicker = tickerRepository.findOne("ADA-USD")
+        val powerTicker = tickerRepository.findOne("POWR-USD")
 
 
         val positions = ArrayList<Position>()
@@ -40,14 +43,23 @@ constructor(
         val positionEth = Position.buildPosition(ethTicker, 1.57128061, 318.2)
         val positionVtc = Position.buildPosition(vtcTicker, 122.10096277, 4.3)
         val positionGrs = Position.buildPosition(grsTicker, 1025.10079425, 1.25)
-        positions.add(positionBtc)
-        positions.add(positionEth)
-        positions.add(positionVtc)
-        positions.add(positionGrs)
+        val positionEthos = Position.buildPosition(ethosTicker, 189.81, 1.52)
+        val positionCardano = Position.buildPosition(cardanoTicker, 3095.901, 0.12)
+        val positionPower = Position.buildPosition(powerTicker, 443.556, 0.66)
+        positions.addAll(arrayListOf(positionBtc,
+                positionEth,
+                positionVtc,
+                positionGrs,
+                positionEthos,
+                positionCardano,
+                positionPower))
         positionRepository.save(positionBtc)
         positionRepository.save(positionEth)
         positionRepository.save(positionVtc)
         positionRepository.save(positionGrs)
+        positionRepository.save(positionEthos)
+        positionRepository.save(positionCardano)
+        positionRepository.save(positionPower)
         val user = User("cp.harmant@gmail.com", "PASSWORD", Role.ADMIN)
         user.id = "1"
         user.positions = positions

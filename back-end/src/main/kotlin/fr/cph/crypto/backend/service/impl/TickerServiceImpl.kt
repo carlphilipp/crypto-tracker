@@ -20,7 +20,7 @@ class TickerServiceImpl(private val client: CoinMarketCapClient,
     }
 
     override fun updateAll() {
-        client.getTickers(Currency.USD, "BTC", "ETH", "LTC", "VTC", "GRS")
+        client.getTickers(Currency.USD, Currency.cryptoCurrenciesAsListOfString())
                 .forEach { ticker -> tickerRepository.save(ticker) }
     }
 }
