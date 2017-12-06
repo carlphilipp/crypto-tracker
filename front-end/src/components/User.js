@@ -155,7 +155,7 @@ class User extends Component {
                     <table>
                       <tbody>
                         <tr>
-                          <td><AddPosition buttonLabel="Add" user={user} updateUserInState={this.updateUserInState.bind(this)}/></td>
+                          <td><AddPosition buttonLabel="Add" user={user} updateUserInState={this.updateUserInState.bind(this)} tickers={this.props.tickers}/></td>
                           <td className="pl-1"><Button size="lg" color="info" onClick={this.refreshTickers.bind(this)}>Refresh</Button></td>
                         </tr>
                         <tr>
@@ -163,7 +163,6 @@ class User extends Component {
                         </tr>
                       </tbody>
                     </table>
-                    <hr/>
                     {table}
                 </div>
               </IntlProvider>

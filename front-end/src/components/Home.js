@@ -7,20 +7,27 @@ import SignUpFailure from './SignUpFailure'
 import {getCurrentPage, saveCurrentPage} from '../service/PageService';
 import {logout} from '../service/AuthService';
 import {removePage} from '../service/PageService';
+import {getAllTickers} from '../utils/ApiClient';
 
 class Home extends Component {
 
     constructor() {
         super();
         this.state = {
+            tickers: [],
             page: getCurrentPage(),
             registerSuccess: false,
             registerFailure: false,
         };
     }
 
+    componentDidMount() {
+      getAllTickers().then((tickers) => {
+          this.setState({tickers: tickers});
+      });
+    }
+
     onUpdate(page) {
-        console.log("on update " + page);
         this.setState({page: page})
         saveCurrentPage(page)
     }
@@ -33,7 +40,6 @@ class Home extends Component {
     }
 
     onRegister(status) {
-        console.log("on register " + status);
         this.setState({
             registerSuccess: status,
             registerFailure: !status
@@ -49,8 +55,8 @@ class Home extends Component {
                 {(this.state.registerFailure) ? <SignUpFailure/> : ''}
                 {
                     (page === 'home')
-                        ? <Tickers/>
-                        : <User onLogout={this.onLogout.bind(this)}/>
+                        ? <Tickers tickers={this.state.tickers}/>
+                        : <User onLogout={this.onLogout.bind(this)} tickers={this.state.tickers}/>
                 }
                 {/* TODO add Footer*/}
             </div>

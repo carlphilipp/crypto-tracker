@@ -1,24 +1,8 @@
 import React, {Component} from 'react';
 import {Table} from 'reactstrap';
-import {getAllTickers} from '../utils/ApiClient';
 import {FormattedNumber, FormattedTime, IntlProvider}  from 'react-intl'
 
 class Tickers extends Component {
-
-    constructor() {
-        super();
-        this.state = {tickers: []};
-    }
-
-    getTickers() {
-        getAllTickers().then((tickers) => {
-            this.setState({tickers});
-        });
-    }
-
-    componentDidMount() {
-        this.getTickers();
-    }
 
     update() {
         this.props.onUpdate('user')
@@ -29,7 +13,7 @@ class Tickers extends Component {
     }
 
     render() {
-        const {tickers} = this.state;
+        const tickers = this.props.tickers;
         const red = 'red'
         const green = 'green'
         let table = null;
