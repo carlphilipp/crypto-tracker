@@ -16,3 +16,11 @@ body {
 .navbar-menu {
     padding-top: 0.5em;
 }
+
+.hidden {
+  display:none;
+}
+
+.show {
+  display:block;
+}

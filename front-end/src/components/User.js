@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router';
 import {getOneUser, refreshTickers} from '../utils/ApiClient';
 import {getUserId, getAccessToken} from '../service/AuthService';
 import {Table, Button} from 'reactstrap';
@@ -52,6 +53,26 @@ class User extends Component {
         })
     }
 
+    renderderp(index) {
+      let derpderp = (
+          <tr key={index + '_2nd'} className={'show'}>
+            <td colSpan="8">
+                <Button size="lg" color="secondary">Modify</Button>{' '}
+                <Button size="lg" color="danger">Delete</Button>
+            </td>
+          </tr>
+        )
+       return derpderp
+    }
+
+    showHideSecondLine(index) {
+      if(this.refs[index].className === 'show') {
+        this.refs[index].className = "hidden";
+      } else {
+        this.refs[index].className = "show";
+      }
+    }
+
     render() {
         const {user} = this.state;
         const red = 'red'
@@ -61,7 +82,6 @@ class User extends Component {
           table = <Table hover>
               <thead>
                 <tr>
-                    <th></th>
                     <th>Currency</th>
                     <th className="text-right">Quantity</th>
                     <th className="text-right">Average Cost</th>
@@ -72,13 +92,16 @@ class User extends Component {
                 </tr>
               </thead>
               <tbody>{
-                    user.positions.map((position, index) => (
+                    user.positions.map((position, index) => ([
                         <tr key={index}>
-                            <td>
-                              <Button size="lg" color="secondary">Modify</Button>{' '}
-                              <Button size="lg" color="danger">Delete</Button>
-                            </td>
-                            <th scope="row" className="align-middle">{position.currency1.currencyName}</th>
+                            <th>
+                              <Link to="#" onClick={() => this.showHideSecondLine(index)}>{position.currency1.currencyName}</Link>
+                              <div className={'hidden'} ref={index}>
+                                <br />
+                                <Button size="lg" color="secondary">Modify</Button>{' '}
+                                <Button size="lg" color="danger">Delete</Button>
+                              </div>
+                            </th>
                             <td className="text-right align-middle">{position.quantity}</td>
                             <td className="text-right align-middle"><FormattedNumber value={position.unitCostPrice} style={`currency`} currency="USD"/></td>
                             <td className="text-right align-middle"><FormattedNumber value={position.originalValue} style={`currency`} currency="USD"/></td>
@@ -93,13 +116,15 @@ class User extends Component {
                               </font>
                             </td>
                             <td className="text-right align-middle"><FormattedTime value={new Date(position.lastUpdated * 1000)}/></td>
-                        </tr>))}
+                        </tr>
+                      ])
+                    )
+                      }
                         {
                         <tr>
                           <th scope="row" className="align-middle">Total</th>
-                          <td></td>
-                          <td></td>
-                          <td></td>
+                          <td />
+                          <td />
                           <td className="text-right align-middle"><FormattedNumber value={user.originalValue} style={`currency`} currency="USD"/></td>
                           <td className="text-right align-middle"><FormattedNumber value={user.value} style={`currency`} currency="USD"/></td>
                           <td className="text-right align-middle">
