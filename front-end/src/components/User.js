@@ -102,20 +102,20 @@ class User extends Component {
                                 <Button size="lg" color="danger">Delete</Button>
                               </div>
                             </th>
-                            <td className="text-right align-middle">{position.quantity}</td>
-                            <td className="text-right align-middle"><FormattedNumber value={position.unitCostPrice} style={`currency`} currency="USD"/></td>
-                            <td className="text-right align-middle"><FormattedNumber value={position.originalValue} style={`currency`} currency="USD"/></td>
-                            <td className="text-right align-middle"><FormattedNumber value={position.value} style={`currency`} currency="USD"/></td>
-                            <td className="text-right align-middle">
+                            <td className="text-right align-text-top">{position.quantity}</td>
+                            <td className="text-right align-text-top"><FormattedNumber value={position.unitCostPrice} style={`currency`} currency="USD"/></td>
+                            <td className="text-right align-text-top"><FormattedNumber value={position.originalValue} style={`currency`} currency="USD"/></td>
+                            <td className="text-right align-text-top"><FormattedNumber value={position.value} style={`currency`} currency="USD"/></td>
+                            <td className="text-right align-text-top">
                               <FormattedNumber value={position.gain} style={`currency`} currency="USD"/>
                             </td>
-                            <td className="text-right align-middle">
+                            <td className="text-right align-text-top">
                               <font color={(position.gainPercentage > 0) ? green : red}>
                                 {(position.gainPercentage > 0) ? '+' : ''}
                                 <FormattedNumber value={position.gainPercentage} style={`percent`} minimumFractionDigits={2} maximumFractionDigits={2}/>
                               </font>
                             </td>
-                            <td className="text-right align-middle"><FormattedTime value={new Date(position.lastUpdated * 1000)}/></td>
+                            <td className="text-right align-text-top"><FormattedTime value={new Date(position.lastUpdated * 1000)}/></td>
                         </tr>
                       ])
                     )

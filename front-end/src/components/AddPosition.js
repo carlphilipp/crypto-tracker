@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
-import {addPosition} from '../utils/ApiClient';
+import {addPosition, getAllTickers} from '../utils/ApiClient';
 import {getAccessToken} from '../service/AuthService';
 
 class AddPosition extends React.Component {
@@ -11,9 +11,19 @@ class AddPosition extends React.Component {
             ticker: 'BTC',
             quantity: null,
             unitCostPrice: null,
+            tickers: [],
         };
         this.toggle = this.toggle.bind(this);
         this.add = this.add.bind(this);
+    }
+
+    componentDidMount() {
+        getAllTickers()
+        .then((tickers) => {
+          this.setState({
+            tickers: tickers.map(ticker => ticker.currency1.code)
+          })
+        })
     }
 
     toggle() {
@@ -60,11 +70,7 @@ class AddPosition extends React.Component {
                             <FormGroup>
                                 <Label for="ticker">Ticker</Label>
                                 <Input size="lg" type="select" name="select" id="ticker" onChange={evt => this.updateFormTicker(evt)} >
-                                {/* TODO get that list from API */}
-                                  <option>BTC</option>
-                                  <option>ETH</option>
-                                  <option>VTC</option>
-                                  <option>GRS</option>
+                                {this.state.tickers.map((position, index) => (<option key={index}>{position}</option>))}
                                 </Input>
                             </FormGroup>
                             <FormGroup>
