@@ -113,8 +113,6 @@ class User extends Component {
                                       <ModifyPosition user={user} index={index} position={position} onUpdatePosition={this.onUpdatePosition.bind(this)}/>
                                 		<div className="col-md-1">
                                         <DeletePosition position={position} index={index} onDeletePosition={this.onDeletePosition.bind(this)}/>
-                                				{/*<Button size="lg" color="danger" onClick={() => {this.showHideSecondLine(index);this.deletePosition(position)}}>Delete</Button>
-                                      */}
                                     </div>
                                 	</div>
                                 </div>
@@ -175,11 +173,20 @@ class User extends Component {
                     <table>
                       <tbody>
                         <tr>
-                          <td><AddPosition buttonLabel="Add" user={user} updateUserInState={this.updateUserInState.bind(this)} tickers={this.props.tickers}/></td>
-                          <td className="pl-1"><Button size="lg" color="info" onClick={this.refreshTickers.bind(this)}>Refresh</Button></td>
+                          <td>
+                          {/* FIXME understand this css layout and make it better. Update where same technic is used */}
+                            <div className="container-fluid">
+                                <div className="row">
+                                    <AddPosition buttonLabel="Add" user={user} updateUserInState={this.updateUserInState.bind(this)} tickers={this.props.tickers}/>
+                                  <div className="col-md-1">
+                                      <Button size="lg" color="info" onClick={this.refreshTickers.bind(this)}>Refresh</Button>
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
                         </tr>
                         <tr>
-                          <td colSpan="2" className="pt-2">{refresh}</td>
+                          <td className="pt-2">{refresh}</td>
                         </tr>
                       </tbody>
                     </table>
