@@ -1,6 +1,6 @@
 import axios from 'axios';
 const BASE_URL = 'http://localhost:8180';
-export {getAllTickers, getOneUser, createUser, login, refreshTickers, addPosition};
+export {getAllTickers, getOneUser, createUser, login, refreshTickers, addPosition, deletePosition};
 
 function getAllTickers() {
     const url = `${BASE_URL}/api/ticker`;
@@ -42,4 +42,11 @@ function addPosition(accessToken, id, ticker, quantity, unitCostPrice) {
       unitCostPrice: unitCostPrice
     }, config)
       .then(response => response.data);
+}
+
+function deletePosition(accessToken, id, positionId) {
+  console.log("delete position " + positionId)
+  const url = `${BASE_URL}/api/user/` + id + `/position/` + positionId;
+  const config = {headers: {'Authorization': 'Bearer ' + accessToken}};
+  return axios.delete(url, config)
 }

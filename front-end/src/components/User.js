@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
-import {getOneUser, refreshTickers} from '../utils/ApiClient';
+import {getOneUser, refreshTickers, deletePosition} from '../utils/ApiClient';
 import {getUserId, getAccessToken} from '../service/AuthService';
 import {Table, Button} from 'reactstrap';
 import {FormattedNumber, FormattedTime, IntlProvider}  from 'react-intl'
@@ -17,6 +17,7 @@ class User extends Component {
           refreshFadeIn: false
         };
         this.getCurrentPrice = this.getCurrentPrice.bind(this);
+        this.deletePosition = this.deletePosition.bind(this);
     }
 
     updateUserInState(user) { this.setState({user: user}); }
@@ -60,6 +61,13 @@ class User extends Component {
       return this.props.tickers.find(ticker => ticker.id === currencyCode1 + '-' + currencyCode2).price;
     }
 
+    deletePosition(position) {
+        const accessToken = getAccessToken();
+        const userId = getUserId();
+        deletePosition(accessToken, userId, position.id)
+          .then(() => this.getUser(accessToken, userId))
+    }
+
     render() {
         const {user} = this.state;
         const red = 'red'
@@ -87,7 +95,7 @@ class User extends Component {
                               <div className={'hidden'} ref={index}>
                                 <br />
                                 <Button size="lg" color="secondary">Modify</Button>{' '}
-                                <Button size="lg" color="danger">Delete</Button>
+                                <Button size="lg" color="danger" onClick={() => {this.showHideSecondLine(index);this.deletePosition(position)}}>Delete</Button>
                               </div>
                             </th>
                             <td className="text-right align-text-top">{position.quantity}</td>

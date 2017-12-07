@@ -17,4 +17,11 @@ class RestResponseEntityExceptionHandler : ResponseEntityExceptionHandler() {
     protected fun duplicateKeyException(ex: RuntimeException, request: WebRequest): ResponseEntity<Any> {
         return handleExceptionInternal(ex, null, HttpHeaders(), HttpStatus.BAD_REQUEST, request)
     }
+
+    @ExceptionHandler(value = [NotAllowedException::class])
+    protected fun notAllowedException(ex: RuntimeException, request: WebRequest): ResponseEntity<Any> {
+        return handleExceptionInternal(ex, null, HttpHeaders(), HttpStatus.UNAUTHORIZED, request)
+    }
 }
+
+class NotAllowedException : RuntimeException()

@@ -2,11 +2,11 @@ package fr.cph.crypto.backend.service.impl
 
 import fr.cph.crypto.backend.domain.Position
 import fr.cph.crypto.backend.domain.User
+import fr.cph.crypto.backend.exception.NotAllowedException
 import fr.cph.crypto.backend.repository.PositionRepository
 import fr.cph.crypto.backend.repository.UserRepository
 import fr.cph.crypto.backend.service.TickerService
 import fr.cph.crypto.backend.service.UserService
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
@@ -77,28 +77,27 @@ constructor(private val positionRepository: PositionRepository,
         return enrich(user)
     }
 
-    override fun updatePosition(position: Position): Position {
-        tickerService.updateAll()
-        return refreshPosition(position)
+    override fun updatePosition(userId: String, position: Position): Position {
+        val positionFound = userRepository.findOne(userId).positions.filter { it.id == position.id }.toList()
+        if (positionFound.isNotEmpty()) {
+            return positionRepository.save(position)
+        } else {
+            throw NotAllowedException()
+        }
     }
 
-    private fun refreshPosition(position: Position): Position {
-        val ticker = tickerService.findOne(position.currency1.code + "-" + position.currency2.code)
-
-        val quantity = position.quantity
-        val costPrice = position.unitCostPrice
-        val originalValue = quantity * costPrice
-        val value = quantity * ticker.price
-        val gain = value - originalValue
-        val gainPercentage = (value * 100 / originalValue - 100) / 100
-
-        position.originalValue = originalValue
-        position.value = value
-        position.gain = gain
-        position.gainPercentage = gainPercentage
-
-        positionRepository.save(position)
-        return position
+    override fun deletePosition(userId: String, positionId: String) {
+        val user = userRepository.findOne(userId)
+        val positionFound = user.positions.filter { it.id == positionId }.toList()
+        when {
+            positionFound.size == 1 -> {
+                user.positions.remove(positionFound[0])
+                positionRepository.delete(positionId)
+                userRepository.save(user)
+            }
+            positionFound.size > 1 -> throw RuntimeException("Something pretty bad happened")
+            else -> throw NotAllowedException()
+        }
     }
 }
 

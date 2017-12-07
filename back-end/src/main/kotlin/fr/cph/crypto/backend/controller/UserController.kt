@@ -41,8 +41,13 @@ constructor(private val userService: UserService) {
     @PreAuthorize("#id == authentication.details.decodedDetails['id']")
     @RequestMapping(value = ["/{id}/position/{positionId}"], method = [RequestMethod.PUT], produces = ["application/json"])
     fun updatePosition(@PathVariable("id") id: String, @RequestBody position: Position): Position {
-        // TODO verify that the position is own by that user
-        return userService.updatePosition(position)
+        return userService.updatePosition(id, position)
+    }
+
+    @PreAuthorize("#id == authentication.details.decodedDetails['id']")
+    @RequestMapping(value = ["/{id}/position/{positionId}"], method = [RequestMethod.DELETE], produces = ["application/json"])
+    fun deletePosition(@PathVariable("id") id: String,  @PathVariable("positionId") positionId: String) {
+        userService.deletePosition(id, positionId)
     }
 
     companion object {

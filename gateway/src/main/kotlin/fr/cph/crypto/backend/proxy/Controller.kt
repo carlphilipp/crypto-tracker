@@ -15,7 +15,11 @@ class Controller(private val restTemplate: RestTemplate, private val restTemplat
     private val port = 8080
     private var currentToken: Token? = null
 
-    @RequestMapping(value = ["/**"], produces = ["application/json"])
+    @RequestMapping(
+            value = ["/**"],
+            produces = ["application/json"],
+            method = [RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE]
+    )
     fun proxy(@RequestHeader("Authorization", required = false) authorization: String?,
               @RequestBody(required = false) body: String?,
               method: HttpMethod,

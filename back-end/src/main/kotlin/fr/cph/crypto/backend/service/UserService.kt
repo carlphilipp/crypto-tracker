@@ -12,7 +12,9 @@ interface UserService : UserDetailsService {
 
     fun findAll(): List<User>
 
-    fun addPosition(id:String, position: Position): User
+    fun addPosition(id: String, position: Position): User
 
-    fun updatePosition(position: Position): Position
+    fun updatePosition(userId: String, position: Position): Position
+
+    fun deletePosition(userId: String, positionId: String)
 }

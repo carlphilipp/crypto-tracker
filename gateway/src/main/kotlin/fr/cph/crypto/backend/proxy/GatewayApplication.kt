@@ -9,7 +9,6 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory
 import org.springframework.http.client.support.BasicAuthorizationInterceptor
 import org.springframework.web.client.RestTemplate
 
-
 @Configuration
 @SpringBootApplication
 class GatewayApplication {
