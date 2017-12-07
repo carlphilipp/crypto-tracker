@@ -51,7 +51,7 @@ private class CustomUserAuthenticationConverter(private val userRepository: User
     override fun convertUserAuthentication(authentication: Authentication): Map<String, *> {
         val user = userRepository.findOneByEmail(authentication.name)
         val response = super.convertUserAuthentication(authentication) as MutableMap<String, Any>
-        response.put(ID, user.id!!)
+        response.put(ID, user?.id!!)
         return response
     }
 

@@ -50,6 +50,11 @@ constructor(private val userService: UserService) {
         userService.deletePosition(id, positionId)
     }
 
+    @RequestMapping(value = ["/share"])
+    fun updateAllUsersShareValue() {
+        userService.updateAllUsersShareValue()
+    }
+
     companion object {
         private val LOGGER = LoggerFactory.getLogger(UserController::class.java)
     }

@@ -11,9 +11,9 @@ interface PositionRepository : MongoRepository<Position, String>
 interface TickerRepository : MongoRepository<Ticker, String>
 
 interface UserRepository : MongoRepository<User, String> {
-    fun findOneByEmail(email: String): User
+    fun findOneByEmail(email: String): User?
 }
 
 interface ShareValueRepository : MongoRepository<ShareValue, String> {
-    fun findTop1ByUserOrderByTimestampDesc(user: User): ShareValue
+    fun findTop1ByUserOrderByTimestampDesc(user: User): ShareValue?
 }

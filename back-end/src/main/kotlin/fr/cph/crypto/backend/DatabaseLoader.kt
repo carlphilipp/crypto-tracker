@@ -45,7 +45,7 @@ constructor(
         val powerTicker = tickerRepository.findOne("POWR-USD")
 
 
-        val positions = ArrayList<Position>()
+/*        val positions = ArrayList<Position>()
         val positionBtc = Position.buildPosition(btcTicker, 0.06564277, 7616.98508457)
         val positionEth = Position.buildPosition(ethTicker, 1.57128061, 318.2)
         val positionVtc = Position.buildPosition(vtcTicker, 122.10096277, 4.3)
@@ -78,9 +78,31 @@ constructor(
 
         shareValueService.addNewShareValue(newUser)
         shareValueService.addNewShareValue(newUser)
-        shareValueService.addNewShareValue(newUser)
+        shareValueService.addNewShareValue(newUser)*/
 
-        val derp = TimeZone.getTimeZone("GMT").toString()
-        derp;
+        val user = User(email = "cp.harmant@gmail.com", password = "PASSWORD", role = Role.ADMIN)
+        user.id = "1"
+        val passwordEncoded = passwordEncoder.encodePassword(user.password, null)
+        user.password = passwordEncoded
+        userRepository.save(user)
+
+        val positionBtc = Position.buildPosition(btcTicker, 0.06564277, 7616.98508457)
+        userService.addPosition(user.id!!, positionBtc)
+        val positionEth = Position.buildPosition(ethTicker, 1.57128061, 318.2)
+        userService.addPosition(user.id!!, positionEth)
+        val positionVtc = Position.buildPosition(vtcTicker, 122.10096277, 4.3)
+        userService.addPosition(user.id!!, positionVtc)
+        val positionGrs = Position.buildPosition(grsTicker, 1025.10079425, 1.25)
+        userService.addPosition(user.id!!, positionGrs)
+        val positionEthos = Position.buildPosition(ethosTicker, 189.81, 1.52)
+        userService.addPosition(user.id!!, positionEthos)
+        val positionCardano = Position.buildPosition(cardanoTicker, 3095.901, 0.12)
+        userService.addPosition(user.id!!, positionCardano)
+        val positionPower = Position.buildPosition(powerTicker, 443.556, 0.66)
+        userService.addPosition(user.id!!, positionPower)
+
+        userService.updateAllUsersShareValue()
+        userService.updateAllUsersShareValue()
+        userService.updateAllUsersShareValue()
     }
 }

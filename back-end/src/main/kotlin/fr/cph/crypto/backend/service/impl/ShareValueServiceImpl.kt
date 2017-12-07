@@ -22,7 +22,7 @@ class ShareValueServiceImpl(private val shareValueRepository: ShareValueReposito
                     shareValue = 100.0)
             shareValueRepository.save(shareValueToSave)
         } else {
-            val quantity = lastShareValue.shareQuantity + (liquidityMovement) / ((user.value!! - liquidityMovement) / lastShareValue.shareQuantity)
+            val quantity = lastShareValue.shareQuantity + (user.liquidityMovement) / ((user.value!! - user.liquidityMovement) / lastShareValue.shareQuantity)
             val shareValue = user.value!! / quantity
 
             val shareValueToSave = ShareValue(

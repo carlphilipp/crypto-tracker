@@ -24,7 +24,7 @@ constructor(private val positionRepository: PositionRepository,
 
     override fun loadUserByUsername(username: String): UserDetails {
         val user = userRepository.findOneByEmail(username)
-        val authorities = listOf<GrantedAuthority>(SimpleGrantedAuthority(user.role.name))
+        val authorities = listOf<GrantedAuthority>(SimpleGrantedAuthority(user!!.role.name))
         return org.springframework.security.core.userdetails.User(user.email, user.password, authorities)
     }
 
@@ -49,6 +49,8 @@ constructor(private val positionRepository: PositionRepository,
         findAll().forEach { user ->
             run {
                 shareValueService.addNewShareValue(user)
+                user.liquidityMovement = 0.0
+                userRepository.save(user)
             }
         }
     }
@@ -83,6 +85,9 @@ constructor(private val positionRepository: PositionRepository,
         val user = userRepository.findOne(id)
         positionRepository.save(position)
         user.positions.add(position)
+
+        user.liquidityMovement = user.liquidityMovement + position.quantity * position.unitCostPrice
+
         userRepository.save(user)
         return enrich(user)
     }
@@ -101,6 +106,11 @@ constructor(private val positionRepository: PositionRepository,
         val positionFound = user.positions.filter { it.id == positionId }.toList()
         when {
             positionFound.size == 1 -> {
+
+                // FIXME Take current value but that should be given by the user
+                val ticker = tickerService.findOne(positionFound[0].currency1.code + "-" + positionFound[0].currency2.code)
+                user.liquidityMovement = user.liquidityMovement - positionFound[0].quantity * ticker.price
+
                 user.positions.remove(positionFound[0])
                 positionRepository.delete(positionId)
                 userRepository.save(user)
