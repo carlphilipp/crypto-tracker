@@ -5,7 +5,7 @@ import {getUserId, getAccessToken} from '../service/AuthService';
 import {Table, Button} from 'reactstrap';
 import {FormattedNumber, FormattedTime, IntlProvider}  from 'react-intl'
 import RefreshSuccess from './RefreshSuccess';
-import AddPosition from './AddPosition';
+import AddPosition from './modals/AddPosition';
 import {delay} from '../utils/Utils';
 
 class User extends Component {

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
-import {addPosition} from '../utils/ApiClient';
-import {getAccessToken} from '../service/AuthService';
+import {addPosition} from '../../utils/ApiClient';
+import {getAccessToken} from '../../service/AuthService';
 
 class AddPosition extends React.Component {
     constructor(props) {

@@ -1,9 +1,9 @@
 import React from 'react';
 import {Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
-import {login} from '../utils/ApiClient';
-import {storeToken} from '../service/AuthService';
-import {delay} from '../utils/Utils';
-import LoginFailure from './LoginFailure';
+import {login} from '../../utils/ApiClient';
+import {storeToken} from '../../service/AuthService';
+import {delay} from '../../utils/Utils';
+import LoginFailure from '../LoginFailure';
 
 class Login extends React.Component {
 
@@ -35,9 +35,7 @@ class Login extends React.Component {
         });
     }
 
-    onLogin() {
-        this.props.onLogin()
-    }
+    onLogin() { this.props.onLogin() }
 
     loginUser() {
         login(this.state.email, this.state.password)
