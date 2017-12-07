@@ -45,7 +45,7 @@ constructor(private val userService: UserService) {
     }
 
     @PreAuthorize("#id == authentication.details.decodedDetails['id']")
-    @RequestMapping(value = ["/{id}/position/{positionId}"], method = [RequestMethod.DELETE], produces = ["application/json"])
+    @RequestMapping(value = ["/{id}/position/{positionId}"], method = [RequestMethod.DELETE])
     fun deletePosition(@PathVariable("id") id: String,  @PathVariable("positionId") positionId: String) {
         userService.deletePosition(id, positionId)
     }
