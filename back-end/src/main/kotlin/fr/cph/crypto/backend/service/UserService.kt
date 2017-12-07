@@ -20,5 +20,5 @@ interface UserService : UserDetailsService {
 
     fun deletePosition(userId: String, positionId: String)
 
-    fun updateShareValueAllUsers()
+    fun updateAllUsersShareValue()
 }

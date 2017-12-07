@@ -18,9 +18,9 @@ class Scheduler(
     }
 
     @Scheduled(cron = "0 0 0 * * *", zone = "GMT")
-    fun update() {
+    fun updateAllUsersShareValue() {
         log.info("Refresh all users share value")
-        userService.updateShareValueAllUsers()
+        userService.updateAllUsersShareValue()
     }
 
     companion object {

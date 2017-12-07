@@ -45,7 +45,7 @@ constructor(private val positionRepository: PositionRepository,
                 .toList()
     }
 
-    override fun updateShareValueAllUsers() {
+    override fun updateAllUsersShareValue() {
         findAll().forEach { user ->
             run {
                 shareValueService.addNewShareValue(user)
