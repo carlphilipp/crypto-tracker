@@ -19,10 +19,7 @@ class DeletePosition extends React.Component {
 
     toggle() { this.setState({ modal: !this.state.modal }); }
 
-    onLogin() { this.props.onLogin() }
-
     delete() {
-        console.log("delete")
         const accessToken = getAccessToken();
         const userId = getUserId();
         deletePosition(accessToken, userId, this.props.position.id)
@@ -48,6 +45,7 @@ class DeletePosition extends React.Component {
                         <b>Quantity:</b> {this.props.position.quantity}<br />
                         <b>Value:</b> <FormattedNumber value={this.props.position.value} style={`currency`} currency="USD"/><br />
                     </ModalBody>
+                      {/* FIXME: create a state failure*/}
                     {(this.state.failure) ? <LoginFailure /> : ''}
                     <ModalFooter>
                         <Button color="danger" size="lg" onClick={this.delete}>Delete</Button>

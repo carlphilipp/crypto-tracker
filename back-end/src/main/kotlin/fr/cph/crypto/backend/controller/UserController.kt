@@ -38,15 +38,15 @@ constructor(private val userService: UserService) {
         return userService.addPosition(id, position)
     }
 
-    @PreAuthorize("#id == authentication.details.decodedDetails['id']")
+    @PreAuthorize("#id == authentication.details.decodedDetails['id'] and #positionId == #position.id")
     @RequestMapping(value = ["/{id}/position/{positionId}"], method = [RequestMethod.PUT], produces = ["application/json"])
-    fun updatePosition(@PathVariable("id") id: String, @RequestBody position: Position): Position {
+    fun updatePosition(@PathVariable("id") id: String, @RequestBody position: Position, @PathVariable("positionId") positionId: String): Position {
         return userService.updatePosition(id, position)
     }
 
     @PreAuthorize("#id == authentication.details.decodedDetails['id']")
     @RequestMapping(value = ["/{id}/position/{positionId}"], method = [RequestMethod.DELETE])
-    fun deletePosition(@PathVariable("id") id: String,  @PathVariable("positionId") positionId: String) {
+    fun deletePosition(@PathVariable("id") id: String, @PathVariable("positionId") positionId: String) {
         userService.deletePosition(id, positionId)
     }
 

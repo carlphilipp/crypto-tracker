@@ -1,7 +1,7 @@
 logging:
   level:
     fr.cph.crypto: DEBUG
-    org.springframework.security: INFO
+    org.springframework.security: DEBUG
 
 security:
   signing-key: MaYzkSjmkzPC57L

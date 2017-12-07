@@ -26,9 +26,7 @@ class User extends Component {
     logout() { this.props.onLogout(); }
 
     getUser(accessToken, userId) {
-        getOneUser(accessToken, userId).then((user) => {
-            this.setState({user: user});
-        })
+        getOneUser(accessToken, userId).then((user) => { this.setState({user: user}); })
         .catch((error) => {
           if(error.response.status === 401 && error.response.data.error_description.includes("expired")){
             console.log("Token expired, logging out...")
@@ -52,9 +50,9 @@ class User extends Component {
 
     showHideSecondLine(index) {
       if(this.refs[index].className === 'show') {
-        this.refs[index].className = "hidden";
+        this.refs[index].className = 'hidden';
       } else {
-        this.refs[index].className = "show";
+        this.refs[index].className = 'show';
       }
     }
 
@@ -67,8 +65,17 @@ class User extends Component {
       }
     }
 
+    // FIXME: Merge both next methods
     onDeletePosition(index) {
       console.log("on delete")
+      this.showHideSecondLine(index)
+      const accessToken = getAccessToken();
+      const userId = getUserId();
+      this.getUser(accessToken, userId);
+    }
+
+    onUpdatePosition(index) {
+      console.log("on udpate")
       this.showHideSecondLine(index)
       const accessToken = getAccessToken();
       const userId = getUserId();
@@ -103,7 +110,7 @@ class User extends Component {
                                 <br />
                                 <div className="container-fluid">
                                 	<div className="row">
-                                      <ModifyPosition position={position}/>
+                                      <ModifyPosition user={user} index={index} position={position} onUpdatePosition={this.onUpdatePosition.bind(this)}/>
                                 		<div className="col-md-1">
                                         <DeletePosition position={position} index={index} onDeletePosition={this.onDeletePosition.bind(this)}/>
                                 				{/*<Button size="lg" color="danger" onClick={() => {this.showHideSecondLine(index);this.deletePosition(position)}}>Delete</Button>

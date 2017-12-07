@@ -1,6 +1,6 @@
 import axios from 'axios';
 const BASE_URL = 'http://localhost:8180';
-export {getAllTickers, getOneUser, createUser, login, refreshTickers, addPosition, deletePosition};
+export {getAllTickers, getOneUser, createUser, login, refreshTickers, addPosition, deletePosition, updatePosition};
 
 function getAllTickers() {
     const url = `${BASE_URL}/api/ticker`;
@@ -42,6 +42,18 @@ function addPosition(accessToken, id, ticker, quantity, unitCostPrice) {
       unitCostPrice: unitCostPrice
     }, config)
       .then(response => response.data);
+}
+
+function updatePosition(accessToken, id, positionId, ticker, quantity, unitCostPrice) {
+  const url = `${BASE_URL}/api/user/` + id + `/position/` + positionId;
+  const config = {headers: {'Authorization': 'Bearer ' + accessToken}};
+  return axios.put(url, {
+      id: positionId,
+      currency1: ticker,
+      currency2: 'USD',
+      quantity: quantity,
+      unitCostPrice: unitCostPrice
+    }, config);
 }
 
 function deletePosition(accessToken, id, positionId) {

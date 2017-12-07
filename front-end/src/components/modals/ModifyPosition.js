@@ -1,8 +1,7 @@
 import React from 'react';
-import {Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
-import {login} from '../../utils/ApiClient';
-import {storeToken} from '../../service/AuthService';
-import {delay} from '../../utils/Utils';
+import {Button, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
+import {updatePosition} from '../../utils/ApiClient';
+import {getAccessToken} from '../../service/AuthService';
 import LoginFailure from '../LoginFailure';
 
 class ModifyPosition extends React.Component {
@@ -11,13 +10,19 @@ class ModifyPosition extends React.Component {
         super(props);
         this.state = {
             modal: false,
-            email: null,
-            password: null,
+            quantity: null,
+            unitCostPrice: null,
             failure: false,
-            refresh: false,
         };
         this.toggle = this.toggle.bind(this);
-        this.loginUser = this.loginUser.bind(this);
+        this.modifyPosition = this.modifyPosition.bind(this);
+    }
+
+    componentDidMount() {
+      this.setState({
+          quantity: this.props.position.quantity,
+          unitCostPrice: this.props.position.unitCostPrice,
+      });
     }
 
     toggle() {
@@ -37,17 +42,15 @@ class ModifyPosition extends React.Component {
 
     onLogin() { this.props.onLogin() }
 
-    loginUser() {
-        login(this.state.email, this.state.password)
+    modifyPosition() {
+        updatePosition(getAccessToken(), this.props.user.id, this.props.position.id, this.props.position.currency1.code, this.state.quantity, this.state.unitCostPrice)
             .then((token) => {
-                this.toggle()
-                storeToken(token);
-                // FIXME: Should not have to use a timer
-                delay(300).then(() => {this.onLogin()});
+                this.toggle();
+                this.props.onUpdatePosition(this.props.index);
             })
             .catch((error) => {
-              console.log("Error: " + error)
-              this.setState({failure:true})
+              console.log("Error: " + error);
+              this.setState({failure:true});
             })
     }
 
@@ -56,22 +59,25 @@ class ModifyPosition extends React.Component {
             <div>
                 <Button color="secondary" size="lg" onClick={this.toggle}>Modify</Button>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-                    <ModalHeader toggle={this.toggle}>Login</ModalHeader>
+                    <ModalHeader toggle={this.toggle}>Modify</ModalHeader>
                     <ModalBody>
-                        <Form>
-                            <FormGroup>
-                                <Label for="exampleEmail">Email</Label>
-                                <Input size="lg" type="email" name="email" id="exampleEmail" onChange={evt => this.handleUserInput(evt)} placeholder="your email" autoFocus="true"/>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label for="examplePassword">Password</Label>
-                                <Input size="lg" type="password" name="password" onChange={evt => this.handleUserInput(evt)} id="examplePassword" placeholder="your password"/>
-                            </FormGroup>
-                        </Form>
+                      <FormGroup>
+                          <Label for="ticker">Ticker</Label>
+                          <Input size="lg" type="text" name="select" id="ticker" onChange={evt => this.handleUserInput(evt)} value={this.props.position.currency1.code}/>
+                      </FormGroup>
+                      <FormGroup>
+                          <Label for="quantity">Quantity</Label>
+                          <Input size="lg" type="text" name="quantity" id="quantity" onChange={evt => this.handleUserInput(evt)} value={this.state.quantity}/>
+                      </FormGroup>
+                      <FormGroup>
+                          <Label for="unitCostPrice">Unit Cost Price</Label>
+                          <Input size="lg" type="text" name="unitCostPrice" id="unitCostPrice" onChange={evt => this.handleUserInput(evt)} value={this.state.unitCostPrice}/>
+                      </FormGroup>
                     </ModalBody>
+                    {/* FIXME: create a state failure*/}
                     {(this.state.failure) ? <LoginFailure /> : ''}
                     <ModalFooter>
-                        <Button color="success" size="lg" onClick={this.loginUser}>Login</Button>{' '}
+                        <Button color="success" size="lg" onClick={this.modifyPosition}>Modify</Button>{' '}
                         <Button color="secondary" size="lg" onClick={this.toggle}>Cancel</Button>
                     </ModalFooter>
                 </Modal>

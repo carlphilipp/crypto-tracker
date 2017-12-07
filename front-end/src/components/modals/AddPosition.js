@@ -34,6 +34,7 @@ class AddPosition extends React.Component {
         });
     }
 
+    // FIXME use a handleUserInput instead of those 3 methods
     updateUnitCostPrice(evt) {
         this.setState({
             unitCostPrice: evt.target.value
