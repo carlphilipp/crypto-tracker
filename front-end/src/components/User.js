@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
-import {getOneUser, refreshTickers, deletePosition} from '../utils/ApiClient';
+import {getOneUser, refreshTickers} from '../utils/ApiClient';
 import {getUserId, getAccessToken} from '../service/AuthService';
 import {Table, Button} from 'reactstrap';
 import {FormattedNumber, FormattedTime, IntlProvider}  from 'react-intl'
 import RefreshSuccess from './RefreshSuccess';
 import AddPosition from './modals/AddPosition';
+import ModifyPosition from './modals/ModifyPosition';
+import DeletePosition from './modals/DeletePosition';
 import {delay} from '../utils/Utils';
 
 class User extends Component {
@@ -17,7 +19,6 @@ class User extends Component {
           refreshFadeIn: false
         };
         this.getCurrentPrice = this.getCurrentPrice.bind(this);
-        this.deletePosition = this.deletePosition.bind(this);
     }
 
     updateUserInState(user) { this.setState({user: user}); }
@@ -58,14 +59,20 @@ class User extends Component {
     }
 
     getCurrentPrice(currencyCode1, currencyCode2) {
-      return this.props.tickers.find(ticker => ticker.id === currencyCode1 + '-' + currencyCode2).price;
+      const ticker = this.props.tickers.find(ticker => ticker.id === currencyCode1 + '-' + currencyCode2)
+      if (ticker === undefined) {
+        return 0;
+      } else {
+        return ticker.price;
+      }
     }
 
-    deletePosition(position) {
-        const accessToken = getAccessToken();
-        const userId = getUserId();
-        deletePosition(accessToken, userId, position.id)
-          .then(() => this.getUser(accessToken, userId))
+    onDeletePosition(index) {
+      console.log("on delete")
+      this.showHideSecondLine(index)
+      const accessToken = getAccessToken();
+      const userId = getUserId();
+      this.getUser(accessToken, userId);
     }
 
     render() {
@@ -94,8 +101,16 @@ class User extends Component {
                               <Link to="#" onClick={() => this.showHideSecondLine(index)}>{position.currency1.currencyName}</Link>
                               <div className={'hidden'} ref={index}>
                                 <br />
-                                <Button size="lg" color="secondary">Modify</Button>{' '}
-                                <Button size="lg" color="danger" onClick={() => {this.showHideSecondLine(index);this.deletePosition(position)}}>Delete</Button>
+                                <div className="container-fluid">
+                                	<div className="row">
+                                      <ModifyPosition position={position}/>
+                                		<div className="col-md-1">
+                                        <DeletePosition position={position} index={index} onDeletePosition={this.onDeletePosition.bind(this)}/>
+                                				{/*<Button size="lg" color="danger" onClick={() => {this.showHideSecondLine(index);this.deletePosition(position)}}>Delete</Button>
+                                      */}
+                                    </div>
+                                	</div>
+                                </div>
                               </div>
                             </th>
                             <td className="text-right align-text-top">{position.quantity}</td>
