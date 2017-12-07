@@ -32,3 +32,8 @@ data class User(@Indexed(unique = true) val email: String,
     @DBRef
     var positions: MutableList<Position> = mutableListOf()
 }
+
+enum class Role {
+    USER,
+    ADMIN
+}

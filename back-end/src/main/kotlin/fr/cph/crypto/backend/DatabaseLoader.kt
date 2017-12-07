@@ -6,10 +6,14 @@ import fr.cph.crypto.backend.domain.User
 import fr.cph.crypto.backend.repository.PositionRepository
 import fr.cph.crypto.backend.repository.TickerRepository
 import fr.cph.crypto.backend.repository.UserRepository
+import fr.cph.crypto.backend.service.ShareValueService
 import fr.cph.crypto.backend.service.TickerService
+import fr.cph.crypto.backend.service.UserService
+import fr.cph.crypto.backend.repository.ShareValueRepository
 import org.springframework.boot.CommandLineRunner
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder
 import org.springframework.stereotype.Component
+import java.util.*
 
 @Component
 class DatabaseLoader
@@ -18,6 +22,9 @@ constructor(
         private val userRepository: UserRepository,
         private val passwordEncoder: ShaPasswordEncoder,
         private val positionRepository: PositionRepository,
+        private val shareValueService: ShareValueService,
+        private val shareValueRepository: ShareValueRepository,
+        private val userService: UserService,
         private val tickerService: TickerService) : CommandLineRunner {
 
 
@@ -25,6 +32,7 @@ constructor(
         tickerRepository.deleteAll()
         userRepository.deleteAll()
         positionRepository.deleteAll()
+        shareValueRepository.deleteAll()
 
         tickerService.updateAll()
 
@@ -65,5 +73,14 @@ constructor(
         val passwordEncoded = passwordEncoder.encodePassword(user.password, null)
         user.password = passwordEncoded
         userRepository.save(user)
+
+        val newUser = userService.findOne(user.id!!)
+
+        shareValueService.addNewShareValue(newUser)
+        shareValueService.addNewShareValue(newUser)
+        shareValueService.addNewShareValue(newUser)
+
+        val derp = TimeZone.getTimeZone("GMT").toString()
+        derp;
     }
 }

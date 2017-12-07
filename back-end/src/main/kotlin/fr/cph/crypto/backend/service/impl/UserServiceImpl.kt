@@ -5,6 +5,7 @@ import fr.cph.crypto.backend.domain.User
 import fr.cph.crypto.backend.exception.NotAllowedException
 import fr.cph.crypto.backend.repository.PositionRepository
 import fr.cph.crypto.backend.repository.UserRepository
+import fr.cph.crypto.backend.service.ShareValueService
 import fr.cph.crypto.backend.service.TickerService
 import fr.cph.crypto.backend.service.UserService
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder
@@ -18,6 +19,7 @@ class UserServiceImpl
 constructor(private val positionRepository: PositionRepository,
             private val userRepository: UserRepository,
             private val tickerService: TickerService,
+            private val shareValueService: ShareValueService,
             private val passwordEncoder: ShaPasswordEncoder) : UserService {
 
     override fun loadUserByUsername(username: String): UserDetails {
@@ -41,6 +43,14 @@ constructor(private val positionRepository: PositionRepository,
                 .findAll()
                 .map { user -> enrich(user) }
                 .toList()
+    }
+
+    override fun updateShareValueAllUsers() {
+        findAll().forEach { user ->
+            run {
+                shareValueService.addNewShareValue(user)
+            }
+        }
     }
 
     private fun enrich(user: User): User {
