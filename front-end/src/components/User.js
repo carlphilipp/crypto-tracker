@@ -40,6 +40,7 @@ class User extends Component {
     componentDidMount() { this.getUser(getAccessToken(), getUserId()); }
 
     refreshTickers() {
+      // TODO create a service to avoid accessing token and user id here
       refreshTickers()
         .then(() => this.getUser(getAccessToken(), getUserId()))
         .then(() => {
@@ -174,7 +175,7 @@ class User extends Component {
                       <tbody>
                         <tr>
                           <td>
-                          {/* FIXME understand this css layout and make it better. Update where same technic is used */}
+                          {/* TODO understand this css layout and make it better. Update where same technic is used */}
                             <div className="container-fluid">
                                 <div className="row">
                                     <AddPosition buttonLabel="Add" user={user} updateUserInState={this.updateUserInState.bind(this)} tickers={this.props.tickers}/>

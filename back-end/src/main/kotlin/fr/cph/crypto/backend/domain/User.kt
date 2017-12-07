@@ -9,10 +9,11 @@ import org.springframework.data.mongodb.core.mapping.DBRef
 import org.springframework.data.mongodb.core.mapping.Document
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder("id", "email", "value", "originalValue", "gain", "gainPercentage", "positions")
+@JsonPropertyOrder("id", "email", "currency", "value", "originalValue", "gain", "gainPercentage", "positions")
 @Document
 data class User(@Indexed(unique = true) val email: String,
                 @JsonIgnore var password: String,
+                val currency: Currency = Currency.USD,
                 @JsonIgnore val role: Role = Role.USER) {
 
     @Id

@@ -10,7 +10,6 @@ import fr.cph.crypto.backend.service.TickerService
 import org.springframework.boot.CommandLineRunner
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder
 import org.springframework.stereotype.Component
-import java.util.*
 
 @Component
 class DatabaseLoader
@@ -60,7 +59,7 @@ constructor(
         positionRepository.save(positionEthos)
         positionRepository.save(positionCardano)
         positionRepository.save(positionPower)
-        val user = User("cp.harmant@gmail.com", "PASSWORD", Role.ADMIN)
+        val user = User(email = "cp.harmant@gmail.com", password = "PASSWORD", role = Role.ADMIN)
         user.id = "1"
         user.positions = positions
         val passwordEncoded = passwordEncoder.encodePassword(user.password, null)
