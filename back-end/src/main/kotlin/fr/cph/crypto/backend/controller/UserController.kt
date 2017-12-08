@@ -58,6 +58,7 @@ constructor(private val userService: UserService) {
         return userService.findAllShareValue(id)
     }
 
+    // TODO: delete that endpoint when share value dev is done
     @RequestMapping(value = ["/share"])
     fun updateAllUsersShareValue() {
         userService.updateAllUsersShareValue()
