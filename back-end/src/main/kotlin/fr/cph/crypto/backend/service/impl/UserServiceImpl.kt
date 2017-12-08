@@ -101,15 +101,12 @@ constructor(private val positionRepository: PositionRepository,
         }
     }
 
-    override fun deletePosition(userId: String, positionId: String) {
+    override fun deletePosition(userId: String, positionId: String, price: Double) {
         val user = userRepository.findOne(userId)
         val positionFound = user.positions.filter { it.id == positionId }.toList()
         when {
             positionFound.size == 1 -> {
-
-                // FIXME Take current value but that should be given by the user
-                val ticker = tickerService.findOne(positionFound[0].currency1.code + "-" + positionFound[0].currency2.code)
-                user.liquidityMovement = user.liquidityMovement - positionFound[0].quantity * ticker.price
+                user.liquidityMovement = user.liquidityMovement - price
 
                 user.positions.remove(positionFound[0])
                 positionRepository.delete(positionId)

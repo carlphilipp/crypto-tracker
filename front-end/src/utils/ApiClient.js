@@ -55,9 +55,9 @@ function updatePosition(accessToken, id, positionId, ticker, quantity, unitCostP
     }, config);
 }
 
-function deletePosition(accessToken, id, positionId) {
+function deletePosition(accessToken, id, positionId, price) {
   console.log("delete position " + positionId)
-  const url = `${BASE_URL}/api/user/` + id + `/position/` + positionId;
+  const url = `${BASE_URL}/api/user/` + id + `/position/` + positionId + `/` + price;
   const config = {headers: {'Authorization': 'Bearer ' + accessToken}};
   return axios.delete(url, config)
 }

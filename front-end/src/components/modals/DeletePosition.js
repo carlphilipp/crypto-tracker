@@ -12,6 +12,7 @@ class DeletePosition extends React.Component {
         this.state = {
             modal: false,
             failure: false,
+            price: null,
         };
         this.toggle = this.toggle.bind(this);
         this.delete = this.delete.bind(this);
@@ -19,10 +20,26 @@ class DeletePosition extends React.Component {
 
     toggle() { this.setState({ modal: !this.state.modal }); }
 
+    updatePrice(evt) {
+      switch(evt.target.id) {
+        case "radio1":
+          this.setState({ price: this.refs.value.value });
+          break;
+        case "radio2":
+          this.setState({ price: this.props.position.value });
+          break;
+        case "value":
+          if(this.refs.radio1.checked === true) {
+            this.setState({ price: this.refs.value.value });
+          }
+          break;
+      }
+    }
+
     delete() {
         const accessToken = getAccessToken();
         const userId = getUserId();
-        deletePosition(accessToken, userId, this.props.position.id)
+        deletePosition(accessToken, userId, this.props.position.id, this.state.price)
             .then((token) => {
                 this.toggle()
                 this.props.onUpdateOrDelete(this.props.index)
@@ -51,20 +68,14 @@ class DeletePosition extends React.Component {
                           {this.props.position.quantity}
                         </FormGroup>
                         <FormGroup>
-                          <legend>Radio Buttons</legend>
+                          <Label for="value">Value</Label>
                           <FormGroup check>
-                            <Label check>
-                              <Input type="radio" name="radio1" />{' '} Option one is this and that—be sure to include why its great
-                            </Label>
+                              <input type="radio" name="radio1" id="radio1" defaultChecked ref="radio1" onClick={(evt) => this.updatePrice(evt)}/>{' '}<input size="lg" type="text" ref="value" name="value" id="value" onBlur={(evt) => this.updatePrice(evt)}/>
                           </FormGroup>
                           <FormGroup check>
-                            <Label check>
-                              <Input type="radio" name="radio1" />{' '}
-                              Option two can be something else and selecting it will deselect option one
-                            </Label>
+                              <input type="radio" name="radio1" id="radio2" ref="radio2" onClick={(evt) => this.updatePrice(evt)}/>{' '}<FormattedNumber value={this.props.position.value} style={`currency`} currency="USD"/> (Market value)
                           </FormGroup>
                         </FormGroup>
-                        <b>Value:</b> <FormattedNumber value={this.props.position.value} style={`currency`} currency="USD"/><br />
                       </Form>
                     </ModalBody>
                       {/* FIXME: create a state failure*/}

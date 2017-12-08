@@ -4,10 +4,8 @@ import fr.cph.crypto.backend.domain.Position
 import fr.cph.crypto.backend.domain.Role
 import fr.cph.crypto.backend.domain.User
 import fr.cph.crypto.backend.repository.PositionRepository
-import fr.cph.crypto.backend.repository.ShareValueRepository
 import fr.cph.crypto.backend.repository.TickerRepository
 import fr.cph.crypto.backend.repository.UserRepository
-import fr.cph.crypto.backend.service.ShareValueService
 import fr.cph.crypto.backend.service.TickerService
 import fr.cph.crypto.backend.service.UserService
 import org.springframework.boot.CommandLineRunner
@@ -21,17 +19,13 @@ constructor(
         private val userRepository: UserRepository,
         private val passwordEncoder: ShaPasswordEncoder,
         private val positionRepository: PositionRepository,
-        private val shareValueService: ShareValueService,
-        private val shareValueRepository: ShareValueRepository,
         private val userService: UserService,
         private val tickerService: TickerService) : CommandLineRunner {
-
 
     override fun run(vararg strings: String) {
         tickerRepository.deleteAll()
         userRepository.deleteAll()
         positionRepository.deleteAll()
-        shareValueRepository.deleteAll()
 
         tickerService.updateAll()
 
@@ -64,8 +58,5 @@ constructor(
         val positionPower = Position.buildPosition(powerTicker, 443.556, 0.66)
         userService.addPosition(user.id!!, positionPower)
 
-        userService.updateAllUsersShareValue()
-        userService.updateAllUsersShareValue()
-        userService.updateAllUsersShareValue()
     }
 }

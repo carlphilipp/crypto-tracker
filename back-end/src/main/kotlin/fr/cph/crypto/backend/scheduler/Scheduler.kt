@@ -17,7 +17,8 @@ class Scheduler(
         tickerService.updateAll()
     }
 
-    @Scheduled(cron = "0 0 0 * * *", zone = "GMT")
+    //@Scheduled(cron = "0 0 0 * * *", zone = "GMT")
+    @Scheduled(cron = "0 0/30 * * * *", zone = "GMT")
     fun updateAllUsersShareValue() {
         log.info("Refresh all users share value")
         userService.updateAllUsersShareValue()
