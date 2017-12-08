@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Header from './Header';
 import Tickers from './Tickers';
 import User from './User';
+import CouldNotLoad from './alerts/CouldNotLoad'
 import SignUpSuccess from './SignUpSuccess'
 import SignUpFailure from './SignUpFailure'
 import {getCurrentPage, saveCurrentPage} from '../service/PageService';
@@ -16,6 +17,7 @@ class Home extends Component {
         this.state = {
             tickers: [],
             page: getCurrentPage(),
+            loadFailure: false,
             registerSuccess: false,
             registerFailure: false,
         };
@@ -24,7 +26,11 @@ class Home extends Component {
     componentDidMount() {
       getAllTickers().then((tickers) => {
           this.setState({tickers: tickers});
-      });
+      })
+      .catch((error) => {
+        this.setState({loadFailure: true})
+        console.error(error)
+      })
     }
 
     onUpdate(page) {
@@ -53,6 +59,7 @@ class Home extends Component {
                 <Header onUpdate={this.onUpdate.bind(this)} onRegister={this.onRegister.bind(this)} onLogout={this.onLogout.bind(this)}/>
                 {(this.state.registerSuccess) ? <SignUpSuccess/> : ''}
                 {(this.state.registerFailure) ? <SignUpFailure/> : ''}
+                {(this.state.loadFailure) ? <CouldNotLoad/> : ''}
                 {
                     (page === 'home')
                         ? <Tickers tickers={this.state.tickers}/>
