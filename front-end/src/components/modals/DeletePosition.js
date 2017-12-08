@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Modal, ModalBody, ModalFooter, ModalHeader, Form, FormGroup, Label, Input} from 'reactstrap';
+import {Button, Modal, ModalBody, ModalFooter, ModalHeader, Form, FormGroup, Label} from 'reactstrap';
 import {deletePosition} from '../../utils/ApiClient';
 import {FormattedNumber}  from 'react-intl'
 import LoginFailure from '../LoginFailure';
@@ -33,6 +33,8 @@ class DeletePosition extends React.Component {
             this.setState({ price: this.refs.value.value });
           }
           break;
+        default:
+          console.log("Error while updating price")
       }
     }
 

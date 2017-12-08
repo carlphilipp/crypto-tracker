@@ -1,6 +1,7 @@
 package fr.cph.crypto.backend.service
 
 import fr.cph.crypto.backend.domain.Position
+import fr.cph.crypto.backend.domain.ShareValue
 import fr.cph.crypto.backend.domain.User
 import org.springframework.security.core.userdetails.UserDetailsService
 
@@ -17,6 +18,8 @@ interface UserService : UserDetailsService {
     fun updatePosition(userId: String, position: Position)
 
     fun deletePosition(userId: String, positionId: String, price: Double)
+
+    fun findAllShareValue(id: String): List<ShareValue>
 
     fun updateAllUsersShareValue()
 }

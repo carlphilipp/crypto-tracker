@@ -1,7 +1,9 @@
 package fr.cph.crypto.backend.controller
 
 import fr.cph.crypto.backend.domain.Position
+import fr.cph.crypto.backend.domain.ShareValue
 import fr.cph.crypto.backend.domain.User
+import fr.cph.crypto.backend.service.ShareValueService
 import fr.cph.crypto.backend.service.UserService
 import org.slf4j.LoggerFactory
 import org.springframework.security.access.prepost.PostAuthorize
@@ -48,6 +50,12 @@ constructor(private val userService: UserService) {
     @RequestMapping(value = ["/{id}/position/{positionId}/{price}"], method = [RequestMethod.DELETE])
     fun deletePosition(@PathVariable("id") id: String, @PathVariable("positionId") positionId: String, @PathVariable("price") price: Double) {
         userService.deletePosition(id, positionId, price)
+    }
+
+    @PreAuthorize("#id == authentication.details.decodedDetails['id']")
+    @RequestMapping(value = ["/{id}/sharevalue"], method = [RequestMethod.GET], produces = ["application/json"])
+    fun findAllShareValue(@PathVariable("id") id: String) : List<ShareValue> {
+        return userService.findAllShareValue(id)
     }
 
     @RequestMapping(value = ["/share"])

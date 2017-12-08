@@ -1,6 +1,7 @@
 package fr.cph.crypto.backend.service.impl
 
 import fr.cph.crypto.backend.domain.Position
+import fr.cph.crypto.backend.domain.ShareValue
 import fr.cph.crypto.backend.domain.User
 import fr.cph.crypto.backend.exception.NotAllowedException
 import fr.cph.crypto.backend.repository.PositionRepository
@@ -115,6 +116,11 @@ constructor(private val positionRepository: PositionRepository,
             positionFound.size > 1 -> throw RuntimeException("Something pretty bad happened")
             else -> throw NotAllowedException()
         }
+    }
+
+    override fun findAllShareValue(id: String): List<ShareValue> {
+        val user = userRepository.findOne(id)
+        return shareValueService.findAllShareValue(user)
     }
 }
 

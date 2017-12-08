@@ -166,7 +166,7 @@ class User extends Component {
         return (
               <IntlProvider locale="en">
                 <div>
-                    <h3 className="text-center">{user.email}</h3>
+                    <h3 className="text-center">Portfolio</h3>
                     <table>
                       <tbody>
                         <tr>

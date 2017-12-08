@@ -1,0 +1,105 @@
+import React, {Component} from 'react';
+import {Link} from 'react-router';
+import {getOneUser, refreshTickers} from '../utils/ApiClient';
+import {getUserId, getAccessToken} from '../service/AuthService';
+import {Table, Button} from 'reactstrap';
+import {FormattedNumber, FormattedTime, IntlProvider}  from 'react-intl'
+import RefreshSuccess from './RefreshSuccess';
+import AddPosition from './modals/AddPosition';
+import ModifyPosition from './modals/ModifyPosition';
+import DeletePosition from './modals/DeletePosition';
+import {delay} from '../utils/Utils';
+
+class User extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+          user: [],
+          refreshFadeIn: false
+        };
+        this.getCurrentPrice = this.getCurrentPrice.bind(this);
+        this.onUpdateOrDelete = this.onUpdateOrDelete.bind(this);
+        this.onAdd = this.onAdd.bind(this);
+    }
+
+    updateUserInState(user) { this.setState({user: user}); }
+
+    logout() { this.props.onLogout(); }
+
+    getUser(accessToken, userId) {
+        getOneUser(accessToken, userId).then((user) => { this.setState({user: user}); })
+        .catch((error) => {
+          if(error.response.status === 401 && error.response.data.error_description.includes("expired")){
+            console.log("Token expired, logging out...")
+            this.logout()
+          } else {
+            console.log("Unhandled error: " + error)
+          }
+        })
+    }
+
+    componentDidMount() { this.getUser(getAccessToken(), getUserId()); }
+
+    refreshTickers() {
+      // TODO create a service to avoid accessing token and user id here
+      refreshTickers()
+        .then(() => this.getUser(getAccessToken(), getUserId()))
+        .then(() => {
+          this.setState({refreshFadeIn: true})
+          delay(3000).then(() => {this.setState({refreshFadeIn: false})});
+        })
+    }
+
+    showHideSecondLine(index) {
+      if(this.refs[index].className === 'show') {
+        this.refs[index].className = 'hidden';
+      } else {
+        this.refs[index].className = 'show';
+      }
+    }
+
+    getCurrentPrice(currencyCode1, currencyCode2) {
+      const ticker = this.props.tickers.find(ticker => ticker.id === currencyCode1 + '-' + currencyCode2)
+      if (ticker === undefined) {
+        return 0;
+      } else {
+        return ticker.price;
+      }
+    }
+
+    onUpdateOrDelete(index) {
+      this.showHideSecondLine(index);
+      this.onAdd();
+    }
+
+    onAdd() {
+      const accessToken = getAccessToken();
+      const userId = getUserId();
+      this.getUser(accessToken, userId);
+    }
+
+    render() {
+        const {user} = this.state;
+        const red = 'red'
+        const green = 'green'
+        let table = null;
+        if(user.positions != null) {
+
+        }
+
+        let refresh = null;
+        if (this.state.refreshFadeIn) {
+          refresh = <RefreshSuccess fadeIn={this.state.refreshFadeIn}/>
+        }
+
+        return (
+                <div>
+                    <h3 className="text-center">Performance</h3>
+                    <hr/>
+                </div>
+        );
+    }
+}
+
+export default User;

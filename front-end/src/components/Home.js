@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Header from './Header';
 import Tickers from './Tickers';
 import User from './User';
+import Performance from './Performance';
 import CouldNotLoad from './alerts/CouldNotLoad'
 import SignUpSuccess from './SignUpSuccess'
 import SignUpFailure from './SignUpFailure'
@@ -52,8 +53,18 @@ class Home extends Component {
         })
     }
 
+    loadPage() {
+      switch(this.state.page) {
+        case 'user':
+          return <User onLogout={this.onLogout.bind(this)} tickers={this.state.tickers}/>;
+        case 'performance':
+          return <Performance onLogout={this.onLogout.bind(this)} tickers={this.state.tickers}/>;
+        default:
+          return <Tickers tickers={this.state.tickers}/>;
+        }
+    }
+
     render() {
-        const {page} = this.state;
         return (
             <div>
                 <Header onUpdate={this.onUpdate.bind(this)} onRegister={this.onRegister.bind(this)} onLogout={this.onLogout.bind(this)}/>
@@ -61,9 +72,7 @@ class Home extends Component {
                 {(this.state.registerFailure) ? <SignUpFailure/> : ''}
                 {(this.state.loadFailure) ? <CouldNotLoad/> : ''}
                 {
-                    (page === 'home')
-                        ? <Tickers tickers={this.state.tickers}/>
-                        : <User onLogout={this.onLogout.bind(this)} tickers={this.state.tickers}/>
+                  this.loadPage()
                 }
                 {/* TODO add Footer*/}
             </div>

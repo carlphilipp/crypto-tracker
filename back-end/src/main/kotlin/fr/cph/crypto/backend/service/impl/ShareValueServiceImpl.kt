@@ -8,6 +8,11 @@ import org.springframework.stereotype.Service
 
 @Service
 class ShareValueServiceImpl(private val shareValueRepository: ShareValueRepository) : ShareValueService {
+
+    override fun findAllShareValue(user: User): List<ShareValue> {
+        return shareValueRepository.findAllByUser(user)
+    }
+
     override fun addNewShareValue(user: User) {
         addNewShareValue(user, 0.0)
     }

@@ -30,6 +30,11 @@ class Header extends Component {
 
     user() { this.props.onUpdate('user'); }
 
+    performance() { this.props.onUpdate('performance'); }
+
+    // TODO create account page
+    account() { this.props.onUpdate('user'); }
+
     logout() { this.props.onLogout(); }
 
     render() {
@@ -41,7 +46,15 @@ class Header extends Component {
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
                             <NavItem className="navbar-menu">
-                              {(isLoggedIn()) ? <Link to="#" onClick={this.home.bind(this)}>Tickers</Link>: ''}
+                              {(isLoggedIn()) ? <Link to="#" onClick={this.home.bind(this)}>Market</Link>: ''}
+                            </NavItem>
+                            &nbsp;&nbsp;&nbsp;
+                            <NavItem className="navbar-menu">
+                              {(isLoggedIn()) ? <Link to="#" onClick={this.user.bind(this)}>Portfolio</Link> : ''}
+                            </NavItem>
+                            &nbsp;&nbsp;&nbsp;
+                            <NavItem className="navbar-menu">
+                              {(isLoggedIn()) ? <Link to="#" onClick={this.performance.bind(this)}>Performance</Link> : ''}
                             </NavItem>
                             &nbsp;&nbsp;&nbsp;
                             <NavItem className="navbar-menu">

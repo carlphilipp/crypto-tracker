@@ -17,5 +17,6 @@ interface UserRepository : MongoRepository<User, String> {
 }
 
 interface ShareValueRepository : MongoRepository<ShareValue, String> {
+    fun findAllByUser(user: User): List<ShareValue>
     fun findTop1ByUserOrderByTimestampDesc(user: User): ShareValue?
 }
