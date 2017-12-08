@@ -86,6 +86,7 @@ constructor(private val positionRepository: PositionRepository,
 
         val user = userRepository.findOne(id)
         user.positions.add(position)
+        user.positions.sortWith(compareBy({ it.currency1.currencyName }))
         user.liquidityMovement = user.liquidityMovement + position.quantity * position.unitCostPrice
 
         userRepository.save(user)

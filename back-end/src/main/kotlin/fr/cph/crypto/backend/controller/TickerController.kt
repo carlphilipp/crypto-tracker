@@ -12,18 +12,18 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping(value = ["/api/ticker"])
 @RestController
 class TickerController
-constructor(private val service: TickerService) {
+constructor(private val tickerService: TickerService) {
 
     @PreAuthorize("hasAuthority('ADMIN') or authentication.details.decodedDetails['id'] == null")
     @RequestMapping(method = [RequestMethod.GET], produces = ["application/json"])
     fun getAllTickers(): List<Ticker> {
-        return service.findAll()
+        return tickerService.findAll()
     }
 
     @PreAuthorize("hasAuthority('ADMIN') or authentication.details.decodedDetails['id'] == null")
     @RequestMapping(value = ["/{currency1}/{currency2}"], method = [RequestMethod.GET], produces = ["application/json"])
     fun getTicker(@PathVariable("currency1") currency1: Currency,
                   @PathVariable("currency2") currency2: Currency): Ticker {
-        return service.findOne(currency1.code + "-" + currency2.code)
+        return tickerService.findOne(currency1.code + "-" + currency2.code)
     }
 }

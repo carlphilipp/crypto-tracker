@@ -9,11 +9,10 @@ import org.springframework.data.mongodb.core.mapping.Document
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder("id", "timestamp", "shareQuantity", "shareValue", "originalValue", "gain", "gainPercentage", "positions")
-@Document
+@Document(collection = "share_value")
 data class ShareValue(
         @Id var id: String? = null,
         val timestamp: Long,
         @JsonIgnore @DBRef val user: User,
         val shareQuantity: Double,
-        val shareValue: Double
-)
+        val shareValue: Double)

@@ -8,7 +8,9 @@ import org.springframework.data.mongodb.repository.MongoRepository
 
 interface PositionRepository : MongoRepository<Position, String>
 
-interface TickerRepository : MongoRepository<Ticker, String>
+interface TickerRepository : MongoRepository<Ticker, String> {
+    fun findAllByOrderByMarketCapDesc(): List<Ticker>
+}
 
 interface UserRepository : MongoRepository<User, String> {
     fun findOneByEmail(email: String): User?

@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder("id", "email", "currency", "value", "originalValue", "gain", "gainPercentage", "positions")
-@Document
+@Document(collection = "user")
 data class User(
         @Id
         var id: String? = null,
@@ -30,7 +30,8 @@ data class User(
         var gainPercentage: Double? = null,
 
         @DBRef
-        var positions: MutableList<Position> = mutableListOf())
+        var positions: MutableList<Position> = mutableListOf()
+)
 
 enum class Role {
     USER,

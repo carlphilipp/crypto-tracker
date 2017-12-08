@@ -15,7 +15,7 @@ constructor(private val restTemplate: RestTemplate) : TickerClient {
 
     override fun getTicker(currency: Currency, ticker: String): Ticker? {
         LOGGER.debug("Search ticker: {}", ticker)
-        return getAllTickers(currency).firstOrNull { (curr) -> curr.code == ticker }
+        return getAllTickers(currency).firstOrNull { tick -> tick.currency1.code == ticker }
     }
 
     override fun getTickers(currency: Currency, vararg tickers: String): List<Ticker> {
@@ -25,7 +25,7 @@ constructor(private val restTemplate: RestTemplate) : TickerClient {
     override fun getTickers(currency: Currency, tickers: List<String>): List<Ticker> {
         LOGGER.debug("Search tickers: {}", tickers)
         return getAllTickers(currency)
-                .filter { (curr) -> tickers.contains(curr.code) }
+                .filter { ticker -> tickers.contains(ticker.currency1.code) }
                 .toList()
     }
 
@@ -42,7 +42,7 @@ constructor(private val restTemplate: RestTemplate) : TickerClient {
         val responses = restTemplate.getForObject(uriComponents.toUri(), Array<Response>::class.java)
         return responses
                 .map { response -> TickerMapper.responseToTicker(currency, response) }
-                .filter { (curr) -> curr != Currency.UNKNOWN }
+                .filter { ticker -> ticker.currency1 != Currency.UNKNOWN }
                 .toList()
     }
 

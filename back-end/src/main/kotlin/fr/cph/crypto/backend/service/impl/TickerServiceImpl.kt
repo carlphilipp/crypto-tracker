@@ -16,7 +16,7 @@ class TickerServiceImpl(private val client: CoinMarketCapClient,
     }
 
     override fun findAll(): List<Ticker> {
-        return tickerRepository.findAll()
+        return tickerRepository.findAllByOrderByMarketCapDesc()
     }
 
     override fun updateAll() {

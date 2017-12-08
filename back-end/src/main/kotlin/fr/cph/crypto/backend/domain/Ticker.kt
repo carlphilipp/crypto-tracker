@@ -8,8 +8,9 @@ import org.springframework.data.mongodb.core.mapping.Document
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder("id", "currency1", "currency2", "price", "exchange", "volume24h", "marketCap", "percentChange1h", "percentChange24h", "percentChange7d", "lastUpdated")
-@Document
-data class Ticker(@Indexed val currency1: Currency,
+@Document(collection = "ticker")
+data class Ticker(@Id var id: String? = null,
+                  @Indexed val currency1: Currency,
                   val currency2: Currency,
                   val price: Double,
                   val exchange: String,
@@ -18,8 +19,4 @@ data class Ticker(@Indexed val currency1: Currency,
                   val percentChange1h: Double,
                   val percentChange24h: Double,
                   val percentChange7d: Double,
-                  val lastUpdated: Long) {
-
-    @Id
-    var id: String? = null
-}
+                  val lastUpdated: Long)
