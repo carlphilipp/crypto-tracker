@@ -25,7 +25,7 @@ class DeletePosition extends React.Component {
         deletePosition(accessToken, userId, this.props.position.id)
             .then((token) => {
                 this.toggle()
-                this.props.onDeletePosition(this.props.index)
+                this.props.onUpdateOrDelete(this.props.index)
             })
             .catch((error) => {
               // TODO handle failure state

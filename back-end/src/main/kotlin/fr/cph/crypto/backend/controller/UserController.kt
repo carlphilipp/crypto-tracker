@@ -33,15 +33,15 @@ constructor(private val userService: UserService) {
     }
 
     @PreAuthorize("#id == authentication.details.decodedDetails['id']")
-    @RequestMapping(value = ["/{id}/position"], method = [RequestMethod.POST], produces = ["application/json"])
-    fun addPosition(@PathVariable("id") id: String, @RequestBody position: Position): User {
-        return userService.addPosition(id, position)
+    @RequestMapping(value = ["/{id}/position"], method = [RequestMethod.POST])
+    fun addPosition(@PathVariable("id") id: String, @RequestBody position: Position) {
+        userService.addPosition(id, position)
     }
 
     @PreAuthorize("#id == authentication.details.decodedDetails['id'] and #positionId == #position.id")
-    @RequestMapping(value = ["/{id}/position/{positionId}"], method = [RequestMethod.PUT], produces = ["application/json"])
-    fun updatePosition(@PathVariable("id") id: String, @RequestBody position: Position, @PathVariable("positionId") positionId: String): Position {
-        return userService.updatePosition(id, position)
+    @RequestMapping(value = ["/{id}/position/{positionId}"], method = [RequestMethod.PUT])
+    fun updatePosition(@PathVariable("id") id: String, @RequestBody position: Position, @PathVariable("positionId") positionId: String) {
+        userService.updatePosition(id, position)
     }
 
     @PreAuthorize("#id == authentication.details.decodedDetails['id']")

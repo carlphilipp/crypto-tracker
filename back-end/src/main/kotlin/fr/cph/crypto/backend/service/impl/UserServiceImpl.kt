@@ -81,21 +81,20 @@ constructor(private val positionRepository: PositionRepository,
         return user
     }
 
-    override fun addPosition(id: String, position: Position): User {
-        val user = userRepository.findOne(id)
+    override fun addPosition(id: String, position: Position) {
         positionRepository.save(position)
-        user.positions.add(position)
 
+        val user = userRepository.findOne(id)
+        user.positions.add(position)
         user.liquidityMovement = user.liquidityMovement + position.quantity * position.unitCostPrice
 
         userRepository.save(user)
-        return enrich(user)
     }
 
-    override fun updatePosition(userId: String, position: Position): Position {
+    override fun updatePosition(userId: String, position: Position) {
         val positionFound = userRepository.findOne(userId).positions.filter { it.id == position.id }.toList()
         if (positionFound.isNotEmpty()) {
-            return positionRepository.save(position)
+            positionRepository.save(position)
         } else {
             throw NotAllowedException()
         }

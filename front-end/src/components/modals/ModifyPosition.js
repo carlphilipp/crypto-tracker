@@ -44,9 +44,9 @@ class ModifyPosition extends React.Component {
 
     modifyPosition() {
         updatePosition(getAccessToken(), this.props.user.id, this.props.position.id, this.props.position.currency1.code, this.state.quantity, this.state.unitCostPrice)
-            .then((token) => {
+            .then(() => {
                 this.toggle();
-                this.props.onUpdatePosition(this.props.index);
+                this.props.onUpdateOrDelete(this.props.index);
             })
             .catch((error) => {
               console.log("Error: " + error);

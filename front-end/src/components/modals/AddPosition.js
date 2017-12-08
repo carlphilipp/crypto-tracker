@@ -43,7 +43,7 @@ class AddPosition extends React.Component {
 
     add() {
         addPosition(getAccessToken(), this.props.user.id, this.state.ticker, this.state.quantity, this.state.unitCostPrice)
-            .then((user) => this.props.updateUserInState(user))
+            .then(() => this.props.onAdd())
             .then(this.toggle())
             .catch(error => {
                 console.log(error);

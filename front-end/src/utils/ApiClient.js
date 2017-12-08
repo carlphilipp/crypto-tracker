@@ -40,8 +40,7 @@ function addPosition(accessToken, id, ticker, quantity, unitCostPrice) {
       currency2: 'USD',
       quantity: quantity,
       unitCostPrice: unitCostPrice
-    }, config)
-      .then(response => response.data);
+    }, config);
 }
 
 function updatePosition(accessToken, id, positionId, ticker, quantity, unitCostPrice) {

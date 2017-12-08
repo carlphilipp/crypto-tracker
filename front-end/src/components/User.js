@@ -19,6 +19,8 @@ class User extends Component {
           refreshFadeIn: false
         };
         this.getCurrentPrice = this.getCurrentPrice.bind(this);
+        this.onUpdateOrDelete = this.onUpdateOrDelete.bind(this);
+        this.onAdd = this.onAdd.bind(this);
     }
 
     updateUserInState(user) { this.setState({user: user}); }
@@ -66,18 +68,12 @@ class User extends Component {
       }
     }
 
-    // FIXME: Merge both next methods
-    onDeletePosition(index) {
-      console.log("on delete")
-      this.showHideSecondLine(index)
-      const accessToken = getAccessToken();
-      const userId = getUserId();
-      this.getUser(accessToken, userId);
+    onUpdateOrDelete(index) {
+      this.showHideSecondLine(index);
+      this.onAdd();
     }
 
-    onUpdatePosition(index) {
-      console.log("on udpate")
-      this.showHideSecondLine(index)
+    onAdd() {
       const accessToken = getAccessToken();
       const userId = getUserId();
       this.getUser(accessToken, userId);
@@ -111,9 +107,9 @@ class User extends Component {
                                 <br />
                                 <div className="container-fluid">
                                 	<div className="row">
-                                      <ModifyPosition user={user} index={index} position={position} onUpdatePosition={this.onUpdatePosition.bind(this)}/>
+                                      <ModifyPosition user={user} index={index} position={position} onUpdateOrDelete={this.onUpdateOrDelete}/>
                                 		<div className="col-md-1">
-                                        <DeletePosition position={position} index={index} onDeletePosition={this.onDeletePosition.bind(this)}/>
+                                        <DeletePosition position={position} index={index} onUpdateOrDelete={this.onUpdateOrDelete}/>
                                     </div>
                                 	</div>
                                 </div>
@@ -178,7 +174,7 @@ class User extends Component {
                           {/* TODO understand this css layout and make it better. Update where same technic is used */}
                             <div className="container-fluid">
                                 <div className="row">
-                                    <AddPosition buttonLabel="Add" user={user} updateUserInState={this.updateUserInState.bind(this)} tickers={this.props.tickers}/>
+                                    <AddPosition buttonLabel="Add" user={user} onAdd={this.onAdd} tickers={this.props.tickers}/>
                                   <div className="col-md-1">
                                       <Button size="lg" color="info" onClick={this.refreshTickers.bind(this)}>Refresh</Button>
                                   </div>

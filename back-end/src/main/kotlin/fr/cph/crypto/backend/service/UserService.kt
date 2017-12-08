@@ -12,11 +12,9 @@ interface UserService : UserDetailsService {
 
     fun findAll(): List<User>
 
-    // FIXME do not return user
-    fun addPosition(id: String, position: Position): User
+    fun addPosition(id: String, position: Position)
 
-    // FIXME do not return Position
-    fun updatePosition(userId: String, position: Position): Position
+    fun updatePosition(userId: String, position: Position)
 
     fun deletePosition(userId: String, positionId: String)
 
