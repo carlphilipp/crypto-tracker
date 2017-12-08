@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Modal, ModalBody, ModalFooter, ModalHeader, Form, FormGroup, Label, InputGroup, InputGroupAddon, Input} from 'reactstrap';
+import {Button, Modal, ModalBody, ModalFooter, ModalHeader, Form, FormGroup, Label} from 'reactstrap';
 import {deletePosition} from '../../utils/ApiClient';
 import {FormattedNumber}  from 'react-intl'
 import LoginFailure from '../LoginFailure';

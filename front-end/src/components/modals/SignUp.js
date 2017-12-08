@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, FormText, FormFeedback} from 'reactstrap';
+import {Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, FormFeedback} from 'reactstrap';
 import {createUser} from '../../utils/ApiClient';
 
 class SignUp extends React.Component {
@@ -22,7 +22,7 @@ class SignUp extends React.Component {
         this.setState({
             modal: !this.state.modal
         }, () => {
-          if(this.state.modal == false) {
+          if(this.state.modal === false) {
             this.setState({
               email: null,
               emailValid: null,
