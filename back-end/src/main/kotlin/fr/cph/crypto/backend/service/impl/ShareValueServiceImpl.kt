@@ -24,7 +24,8 @@ class ShareValueServiceImpl(private val shareValueRepository: ShareValueReposito
                     timestamp = System.currentTimeMillis(),
                     user = user,
                     shareQuantity = user.value!! / 100,
-                    shareValue = 100.0)
+                    shareValue = 100.0,
+                    portfolioValue = user.value!!)
             shareValueRepository.save(shareValueToSave)
         } else {
             val quantity = lastShareValue.shareQuantity + (user.liquidityMovement) / ((user.value!! - user.liquidityMovement) / lastShareValue.shareQuantity)
@@ -34,7 +35,8 @@ class ShareValueServiceImpl(private val shareValueRepository: ShareValueReposito
                     timestamp = System.currentTimeMillis(),
                     user = user,
                     shareQuantity = quantity,
-                    shareValue = shareValue)
+                    shareValue = shareValue,
+                    portfolioValue = user.value!!)
             shareValueRepository.save(shareValueToSave)
         }
     }

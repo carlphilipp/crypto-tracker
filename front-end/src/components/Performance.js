@@ -1,16 +1,9 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router';
-import {LineChart, XAxis, YAxis, Tooltip, CartesianGrid, Line, Legend} from 'recharts';
 import {getAllShareValue, refreshTickers} from '../utils/ApiClient';
 import {getUserId, getAccessToken} from '../service/AuthService';
-import {Table, Button} from 'reactstrap';
-import {FormattedNumber, FormattedTime, IntlProvider}  from 'react-intl'
-import RefreshSuccess from './RefreshSuccess';
-import AddPosition from './modals/AddPosition';
-import ModifyPosition from './modals/ModifyPosition';
-import DeletePosition from './modals/DeletePosition';
 import {delay} from '../utils/Utils';
 import SimpleLineChart from './charts/ShareValueChart'
+var dateFormat = require('dateformat');
 
 class User extends Component {
 
@@ -30,7 +23,16 @@ class User extends Component {
     logout() { this.props.onLogout(); }
 
     getAllShareValue(accessToken, userId) {
-        getAllShareValue(accessToken, userId).then((shareValues) => { this.setState({shareValues: shareValues}); })
+        getAllShareValue(accessToken, userId).then((shareValues) => {
+
+          const rechartsData = shareValues.map(shareValue => {return {
+            date: dateFormat(new Date(shareValue.timestamp), "mm-dd-yyyy"),
+            shareValue: shareValue.shareValue,
+            portfolioValue: shareValue.portfolioValue,
+          }})
+          this.setState({shareValues: rechartsData});
+        })
+
         .catch((error) => {
           if(error.response.status === 401 && error.response.data.error_description.includes("expired")){
             console.log("Token expired, logging out...")
@@ -65,23 +67,11 @@ class User extends Component {
     }
 
     render() {
-        const {user} = this.state;
-        const data = [
-      {name: 'Page A', pv: 2400, amt: 2400},
-      {name: 'Page B', pv: 1398, amt: 2210},
-      {name: 'Page C', pv: 9800, amt: 2290},
-      {name: 'Page D', pv: 3908, amt: 2000},
-      {name: 'Page E', pv: 4800, amt: 2181},
-      {name: 'Page F', pv: 3800, amt: 2500},
-      {name: 'Page G', pv: 4300, amt: 2100},];
-
-
-
         return (
                 <div>
-                    <h3 className="text-center">Performance</h3>
+                    <h3 className="text-center">Share Value</h3>
                     <hr/>
-                     <SimpleLineChart />
+                     <SimpleLineChart shareValues={this.state.shareValues}/>
                 </div>
         );
     }

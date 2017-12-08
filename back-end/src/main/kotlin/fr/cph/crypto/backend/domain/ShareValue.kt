@@ -16,4 +16,5 @@ data class ShareValue(
         val timestamp: Long,
         @JsonIgnore @Indexed @DBRef val user: User,
         val shareQuantity: Double,
-        val shareValue: Double)
+        val shareValue: Double,
+        val portfolioValue: Double)

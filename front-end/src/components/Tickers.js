@@ -74,7 +74,7 @@ class Tickers extends Component {
         return (
             <IntlProvider locale="en">
               <div>
-                  <h3 className="text-center">Portfolio</h3>
+                  <h3 className="text-center">Market</h3>
                   <hr/>
                   {table}
                   {/*<Footer />*/}
