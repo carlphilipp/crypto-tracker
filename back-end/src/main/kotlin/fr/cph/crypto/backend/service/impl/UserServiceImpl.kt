@@ -9,6 +9,7 @@ import fr.cph.crypto.backend.repository.UserRepository
 import fr.cph.crypto.backend.service.ShareValueService
 import fr.cph.crypto.backend.service.TickerService
 import fr.cph.crypto.backend.service.UserService
+import org.slf4j.LoggerFactory
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
@@ -94,11 +95,18 @@ constructor(private val positionRepository: PositionRepository,
     }
 
     override fun updatePosition(userId: String, position: Position) {
-        val positionFound = userRepository.findOne(userId).positions.filter { it.id == position.id }.toList()
-        if (positionFound.isNotEmpty()) {
-            positionRepository.save(position)
-        } else {
-            throw NotAllowedException()
+        val user = userRepository.findOne(userId)
+        val positionFound = user.positions.filter { it.id == position.id }.toList()
+        when {
+            positionFound.size == 1 -> {
+                user.liquidityMovement = user.liquidityMovement + ((position.unitCostPrice * position.quantity) - (positionFound[0].unitCostPrice * positionFound[0].quantity))
+
+                positionRepository.save(position)
+
+                userRepository.save(user)
+            }
+            positionFound.size > 1 -> throw RuntimeException("Something pretty bad happened")
+            else -> throw NotAllowedException()
         }
     }
 
@@ -121,6 +129,10 @@ constructor(private val positionRepository: PositionRepository,
     override fun findAllShareValue(id: String): List<ShareValue> {
         val user = userRepository.findOne(id)
         return shareValueService.findAllShareValue(user)
+    }
+
+    companion object {
+        private val LOGGER = LoggerFactory.getLogger(UserServiceImpl::class.java)
     }
 }
 
