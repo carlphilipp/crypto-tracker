@@ -4,7 +4,7 @@ import {getOneUser, refreshTickers} from '../utils/ApiClient';
 import {getUserId, getAccessToken} from '../service/AuthService';
 import {Table, Button} from 'reactstrap';
 import {FormattedNumber, FormattedTime, IntlProvider}  from 'react-intl'
-import RefreshSuccess from './RefreshSuccess';
+import RefreshSuccess from './alerts/RefreshSuccess';
 import AddPosition from './modals/AddPosition';
 import ModifyPosition from './modals/ModifyPosition';
 import DeletePosition from './modals/DeletePosition';

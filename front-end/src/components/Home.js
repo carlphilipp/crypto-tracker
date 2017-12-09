@@ -4,8 +4,8 @@ import Tickers from './Tickers';
 import User from './User';
 import Performance from './Performance';
 import CouldNotLoad from './alerts/CouldNotLoad'
-import SignUpSuccess from './SignUpSuccess'
-import SignUpFailure from './SignUpFailure'
+import SignUpSuccess from './alerts/SignUpSuccess'
+import SignUpFailure from './alerts/SignUpFailure'
 import {getCurrentPage, saveCurrentPage} from '../service/PageService';
 import {logout} from '../service/AuthService';
 import {removePage} from '../service/PageService';
