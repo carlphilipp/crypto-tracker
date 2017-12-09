@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, Modal, ModalBody, ModalFooter, ModalHeader, Form, FormGroup, Label, FormText, InputGroup, InputGroupAddon, Input} from 'reactstrap';
 import {deletePosition} from '../../utils/ApiClient';
 import {FormattedNumber}  from 'react-intl'
-import LoginFailure from '../LoginFailure';
+import LoginFailure from '../alerts/LoginFailure';
 import {getUserId, getAccessToken} from '../../service/AuthService';
 
 class DeletePosition extends React.Component {

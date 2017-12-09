@@ -42,7 +42,7 @@ class SignUp extends React.Component {
     }
 
     validate(name, value) {
-      switch(name){
+      switch(name) {
         case "email":
           this.setState({emailValid: value.includes('@')}, () => this.validateForm());
           break;

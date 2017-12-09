@@ -19,7 +19,7 @@ class LoginFailure extends React.Component {
     render() {
         return (
             <Alert color="danger" isOpen={this.state.visible}>
-                Something failed while login :(
+                No login/password match
             </Alert>
         );
     }

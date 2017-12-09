@@ -1,9 +1,9 @@
 import React from 'react';
-import {Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
+import {Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, FormFeedback} from 'reactstrap';
 import {login} from '../../utils/ApiClient';
 import {storeToken} from '../../service/AuthService';
 import {delay} from '../../utils/Utils';
-import LoginFailure from '../LoginFailure';
+import LoginFailure from '../alerts/LoginFailure';
 
 class Login extends React.Component {
 
@@ -12,9 +12,12 @@ class Login extends React.Component {
         this.state = {
             modal: false,
             email: null,
+            emailValid: null,
             password: null,
+            passwordValid: null,
             failure: false,
             refresh: false,
+            formValid: false,
         };
         this.toggle = this.toggle.bind(this);
         this.loginUser = this.loginUser.bind(this);
@@ -32,7 +35,24 @@ class Login extends React.Component {
         this.setState({
           [name]: value,
           failure: false
-        });
+        }, () => this.validate(name, value));
+    }
+
+    validate(name, value) {
+      switch(name) {
+        case "email":
+          this.setState({emailValid: value != null && value !== ''}, () => this.validateForm());
+          break;
+        case "password":
+          this.setState({passwordValid: this.state.password != null && this.state.password !== ''}, () => this.validateForm());
+          break;
+        default:
+          break;
+      }
+    }
+
+    validateForm() {
+      this.setState({formValid: this.state.emailValid && this.state.passwordValid})
     }
 
     onLogin() { this.props.onLogin() }
@@ -60,18 +80,20 @@ class Login extends React.Component {
                     <ModalBody>
                         <Form>
                             <FormGroup>
-                                <Label for="exampleEmail">Email</Label>
-                                <Input size="lg" type="email" name="email" id="exampleEmail" onChange={evt => this.handleUserInput(evt)} placeholder="your email" autoFocus="true"/>
+                                <Label for="email">Email</Label>
+                                <Input size="lg" type="email" name="email" id="email" onChange={evt => this.handleUserInput(evt)} placeholder="your email" autoFocus="true"/>
+                                <FormFeedback>Invalid email</FormFeedback>
                             </FormGroup>
                             <FormGroup>
-                                <Label for="examplePassword">Password</Label>
-                                <Input size="lg" type="password" name="password" onChange={evt => this.handleUserInput(evt)} id="examplePassword" placeholder="your password"/>
+                                <Label for="password">Password</Label>
+                                <Input size="lg" type="password" name="password" id="password"  onChange={evt => this.handleUserInput(evt)} placeholder="your password"/>
+                                  <FormFeedback>The password can not be empty</FormFeedback>
                             </FormGroup>
                         </Form>
                     </ModalBody>
                     {(this.state.failure) ? <LoginFailure /> : ''}
                     <ModalFooter>
-                        <Button color="success" size="lg" onClick={this.loginUser}>Login</Button>{' '}
+                        <Button color="success" size="lg" onClick={this.loginUser} disabled={!this.state.formValid}>Login</Button>{' '}
                         <Button color="secondary" size="lg" onClick={this.toggle}>Cancel</Button>
                     </ModalFooter>
                 </Modal>

@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 import {updatePosition} from '../../utils/ApiClient';
 import {getAccessToken} from '../../service/AuthService';
-import LoginFailure from '../LoginFailure';
+import LoginFailure from '../alerts/LoginFailure';
 
 class ModifyPosition extends React.Component {
 
