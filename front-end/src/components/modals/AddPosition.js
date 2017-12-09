@@ -87,7 +87,7 @@ class AddPosition extends React.Component {
                             <FormGroup>
                                 <Label for="quantity">Quantity</Label>
                                 <Input size="lg" type="text" name="quantity" onBlur={evt => this.handleUserInput(evt)} id="quantity" placeholder="1.0" valid={this.state.quantityValid}/>
-                                <FormFeedback>Must be a valid number</FormFeedback>
+                                <FormFeedback><br />Must be a valid number</FormFeedback>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="unitCostPrice">Unit Cost Price</Label>

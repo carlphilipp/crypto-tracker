@@ -57,7 +57,6 @@ class ModifyPosition extends React.Component {
     }
 
     validate(name, value) {
-      console.log(name + " " + value);
       switch(name) {
         case "quantity":
           this.setState({quantityValid: !isNaN(value)}, () => this.validateForm());
@@ -96,8 +95,8 @@ class ModifyPosition extends React.Component {
                     <ModalHeader toggle={this.toggle}>Modify</ModalHeader>
                     <ModalBody>
                       <FormGroup>
-                          <Label for="ticker">Ticker</Label>
-                          <Input size="lg" type="text" name="select" id="ticker" value={this.props.position.currency1.code} onChange={evt => this.handleUserInput(evt)}/>
+                          <Label for="ticker">Ticker</Label><br />
+                          {this.props.position.currency1.code}
                       </FormGroup>
                       <FormGroup>
                           <Label for="quantity">Quantity</Label>
