@@ -39,7 +39,7 @@ constructor(
         val cardanoTicker = tickerRepository.findOne("ADA-USD")
         val powerTicker = tickerRepository.findOne("POWR-USD")
 
-        val user = User(email = "cp.harmant@gmail.com", password = "PASSWORD", role = Role.ADMIN)
+        val user = User("cp.harmant@gmail.com", "PASSWORD", Role.ADMIN)
         user.id = "1"
         val passwordEncoded = passwordEncoder.encodePassword(user.password, null)
         user.password = passwordEncoded
