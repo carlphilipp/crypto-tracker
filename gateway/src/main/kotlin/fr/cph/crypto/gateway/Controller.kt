@@ -1,4 +1,4 @@
-package fr.cph.crypto.backend.proxy
+package fr.cph.crypto.gateway
 
 import org.slf4j.LoggerFactory
 import org.springframework.http.*

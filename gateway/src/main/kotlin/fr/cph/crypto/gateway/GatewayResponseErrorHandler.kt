@@ -1,4 +1,4 @@
-package fr.cph.crypto.backend.proxy
+package fr.cph.crypto.gateway
 
 import org.springframework.http.client.ClientHttpResponse
 import org.springframework.web.client.ResponseErrorHandler

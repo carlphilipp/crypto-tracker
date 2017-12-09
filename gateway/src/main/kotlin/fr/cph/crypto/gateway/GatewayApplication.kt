@@ -1,4 +1,4 @@
-package fr.cph.crypto.backend.proxy
+package fr.cph.crypto.gateway
 
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.SpringApplication
