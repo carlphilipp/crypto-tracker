@@ -25,7 +25,7 @@ class ShareValueServiceImpl(private val shareValueRepository: ShareValueReposito
                     timestamp = System.currentTimeMillis(),
                     user = user,
                     shareQuantity = user.value!! / 100,
-            console.log("name: " + name + " value: " + value)              shareValue = 100.0,
+                    shareValue = 100.0,
                     portfolioValue = user.value!!)
             shareValueRepository.save(shareValueToSave)
         } else {
