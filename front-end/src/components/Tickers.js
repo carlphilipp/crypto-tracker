@@ -1,15 +1,12 @@
 import React, {Component} from 'react';
 import {Table} from 'reactstrap';
 import {FormattedNumber, FormattedTime, IntlProvider}  from 'react-intl'
+import {getMinimumFractionDigits} from '../utils/Utils';
 
 class Tickers extends Component {
 
     update() {
         this.props.onUpdate('user')
-    }
-
-    getMinimumFractionDigits(price) {
-      return price < 1 ? 6 : 2
     }
 
     render() {
@@ -37,7 +34,7 @@ class Tickers extends Component {
                     <tr key={index}>
                         <th scope="row">{ticker.currency1.currencyName}</th>
                         <td className="text-right">
-                          <FormattedNumber value={ticker.price} style={`currency`} currency="USD" minimumFractionDigits={this.getMinimumFractionDigits(ticker.price)}/>
+                          <FormattedNumber value={ticker.price} style={`currency`} currency="USD" minimumFractionDigits={getMinimumFractionDigits(ticker.price)}/>
                         </td>
                         <td className="text-right">
                           <FormattedNumber value={ticker.marketCap} style={`currency`} currency="USD" minimumFractionDigits={0}/>

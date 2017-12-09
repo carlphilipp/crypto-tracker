@@ -8,7 +8,7 @@ import RefreshSuccess from './alerts/RefreshSuccess';
 import AddPosition from './modals/AddPosition';
 import ModifyPosition from './modals/ModifyPosition';
 import DeletePosition from './modals/DeletePosition';
-import {delay} from '../utils/Utils';
+import {delay, getMinimumFractionDigits} from '../utils/Utils';
 
 class User extends Component {
 
@@ -116,8 +116,8 @@ class User extends Component {
                               </div>
                             </th>
                             <td className="text-right align-text-top">{position.quantity}</td>
-                            <td className="text-right align-text-top"><FormattedNumber value={this.getCurrentPrice(position.currency1.code, position.currency2.code)} style={`currency`} currency="USD"/></td>
-                            <td className="text-right align-text-top"><FormattedNumber value={position.unitCostPrice} style={`currency`} currency="USD"/></td>
+                            <td className="text-right align-text-top"><FormattedNumber value={this.getCurrentPrice(position.currency1.code, position.currency2.code)} minimumFractionDigits={getMinimumFractionDigits(this.getCurrentPrice(position.currency1.code, position.currency2.code))} style={`currency`} currency="USD"/></td>
+                            <td className="text-right align-text-top"><FormattedNumber value={position.unitCostPrice} minimumFractionDigits={getMinimumFractionDigits(position.unitCostPrice)} style={`currency`} currency="USD"/></td>
                             <td className="text-right align-text-top"><FormattedNumber value={position.originalValue} style={`currency`} currency="USD"/></td>
                             <td className="text-right align-text-top"><FormattedNumber value={position.value} style={`currency`} currency="USD"/></td>
                             <td className="text-right align-text-top">
