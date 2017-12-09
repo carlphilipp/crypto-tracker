@@ -80,7 +80,7 @@ class AddPosition extends React.Component {
                         <Form>
                             <FormGroup>
                                 <Label for="ticker">Ticker</Label>
-                                <Input size="lg" type="select" name="select" id="ticker" onChange={evt => this.handleUserInput(evt)} autoFocus="true">
+                                <Input size="lg" type="select" name="ticker" id="ticker" onChange={evt => this.handleUserInput(evt)} autoFocus="true">
                                 {this.props.tickers.map(ticker => ticker.currency1.code).map((position, index) => (<option key={index}>{position}</option>))}
                                 </Input>
                             </FormGroup>
@@ -96,6 +96,7 @@ class AddPosition extends React.Component {
                             </FormGroup>
                         </Form>
                     </ModalBody>
+                      {/* FIXME: create a failure state */}
                     <ModalFooter>
                         <Button color="primary" size="lg" onClick={this.add} disabled={!this.state.formValid}>Add</Button>{' '}
                         <Button color="secondary" size="lg" onClick={this.toggle}>Cancel</Button>

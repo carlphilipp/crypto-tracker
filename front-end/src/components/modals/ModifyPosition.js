@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
+import {Button, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, FormFeedback} from 'reactstrap';
 import {updatePosition} from '../../utils/ApiClient';
 import {getAccessToken} from '../../service/AuthService';
 import LoginFailure from '../alerts/LoginFailure';
@@ -11,33 +11,67 @@ class ModifyPosition extends React.Component {
         this.state = {
             modal: false,
             quantity: null,
+            quantityValid: null,
             unitCostPrice: null,
+            unitCostPriceValid: null,
             failure: false,
+            formValid: false,
         };
         this.toggle = this.toggle.bind(this);
         this.modifyPosition = this.modifyPosition.bind(this);
+    }
+
+    toggle() {
+        this.setState({
+            modal: !this.state.modal
+        }, () => {
+          if(this.state.modal === false) {
+            this.setState({
+              quantity: this.props.position.quantity,
+              quantityValid: null,
+              unitCostPrice: this.props.position.unitCostPrice,
+              unitCostPriceValid: null,
+              formValid: false,
+            });
+          }
+        });
     }
 
     componentDidMount() {
       this.setState({
           quantity: this.props.position.quantity,
           unitCostPrice: this.props.position.unitCostPrice,
-      });
+          quantityValid: true,
+          unitCostPriceValid: true
+      }, () => this.validateForm());
     }
 
-    toggle() {
-        this.setState({
-            modal: !this.state.modal
-        });
-    }
-
+    /* FIXME: code duplicated with AddPosition. Should be able to do that in a parent */
     handleUserInput(e) {
         const name = e.target.name;
         const value = e.target.value;
         this.setState({
           [name]: value,
           failure: false
-        });
+        }, () => this.validate(name, value))
+    }
+
+    validate(name, value) {
+      console.log(name + " " + value);
+      switch(name) {
+        case "quantity":
+          this.setState({quantityValid: !isNaN(value)}, () => this.validateForm());
+          break;
+        case "unitCostPrice":
+          this.setState({unitCostPriceValid: !isNaN(value)}, () => this.validateForm());
+          break;
+        default:
+          break;
+      }
+    }
+
+    validateForm() {
+      this.setState({formValid: this.state.quantityValid && this.state.unitCostPriceValid})
     }
 
     onLogin() { this.props.onLogin() }
@@ -63,21 +97,23 @@ class ModifyPosition extends React.Component {
                     <ModalBody>
                       <FormGroup>
                           <Label for="ticker">Ticker</Label>
-                          <Input size="lg" type="text" name="select" id="ticker" onChange={evt => this.handleUserInput(evt)} value={this.props.position.currency1.code}/>
+                          <Input size="lg" type="text" name="select" id="ticker" value={this.props.position.currency1.code} onChange={evt => this.handleUserInput(evt)}/>
                       </FormGroup>
                       <FormGroup>
                           <Label for="quantity">Quantity</Label>
-                          <Input size="lg" type="text" name="quantity" id="quantity" onChange={evt => this.handleUserInput(evt)} value={this.state.quantity}/>
+                          <Input size="lg" type="text" name="quantity" id="quantity" onBlur={evt => this.handleUserInput(evt)} defaultValue={this.state.quantity} valid={this.state.quantityValid} autoFocus="true"/>
+                          <FormFeedback>Must be a valid number</FormFeedback>
                       </FormGroup>
                       <FormGroup>
                           <Label for="unitCostPrice">Unit Cost Price</Label>
-                          <Input size="lg" type="text" name="unitCostPrice" id="unitCostPrice" onChange={evt => this.handleUserInput(evt)} value={this.state.unitCostPrice}/>
+                          <Input size="lg" type="text" name="unitCostPrice" id="unitCostPrice" onBlur={evt => this.handleUserInput(evt)} defaultValue={this.state.unitCostPrice} valid={this.state.unitCostPriceValid}/>
+                          <FormFeedback>Must be a valid number</FormFeedback>
                       </FormGroup>
                     </ModalBody>
-                    {/* FIXME: create a state failure*/}
+                    {/* FIXME: create a failure state*/}
                     {(this.state.failure) ? <LoginFailure /> : ''}
                     <ModalFooter>
-                        <Button color="success" size="lg" onClick={this.modifyPosition}>Modify</Button>{' '}
+                        <Button color="success" size="lg" onClick={this.modifyPosition} disabled={!this.state.formValid}>Modify</Button>{' '}
                         <Button color="secondary" size="lg" onClick={this.toggle}>Cancel</Button>
                     </ModalFooter>
                 </Modal>
