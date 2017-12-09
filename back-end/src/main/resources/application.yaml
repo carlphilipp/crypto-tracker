@@ -16,3 +16,15 @@ security:
   oauth2:
     resource:
       filter-order: 3
+spring:
+  data:
+    mongodb:
+      database: cryptodb
+      repositories:
+        enabled: true
+  profiles:
+    active: dev
+server:
+  port: 8280
+  compression:
+    enabled: true

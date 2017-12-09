@@ -3,3 +3,5 @@ logging:
     fr.cph.crypto.proxy: DEBUG
 server:
   port: 8180
+  compression:
+    enabled: true

@@ -9,9 +9,11 @@ import fr.cph.crypto.backend.repository.UserRepository
 import fr.cph.crypto.backend.service.TickerService
 import fr.cph.crypto.backend.service.UserService
 import org.springframework.boot.CommandLineRunner
+import org.springframework.context.annotation.Profile
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder
 import org.springframework.stereotype.Component
 
+@Profile("dev")
 @Component
 class DatabaseLoader
 constructor(

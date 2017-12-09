@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest
 class Controller(private val restTemplate: RestTemplate, private val restTemplateAuth: RestTemplate) {
 
     private val server = "localhost"
-    private val port = 8080
+    private val port = 8280
     private var currentToken: Token? = null
 
     @RequestMapping(
