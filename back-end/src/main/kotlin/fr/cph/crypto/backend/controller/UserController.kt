@@ -35,7 +35,7 @@ constructor(private val userService: UserService) {
     }
 
     @PreAuthorize("#id == authentication.details.decodedDetails['id']")
-    @RequestMapping(value = ["/{id}/position"], method = [RequestMethod.POST])
+    @RequestMapping(value = ["/{id}/position"], method = [RequestMethod.POST], consumes = ["application/json"])
     fun addPosition(@PathVariable("id") id: String, @RequestBody position: Position) {
         userService.addPosition(id, position)
     }

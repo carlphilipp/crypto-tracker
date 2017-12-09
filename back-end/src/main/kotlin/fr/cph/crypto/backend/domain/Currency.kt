@@ -11,8 +11,8 @@ enum class Currency constructor(val code: String, val currencyName: String, val 
     LTC("LTC", "Litecoin", "Ł", Type.CRYPTO),
     VTC("VTC", "Vertcoin", "VTC", Type.CRYPTO),
     ETHOS("ETHOS", "Ethos", "ETHOS", Type.CRYPTO),
-    CARDANO("ADA", "Cardano", "ADA", Type.CRYPTO),
-    POWER_LEDGER("POWR", "Power Ledger", "POWR", Type.CRYPTO),
+    ADA("ADA", "Cardano", "ADA", Type.CRYPTO),
+    POWR("POWR", "Power Ledger", "POWR", Type.CRYPTO),
 
     USD("USD", "United States Dollar", "$", Type.FIAT),
     EUR("EUR", "Euro", "€", Type.FIAT),
