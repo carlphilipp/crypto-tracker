@@ -12,12 +12,12 @@ class TickerScheduler(private val tickerService: TickerService) {
 
     @Scheduled(fixedRate = 300000, initialDelay = 5000)
     fun updateAllTickers() {
-        log.info("Update all tickers")
+        LOGGER.info("Update all tickers")
         tickerService.updateAll()
     }
 
     companion object {
-        private val log = LoggerFactory.getLogger(TickerScheduler::class.java)
+        private val LOGGER = LoggerFactory.getLogger(TickerScheduler::class.java)
     }
 }
 
@@ -27,12 +27,12 @@ class ShareValueSchedulerProd(private val userService: UserService) {
 
     @Scheduled(cron = "0 0 0 * * *", zone = "GMT")
     fun updateAllUsersShareValue() {
-        log.info("Refresh all users share value")
+        LOGGER.info("Refresh all users share value")
         userService.updateAllUsersShareValue()
     }
 
     companion object {
-        private val log = LoggerFactory.getLogger(ShareValueSchedulerProd::class.java)
+        private val LOGGER = LoggerFactory.getLogger(ShareValueSchedulerProd::class.java)
     }
 }
 
@@ -42,11 +42,11 @@ class ShareValueSchedulerDev(private val userService: UserService) {
 
     @Scheduled(cron = "0 0/30 * * * *", zone = "GMT")
     fun updateAllUsersShareValue() {
-        log.info("Refresh all users share value")
+        LOGGER.info("Refresh all users share value")
         userService.updateAllUsersShareValue()
     }
 
     companion object {
-        private val log = LoggerFactory.getLogger(ShareValueSchedulerDev::class.java)
+        private val LOGGER = LoggerFactory.getLogger(ShareValueSchedulerDev::class.java)
     }
 }

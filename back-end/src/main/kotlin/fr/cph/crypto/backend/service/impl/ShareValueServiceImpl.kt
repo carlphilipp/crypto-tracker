@@ -4,6 +4,7 @@ import fr.cph.crypto.backend.domain.ShareValue
 import fr.cph.crypto.backend.domain.User
 import fr.cph.crypto.backend.repository.ShareValueRepository
 import fr.cph.crypto.backend.service.ShareValueService
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
@@ -28,8 +29,12 @@ class ShareValueServiceImpl(private val shareValueRepository: ShareValueReposito
                     portfolioValue = user.value!!)
             shareValueRepository.save(shareValueToSave)
         } else {
+            LOGGER.info("Last share value: {}" + lastShareValue)
+            LOGGER.info("User portfolio value: {}" + user.value)
             val quantity = lastShareValue.shareQuantity + (user.liquidityMovement) / ((user.value!! - user.liquidityMovement) / lastShareValue.shareQuantity)
+            LOGGER.info("Quantity: {}" + quantity)
             val shareValue = user.value!! / quantity
+            LOGGER.info("Share value: {}" + shareValue)
 
             val shareValueToSave = ShareValue(
                     timestamp = System.currentTimeMillis(),
@@ -39,5 +44,9 @@ class ShareValueServiceImpl(private val shareValueRepository: ShareValueReposito
                     portfolioValue = user.value!!)
             shareValueRepository.save(shareValueToSave)
         }
+    }
+
+    companion object {
+        private val LOGGER = LoggerFactory.getLogger(ShareValueServiceImpl::class.java)
     }
 }

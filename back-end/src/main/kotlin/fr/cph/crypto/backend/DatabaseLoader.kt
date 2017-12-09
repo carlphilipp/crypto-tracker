@@ -60,5 +60,8 @@ constructor(
         val positionPower = Position.buildPosition(powerTicker, 443.556, 0.66)
         userService.addPosition(user.id!!, positionPower)
 
+        val userFound = userRepository.findOne(user.id)
+        userFound.liquidityMovement = 0.0
+        userRepository.save(userFound)
     }
 }

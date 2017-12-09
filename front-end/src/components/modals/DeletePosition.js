@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Modal, ModalBody, ModalFooter, ModalHeader, Form, FormGroup, Label} from 'reactstrap';
+import {Button, Modal, ModalBody, ModalFooter, ModalHeader, Form, FormGroup, Label, FormText, InputGroup, InputGroupAddon, Input} from 'reactstrap';
 import {deletePosition} from '../../utils/ApiClient';
 import {FormattedNumber}  from 'react-intl'
 import LoginFailure from '../LoginFailure';
@@ -21,7 +21,8 @@ class DeletePosition extends React.Component {
     toggle() { this.setState({ modal: !this.state.modal }); }
 
     updatePrice(evt) {
-      switch(evt.target.id) {
+      this.setState({ price: evt.target.value });
+/*      switch(evt.target.id) {
         case "radio1":
           this.setState({ price: this.refs.value.value });
           break;
@@ -35,7 +36,7 @@ class DeletePosition extends React.Component {
           break;
         default:
           console.log("Error while updating price")
-      }
+      } */
     }
 
     delete() {
@@ -71,12 +72,11 @@ class DeletePosition extends React.Component {
                         </FormGroup>
                         <FormGroup>
                           <Label for="value">Value</Label>
-                          <FormGroup check>
-                              <input type="radio" name="radio1" id="radio1" defaultChecked ref="radio1" onClick={(evt) => this.updatePrice(evt)}/>{' $'}<input size="lg" type="text" ref="value" name="value" id="value" onBlur={(evt) => this.updatePrice(evt)}/>
-                          </FormGroup>
-                          <FormGroup check>
-                              <input type="radio" name="radio1" id="radio2" ref="radio2" onClick={(evt) => this.updatePrice(evt)}/>{' '}<FormattedNumber value={this.props.position.value} style={`currency`} currency="USD"/> (Market value)
-                          </FormGroup>
+                          <InputGroup size="lg">
+                              <InputGroupAddon size="lg">$</InputGroupAddon>
+                              <Input size="lg" placeholder={0.0} onBlur={(evt) => this.updatePrice(evt)}/>
+                            </InputGroup>
+                            <FormText>Current market value: <FormattedNumber value={this.props.position.value} style={`currency`} currency="USD"/></FormText>
                         </FormGroup>
                       </Form>
                     </ModalBody>
