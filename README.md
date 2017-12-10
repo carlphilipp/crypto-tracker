@@ -1,3 +1,6 @@
+### Development Environment
+#### Build
+
 To start the backend:
 ```
 ./gradlew clean build
@@ -14,3 +17,22 @@ cd front-end && npm install && npm start
 ```
 
 The browser should be started on `http://localhost:3000`
+
+### Production Environment
+#### Build
+
+```
+./gradlew clean build
+cd front-end
+npm run build
+
+```
+
+#### Deploy
+
+```
+java -jar -Dspring.profiles.active=prod back-end-XXX.jar
+java -jar gateway-XXX.jar
+
+
+```

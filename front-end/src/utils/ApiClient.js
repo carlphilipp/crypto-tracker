@@ -1,8 +1,13 @@
 import axios from 'axios';
-const BASE_URL = 'http://localhost:8180';
 export {getAllTickers, getOneUser, createUser, login, refreshTickers, addPosition, deletePosition, updatePosition, getAllShareValue};
 
+// FIXME pass that url through env variable
+const BASE_URL = process.env.NODE_ENV === 'production'
+    ? 'https://stocktracker.fr/gateway'
+    : 'http://localhost:8180';
+
 function getAllTickers() {
+    console.log("Node env: " + process.env.NODE_ENV)
     const url = `${BASE_URL}/api/ticker`;
     return axios.get(url).then(response => response.data);
 }
