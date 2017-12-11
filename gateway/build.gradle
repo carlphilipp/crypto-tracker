@@ -5,8 +5,7 @@ dependencies {
 
             [group: 'com.fasterxml.jackson.module', name: 'jackson-module-kotlin'],
             [group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'],
-            [group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.4'
-            ],
+            [group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.4'],
 
     )
     testCompile('org.springframework.boot:spring-boot-starter-test')

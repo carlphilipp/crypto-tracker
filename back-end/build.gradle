@@ -5,6 +5,8 @@ dependencies {
             [group: 'org.springframework.boot', name: 'spring-boot-starter-security'],
             [group: 'org.springframework.security', name: 'spring-security-jwt'],
             [group: 'org.springframework.security.oauth', name: 'spring-security-oauth2'],
+            // TODO: Protect client secret in both app with with jasypt
+            // http://www.ru-rocker.com/2017/01/13/spring-boot-encrypting-sensitive-variable-properties-file/
 
             [group: 'com.fasterxml.jackson.module', name: 'jackson-module-kotlin'],
             [group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'],
