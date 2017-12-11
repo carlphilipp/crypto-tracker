@@ -24,7 +24,7 @@ class Controller(private val restTemplate: RestTemplate, private val restTemplat
               @RequestBody(required = false) body: String?,
               method: HttpMethod,
               request: HttpServletRequest): ResponseEntity<String>? {
-        LOGGER.debug("Request! {}", request.requestURI)
+        LOGGER.debug("Request {}", request.requestURI)
         val uri = URI("http", null, server, port, request.requestURI, request.queryString, null)
         val headers = buildHeaders(authorization)
         val entity = HttpEntity(body, headers)
@@ -44,7 +44,7 @@ class Controller(private val restTemplate: RestTemplate, private val restTemplat
 
     @RequestMapping(value = ["/oauth/**"], produces = ["application/json"])
     fun proxyOauth(method: HttpMethod, request: HttpServletRequest): ResponseEntity<String>? {
-        LOGGER.debug("Request OAuth! {}", request.requestURI)
+        LOGGER.debug("Request OAuth {}", request.requestURI)
         val uri = URI("http", null, server, port, request.requestURI, request.queryString, null)
         val headers = HttpHeaders()
         headers.add("Content-Type", "application/json")
