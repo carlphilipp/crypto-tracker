@@ -32,8 +32,7 @@ class Header extends Component {
 
     performance() { this.props.onUpdate('performance'); }
 
-    // TODO create account page
-    account() { this.props.onUpdate('user'); }
+    account() { this.props.onUpdate('account'); }
 
     logout() { this.props.onLogout(); }
 
@@ -58,7 +57,7 @@ class Header extends Component {
                             </NavItem>
                             &nbsp;&nbsp;&nbsp;
                             <NavItem className="navbar-menu">
-                              {(isLoggedIn()) ? <Link to="#" onClick={this.user.bind(this)}>Account</Link> : ''}
+                              {(isLoggedIn()) ? <Link to="#" onClick={this.account.bind(this)}>Account</Link> : ''}
                             </NavItem>
                             <NavItem>
                                 {(!isLoggedIn()) ? <Login onLogin={this.onLogin.bind(this)} buttonLabel="Login"/> : ''}

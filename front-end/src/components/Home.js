@@ -3,6 +3,7 @@ import Header from './Header';
 import Tickers from './Tickers';
 import User from './User';
 import Performance from './Performance';
+import Account from './Account';
 import CouldNotLoad from './alerts/CouldNotLoad'
 import SignUpSuccess from './alerts/SignUpSuccess'
 import SignUpFailure from './alerts/SignUpFailure'
@@ -59,6 +60,8 @@ class Home extends Component {
           return <User onLogout={this.onLogout.bind(this)} tickers={this.state.tickers}/>;
         case 'performance':
           return <Performance onLogout={this.onLogout.bind(this)} tickers={this.state.tickers}/>;
+        case 'account':
+            return <Account onLogout={this.onLogout.bind(this)}/>;
         default:
           return <Tickers tickers={this.state.tickers}/>;
         }

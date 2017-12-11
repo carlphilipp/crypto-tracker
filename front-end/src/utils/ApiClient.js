@@ -7,7 +7,6 @@ const BASE_URL = process.env.NODE_ENV === 'production'
     : 'http://localhost:8180';
 
 function getAllTickers() {
-    console.log("Node env: " + process.env.NODE_ENV)
     const url = `${BASE_URL}/api/ticker`;
     return axios.get(url).then(response => response.data);
 }
