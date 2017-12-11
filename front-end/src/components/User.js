@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
-import {getOneUser, refreshTickers} from '../utils/ApiClient';
-import {getUserId, getAccessToken} from '../service/AuthService';
+import {refreshTickers} from '../utils/ApiClient';
+import {getCurrentUser} from '../service/UserService';
 import {Table, Button} from 'reactstrap';
 import {FormattedNumber, FormattedTime, IntlProvider}  from 'react-intl'
 import RefreshSuccess from './alerts/RefreshSuccess';
@@ -23,28 +23,17 @@ class User extends Component {
         this.onAdd = this.onAdd.bind(this);
     }
 
-    updateUserInState(user) { this.setState({user: user}); }
-
     logout() { this.props.onLogout(); }
 
-    getUser(accessToken, userId) {
-        getOneUser(accessToken, userId).then((user) => { this.setState({user: user}); })
-        .catch((error) => {
-          if(error.response.status === 401 && error.response.data.error_description.includes("expired")){
-            console.log("Token expired, logging out...")
-            this.logout()
-          } else {
-            console.log("Unhandled error: " + error)
-          }
-        })
+    getCurrentUser() {
+        getCurrentUser().then((user) => { this.setState({user: user}); });
     }
 
-    componentDidMount() { this.getUser(getAccessToken(), getUserId()); }
+    componentDidMount() { this.getCurrentUser(); }
 
     refreshTickers() {
-      // TODO create a service to avoid accessing token and user id here
       refreshTickers()
-        .then(() => this.getUser(getAccessToken(), getUserId()))
+        .then(() => this.getCurrentUser())
         .then(() => {
           this.setState({refreshFadeIn: true})
           delay(3000).then(() => {this.setState({refreshFadeIn: false})});
@@ -74,9 +63,7 @@ class User extends Component {
     }
 
     onAdd() {
-      const accessToken = getAccessToken();
-      const userId = getUserId();
-      this.getUser(accessToken, userId);
+      this.getCurrentUser();
     }
 
     render() {

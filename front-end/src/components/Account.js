@@ -3,6 +3,7 @@ import {IntlProvider}  from 'react-intl'
 import {getOneUser} from '../utils/ApiClient';
 import {getUserId, getAccessToken} from '../service/AuthService';
 import {Button} from 'reactstrap';
+import {getCurrentUser} from '../service/UserService';
 
 class Account extends Component {
 
@@ -18,19 +19,11 @@ class Account extends Component {
 
     logout() { this.props.onLogout(); }
 
-    getUser(accessToken, userId) {
-        getOneUser(accessToken, userId).then((user) => { this.setState({user: user}); })
-        .catch((error) => {
-          if(error.response.status === 401 && error.response.data.error_description.includes("expired")){
-            console.log("Token expired, logging out...")
-            this.logout()
-          } else {
-            console.log("Unhandled error: " + error)
-          }
-        })
+    getUser() {
+        getCurrentUser().then((user) => { this.setState({user: user}); })
     }
 
-    componentDidMount() { this.getUser(getAccessToken(), getUserId()); }
+    componentDidMount() { this.getUser(); }
 
     render() {
         const {user} = this.state;

@@ -14,7 +14,7 @@ function getAllTickers() {
 function getOneUser(accessToken, userId) {
     const url = `${BASE_URL}/api/user/` + userId;
     const config = {headers: {'Authorization': 'Bearer ' + accessToken}};
-    return axios.get(url, config).then(response => response.data);
+    return axios.get(url, config);
 }
 
 function createUser(email, password) {
