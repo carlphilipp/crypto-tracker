@@ -9,11 +9,11 @@ import org.springframework.data.mongodb.core.mapping.Document
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder("id", "currency1", "currency2", "quantity", "value", "gain", "gainPercentage", "unitCostPrice", "originalValue", "lastUpdated")
 @Document(collection = "position")
-data class Position private constructor(
+data class Position constructor(
         val currency1: Currency,
-        val currency2: Currency,
         val quantity: Double,
-        val unitCostPrice: Double) {
+        val unitCostPrice: Double,
+        val currency2: Currency = Currency.USD) {
 
     @Id
     var id: String? = null
@@ -28,15 +28,5 @@ data class Position private constructor(
     var gainPercentage: Double? = null
     @Transient
     var lastUpdated: Long? = null
-
-    companion object {
-        fun buildPosition(ticker: Ticker, quantity: Double, unitCostPrice: Double): Position {
-            return Position(
-                    currency1 = ticker.currency1,
-                    currency2 = ticker.currency2,
-                    quantity = quantity,
-                    unitCostPrice = unitCostPrice)
-        }
-    }
 }
 

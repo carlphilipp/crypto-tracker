@@ -13,7 +13,7 @@ cd front-end && npm install
 #### Deploy & start
 
 ```
-java -jar back-end/build/libs/back-end-0.0.1-SNAPSHOT.jar
+java -jar -Dspring.profiles.active=dev back-end/build/libs/back-end-0.0.1-SNAPSHOT.jar
 java -jar gateway/build/libs/gateway-0.0.1-SNAPSHOT.jar
 cd front-end && npm install && npm start
 ```
@@ -34,7 +34,7 @@ npm run build
 #### Deploy & start
 
 ```
-java -jar -Dspring.profiles.active=prod back-end-XXX.jar
+java -jar back-end-XXX.jar
 java -jar gateway-XXX.jar
 cd front-end
 serve -s build

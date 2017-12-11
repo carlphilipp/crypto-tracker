@@ -1,7 +1,27 @@
-logging:
-  level:
-    fr.cph.crypto.proxy: DEBUG
 server:
   port: 8180
   compression:
     enabled: true
+
+spring:
+  profiles:
+    active: prod
+
+---
+
+spring:
+    profiles: dev
+
+logging:
+  level:
+    fr.cph.crypto.gateway: DEBUG
+
+---
+
+spring:
+    profiles: prod
+
+logging:
+  level:
+    fr.cph.crypto.gateway: INFO
+  file: gateway.log

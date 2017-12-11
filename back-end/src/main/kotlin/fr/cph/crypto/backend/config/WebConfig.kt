@@ -1,4 +1,4 @@
-package fr.cph.crypto.backend.config
+package fr.cph.crypto.backend.configsec
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
@@ -14,7 +14,6 @@ class WebConfig {
 
     @Value("\${security.encoding-strength}")
     private lateinit var encodingStrength: String
-
 
     @Bean
     fun shaPasswordEncoder(): ShaPasswordEncoder {
