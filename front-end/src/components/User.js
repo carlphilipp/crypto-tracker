@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
-import {getCurrentUser, refreshCurrentTickers} from '../service/UserService';
+import {getCurrentUser} from '../service/UserService';
+import {refreshCurrentTickers} from '../service/TickerService';
 import {Table, Button} from 'reactstrap';
 import {FormattedNumber, FormattedTime, IntlProvider}  from 'react-intl'
 import RefreshSuccess from './alerts/RefreshSuccess';

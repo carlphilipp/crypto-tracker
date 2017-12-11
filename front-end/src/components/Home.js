@@ -10,7 +10,7 @@ import SignUpFailure from './alerts/SignUpFailure'
 import {getCurrentPage, saveCurrentPage} from '../service/PageService';
 import {logout} from '../service/AuthService';
 import {removePage} from '../service/PageService';
-import {getCurrentTickers} from '../service/UserService';
+import {getCurrentTickers} from '../service/TickerService';
 
 class Home extends Component {
 
