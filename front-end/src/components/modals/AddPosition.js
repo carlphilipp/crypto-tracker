@@ -36,10 +36,10 @@ class AddPosition extends React.Component {
         });
     }
 
-    handleUserInput(e) {
-      const name = e.target.name;
-      const value = e.target.value;
-      this.setState({[name]: value}, () => this.validate(name, value))
+    handleUserInput(evt) {
+      const name = evt.target.name;
+      const value = evt.target.value;
+      this.setState({[name]: value}, () => this.validate(name, value));
     }
 
     // TODO Check how the API react between 423.0 vs 1,000.0

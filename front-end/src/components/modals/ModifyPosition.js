@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, FormFeedback} from 'reactstrap';
+import {Button, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, FormFeedback, Collapse, Table} from 'reactstrap';
 import {updateOnePosition} from '../../service/UserService';
 import LoginFailure from '../alerts/LoginFailure';
 
@@ -9,13 +9,24 @@ class ModifyPosition extends React.Component {
         super(props);
         this.state = {
             modal: false,
+            smart: false,
+            manual: false,
             quantity: null,
             quantityValid: null,
             unitCostPrice: null,
             unitCostPriceValid: null,
             failure: false,
             formValid: false,
+
+
+            smartAddQuantity: 0,
+            smartAddUnitCostPrice: 0,
+
+
+            smartNewQuantity: 0,
+            smartNewUnitCostPrice: 0,
         };
+
         this.toggle = this.toggle.bind(this);
         this.modifyPosition = this.modifyPosition.bind(this);
     }
@@ -75,7 +86,17 @@ class ModifyPosition extends React.Component {
     onLogin() { this.props.onLogin() }
 
     modifyPosition() {
-        updateOnePosition(this.props.position.id, this.props.position.currency1.code, this.state.quantity, this.state.unitCostPrice)
+      // FIXME this is pretty dirty, to refactor
+        let newQuantity = null;
+        let newUnitCostPrice = null;
+        if (this.state.smart) {
+          newQuantity = this.state.smartNewQuantity;
+          newUnitCostPrice = this.state.smartNewUnitCostPrice;
+        } else if (this.state.manual) {
+          newQuantity = this.state.quantity;
+          newUnitCostPrice = this.state.unitCostPrice;
+        }
+        updateOnePosition(this.props.position.id, this.props.position.currency1.code, newQuantity, newUnitCostPrice)
             .then(() => {
                 this.toggle();
                 this.props.onUpdateOrDelete(this.props.index);
@@ -86,6 +107,37 @@ class ModifyPosition extends React.Component {
             })
     }
 
+    display(evt) {
+      const name = evt.target.name;
+      switch(name) {
+        case 'smart':
+          this.setState({ smart: !this.state.smart, manual: false });
+          break;
+        case 'manual':
+          this.setState({ smart: false, manual: !this.state.manual });
+          break;
+        default:
+          this.setState({ smart: false, manual: false, });
+      }
+    }
+
+    handleUseNewValues(evt) {
+        const name = evt.target.name;
+        const value = evt.target.value;
+        this.setState({[name]: value}, () => this.populateNewValues());
+    }
+
+    populateNewValues() {
+      const newQuantity = parseFloat(this.state.quantity) + parseFloat(this.state.smartAddQuantity)
+      const newUnitCostPrice = (parseFloat(this.state.smartAddQuantity)) < 0
+          ? parseFloat(this.state.unitCostPrice)
+          :(parseFloat(this.state.smartAddUnitCostPrice) * parseFloat(this.state.smartAddQuantity) + parseFloat(this.state.unitCostPrice) * parseFloat(this.state.quantity)) / newQuantity
+      this.setState({
+        smartNewQuantity: newQuantity,
+        smartNewUnitCostPrice: newUnitCostPrice
+      })
+    }
+
     render() {
         return (
             <div>
@@ -94,19 +146,81 @@ class ModifyPosition extends React.Component {
                     <ModalHeader toggle={this.toggle}>Modify</ModalHeader>
                     <ModalBody>
                       <FormGroup>
-                          <Label for="ticker">Ticker</Label><br />
-                          {this.props.position.currency1.code}
+                        <Button outline color="primary" size="lg" name="smart" id="smart" block onClick={(evt) => this.display(evt)}>Smart</Button>
                       </FormGroup>
+                      <div className="text-center">or</div>
                       <FormGroup>
-                          <Label for="quantity">Quantity</Label>
-                          <Input size="lg" type="text" name="quantity" id="quantity" onBlur={evt => this.handleUserInput(evt)} defaultValue={this.state.quantity} valid={this.state.quantityValid} autoFocus="true"/>
-                          <FormFeedback>Must be a valid number</FormFeedback>
+                        <Button outline color="primary" size="lg" name="manual" id="manual" block onClick={(evt) => this.display(evt)}>Manual</Button>
                       </FormGroup>
-                      <FormGroup>
-                          <Label for="unitCostPrice">Unit Cost Price</Label>
-                          <Input size="lg" type="text" name="unitCostPrice" id="unitCostPrice" onBlur={evt => this.handleUserInput(evt)} defaultValue={this.state.unitCostPrice} valid={this.state.unitCostPriceValid}/>
-                          <FormFeedback>Must be a valid number</FormFeedback>
-                      </FormGroup>
+
+
+
+
+                      <Collapse isOpen={this.state.smart}>
+                        <h3 className="text-center">Smart change</h3>
+                        <Table bordered>
+                          <thead>
+                            <tr>
+                                <th>Currency</th>
+                                <th className="text-right">Current Quantity</th>
+                                <th className="text-right">Current Unit Cost Price</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>{this.props.position.currency1.code}</td>
+                              <td className="text-right">{this.state.quantity}</td>
+                              <td className="text-right">${this.state.unitCostPrice}</td>
+                            </tr>
+                          </tbody>
+                        </Table>
+                        <FormGroup>
+                            <Label for="quantity">Add or Remove quantity</Label>
+                            <Input size="lg" type="text" name="smartAddQuantity" id="smartAddQuantity" ref="smartAddQuantity" defaultValue={this.state.smartAddQuantity} onBlur={(evt) => this.handleUseNewValues(evt)}/>
+                            <FormFeedback>Must be a valid number</FormFeedback>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="unitCostPrice">Unit Cost Price</Label>
+                            <Input size="lg" type="text" name="smartAddUnitCostPrice" id="smartAddUnitCostPrice" ref="smartAddUnitCostPrice" defaultValue={this.state.smartAddUnitCostPrice} onBlur={(evt) => this.handleUseNewValues(evt)}/>
+                            <FormFeedback>Must be a valid number</FormFeedback>
+                        </FormGroup>
+                        <Table bordered>
+                          <thead>
+                            <tr>
+                                <th>Currency</th>
+                                <th className="text-right">New Quantity</th>
+                                <th className="text-right">New Unit Cost Price</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>{this.props.position.currency1.code}</td>
+                              <td className="text-right"><Input size="lg" type="text" name="smartNewQuantity" id="smartNewQuantity" value={this.state.smartNewQuantity} /></td>
+                              <td className="text-right"><Input size="lg" type="text" name="smartNewUnitCostPrice" id="smartNewUnitCostPrice" value={this.state.smartNewUnitCostPrice} /></td>
+                            </tr>
+                          </tbody>
+                        </Table>
+                      </Collapse>
+
+
+
+                      <Collapse isOpen={this.state.manual}>
+                        Manual change
+                        <FormGroup>
+                            <Label for="ticker">Ticker</Label><br />
+                            {this.props.position.currency1.code}
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="quantity">Quantity</Label>
+                            <Input size="lg" type="text" name="quantity" id="quantity" onBlur={evt => this.handleUserInput(evt)} defaultValue={this.state.quantity} valid={this.state.quantityValid} autoFocus="true"/>
+                            <FormFeedback>Must be a valid number</FormFeedback>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="unitCostPrice">Unit Cost Price</Label>
+                            <Input size="lg" type="text" name="unitCostPrice" id="unitCostPrice" onBlur={evt => this.handleUserInput(evt)} defaultValue={this.state.unitCostPrice} valid={this.state.unitCostPriceValid}/>
+                            <FormFeedback>Must be a valid number</FormFeedback>
+                        </FormGroup>
+                      </Collapse>
                     </ModalBody>
                     {/* FIXME: create a failure state*/}
                     {(this.state.failure) ? <LoginFailure /> : ''}
