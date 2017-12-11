@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import {IntlProvider}  from 'react-intl'
-import {getOneUser} from '../utils/ApiClient';
-import {getUserId, getAccessToken} from '../service/AuthService';
 import {Button} from 'reactstrap';
 import {getCurrentUser} from '../service/UserService';
 

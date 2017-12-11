@@ -1,5 +1,9 @@
-import {getOneUser} from '../utils/ApiClient';
+import {createUser, getOneUser, addPosition, deletePosition, updatePosition, refreshTickers, getAllTickers, getAllShareValue, login} from '../utils/ApiClient';
 import {getUserId, getAccessToken} from './AuthService';
+
+export function createNewUser(email, password) {
+  return createUser({ email: email, password: password }).then(response => response.data);
+}
 
 export function getCurrentUser() {
     const accessToken = getAccessToken();
@@ -13,5 +17,53 @@ export function getCurrentUser() {
                   } else {
                     console.log("Unhandled error: " + error)
                   }
-                })
+                });
+}
+
+export function addPositionToCurrentUser(ticker, quantity, unitCostPrice) {
+    const accessToken = getAccessToken();
+    const userId = getUserId();
+    return addPosition(accessToken, userId, {
+        currency1: ticker,
+        currency2: 'USD',
+        quantity: quantity,
+        unitCostPrice: unitCostPrice
+      });
+}
+
+export function updateOnePosition(positionId, ticker, quantity, unitCostPrice) {
+    const accessToken = getAccessToken();
+    const userId = getUserId();
+    return updatePosition(accessToken, userId, {
+        id: positionId,
+        currency1: ticker,
+        currency2: 'USD',
+        quantity: quantity,
+        unitCostPrice: unitCostPrice
+      });
+}
+
+export function deletePositionFromCurrentUser(positionId, price) {
+    const accessToken = getAccessToken();
+    const userId = getUserId();
+    return deletePosition(accessToken, userId, positionId, price);
+}
+
+export function getCurrentUserShareValue() {
+    const accessToken = getAccessToken();
+    const userId = getUserId();
+    return getAllShareValue(accessToken, userId).then(response => response.data);
+}
+
+export function loginUser(email, password) {
+    return login(email, password).then(response => response.data)
+}
+
+// TODO: we might want to create a ticker service
+export function getCurrentTickers() {
+    return getAllTickers().then(response => response.data);
+}
+
+export function refreshCurrentTickers() {
+    return refreshTickers().then(response => response.data);
 }

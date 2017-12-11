@@ -1,7 +1,6 @@
 import React from 'react';
 import {Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, FormFeedback} from 'reactstrap';
-import {addPosition} from '../../utils/ApiClient';
-import {getAccessToken} from '../../service/AuthService';
+import {addPositionToCurrentUser} from '../../service/UserService';
 
 class AddPosition extends React.Component {
     constructor(props) {
@@ -62,7 +61,7 @@ class AddPosition extends React.Component {
     }
 
     add() {
-        addPosition(getAccessToken(), this.props.user.id, this.state.ticker, this.state.quantity, this.state.unitCostPrice)
+        addPositionToCurrentUser(this.state.ticker, this.state.quantity, this.state.unitCostPrice)
             .then(() => this.props.onAdd())
             .then(this.toggle())
             .catch(error => {
@@ -86,12 +85,12 @@ class AddPosition extends React.Component {
                             </FormGroup>
                             <FormGroup>
                                 <Label for="quantity">Quantity</Label>
-                                <Input size="lg" type="text" name="quantity" onBlur={evt => this.handleUserInput(evt)} id="quantity" placeholder="1.0" valid={this.state.quantityValid}/>
+                                <Input size="lg" type="text" name="quantity" id="quantity" onBlur={evt => this.handleUserInput(evt)} placeholder="1.0" valid={this.state.quantityValid}/>
                                 <FormFeedback>Must be a valid number</FormFeedback>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="unitCostPrice">Unit Cost Price</Label>
-                                <Input size="lg" type="text" name="unitCostPrice" id="unitCostPrice" onChange={evt => this.handleUserInput(evt)} placeholder="100" valid={this.state.unitCostPriceValid}/>
+                                <Input size="lg" type="text" name="unitCostPrice" id="unitCostPrice" onBlur={evt => this.handleUserInput(evt)} placeholder="100" valid={this.state.unitCostPriceValid}/>
                                 <FormFeedback>Must be a valid number</FormFeedback>
                             </FormGroup>
                         </Form>

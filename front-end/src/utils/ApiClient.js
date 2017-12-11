@@ -1,73 +1,62 @@
 import axios from 'axios';
-export {getAllTickers, getOneUser, createUser, login, refreshTickers, addPosition, deletePosition, updatePosition, getAllShareValue};
 
 // FIXME pass that url through env variable
 const BASE_URL = process.env.NODE_ENV === 'production'
     ? 'https://stocktracker.fr/gateway'
     : 'http://localhost:8180';
 
-function getAllTickers() {
+// Tickers
+export function getAllTickers() {
     const url = `${BASE_URL}/api/ticker`;
-    return axios.get(url).then(response => response.data);
+    return axios.get(url);
 }
 
-function getOneUser(accessToken, userId) {
-    const url = `${BASE_URL}/api/user/` + userId;
-    const config = {headers: {'Authorization': 'Bearer ' + accessToken}};
-    return axios.get(url, config);
-}
-
-function createUser(email, password) {
-    const url = `${BASE_URL}/api/user`;
-    return axios.post(url, {
-        email: email,
-        password: password,
-    })
-        .then(response => response.data);
-}
-
-function refreshTickers() {
+export function refreshTickers() {
     const url = `${BASE_URL}/api/refresh`;
     return axios.get(url);
 }
 
-function login(email, password) {
-    const url = `${BASE_URL}/oauth/token?grant_type=password&username=` + email + `&password=` + password;
-    return axios.post(url).then(response => response.data);
+// Users
+export function createUser(user) {
+    const url = `${BASE_URL}/api/user`;
+    return axios.post(url, user).then(response => response.data);
 }
 
-function addPosition(accessToken, id, ticker, quantity, unitCostPrice) {
+export function getOneUser(accessToken, userId) {
+    const url = `${BASE_URL}/api/user/` + userId;
+    const config = createConfig(accessToken);
+    return axios.get(url, config);
+}
+
+export function addPosition(accessToken, id, position) {
   const url = `${BASE_URL}/api/user/` + id + `/position`;
-  const config = {headers: {'Authorization': 'Bearer ' + accessToken}};
-  return axios.post(url, {
-      currency1: ticker,
-      currency2: 'USD',
-      quantity: quantity,
-      unitCostPrice: unitCostPrice
-    }, config);
+  const config = createConfig(accessToken);
+  return axios.post(url, position, config);
 }
 
-function updatePosition(accessToken, id, positionId, ticker, quantity, unitCostPrice) {
-  const url = `${BASE_URL}/api/user/` + id + `/position/` + positionId;
-  const config = {headers: {'Authorization': 'Bearer ' + accessToken}};
-  return axios.put(url, {
-      id: positionId,
-      currency1: ticker,
-      currency2: 'USD',
-      quantity: quantity,
-      unitCostPrice: unitCostPrice
-    }, config);
+export function updatePosition(accessToken, id, position) {
+  const url = `${BASE_URL}/api/user/` + id + `/position/` + position.id;
+  const config = createConfig(accessToken);
+  return axios.put(url, position, config);
 }
 
-function deletePosition(accessToken, id, positionId, price) {
-  console.log("delete position " + positionId)
+export function deletePosition(accessToken, id, positionId, price) {
   const url = `${BASE_URL}/api/user/` + id + `/position/` + positionId + `/` + price;
-  const config = {headers: {'Authorization': 'Bearer ' + accessToken}};
-  return axios.delete(url, config)
+  const config = createConfig(accessToken);
+  return axios.delete(url, config);
 }
 
-function getAllShareValue(accessToken, userId) {
+export function getAllShareValue(accessToken, userId) {
     const url = `${BASE_URL}/api/user/` + userId + `/sharevalue`;
-    const config = {headers: {'Authorization': 'Bearer ' + accessToken}};
-    return axios.get(url, config).then(response => response.data);
+    const config = createConfig(accessToken);
+    return axios.get(url, config);
+}
+
+export function login(email, password) {
+    const url = `${BASE_URL}/oauth/token?grant_type=password&username=` + email + `&password=` + password;
+    return axios.post(url);
+}
+
+function createConfig(accessToken) {
+  return {headers: {'Authorization': 'Bearer ' + accessToken}};
 }

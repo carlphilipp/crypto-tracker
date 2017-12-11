@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
-import {refreshTickers} from '../utils/ApiClient';
-import {getCurrentUser} from '../service/UserService';
+import {getCurrentUser, refreshCurrentTickers} from '../service/UserService';
 import {Table, Button} from 'reactstrap';
 import {FormattedNumber, FormattedTime, IntlProvider}  from 'react-intl'
 import RefreshSuccess from './alerts/RefreshSuccess';
@@ -32,7 +31,7 @@ class User extends Component {
     componentDidMount() { this.getCurrentUser(); }
 
     refreshTickers() {
-      refreshTickers()
+      refreshCurrentTickers()
         .then(() => this.getCurrentUser())
         .then(() => {
           this.setState({refreshFadeIn: true})

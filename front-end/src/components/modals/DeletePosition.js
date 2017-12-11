@@ -1,9 +1,8 @@
 import React from 'react';
 import {Button, Modal, ModalBody, ModalFooter, ModalHeader, Form, FormGroup, Label, FormText, Input, FormFeedback} from 'reactstrap';
-import {deletePosition} from '../../utils/ApiClient';
 import {FormattedNumber}  from 'react-intl'
 import LoginFailure from '../alerts/LoginFailure';
-import {getUserId, getAccessToken} from '../../service/AuthService';
+import {deletePositionFromCurrentUser} from '../../service/UserService';
 
 class DeletePosition extends React.Component {
 
@@ -46,9 +45,7 @@ class DeletePosition extends React.Component {
     }
 
     delete() {
-        const accessToken = getAccessToken();
-        const userId = getUserId();
-        deletePosition(accessToken, userId, this.props.position.id, this.state.price)
+        deletePositionFromCurrentUser(this.props.position.id, this.state.price)
             .then((token) => {
                 this.toggle()
                 this.props.onUpdateOrDelete(this.props.index)

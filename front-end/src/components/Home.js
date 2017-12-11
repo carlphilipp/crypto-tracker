@@ -10,7 +10,7 @@ import SignUpFailure from './alerts/SignUpFailure'
 import {getCurrentPage, saveCurrentPage} from '../service/PageService';
 import {logout} from '../service/AuthService';
 import {removePage} from '../service/PageService';
-import {getAllTickers} from '../utils/ApiClient';
+import {getCurrentTickers} from '../service/UserService';
 
 class Home extends Component {
 
@@ -26,7 +26,7 @@ class Home extends Component {
     }
 
     componentDidMount() {
-      getAllTickers().then((tickers) => {
+      getCurrentTickers().then((tickers) => {
           this.setState({tickers: tickers});
       })
       .catch((error) => {

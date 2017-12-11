@@ -24,9 +24,6 @@ export function storeToken(token) {
     save(TOKEN, JSON.stringify(token))
 }
 
-export function login() {
-}
-
 export function logout() {
     remove(TOKEN)
 }

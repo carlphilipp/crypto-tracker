@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-import {getAllShareValue, refreshTickers} from '../utils/ApiClient';
-import {getUserId, getAccessToken} from '../service/AuthService';
-import {delay} from '../utils/Utils';
+import {getCurrentUserShareValue} from '../service/UserService';
 import SimpleLineChart from './charts/ShareValueChart'
 var dateFormat = require('dateformat');
 
@@ -14,8 +12,6 @@ class User extends Component {
           shareValues: [],
           refreshFadeIn: false
         };
-        this.onUpdateOrDelete = this.onUpdateOrDelete.bind(this);
-        this.onAdd = this.onAdd.bind(this);
     }
 
     updateUserInState(user) { this.setState({user: user}); }
@@ -23,7 +19,7 @@ class User extends Component {
     logout() { this.props.onLogout(); }
 
     getAllShareValue(accessToken, userId) {
-        getAllShareValue(accessToken, userId).then((shareValues) => {
+        getCurrentUserShareValue().then((shareValues) => {
 
           const rechartsData = shareValues.map(shareValue => {return {
             date: dateFormat(new Date(shareValue.timestamp), "mm-dd-yyyy"),
@@ -43,28 +39,7 @@ class User extends Component {
         })
     }
 
-    componentDidMount() { this.getAllShareValue(getAccessToken(), getUserId()); }
-
-    refreshTickers() {
-      // TODO create a service to avoid accessing token and user id here
-      refreshTickers()
-        .then(() => this.getUser(getAccessToken(), getUserId()))
-        .then(() => {
-          this.setState({refreshFadeIn: true})
-          delay(3000).then(() => {this.setState({refreshFadeIn: false})});
-        })
-    }
-
-    onUpdateOrDelete(index) {
-      this.showHideSecondLine(index);
-      this.onAdd();
-    }
-
-    onAdd() {
-      const accessToken = getAccessToken();
-      const userId = getUserId();
-      this.getUser(accessToken, userId);
-    }
+    componentDidMount() { this.getAllShareValue(); }
 
     render() {
         return (

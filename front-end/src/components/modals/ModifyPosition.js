@@ -1,7 +1,6 @@
 import React from 'react';
 import {Button, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, FormFeedback} from 'reactstrap';
-import {updatePosition} from '../../utils/ApiClient';
-import {getAccessToken} from '../../service/AuthService';
+import {updateOnePosition} from '../../service/UserService';
 import LoginFailure from '../alerts/LoginFailure';
 
 class ModifyPosition extends React.Component {
@@ -76,7 +75,7 @@ class ModifyPosition extends React.Component {
     onLogin() { this.props.onLogin() }
 
     modifyPosition() {
-        updatePosition(getAccessToken(), this.props.user.id, this.props.position.id, this.props.position.currency1.code, this.state.quantity, this.state.unitCostPrice)
+        updateOnePosition(this.props.position.id, this.props.position.currency1.code, this.state.quantity, this.state.unitCostPrice)
             .then(() => {
                 this.toggle();
                 this.props.onUpdateOrDelete(this.props.index);

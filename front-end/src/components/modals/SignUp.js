@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, FormFeedback} from 'reactstrap';
-import {createUser} from '../../utils/ApiClient';
+import {createNewUser} from '../../service/UserService';
 
 class SignUp extends React.Component {
     constructor(props) {
@@ -62,12 +62,11 @@ class SignUp extends React.Component {
     }
 
     onRegister(status) {
-        console.log("register in signup")
         this.props.onRegister(status)
     }
 
     create() {
-        createUser(this.state.email, this.state.password)
+        createNewUser(this.state.email, this.state.password)
             .then(this.toggle())
             .then(() => {
                 this.onRegister(true);

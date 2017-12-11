@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, FormFeedback} from 'reactstrap';
-import {login} from '../../utils/ApiClient';
+import {loginUser} from '../../service/UserService';
 import {storeToken} from '../../service/AuthService';
 import {delay} from '../../utils/Utils';
 import LoginFailure from '../alerts/LoginFailure';
@@ -58,9 +58,10 @@ class Login extends React.Component {
     onLogin() { this.props.onLogin() }
 
     loginUser() {
-        login(this.state.email, this.state.password)
+        loginUser(this.state.email, this.state.password)
             .then((token) => {
                 this.toggle()
+                // TODO should not manipualte user token here
                 storeToken(token);
                 // FIXME: Should not have to use a timer
                 delay(300).then(() => {this.onLogin()});
