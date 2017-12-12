@@ -1,11 +1,13 @@
 import {createUser, getOneUser, addPosition, deletePosition, updatePosition, getAllShareValue, login} from '../utils/ApiClient';
 import {getUserId, getAccessToken} from './AuthService';
 
+
+// FIXME handle expired token in all functions of that file
 export function createNewUser(email, password) {
   return createUser({ email: email, password: password }).then(response => response.data);
 }
 
-export function getCurrentUser() {
+export function getCurrentUser(callback) {
     const accessToken = getAccessToken();
     const userId = getUserId();
     return getOneUser(accessToken, userId)
@@ -13,7 +15,7 @@ export function getCurrentUser() {
                 .catch((error) => {
                   if (error.response.status === 401 && error.response.data.error_description.includes("expired")) {
                     console.log("Token expired, logging out...")
-                    this.logout()
+                    callback()
                   } else {
                     console.log("Unhandled error: " + error)
                   }

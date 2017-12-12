@@ -26,7 +26,7 @@ class User extends Component {
     logout() { this.props.onLogout(); }
 
     getCurrentUser() {
-        getCurrentUser().then((user) => { this.setState({user: user}); });
+        getCurrentUser(this.logout).then((user) => { this.setState({user: user}); });
     }
 
     componentDidMount() { this.getCurrentUser(); }
