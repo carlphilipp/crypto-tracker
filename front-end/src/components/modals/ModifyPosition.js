@@ -11,9 +11,9 @@ class ModifyPosition extends React.Component {
             modal: false,
 
             manualMod: false,
-            manualQuantity: null,
+            manualQuantity: this.props.position.quantity,
             manualQuantityValid: null,
-            manualUnitCostPrice: null,
+            manualUnitCostPrice: this.props.position.unitCostPrice,
             manualUnitCostPriceValid: null,
 
             smartMod: false,
@@ -21,13 +21,12 @@ class ModifyPosition extends React.Component {
             smartQuantityValid: null,
             smartAddUnitCostPrice: 0,
             smartAddUnitCostPriceValid: null,
-            smartNewQuantity: 0,
-            smartNewUnitCostPrice: 0,
+            smartNewQuantity: this.props.position.quantity,
+            smartNewUnitCostPrice: this.props.position.unitCostPrice,
 
             failure: false,
             formValid: false,
         };
-
         this.toggle = this.toggle.bind(this);
         this.modifyPosition = this.modifyPosition.bind(this);
     }
@@ -38,28 +37,13 @@ class ModifyPosition extends React.Component {
         }, () => {
           if(this.state.modal === false) {
             this.setState({
-              manualQuantity: this.props.position.quantity,
-              manualQuantityValid: null,
-              manualUnitCostPrice: this.props.position.unitCostPrice,
-              manualUnitCostPriceValid: null,
-
-              smartNewQuantity: this.props.position.quantity,
-              smartNewUnitCostPrice: this.props.position.unitCostPrice,
-
+              manualMod: false,
+              smartMod: false,
+              failure: false,
               formValid: false,
             });
           }
         });
-    }
-
-    componentDidMount() {
-      this.setState({
-          manualQuantity: this.props.position.quantity,
-          manualUnitCostPrice: this.props.position.unitCostPrice,
-
-          smartNewQuantity: this.props.position.quantity,
-          smartNewUnitCostPrice: this.props.position.unitCostPrice,
-      });
     }
 
     /* FIXME: code duplicated with AddPosition. Should be able to do that in a parent */
@@ -74,10 +58,10 @@ class ModifyPosition extends React.Component {
 
     validate(name, value) {
       switch(name) {
-        case "quantity":
+        case "manualQuantity":
           this.setState({manualQuantityValid: !isNaN(value)}, () => this.validateForm());
           break;
-        case "unitCostPrice":
+        case "manualUnitCostPrice":
           this.setState({manualUnitCostPriceValid: !isNaN(value)}, () => this.validateForm());
           break;
         default:
@@ -104,6 +88,8 @@ class ModifyPosition extends React.Component {
           newQuantity = this.state.manualQuantity;
           newUnitCostPrice = this.state.manualUnitCostPrice;
         }
+
+        console.log("modifyPosition: " + newQuantity + " " + newQuantity);
         if (newQuantity != null && newUnitCostPrice != null) {
           updateOnePosition(this.props.position.id, this.props.position.currency1.code, newQuantity, newUnitCostPrice)
               .then(() => {
@@ -232,12 +218,12 @@ class ModifyPosition extends React.Component {
                         </FormGroup>
                         <FormGroup>
                             <Label for="quantity">Quantity</Label>
-                            <Input size="lg" type="text" name="quantity" id="quantity" onBlur={evt => this.handleUserInput(evt)} defaultValue={this.state.manualQuantity} valid={this.state.manualQuantityValid} autoFocus="true"/>
+                            <Input size="lg" type="text" name="manualQuantity" id="manualQuantity" onBlur={evt => this.handleUserInput(evt)} defaultValue={this.state.manualQuantity} valid={this.state.manualQuantityValid} autoFocus="true"/>
                             <FormFeedback>Must be a valid number</FormFeedback>
                         </FormGroup>
                         <FormGroup>
                             <Label for="unitCostPrice">Unit Cost Price</Label>
-                            <Input size="lg" type="text" name="unitCostPrice" id="unitCostPrice" onBlur={evt => this.handleUserInput(evt)} defaultValue={this.state.manualUnitCostPrice} valid={this.state.manualUnitCostPriceValid}/>
+                            <Input size="lg" type="text" name="manualUnitCostPrice" id="manualUnitCostPrice" onBlur={evt => this.handleUserInput(evt)} defaultValue={this.state.manualUnitCostPrice} valid={this.state.manualUnitCostPriceValid}/>
                             <FormFeedback>Must be a valid number</FormFeedback>
                         </FormGroup>
                       </Collapse>
