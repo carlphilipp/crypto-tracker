@@ -9,22 +9,23 @@ class ModifyPosition extends React.Component {
         super(props);
         this.state = {
             modal: false,
-            smart: false,
-            manual: false,
-            quantity: null,
-            quantityValid: null,
-            unitCostPrice: null,
-            unitCostPriceValid: null,
-            failure: false,
-            formValid: false,
 
+            manualMod: false,
+            manualQuantity: null,
+            manualQuantityValid: null,
+            manualUnitCostPrice: null,
+            manualUnitCostPriceValid: null,
 
+            smartMod: false,
             smartAddQuantity: 0,
+            smartQuantityValid: null,
             smartAddUnitCostPrice: 0,
-
-
+            smartAddUnitCostPriceValid: null,
             smartNewQuantity: 0,
             smartNewUnitCostPrice: 0,
+
+            failure: false,
+            formValid: false,
         };
 
         this.toggle = this.toggle.bind(this);
@@ -37,10 +38,14 @@ class ModifyPosition extends React.Component {
         }, () => {
           if(this.state.modal === false) {
             this.setState({
-              quantity: this.props.position.quantity,
-              quantityValid: null,
-              unitCostPrice: this.props.position.unitCostPrice,
-              unitCostPriceValid: null,
+              manualQuantity: this.props.position.quantity,
+              manualQuantityValid: null,
+              manualUnitCostPrice: this.props.position.unitCostPrice,
+              manualUnitCostPriceValid: null,
+
+              smartNewQuantity: this.props.position.quantity,
+              smartNewUnitCostPrice: this.props.position.unitCostPrice,
+
               formValid: false,
             });
           }
@@ -49,11 +54,12 @@ class ModifyPosition extends React.Component {
 
     componentDidMount() {
       this.setState({
-          quantity: this.props.position.quantity,
-          unitCostPrice: this.props.position.unitCostPrice,
-          quantityValid: true,
-          unitCostPriceValid: true
-      }, () => this.validateForm());
+          manualQuantity: this.props.position.quantity,
+          manualUnitCostPrice: this.props.position.unitCostPrice,
+
+          smartNewQuantity: this.props.position.quantity,
+          smartNewUnitCostPrice: this.props.position.unitCostPrice,
+      });
     }
 
     /* FIXME: code duplicated with AddPosition. Should be able to do that in a parent */
@@ -69,10 +75,10 @@ class ModifyPosition extends React.Component {
     validate(name, value) {
       switch(name) {
         case "quantity":
-          this.setState({quantityValid: !isNaN(value)}, () => this.validateForm());
+          this.setState({manualQuantityValid: !isNaN(value)}, () => this.validateForm());
           break;
         case "unitCostPrice":
-          this.setState({unitCostPriceValid: !isNaN(value)}, () => this.validateForm());
+          this.setState({manualUnitCostPriceValid: !isNaN(value)}, () => this.validateForm());
           break;
         default:
           break;
@@ -80,62 +86,83 @@ class ModifyPosition extends React.Component {
     }
 
     validateForm() {
-      this.setState({formValid: this.state.quantityValid && this.state.unitCostPriceValid})
+      this.setState({
+        formValid: (this.state.manualQuantityValid && this.state.manualUnitCostPriceValid) || (this.state.smartQuantityValid && this.state.smartAddUnitCostPriceValid)
+      });
     }
 
     onLogin() { this.props.onLogin() }
 
     modifyPosition() {
-      // FIXME this is pretty dirty, to refactor
+        // FIXME this is pretty dirty, to refactor
         let newQuantity = null;
         let newUnitCostPrice = null;
-        if (this.state.smart) {
+        if (this.state.smartMod) {
           newQuantity = this.state.smartNewQuantity;
           newUnitCostPrice = this.state.smartNewUnitCostPrice;
-        } else if (this.state.manual) {
-          newQuantity = this.state.quantity;
-          newUnitCostPrice = this.state.unitCostPrice;
+        } else if (this.state.manualMod) {
+          newQuantity = this.state.manualQuantity;
+          newUnitCostPrice = this.state.manualUnitCostPrice;
         }
-        updateOnePosition(this.props.position.id, this.props.position.currency1.code, newQuantity, newUnitCostPrice)
-            .then(() => {
-                this.toggle();
-                this.props.onUpdateOrDelete(this.props.index);
-            })
-            .catch((error) => {
-              console.log("Error: " + error);
-              this.setState({failure:true});
-            })
+        if (newQuantity != null && newUnitCostPrice != null) {
+          updateOnePosition(this.props.position.id, this.props.position.currency1.code, newQuantity, newUnitCostPrice)
+              .then(() => {
+                  this.toggle();
+                  this.props.onUpdateOrDelete(this.props.index);
+              })
+              .catch((error) => {
+                console.log("Error: " + error);
+                this.setState({failure:true});
+              })
+        }
     }
 
-    display(evt) {
+    showHideForm(evt) {
       const name = evt.target.name;
       switch(name) {
         case 'smart':
-          this.setState({ smart: !this.state.smart, manual: false });
+          this.setState({ smartMod: !this.state.smartMod, manualMod: false });
           break;
         case 'manual':
-          this.setState({ smart: false, manual: !this.state.manual });
+          this.setState({ smartMod: false, manualMod: !this.state.manualMod });
           break;
         default:
-          this.setState({ smart: false, manual: false, });
+          this.setState({ smartMod: false, manualMod: false, });
       }
     }
 
     handleUseNewValues(evt) {
         const name = evt.target.name;
         const value = evt.target.value;
-        this.setState({[name]: value}, () => this.populateNewValues());
+        this.setState({[name]: value}, () => this.validate2(name, value));
+    }
+
+    validate2(name, value) {
+      switch(name) {
+        case "smartAddQuantity":
+          this.setState({smartQuantityValid: !isNaN(value)}, () => this.populateNewValues());
+          break;
+        case "smartAddUnitCostPrice":
+          this.setState({smartAddUnitCostPriceValid: !isNaN(value)}, () => this.populateNewValues());
+          break;
+        default:
+          break;
+      }
     }
 
     populateNewValues() {
-      const newQuantity = parseFloat(this.state.quantity) + parseFloat(this.state.smartAddQuantity)
-      const newUnitCostPrice = (parseFloat(this.state.smartAddQuantity)) < 0
-          ? parseFloat(this.state.unitCostPrice)
-          :(parseFloat(this.state.smartAddUnitCostPrice) * parseFloat(this.state.smartAddQuantity) + parseFloat(this.state.unitCostPrice) * parseFloat(this.state.quantity)) / newQuantity
-      this.setState({
-        smartNewQuantity: newQuantity,
-        smartNewUnitCostPrice: newUnitCostPrice
-      })
+        const newQuantity = parseFloat(this.state.manualQuantity) + parseFloat(this.state.smartAddQuantity)
+        const newUnitCostPrice = (parseFloat(this.state.smartAddQuantity)) < 0
+            ? parseFloat(this.state.manualUnitCostPrice)
+            :(parseFloat(this.state.smartAddUnitCostPrice) * parseFloat(this.state.smartAddQuantity) + parseFloat(this.state.manualUnitCostPrice) * parseFloat(this.state.manualQuantity)) / newQuantity;
+        if (!isNaN(newQuantity) && !isNaN(newUnitCostPrice)) {
+          this.setState({
+            smartNewQuantity: newQuantity,
+            smartNewUnitCostPrice: newUnitCostPrice
+          }, () => this.validateForm());
+        } else {
+          this.validateForm()
+        }
     }
 
     render() {
@@ -146,17 +173,13 @@ class ModifyPosition extends React.Component {
                     <ModalHeader toggle={this.toggle}>Modify</ModalHeader>
                     <ModalBody>
                       <FormGroup>
-                        <Button outline color="primary" size="lg" name="smart" id="smart" block onClick={(evt) => this.display(evt)}>Smart</Button>
+                        <Button outline color="primary" size="lg" name="smart" id="smart" block onClick={(evt) => this.showHideForm(evt)}>Smart</Button>
                       </FormGroup>
                       <div className="text-center">or</div>
                       <FormGroup>
-                        <Button outline color="primary" size="lg" name="manual" id="manual" block onClick={(evt) => this.display(evt)}>Manual</Button>
+                        <Button outline color="primary" size="lg" name="manual" id="manual" block onClick={(evt) => this.showHideForm(evt)}>Manual</Button>
                       </FormGroup>
-
-
-
-
-                      <Collapse isOpen={this.state.smart}>
+                      <Collapse isOpen={this.state.smartMod}>
                         <h3 className="text-center">Smart change</h3>
                         <Table bordered>
                           <thead>
@@ -169,19 +192,19 @@ class ModifyPosition extends React.Component {
                           <tbody>
                             <tr>
                               <td>{this.props.position.currency1.code}</td>
-                              <td className="text-right">{this.state.quantity}</td>
-                              <td className="text-right">${this.state.unitCostPrice}</td>
+                              <td className="text-right">{this.state.manualQuantity}</td>
+                              <td className="text-right">${this.state.manualUnitCostPrice}</td>
                             </tr>
                           </tbody>
                         </Table>
                         <FormGroup>
                             <Label for="quantity">Add or Remove quantity</Label>
-                            <Input size="lg" type="text" name="smartAddQuantity" id="smartAddQuantity" ref="smartAddQuantity" defaultValue={this.state.smartAddQuantity} onBlur={(evt) => this.handleUseNewValues(evt)}/>
+                            <Input size="lg" type="text" name="smartAddQuantity" id="smartAddQuantity" valid={this.state.smartQuantityValid} defaultValue={this.state.smartAddQuantity} onBlur={(evt) => this.handleUseNewValues(evt)}/>
                             <FormFeedback>Must be a valid number</FormFeedback>
                         </FormGroup>
                         <FormGroup>
                             <Label for="unitCostPrice">Unit Cost Price</Label>
-                            <Input size="lg" type="text" name="smartAddUnitCostPrice" id="smartAddUnitCostPrice" ref="smartAddUnitCostPrice" defaultValue={this.state.smartAddUnitCostPrice} onBlur={(evt) => this.handleUseNewValues(evt)}/>
+                            <Input size="lg" type="text" name="smartAddUnitCostPrice" id="smartAddUnitCostPrice" valid={this.state.smartAddUnitCostPriceValid} defaultValue={this.state.smartAddUnitCostPrice} onBlur={(evt) => this.handleUseNewValues(evt)}/>
                             <FormFeedback>Must be a valid number</FormFeedback>
                         </FormGroup>
                         <Table bordered>
@@ -195,29 +218,26 @@ class ModifyPosition extends React.Component {
                           <tbody>
                             <tr>
                               <td>{this.props.position.currency1.code}</td>
-                              <td className="text-right"><Input size="lg" type="text" name="smartNewQuantity" id="smartNewQuantity" value={this.state.smartNewQuantity} /></td>
-                              <td className="text-right"><Input size="lg" type="text" name="smartNewUnitCostPrice" id="smartNewUnitCostPrice" value={this.state.smartNewUnitCostPrice} /></td>
+                              <td className="text-right">{this.state.smartNewQuantity}</td>
+                              <td className="text-right">${this.state.smartNewUnitCostPrice}</td>
                             </tr>
                           </tbody>
                         </Table>
                       </Collapse>
-
-
-
-                      <Collapse isOpen={this.state.manual}>
-                        Manual change
+                      <Collapse isOpen={this.state.manualMod}>
+                        <h3 className="text-center">Manual change</h3>
                         <FormGroup>
                             <Label for="ticker">Ticker</Label><br />
                             {this.props.position.currency1.code}
                         </FormGroup>
                         <FormGroup>
                             <Label for="quantity">Quantity</Label>
-                            <Input size="lg" type="text" name="quantity" id="quantity" onBlur={evt => this.handleUserInput(evt)} defaultValue={this.state.quantity} valid={this.state.quantityValid} autoFocus="true"/>
+                            <Input size="lg" type="text" name="quantity" id="quantity" onBlur={evt => this.handleUserInput(evt)} defaultValue={this.state.manualQuantity} valid={this.state.manualQuantityValid} autoFocus="true"/>
                             <FormFeedback>Must be a valid number</FormFeedback>
                         </FormGroup>
                         <FormGroup>
                             <Label for="unitCostPrice">Unit Cost Price</Label>
-                            <Input size="lg" type="text" name="unitCostPrice" id="unitCostPrice" onBlur={evt => this.handleUserInput(evt)} defaultValue={this.state.unitCostPrice} valid={this.state.unitCostPriceValid}/>
+                            <Input size="lg" type="text" name="unitCostPrice" id="unitCostPrice" onBlur={evt => this.handleUserInput(evt)} defaultValue={this.state.manualUnitCostPrice} valid={this.state.manualUnitCostPriceValid}/>
                             <FormFeedback>Must be a valid number</FormFeedback>
                         </FormGroup>
                       </Collapse>

@@ -2,13 +2,10 @@ import React from 'react';
 import { Alert } from 'reactstrap';
 
 class LoginFailure extends React.Component {
+
     constructor(props) {
         super(props);
-
-        this.state = {
-            visible: true
-        };
-
+        this.state = { visible: true };
         this.onDismiss = this.onDismiss.bind(this);
     }
 

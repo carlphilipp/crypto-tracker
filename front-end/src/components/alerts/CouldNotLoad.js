@@ -5,7 +5,7 @@ class CouldNotLoad extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {visible: true};
+        this.state = { visible: true };
     }
 
     onDismiss() {

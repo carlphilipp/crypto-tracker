@@ -8,7 +8,6 @@ class SignUpFailure extends React.Component {
         this.state = {
             visible: true
         };
-
         this.onDismiss = this.onDismiss.bind(this);
     }
 
