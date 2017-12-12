@@ -37,9 +37,7 @@ class ModifyPosition extends React.Component {
 
     toggle() {
         this.init()
-        this.setState({
-            modal: !this.state.modal
-        });
+        this.setState({ modal: !this.state.modal });
     }
 
     /* FIXME: code duplicated with AddPosition. Should be able to do that in a parent */
@@ -114,10 +112,10 @@ class ModifyPosition extends React.Component {
     handleUseNewValues(evt) {
         const name = evt.target.name;
         const value = evt.target.value;
-        this.setState({[name]: value}, () => this.validate2(name, value));
+        this.setState({[name]: value}, () => this.validateSmartMod(name, value));
     }
 
-    validate2(name, value) {
+    validateSmartMod(name, value) {
       switch(name) {
         case "smartAddQuantity":
           this.setState({smartQuantityValid: !isNaN(value)}, () => this.populateNewValues());
