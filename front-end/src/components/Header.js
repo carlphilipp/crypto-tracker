@@ -45,19 +45,19 @@ class Header extends Component {
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
                             <NavItem className="navbar-menu">
-                              {(isLoggedIn()) ? <Link to="#" onClick={this.home.bind(this)}>Market</Link>: ''}
+                              {(isLoggedIn()) ? <Link to="#" activeStyle={{color:'#53acff'}} onClick={this.home.bind(this)}>Market</Link>: ''}
                             </NavItem>
                             &nbsp;&nbsp;&nbsp;
                             <NavItem className="navbar-menu">
-                              {(isLoggedIn()) ? <Link to="#" onClick={this.user.bind(this)}>Portfolio</Link> : ''}
+                              {(isLoggedIn()) ? <Link to="#" activeStyle={{color:'#53acff'}} onClick={this.user.bind(this)}>Portfolio</Link> : ''}
                             </NavItem>
                             &nbsp;&nbsp;&nbsp;
                             <NavItem className="navbar-menu">
-                              {(isLoggedIn()) ? <Link to="#" onClick={this.performance.bind(this)}>Performance</Link> : ''}
+                              {(isLoggedIn()) ? <Link to="#" activeStyle={{color:'#53acff'}} onClick={this.performance.bind(this)}>Performance</Link> : ''}
                             </NavItem>
                             &nbsp;&nbsp;&nbsp;
                             <NavItem className="navbar-menu">
-                              {(isLoggedIn()) ? <Link to="#" onClick={this.account.bind(this)}>Account</Link> : ''}
+                              {(isLoggedIn()) ? <Link to="#" activeStyle={{color:'#53acff'}} onClick={this.account.bind(this)}>Account</Link> : ''}
                             </NavItem>
                             <NavItem>
                                 {(!isLoggedIn()) ? <Login onLogin={this.onLogin.bind(this)} buttonLabel="Login"/> : ''}
