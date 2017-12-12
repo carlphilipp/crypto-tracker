@@ -78,6 +78,7 @@ class DeletePosition extends React.Component {
                           <Input size="lg" placeholder={0.0} onBlur={(evt) => this.updatePrice(evt)}  valid={this.state.priceValid}/>
                           <FormFeedback>Must be a valid number</FormFeedback>
                           <FormText>Current market value: <FormattedNumber value={this.props.position.value} style={`currency`} currency="USD"/></FormText>
+                          <FormText>Original value: <FormattedNumber value={this.props.position.originalValue} style={`currency`} currency="USD"/></FormText>
                         </FormGroup>
                       </Form>
                     </ModalBody>
