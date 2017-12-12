@@ -9,40 +9,36 @@ class ModifyPosition extends React.Component {
         super(props);
         this.state = {
             modal: false,
-
-            manualMod: false,
-            manualQuantity: this.props.position.quantity,
-            manualQuantityValid: null,
-            manualUnitCostPrice: this.props.position.unitCostPrice,
-            manualUnitCostPriceValid: null,
-
-            smartMod: false,
-            smartAddQuantity: 0,
-            smartQuantityValid: null,
-            smartAddUnitCostPrice: 0,
-            smartAddUnitCostPriceValid: null,
-            smartNewQuantity: this.props.position.quantity,
-            smartNewUnitCostPrice: this.props.position.unitCostPrice,
-
-            failure: false,
-            formValid: false,
         };
         this.toggle = this.toggle.bind(this);
         this.modifyPosition = this.modifyPosition.bind(this);
     }
 
+    init() {
+      this.setState({
+        manualMod: false,
+        manualQuantity: this.props.position.quantity,
+        manualQuantityValid: null,
+        manualUnitCostPrice: this.props.position.unitCostPrice,
+        manualUnitCostPriceValid: null,
+
+        smartMod: false,
+        smartAddQuantity: 0,
+        smartQuantityValid: null,
+        smartAddUnitCostPrice: 0,
+        smartAddUnitCostPriceValid: null,
+        smartNewQuantity: this.props.position.quantity,
+        smartNewUnitCostPrice: this.props.position.unitCostPrice,
+
+        failure: false,
+        formValid: false,
+      });
+    }
+
     toggle() {
+        this.init()
         this.setState({
             modal: !this.state.modal
-        }, () => {
-          if(this.state.modal === false) {
-            this.setState({
-              manualMod: false,
-              smartMod: false,
-              failure: false,
-              formValid: false,
-            });
-          }
         });
     }
 
@@ -88,8 +84,6 @@ class ModifyPosition extends React.Component {
           newQuantity = this.state.manualQuantity;
           newUnitCostPrice = this.state.manualUnitCostPrice;
         }
-
-        console.log("modifyPosition: " + newQuantity + " " + newQuantity);
         if (newQuantity != null && newUnitCostPrice != null) {
           updateOnePosition(this.props.position.id, this.props.position.currency1.code, newQuantity, newUnitCostPrice)
               .then(() => {
