@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {getCurrentUserShareValue} from '../service/UserService';
 import SimpleLineChart from './charts/ShareValueChart'
 import {Table} from 'reactstrap';
-import {FormattedNumber, FormattedTime, IntlProvider}  from 'react-intl'
+import {FormattedNumber, IntlProvider}  from 'react-intl'
 
 var dateFormat = require('dateformat');
 
@@ -30,15 +30,6 @@ class User extends Component {
             portfolioValue: shareValue.portfolioValue,
           }})
           this.setState({shareValues: shareValues});
-        })
-
-        .catch((error) => {
-          if(error.response.status === 401 && error.response.data.error_description.includes("expired")){
-            console.log("Token expired, logging out...")
-            this.logout()
-          } else {
-            console.log("Unhandled error: " + error)
-          }
         })
     }
 

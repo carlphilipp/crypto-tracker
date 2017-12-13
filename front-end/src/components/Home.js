@@ -44,7 +44,7 @@ class Home extends Component {
       this.onUpdate('home')
       logout();
       removePage();
-      this.setState({})
+      //this.setState({})
     }
 
     onRegister(status) {

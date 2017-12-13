@@ -21,6 +21,7 @@ class User extends Component {
         this.getCurrentPrice = this.getCurrentPrice.bind(this);
         this.onUpdateOrDelete = this.onUpdateOrDelete.bind(this);
         this.onAdd = this.onAdd.bind(this);
+        this.logout = this.logout.bind(this);
     }
 
     logout() { this.props.onLogout(); }
