@@ -6,6 +6,8 @@ interface TickerService {
 
     fun findOne(id: String): Ticker
 
+    fun findAllById(ids: List<String>): List<Ticker>
+
     fun findAll(): List<Ticker>
 
     fun updateAll()

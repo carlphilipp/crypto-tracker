@@ -58,11 +58,12 @@ constructor(private val positionRepository: PositionRepository,
     }
 
     private fun enrich(user: User): User {
-        // TODO optimize that code to do only one request into DB
+        val ids = user.positions.map { position -> position.currency1.code + "-" + position.currency2.code }.toList()
+        val tickers = tickerService.findAllById(ids)
         var totalValue = 0.0
         var totalOriginalValue = 0.0
         for (position in user.positions) {
-            val ticker = tickerService.findOne(position.currency1.code + "-" + position.currency2.code)
+            val ticker = tickers.find { ticker -> ticker.id == position.currency1.code + "-" + position.currency2.code}!!
             val originalValue = position.quantity * position.unitCostPrice
             val value = position.quantity * ticker.price
             val gain = value - originalValue

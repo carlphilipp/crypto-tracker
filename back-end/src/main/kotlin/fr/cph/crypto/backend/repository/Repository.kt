@@ -10,6 +10,7 @@ interface PositionRepository : MongoRepository<Position, String>
 
 interface TickerRepository : MongoRepository<Ticker, String> {
     fun findAllByOrderByMarketCapDesc(): List<Ticker>
+    fun findByIdIn(ids: List<String>): List<Ticker>
 }
 
 interface UserRepository : MongoRepository<User, String> {
