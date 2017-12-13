@@ -25,7 +25,7 @@ class Home extends Component {
         };
     }
 
-    componentDidMount() {
+    updateTickers() {
       getCurrentTickers().then((tickers) => {
           this.setState({tickers: tickers});
       })
@@ -35,16 +35,20 @@ class Home extends Component {
       })
     }
 
+    componentDidMount() { this.updateTickers(); }
+
     onUpdate(page) {
         this.setState({page: page})
         saveCurrentPage(page)
+        if (page === 'home') {
+          this.updateTickers();
+        }
     }
 
     onLogout() {
       this.onUpdate('home')
       logout();
       removePage();
-      //this.setState({})
     }
 
     onRegister(status) {

@@ -50,12 +50,8 @@ class User extends Component {
     }
 
     getCurrentPrice(currencyCode1, currencyCode2) {
-      const ticker = this.props.tickers.find(ticker => ticker.id === currencyCode1 + '-' + currencyCode2)
-      if (ticker === undefined) {
-        return 0;
-      } else {
-        return ticker.price;
-      }
+      const ticker = this.props.tickers.find(ticker => ticker.id === currencyCode1 + '-' + currencyCode2);
+      return ticker === undefined ? 0 : ticker.price;
     }
 
     onUpdateOrDelete(index) {
