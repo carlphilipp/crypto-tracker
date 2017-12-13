@@ -75,15 +75,19 @@ class ModifyPosition extends React.Component {
         // FIXME this is pretty dirty, to refactor
         let newQuantity = null;
         let newUnitCostPrice = null;
+        let smartAddQuantity = null;
+        let smartAddUnitCostPrice = null;
         if (this.state.smartMod) {
           newQuantity = this.state.smartNewQuantity;
           newUnitCostPrice = this.state.smartNewUnitCostPrice;
+          smartAddQuantity =  this.state.smartAddQuantity;
+          smartAddUnitCostPrice = this.state.smartAddUnitCostPrice;
         } else if (this.state.manualMod) {
           newQuantity = this.state.manualQuantity;
           newUnitCostPrice = this.state.manualUnitCostPrice;
         }
         if (newQuantity != null && newUnitCostPrice != null) {
-          updateOnePosition(this.props.position.id, this.props.position.currency1.code, newQuantity, newUnitCostPrice)
+          updateOnePosition(this.props.position.id, this.props.position.currency1.code, newQuantity, newUnitCostPrice, smartAddQuantity, smartAddUnitCostPrice)
               .then(() => {
                   this.toggle();
                   this.props.onUpdateOrDelete(this.props.index);

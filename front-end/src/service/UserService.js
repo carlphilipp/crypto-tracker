@@ -33,10 +33,11 @@ export function addPositionToCurrentUser(ticker, quantity, unitCostPrice) {
       });
 }
 
-export function updateOnePosition(positionId, ticker, quantity, unitCostPrice) {
+export function updateOnePosition(positionId, ticker, quantity, unitCostPrice, transactionQuantity, transactionUnitCostPrice) {
     const accessToken = getAccessToken();
     const userId = getUserId();
-    return updatePosition(accessToken, userId, {
+    return updatePosition(accessToken, userId, transactionQuantity, transactionUnitCostPrice,
+      {
         id: positionId,
         currency1: ticker,
         currency2: 'USD',

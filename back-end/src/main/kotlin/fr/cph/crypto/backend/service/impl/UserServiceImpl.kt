@@ -63,7 +63,7 @@ constructor(private val positionRepository: PositionRepository,
         var totalValue = 0.0
         var totalOriginalValue = 0.0
         for (position in user.positions) {
-            val ticker = tickers.find { ticker -> ticker.id == position.currency1.code + "-" + position.currency2.code}!!
+            val ticker = tickers.find { ticker -> ticker.id == position.currency1.code + "-" + position.currency2.code }!!
             val originalValue = position.quantity * position.unitCostPrice
             val value = position.quantity * ticker.price
             val gain = value - originalValue
@@ -95,12 +95,36 @@ constructor(private val positionRepository: PositionRepository,
         userRepository.save(user)
     }
 
-    override fun updatePosition(userId: String, position: Position) {
+    override fun updatePosition(userId: String, position: Position, transactionQuantity: Double?, transactionUnitCostPrice: Double?) {
+        if (transactionQuantity != null && transactionUnitCostPrice != null) {
+            updatePositionSmart(userId, position, transactionQuantity, transactionUnitCostPrice)
+        } else {
+            updatePositionManual(userId, position)
+        }
+    }
+
+    private fun updatePositionManual(userId: String, position: Position) {
         val user = userRepository.findOne(userId)
         val positionFound = user.positions.filter { it.id == position.id }.toList()
         when {
             positionFound.size == 1 -> {
                 user.liquidityMovement = user.liquidityMovement + ((position.unitCostPrice * position.quantity) - (positionFound[0].unitCostPrice * positionFound[0].quantity))
+
+                positionRepository.save(position)
+
+                userRepository.save(user)
+            }
+            positionFound.size > 1 -> throw RuntimeException("Something pretty bad happened")
+            else -> throw NotAllowedException()
+        }
+    }
+
+    private fun updatePositionSmart(userId: String, position: Position, transactionQuantity: Double, transactionUnitCostPrice: Double) {
+        val user = userRepository.findOne(userId)
+        val positionFound = user.positions.filter { it.id == position.id }.toList()
+        when {
+            positionFound.size == 1 -> {
+                user.liquidityMovement = user.liquidityMovement + transactionUnitCostPrice * transactionQuantity
 
                 positionRepository.save(position)
 

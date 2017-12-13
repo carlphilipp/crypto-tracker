@@ -34,9 +34,10 @@ export function addPosition(accessToken, id, position) {
   return axios.post(url, position, config);
 }
 
-export function updatePosition(accessToken, id, position) {
+export function updatePosition(accessToken, id, transactionQuantity, transactionUnitCostPrice, position) {
   const url = `${BASE_URL}/api/user/` + id + `/position/` + position.id;
-  const config = createConfig(accessToken);
+  //const config = createConfig(accessToken);
+  const config = {headers: {'Authorization': 'Bearer ' + accessToken}, params: {transactionQuantity: transactionQuantity, transactionUnitCostPrice: transactionUnitCostPrice}};
   return axios.put(url, position, config);
 }
 

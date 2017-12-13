@@ -42,8 +42,12 @@ constructor(private val userService: UserService) {
 
     @PreAuthorize("#id == authentication.details.decodedDetails['id'] and #positionId == #position.id")
     @RequestMapping(value = ["/{id}/position/{positionId}"], method = [RequestMethod.PUT])
-    fun updatePosition(@PathVariable("id") id: String, @RequestBody position: Position, @PathVariable("positionId") positionId: String) {
-        userService.updatePosition(id, position)
+    fun updatePosition(@PathVariable("id") id: String,
+                       @RequestBody position: Position,
+                       @PathVariable("positionId") positionId: String,
+                       @RequestParam("transactionQuantity", required = false) transactionQuantity : Double?,
+                       @RequestParam("transactionUnitCostPrice", required = false) transactionUnitCostPrice : Double?) {
+        userService.updatePosition(id, position, transactionQuantity, transactionUnitCostPrice)
     }
 
     @PreAuthorize("#id == authentication.details.decodedDetails['id']")

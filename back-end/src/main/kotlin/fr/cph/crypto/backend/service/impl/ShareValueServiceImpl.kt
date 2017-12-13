@@ -29,8 +29,9 @@ class ShareValueServiceImpl(private val shareValueRepository: ShareValueReposito
                     portfolioValue = user.value!!)
             shareValueRepository.save(shareValueToSave)
         } else {
+            LOGGER.debug("======================")
             LOGGER.debug("Last share value: {}", lastShareValue)
-            LOGGER.debug("User portfolio value: {}", user.value)
+            LOGGER.debug("User portfolio value: {} and current liquidity movement: {}", user.value, user.liquidityMovement)
             val quantity = lastShareValue.shareQuantity + (user.liquidityMovement) / ((user.value!! - user.liquidityMovement) / lastShareValue.shareQuantity)
             LOGGER.debug("Quantity: {}", quantity)
             val shareValue = user.value!! / quantity

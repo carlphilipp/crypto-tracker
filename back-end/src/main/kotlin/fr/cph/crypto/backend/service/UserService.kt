@@ -15,7 +15,7 @@ interface UserService : UserDetailsService {
 
     fun addPosition(id: String, position: Position)
 
-    fun updatePosition(userId: String, position: Position)
+    fun updatePosition(userId: String, position: Position, transactionQuantity : Double?, transactionUnitCostPrice : Double?)
 
     fun deletePosition(userId: String, positionId: String, price: Double)
 
