@@ -21,22 +21,10 @@ class ShareValueServiceImpl(private val shareValueRepository: ShareValueReposito
     override fun addNewShareValue(user: User, liquidityMovement: Double) {
         val lastShareValue = shareValueRepository.findTop1ByUserOrderByTimestampDesc(user)
         if (lastShareValue == null) {
-            val shareValueToSave = ShareValue(
-                    timestamp = System.currentTimeMillis(),
-                    user = user,
-                    shareQuantity = user.value!! / 100,
-                    shareValue = 100.0,
-                    portfolioValue = user.value!!)
-            shareValueRepository.save(shareValueToSave)
+            addFirstTimeShareValue(user)
         } else {
-            LOGGER.debug("======================")
-            LOGGER.debug("Last share value: {}", lastShareValue)
-            LOGGER.debug("User portfolio value: {} and current liquidity movement: {}", user.value, user.liquidityMovement)
             val quantity = lastShareValue.shareQuantity + (user.liquidityMovement) / ((user.value!! - user.liquidityMovement) / lastShareValue.shareQuantity)
-            LOGGER.debug("Quantity: {}", quantity)
             val shareValue = user.value!! / quantity
-            LOGGER.debug("Share value: {}", shareValue)
-
             val shareValueToSave = ShareValue(
                     timestamp = System.currentTimeMillis(),
                     user = user,
@@ -45,6 +33,27 @@ class ShareValueServiceImpl(private val shareValueRepository: ShareValueReposito
                     portfolioValue = user.value!!)
             shareValueRepository.save(shareValueToSave)
         }
+    }
+
+    /**
+     * For the first time,
+     */
+    private fun addFirstTimeShareValue(user: User) {
+        val yesterdayShareValue = ShareValue(
+                timestamp = System.currentTimeMillis() - 86400000,
+                user = user,
+                shareQuantity = user.originalValue!! / 100,
+                shareValue = 100.0,
+                portfolioValue = user.originalValue!!)
+        shareValueRepository.save(yesterdayShareValue)
+        val defaultShareValue = user.gainPercentage!! * 100 + 100
+        val shareValueToSave = ShareValue(
+                timestamp = System.currentTimeMillis(),
+                user = user,
+                shareQuantity = user.value!! / defaultShareValue,
+                shareValue = defaultShareValue,
+                portfolioValue = user.value!!)
+        shareValueRepository.save(shareValueToSave)
     }
 
     companion object {
