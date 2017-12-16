@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory
 
 object TickerMapper {
 
-    private val LOGGER = LoggerFactory.getLogger(CoinMarketCapClient::class.java)
+    private val LOGGER = LoggerFactory.getLogger(CoinMarketCapAdapter::class.java)
 
     fun responseToTicker(currency: Currency, response: Response): Ticker {
         try {

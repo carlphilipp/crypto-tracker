@@ -3,6 +3,3 @@
 out/
 build/
 *.iml
-
-/back-end/build/
-/gateway/build/

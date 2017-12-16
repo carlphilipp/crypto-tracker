@@ -10,7 +10,7 @@ import org.springframework.web.util.UriComponentsBuilder
 import java.util.*
 
 @Service
-class CoinMarketCapClient
+class CoinMarketCapAdapter
 constructor(private val restTemplate: RestTemplate) : TickerClient {
 
     override fun getTicker(currency: Currency, ticker: String): Ticker? {
@@ -47,6 +47,6 @@ constructor(private val restTemplate: RestTemplate) : TickerClient {
     }
 
     companion object {
-        private val LOGGER = LoggerFactory.getLogger(CoinMarketCapClient::class.java)
+        private val LOGGER = LoggerFactory.getLogger(CoinMarketCapAdapter::class.java)
     }
 }
