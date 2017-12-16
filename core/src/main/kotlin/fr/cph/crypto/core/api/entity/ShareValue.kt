@@ -1,4 +1,4 @@
-package fr.cph.crypto.core
+package fr.cph.crypto.core.api.entity
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonInclude

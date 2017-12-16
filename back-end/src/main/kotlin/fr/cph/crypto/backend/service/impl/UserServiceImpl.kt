@@ -1,14 +1,14 @@
 package fr.cph.crypto.backend.service.impl
 
-import fr.cph.crypto.core.Position
-import fr.cph.crypto.core.ShareValue
-import fr.cph.crypto.core.User
 import fr.cph.crypto.backend.exception.NotAllowedException
-import fr.cph.crypto.backend.repository.PositionRepository
-import fr.cph.crypto.backend.repository.UserRepository
 import fr.cph.crypto.backend.service.ShareValueService
 import fr.cph.crypto.backend.service.TickerService
 import fr.cph.crypto.backend.service.UserService
+import fr.cph.crypto.core.api.entity.Position
+import fr.cph.crypto.core.api.entity.ShareValue
+import fr.cph.crypto.core.api.entity.User
+import fr.cph.crypto.core.spi.PositionRepository
+import fr.cph.crypto.core.spi.UserRepository
 import org.slf4j.LoggerFactory
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder
 import org.springframework.security.core.GrantedAuthority
@@ -37,7 +37,7 @@ constructor(private val positionRepository: PositionRepository,
     }
 
     override fun findOne(id: String): User {
-        return enrich(userRepository.findOne(id))
+        return enrich(userRepository.findOne(id)!!)
     }
 
     override fun findAll(): List<User> {
@@ -88,7 +88,7 @@ constructor(private val positionRepository: PositionRepository,
         positionRepository.save(position)
 
         val user = userRepository.findOne(id)
-        user.positions.add(position)
+        user!!.positions.add(position)
         user.positions.sortWith(compareBy({ it.currency1.currencyName }))
         user.liquidityMovement = user.liquidityMovement + position.quantity * position.unitCostPrice
 
@@ -105,7 +105,7 @@ constructor(private val positionRepository: PositionRepository,
 
     private fun updatePositionManual(userId: String, position: Position) {
         val user = userRepository.findOne(userId)
-        val positionFound = user.positions.filter { it.id == position.id }.toList()
+        val positionFound = user!!.positions.filter { it.id == position.id }.toList()
         when {
             positionFound.size == 1 -> {
                 user.liquidityMovement = user.liquidityMovement + ((position.unitCostPrice * position.quantity) - (positionFound[0].unitCostPrice * positionFound[0].quantity))
@@ -121,7 +121,7 @@ constructor(private val positionRepository: PositionRepository,
 
     private fun updatePositionSmart(userId: String, position: Position, transactionQuantity: Double, transactionUnitCostPrice: Double) {
         val user = userRepository.findOne(userId)
-        val positionFound = user.positions.filter { it.id == position.id }.toList()
+        val positionFound = user!!.positions.filter { it.id == position.id }.toList()
         when {
             positionFound.size == 1 -> {
                 user.liquidityMovement = user.liquidityMovement + transactionUnitCostPrice * transactionQuantity
@@ -137,7 +137,7 @@ constructor(private val positionRepository: PositionRepository,
 
     override fun deletePosition(userId: String, positionId: String, price: Double) {
         val user = userRepository.findOne(userId)
-        val positionFound = user.positions.filter { it.id == positionId }.toList()
+        val positionFound = user!!.positions.filter { it.id == positionId }.toList()
         when {
             positionFound.size == 1 -> {
                 user.liquidityMovement = user.liquidityMovement - price
@@ -153,7 +153,7 @@ constructor(private val positionRepository: PositionRepository,
 
     override fun findAllShareValue(id: String): List<ShareValue> {
         val user = userRepository.findOne(id)
-        return shareValueService.findAllShareValue(user)
+        return shareValueService.findAllShareValue(user!!)
     }
 
     companion object {

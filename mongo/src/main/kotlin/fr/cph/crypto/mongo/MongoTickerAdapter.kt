@@ -1,6 +1,7 @@
 package fr.cph.crypto.mongo
 
-import fr.cph.crypto.core.Ticker
+import fr.cph.crypto.core.api.entity.Ticker
+import fr.cph.crypto.mongo.repository.TickerRepository
 import org.springframework.stereotype.Service
 
 @Service
@@ -25,5 +26,4 @@ class MongoTickerAdapter(private val repository: TickerRepository) : fr.cph.cryp
     override fun deleteAll() {
         return repository.deleteAll()
     }
-
 }

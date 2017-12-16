@@ -2,8 +2,8 @@ package fr.cph.crypto.backend.service.impl
 
 import fr.cph.crypto.core.spi.TickerRepository
 import fr.cph.crypto.backend.service.TickerService
-import fr.cph.crypto.core.Currency
-import fr.cph.crypto.core.Ticker
+import fr.cph.crypto.core.api.entity.Currency
+import fr.cph.crypto.core.api.entity.Ticker
 import fr.cph.crypto.core.api.TickerClient
 import org.springframework.stereotype.Service
 

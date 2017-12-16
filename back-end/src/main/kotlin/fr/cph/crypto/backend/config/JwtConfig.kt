@@ -1,6 +1,6 @@
 package fr.cph.crypto.backend.config
 
-import fr.cph.crypto.backend.repository.UserRepository
+import fr.cph.crypto.core.spi.UserRepository
 import org.springframework.boot.autoconfigure.security.oauth2.resource.JwtAccessTokenConverterConfigurer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

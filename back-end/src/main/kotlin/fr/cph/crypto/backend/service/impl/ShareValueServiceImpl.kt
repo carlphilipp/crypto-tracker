@@ -1,8 +1,8 @@
 package fr.cph.crypto.backend.service.impl
 
-import fr.cph.crypto.core.ShareValue
-import fr.cph.crypto.core.User
-import fr.cph.crypto.backend.repository.ShareValueRepository
+import fr.cph.crypto.core.api.entity.ShareValue
+import fr.cph.crypto.core.api.entity.User
+import fr.cph.crypto.core.spi.ShareValueRepository
 import fr.cph.crypto.backend.service.ShareValueService
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service

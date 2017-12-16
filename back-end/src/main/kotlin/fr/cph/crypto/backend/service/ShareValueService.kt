@@ -1,7 +1,7 @@
 package fr.cph.crypto.backend.service
 
-import fr.cph.crypto.core.ShareValue
-import fr.cph.crypto.core.User
+import fr.cph.crypto.core.api.entity.ShareValue
+import fr.cph.crypto.core.api.entity.User
 
 interface ShareValueService {
 

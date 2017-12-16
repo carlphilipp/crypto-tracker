@@ -1,14 +1,14 @@
 package fr.cph.crypto.backend
 
-import fr.cph.crypto.core.Currency
-import fr.cph.crypto.core.Position
-import fr.cph.crypto.core.Role
-import fr.cph.crypto.core.User
-import fr.cph.crypto.backend.repository.PositionRepository
-import fr.cph.crypto.core.spi.TickerRepository
-import fr.cph.crypto.backend.repository.UserRepository
 import fr.cph.crypto.backend.service.TickerService
 import fr.cph.crypto.backend.service.UserService
+import fr.cph.crypto.core.api.entity.Currency
+import fr.cph.crypto.core.api.entity.Position
+import fr.cph.crypto.core.api.entity.Role
+import fr.cph.crypto.core.api.entity.User
+import fr.cph.crypto.core.spi.PositionRepository
+import fr.cph.crypto.core.spi.TickerRepository
+import fr.cph.crypto.core.spi.UserRepository
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Profile
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder
@@ -52,7 +52,7 @@ constructor(private val tickerRepository: TickerRepository,
         val positionPower = Position(Currency.POWR, 443.556, 0.66)
         userService.addPosition(user.id!!, positionPower)
 
-        val userFound = userRepository.findOne(user.id)
+        val userFound = userRepository.findOne(user.id!!)!!
         userFound.liquidityMovement = 0.0
         userRepository.save(userFound)
     }

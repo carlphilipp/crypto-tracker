@@ -1,6 +1,6 @@
 package fr.cph.crypto.core.spi
 
-import fr.cph.crypto.core.Ticker
+import fr.cph.crypto.core.api.entity.Ticker
 
 interface TickerRepository {
 

@@ -1,7 +1,7 @@
 package fr.cph.crypto.core.api
 
-import fr.cph.crypto.core.Currency
-import fr.cph.crypto.core.Ticker
+import fr.cph.crypto.core.api.entity.Currency
+import fr.cph.crypto.core.api.entity.Ticker
 
 interface TickerClient {
 

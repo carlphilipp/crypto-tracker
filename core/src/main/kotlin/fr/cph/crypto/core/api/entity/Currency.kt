@@ -1,4 +1,4 @@
-package fr.cph.crypto.core
+package fr.cph.crypto.core.api.entity
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import java.util.*
@@ -28,12 +28,12 @@ enum class Currency constructor(val code: String, val currencyName: String, val 
             return Arrays.stream(Currency.values())
                     .filter { currency -> currency.code == str }
                     .findAny()
-                    .orElse(Currency.UNKNOWN)
+                    .orElse(UNKNOWN)
         }
 
         fun cryptoCurrenciesAsListOfString(): List<String> {
             return Currency.values()
-                    .filter { currency -> currency.type == Currency.Type.CRYPTO }
+                    .filter { currency -> currency.type == Type.CRYPTO }
                     .map { currency -> currency.code }
                     .toList()
         }
