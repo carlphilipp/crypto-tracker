@@ -1,6 +1,6 @@
 package fr.cph.crypto.backend.service
 
-import fr.cph.crypto.backend.domain.Ticker
+import fr.cph.crypto.core.Ticker
 
 interface TickerService {
 

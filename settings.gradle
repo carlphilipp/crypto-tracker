@@ -1,2 +1,4 @@
 include ':back-end'
 include ':gateway'
+include ':core'
+include ':mongo'

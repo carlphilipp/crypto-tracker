@@ -1,7 +1,9 @@
-package fr.cph.crypto.backend.configsec
+package fr.cph.crypto.backend.config
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import fr.cph.crypto.core.api.TickerClient
+import fr.cph.crypto.mongo.CoinMarketCapClient
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -30,4 +32,9 @@ class WebConfig {
     fun restTemplate(): RestTemplate {
         return RestTemplate()
     }
+
+/*    @Bean
+    fun tickerClient() : TickerClient {
+        return CoinMarketCapClient(restTemplate())
+    }*/
 }

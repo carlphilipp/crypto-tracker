@@ -1,8 +1,8 @@
 package fr.cph.crypto.backend.service
 
-import fr.cph.crypto.backend.domain.Position
-import fr.cph.crypto.backend.domain.ShareValue
-import fr.cph.crypto.backend.domain.User
+import fr.cph.crypto.core.Position
+import fr.cph.crypto.core.ShareValue
+import fr.cph.crypto.core.User
 import org.springframework.security.core.userdetails.UserDetailsService
 
 interface UserService : UserDetailsService {

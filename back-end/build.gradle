@@ -1,4 +1,8 @@
+apply plugin: 'org.springframework.boot'
+
 dependencies {
+    compile project(':core')
+    compile project(':mongo')
     compile(
             [group: 'org.springframework.boot', name: 'spring-boot-starter-web'],
             [group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb'],

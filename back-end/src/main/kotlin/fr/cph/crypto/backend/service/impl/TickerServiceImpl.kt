@@ -1,14 +1,14 @@
 package fr.cph.crypto.backend.service.impl
 
-import fr.cph.crypto.backend.client.impl.CoinMarketCapClient
-import fr.cph.crypto.backend.domain.Currency
-import fr.cph.crypto.backend.domain.Ticker
 import fr.cph.crypto.backend.repository.TickerRepository
 import fr.cph.crypto.backend.service.TickerService
+import fr.cph.crypto.core.Currency
+import fr.cph.crypto.core.Ticker
+import fr.cph.crypto.core.api.TickerClient
 import org.springframework.stereotype.Service
 
 @Service
-class TickerServiceImpl(private val client: CoinMarketCapClient,
+class TickerServiceImpl(private val client: TickerClient,
                         private val tickerRepository: TickerRepository) : TickerService {
 
     override fun findOne(id: String): Ticker {

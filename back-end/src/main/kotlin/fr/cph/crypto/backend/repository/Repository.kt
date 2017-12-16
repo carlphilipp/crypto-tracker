@@ -1,9 +1,9 @@
 package fr.cph.crypto.backend.repository
 
-import fr.cph.crypto.backend.domain.Position
-import fr.cph.crypto.backend.domain.ShareValue
-import fr.cph.crypto.backend.domain.Ticker
-import fr.cph.crypto.backend.domain.User
+import fr.cph.crypto.core.Position
+import fr.cph.crypto.core.ShareValue
+import fr.cph.crypto.core.Ticker
+import fr.cph.crypto.core.User
 import org.springframework.data.mongodb.repository.MongoRepository
 
 interface PositionRepository : MongoRepository<Position, String>

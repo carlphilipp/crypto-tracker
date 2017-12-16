@@ -1,7 +1,7 @@
 package fr.cph.crypto.backend.service.impl
 
-import fr.cph.crypto.backend.domain.ShareValue
-import fr.cph.crypto.backend.domain.User
+import fr.cph.crypto.core.ShareValue
+import fr.cph.crypto.core.User
 import fr.cph.crypto.backend.repository.ShareValueRepository
 import fr.cph.crypto.backend.service.ShareValueService
 import org.slf4j.LoggerFactory
