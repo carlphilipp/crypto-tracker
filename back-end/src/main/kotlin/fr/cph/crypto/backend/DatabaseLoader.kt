@@ -5,7 +5,7 @@ import fr.cph.crypto.core.Position
 import fr.cph.crypto.core.Role
 import fr.cph.crypto.core.User
 import fr.cph.crypto.backend.repository.PositionRepository
-import fr.cph.crypto.backend.repository.TickerRepository
+import fr.cph.crypto.core.spi.TickerRepository
 import fr.cph.crypto.backend.repository.UserRepository
 import fr.cph.crypto.backend.service.TickerService
 import fr.cph.crypto.backend.service.UserService

@@ -1,6 +1,6 @@
 package fr.cph.crypto.backend.service.impl
 
-import fr.cph.crypto.backend.repository.TickerRepository
+import fr.cph.crypto.core.spi.TickerRepository
 import fr.cph.crypto.backend.service.TickerService
 import fr.cph.crypto.core.Currency
 import fr.cph.crypto.core.Ticker
@@ -12,15 +12,15 @@ class TickerServiceImpl(private val client: TickerClient,
                         private val tickerRepository: TickerRepository) : TickerService {
 
     override fun findOne(id: String): Ticker {
-        return tickerRepository.findOne(id)
+        return tickerRepository.findOne(id)!!
     }
 
     override fun findAllById(ids: List<String>): List<Ticker> {
-        return tickerRepository.findByIdIn(ids)
+        return tickerRepository.findAllById(ids)
     }
 
     override fun findAll(): List<Ticker> {
-        return tickerRepository.findAllByOrderByMarketCapDesc()
+        return tickerRepository.findAll()
     }
 
     override fun updateAll() {

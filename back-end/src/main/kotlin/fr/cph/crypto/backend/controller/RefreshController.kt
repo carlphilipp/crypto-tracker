@@ -1,9 +1,8 @@
 package fr.cph.crypto.backend.controller
 
 import fr.cph.crypto.core.Currency
-import fr.cph.crypto.core.Ticker
-import fr.cph.crypto.backend.repository.TickerRepository
 import fr.cph.crypto.core.api.TickerClient
+import fr.cph.crypto.core.spi.TickerRepository
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
@@ -19,7 +18,7 @@ constructor(private val tickerRepository: TickerRepository, private val client: 
     @RequestMapping(value = ["/api/refresh"], method = [RequestMethod.GET], produces = ["application/json"])
     fun refreshAll(): ResponseEntity<String> {
         client.getTickers(Currency.USD, Currency.cryptoCurrenciesAsListOfString())
-                .forEach { ticker -> tickerRepository.save<Ticker>(ticker) }
+                .forEach { ticker -> tickerRepository.save(ticker) }
         return ResponseEntity("{}", HttpStatus.OK)
     }
 }
