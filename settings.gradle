@@ -1,5 +1,13 @@
-include ':back-end'
+include ':domain'
+project(':domain').projectDir = file('back-end/domain')
+
+include 'client-coinmarketcap'
+project(':client-coinmarketcap').projectDir = file('back-end/infra/client/coinmarketcap')
+
+include 'rest-api'
+project(':rest-api').projectDir = file('back-end/infra/application/rest-api')
+
+include 'persistence-mongo'
+project(':persistence-mongo').projectDir = file('back-end/infra/persistence/mongo')
+
 include ':gateway'
-include ':core'
-include ':client'
-include ':mongo'

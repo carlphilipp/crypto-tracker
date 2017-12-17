@@ -35,25 +35,4 @@ class WebConfig {
     fun restTemplate(): RestTemplate {
         return RestTemplate()
     }
-
-    @Bean
-    fun userService(userRepository: UserRepository,
-                    shareValueRepository: ShareValueRepository,
-                    positionRepository: PositionRepository,
-                    tickerRepository: TickerRepository,
-                    passwordEncoder: PasswordEncoder): UserService {
-        return UserServiceImpl(
-                userRepository = userRepository,
-                shareValueRepository = shareValueRepository,
-                positionRepository = positionRepository,
-                tickerRepository = tickerRepository,
-                passwordEncoder = passwordEncoder)
-    }
-
-    @Bean
-    fun tickerService(tickerClient: TickerClient, tickerRepository: TickerRepository): TickerService {
-        return TickerServiceImpl(
-                client = tickerClient,
-                tickerRepository = tickerRepository)
-    }
 }

@@ -57,8 +57,8 @@ constructor(private val userService: UserService) {
 
     @PreAuthorize("#id == authentication.details.decodedDetails['id']")
     @RequestMapping(value = ["/{id}/sharevalue"], method = [RequestMethod.GET], produces = ["application/json"])
-    fun findAllShareValue(@PathVariable("id") userId: String): List<ShareValue> {
-        return userService.findAllShareValue(userId)
+    fun findAllShareValue(@PathVariable("id") id: String): List<ShareValue> {
+        return userService.findAllShareValue(id)
     }
 
     // TODO: delete that endpoint when share value dev is done

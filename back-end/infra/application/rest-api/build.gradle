@@ -1,9 +1,9 @@
 apply plugin: 'org.springframework.boot'
 
 dependencies {
-    compile project(':core')
-    compile project(':client')
-    compile project(':mongo')
+    compile project(':domain')
+    compile project(':client-coinmarketcap')
+    compile project(':persistence-mongo')
     compile(
             [group: 'org.springframework.boot', name: 'spring-boot-starter-web'],
             [group: 'org.springframework.boot', name: 'spring-boot-starter-security'],
