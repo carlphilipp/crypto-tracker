@@ -1,6 +1,6 @@
 package fr.cph.crypto.backend.controller
 
-import fr.cph.crypto.core.api.TickerClient
+import fr.cph.crypto.core.spi.TickerClient
 import fr.cph.crypto.core.api.entity.Currency
 import fr.cph.crypto.core.spi.TickerRepository
 import org.springframework.http.HttpStatus

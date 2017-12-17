@@ -2,7 +2,7 @@ package fr.cph.crypto.mongo
 
 import fr.cph.crypto.core.api.entity.Currency
 import fr.cph.crypto.core.api.entity.Ticker
-import fr.cph.crypto.core.api.TickerClient
+import fr.cph.crypto.core.spi.TickerClient
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate

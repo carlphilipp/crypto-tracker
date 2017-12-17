@@ -1,4 +1,4 @@
-package fr.cph.crypto.core.api
+package fr.cph.crypto.core.spi
 
 import fr.cph.crypto.core.api.entity.Currency
 import fr.cph.crypto.core.api.entity.Ticker
