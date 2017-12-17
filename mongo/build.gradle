@@ -5,8 +5,4 @@ dependencies {
             [group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'],
             [group: 'org.jetbrains.kotlin', name: 'kotlin-reflect'],
     )
-
-    compile('com.fasterxml.jackson.module:jackson-module-kotlin:2.9.2') {
-        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-reflect'
-    }
 }

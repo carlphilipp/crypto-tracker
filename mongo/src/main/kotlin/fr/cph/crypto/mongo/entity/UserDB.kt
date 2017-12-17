@@ -15,6 +15,7 @@ data class UserDB(
         var password: String,
         val role: Role,
         val currency: Currency,
+        val liquidityMovement: Double,
         @DBRef
         var positions: List<PositionDB>) {
 
@@ -25,6 +26,7 @@ data class UserDB(
                 role = this.role,
                 currency = this.currency)
         user.id = this.id
+        user.liquidityMovement = this.liquidityMovement
         user.positions = this.positions.map { position -> position.toPosition() }.toMutableList()
         return user
     }
@@ -37,6 +39,7 @@ data class UserDB(
                     password = user.password,
                     role = user.role,
                     currency = user.currency,
+                    liquidityMovement = user.liquidityMovement,
                     positions = user.positions.map { position -> PositionDB.toPositionDB(position) }
             )
         }
