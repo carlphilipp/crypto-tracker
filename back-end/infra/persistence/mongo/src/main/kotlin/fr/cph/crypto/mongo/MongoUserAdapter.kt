@@ -16,7 +16,7 @@ class MongoUserAdapter(private val repository: UserRepository) : fr.cph.crypto.c
     }
 
     override fun save(user: User): User {
-        return repository.save(UserDB.toDbUser(user)).toUser()
+        return repository.save(UserDB.from(user)).toUser()
     }
 
     override fun findOne(id: String): User? {

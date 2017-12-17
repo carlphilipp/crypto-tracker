@@ -32,7 +32,7 @@ data class UserDB(
     }
 
     companion object {
-        fun toDbUser(user: User): UserDB {
+        fun from(user: User): UserDB {
             return UserDB(
                     id = user.id,
                     email = user.email,
@@ -40,7 +40,7 @@ data class UserDB(
                     role = user.role,
                     currency = user.currency,
                     liquidityMovement = user.liquidityMovement,
-                    positions = user.positions.map { position -> PositionDB.toPositionDB(position) }
+                    positions = user.positions.map { position -> PositionDB.from(position) }
             )
         }
     }

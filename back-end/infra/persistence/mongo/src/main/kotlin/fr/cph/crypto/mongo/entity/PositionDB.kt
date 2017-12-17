@@ -25,7 +25,7 @@ data class PositionDB constructor(
     }
 
     companion object {
-        fun toPositionDB(position: Position): PositionDB {
+        fun from(position: Position): PositionDB {
             return PositionDB(
                     id = position.id,
                     currency1 = position.currency1,

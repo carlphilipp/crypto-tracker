@@ -28,11 +28,11 @@ data class ShareValueDB(
     }
 
     companion object {
-        fun toShareValueDB(shareValue: ShareValue): ShareValueDB {
+        fun from(shareValue: ShareValue): ShareValueDB {
             return ShareValueDB(
                     id = shareValue.id,
                     timestamp = shareValue.timestamp,
-                    user = fr.cph.crypto.mongo.entity.UserDB.toDbUser(shareValue.user),
+                    user = fr.cph.crypto.mongo.entity.UserDB.from(shareValue.user),
                     shareQuantity = shareValue.shareQuantity,
                     shareValue = shareValue.shareValue,
                     portfolioValue = shareValue.portfolioValue

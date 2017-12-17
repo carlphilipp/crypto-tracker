@@ -37,7 +37,7 @@ data class TickerDB(@Id var id: String? = null,
     }
 
     companion object {
-        fun toTickerDB(ticker: Ticker): TickerDB {
+        fun from(ticker: Ticker): TickerDB {
             return TickerDB(
                     id = ticker.id,
                     currency1 = ticker.currency1,

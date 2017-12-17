@@ -22,7 +22,7 @@ class MongoTickerAdapter(private val repository: TickerRepository) : fr.cph.cryp
     }
 
     override fun save(ticker: Ticker): Ticker {
-        return repository.save(TickerDB.toTickerDB(ticker)).toTicker()
+        return repository.save(TickerDB.from(ticker)).toTicker()
     }
 
     override fun deleteAll() {
