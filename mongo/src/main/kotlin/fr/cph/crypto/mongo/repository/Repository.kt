@@ -1,23 +1,23 @@
 package fr.cph.crypto.mongo.repository
 
-import fr.cph.crypto.core.api.entity.Position
-import fr.cph.crypto.core.api.entity.ShareValue
-import fr.cph.crypto.core.api.entity.Ticker
-import fr.cph.crypto.core.api.entity.User
+import fr.cph.crypto.mongo.entity.PositionDB
+import fr.cph.crypto.mongo.entity.ShareValueDB
+import fr.cph.crypto.mongo.entity.TickerDB
+import fr.cph.crypto.mongo.entity.UserDB
 import org.springframework.data.mongodb.repository.MongoRepository
 
-interface TickerRepository : MongoRepository<Ticker, String> {
-    fun findAllByOrderByMarketCapDesc(): List<Ticker>
-    fun findByIdIn(ids: List<String>): List<Ticker>
+interface TickerRepository : MongoRepository<TickerDB, String> {
+    fun findAllByOrderByMarketCapDesc(): List<TickerDB>
+    fun findByIdIn(ids: List<String>): List<TickerDB>
 }
 
-interface ShareValueRepository : MongoRepository<ShareValue, String> {
-    fun findAllByUser(user: User): List<ShareValue>
-    fun findTop1ByUserOrderByTimestampDesc(user: User): ShareValue?
+interface ShareValueRepository : MongoRepository<ShareValueDB, String> {
+    fun findAllByUser(user: UserDB): List<ShareValueDB>
+    fun findTop1ByUserOrderByTimestampDesc(user: UserDB): ShareValueDB?
 }
 
-interface PositionRepository : MongoRepository<Position, String>
+interface PositionRepository : MongoRepository<PositionDB, String>
 
-interface UserRepository : MongoRepository<User, String> {
-    fun findOneByEmail(email: String): User?
+interface UserRepository : MongoRepository<UserDB, String> {
+    fun findOneByEmail(email: String): UserDB?
 }

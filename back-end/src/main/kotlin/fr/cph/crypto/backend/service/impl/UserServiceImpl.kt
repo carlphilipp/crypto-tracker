@@ -85,12 +85,13 @@ constructor(private val positionRepository: PositionRepository,
     }
 
     override fun addPosition(id: String, position: Position) {
-        positionRepository.save(position)
+        val savedPosition = positionRepository.save(position)
+
 
         val user = userRepository.findOne(id)
-        user!!.positions.add(position)
+        user!!.positions.add(savedPosition)
         user.positions.sortWith(compareBy({ it.currency1.currencyName }))
-        user.liquidityMovement = user.liquidityMovement + position.quantity * position.unitCostPrice
+        user.liquidityMovement = user.liquidityMovement + savedPosition.quantity * savedPosition.unitCostPrice
 
         userRepository.save(user)
     }

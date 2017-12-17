@@ -2,6 +2,8 @@ package fr.cph.crypto.mongo
 
 import fr.cph.crypto.core.api.entity.ShareValue
 import fr.cph.crypto.core.api.entity.User
+import fr.cph.crypto.mongo.entity.ShareValueDB
+import fr.cph.crypto.mongo.entity.UserDB
 import fr.cph.crypto.mongo.repository.ShareValueRepository
 import org.springframework.stereotype.Service
 
@@ -9,14 +11,15 @@ import org.springframework.stereotype.Service
 class MongoShareValueAdapter(private val repository: ShareValueRepository) : fr.cph.crypto.core.spi.ShareValueRepository {
 
     override fun findAllByUser(user: User): List<ShareValue> {
-        return repository.findAllByUser(user)
+        return repository.findAllByUser(UserDB.toDbUser(user))
+                .map { shareValue -> shareValue.toShareValue() }
     }
 
     override fun findTop1ByUserOrderByTimestampDesc(user: User): ShareValue? {
-        return repository.findTop1ByUserOrderByTimestampDesc(user)
+        return repository.findTop1ByUserOrderByTimestampDesc(UserDB.toDbUser(user))?.toShareValue()
     }
 
     override fun save(shareValue: ShareValue): ShareValue {
-        return repository.save(shareValue)
+        return repository.save(ShareValueDB.toShareValueDB(shareValue)).toShareValue()
     }
 }

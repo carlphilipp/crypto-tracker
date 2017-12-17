@@ -31,11 +31,11 @@ constructor(private val tickerRepository: TickerRepository,
 
         tickerService.updateAll()
 
-        val user = User("cp.harmant@gmail.com", "PASSWORD", Role.ADMIN)
+        var user = User("cp.harmant@gmail.com", "PASSWORD", Role.ADMIN)
         user.id = "1"
         val passwordEncoded = passwordEncoder.encodePassword(user.password, null)
         user.password = passwordEncoded
-        userRepository.save(user)
+        user = userRepository.save(user)
 
         val positionBtc = Position(Currency.BTC, 0.06564277, 7616.98508457)
         userService.addPosition(user.id!!, positionBtc)
