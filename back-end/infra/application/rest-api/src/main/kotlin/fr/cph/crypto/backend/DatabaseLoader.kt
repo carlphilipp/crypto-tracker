@@ -6,7 +6,6 @@ import fr.cph.crypto.core.api.entity.Currency
 import fr.cph.crypto.core.api.entity.Position
 import fr.cph.crypto.core.api.entity.Role
 import fr.cph.crypto.core.api.entity.User
-import fr.cph.crypto.core.spi.PositionRepository
 import fr.cph.crypto.core.spi.TickerRepository
 import fr.cph.crypto.core.spi.UserRepository
 import org.springframework.boot.CommandLineRunner
@@ -20,14 +19,13 @@ class DatabaseLoader
 constructor(private val tickerRepository: TickerRepository,
             private val userRepository: UserRepository,
             private val passwordEncoder: ShaPasswordEncoder,
-            private val positionRepository: PositionRepository,
             private val userService: UserService,
             private val tickerService: TickerService) : CommandLineRunner {
 
     override fun run(vararg strings: String) {
         tickerRepository.deleteAll()
         userRepository.deleteAll()
-        positionRepository.deleteAll()
+        userRepository.deleteAllPositions()
 
         tickerService.updateAll()
 

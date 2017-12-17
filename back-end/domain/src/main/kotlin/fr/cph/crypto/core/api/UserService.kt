@@ -11,7 +11,7 @@ interface UserService {
 
     fun findAll(): List<User>
 
-    fun addPosition(id: String, position: Position)
+    fun addPosition(userId: String, position: Position)
 
     fun updatePosition(userId: String, position: Position, transactionQuantity: Double?, transactionUnitCostPrice: Double?)
 

@@ -13,13 +13,11 @@ class ServiceConfig {
     @Bean
     fun userService(userRepository: UserRepository,
                     shareValueRepository: ShareValueRepository,
-                    positionRepository: PositionRepository,
                     tickerRepository: TickerRepository,
                     passwordEncoder: PasswordEncoder): UserService {
         return UserServiceImpl(
                 userRepository = userRepository,
                 shareValueRepository = shareValueRepository,
-                positionRepository = positionRepository,
                 tickerRepository = tickerRepository,
                 passwordEncoder = passwordEncoder)
     }

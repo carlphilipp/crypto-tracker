@@ -17,7 +17,7 @@ data class UserDB(
         val currency: Currency,
         val liquidityMovement: Double,
         @DBRef
-        var positions: List<PositionDB>) {
+        var positions: MutableList<PositionDB>) {
 
     fun toUser(): User {
         val user = User(
@@ -40,7 +40,7 @@ data class UserDB(
                     role = user.role,
                     currency = user.currency,
                     liquidityMovement = user.liquidityMovement,
-                    positions = user.positions.map { position -> PositionDB.from(position) }
+                    positions = user.positions.map { position -> PositionDB.from(position) }.toMutableList()
             )
         }
     }

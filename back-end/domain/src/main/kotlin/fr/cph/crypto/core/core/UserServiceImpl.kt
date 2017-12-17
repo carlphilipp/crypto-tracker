@@ -5,12 +5,15 @@ import fr.cph.crypto.core.api.entity.Position
 import fr.cph.crypto.core.api.entity.ShareValue
 import fr.cph.crypto.core.api.entity.User
 import fr.cph.crypto.core.api.exception.NotAllowedException
-import fr.cph.crypto.core.spi.*
+import fr.cph.crypto.core.api.exception.NotFoundException
+import fr.cph.crypto.core.spi.PasswordEncoder
+import fr.cph.crypto.core.spi.ShareValueRepository
+import fr.cph.crypto.core.spi.TickerRepository
+import fr.cph.crypto.core.spi.UserRepository
 
 class UserServiceImpl(
         private val userRepository: UserRepository,
         private val shareValueRepository: ShareValueRepository,
-        private val positionRepository: PositionRepository,
         private val tickerRepository: TickerRepository,
         private val passwordEncoder: PasswordEncoder) : UserService {
 
@@ -21,7 +24,7 @@ class UserServiceImpl(
     }
 
     override fun findOne(id: String): User {
-        return enrich(userRepository.findOne(id)!!)
+        return enrich(userRepository.findOne(id) ?: throw NotFoundException())
     }
 
     override fun findAll(): List<User> {
@@ -31,51 +34,41 @@ class UserServiceImpl(
                 .toList()
     }
 
-    override fun addPosition(id: String, position: Position) {
-        val savedPosition = positionRepository.save(position)
-
-        val user = userRepository.findOne(id)
-        user!!.positions.add(savedPosition)
-        user.positions.sortWith(compareBy({ it.currency1.currencyName }))
-        user.liquidityMovement = user.liquidityMovement + savedPosition.quantity * savedPosition.unitCostPrice
-
-        userRepository.save(user)
+    override fun addPosition(userId: String, position: Position) {
+        val user = userRepository.findOne(userId) ?: throw NotFoundException()
+        user.liquidityMovement = user.liquidityMovement + position.quantity * position.unitCostPrice
+        userRepository.addPosition(user, position)
     }
 
     override fun updatePosition(userId: String, position: Position, transactionQuantity: Double?, transactionUnitCostPrice: Double?) {
+        val user = userRepository.findOne(userId) ?: throw NotFoundException()
         if (transactionQuantity != null && transactionUnitCostPrice != null) {
-            updatePositionSmart(userId, position, transactionQuantity, transactionUnitCostPrice)
+            updatePositionSmart(user, position, transactionQuantity, transactionUnitCostPrice)
         } else {
-            updatePositionManual(userId, position)
+            updatePositionManual(user, position)
         }
     }
 
-    private fun updatePositionManual(userId: String, position: Position) {
-        val user = userRepository.findOne(userId)
-        val positionFound = user!!.positions.filter { it.id == position.id }.toList()
+    private fun updatePositionManual(user: User, position: Position) {
+        val positionFound = user.positions.filter { it.id == position.id }.toList()
         when {
             positionFound.size == 1 -> {
                 user.liquidityMovement = user.liquidityMovement + ((position.unitCostPrice * position.quantity) - (positionFound[0].unitCostPrice * positionFound[0].quantity))
 
-                positionRepository.save(position)
-
-                userRepository.save(user)
+                userRepository.updatePosition(user, position)
             }
             positionFound.size > 1 -> throw RuntimeException("Something pretty bad happened")
             else -> throw NotAllowedException()
         }
     }
 
-    private fun updatePositionSmart(userId: String, position: Position, transactionQuantity: Double, transactionUnitCostPrice: Double) {
-        val user = userRepository.findOne(userId)
-        val positionFound = user!!.positions.filter { it.id == position.id }.toList()
+    private fun updatePositionSmart(user: User, position: Position, transactionQuantity: Double, transactionUnitCostPrice: Double) {
+        val positionFound = user.positions.filter { it.id == position.id }.toList()
         when {
             positionFound.size == 1 -> {
                 user.liquidityMovement = user.liquidityMovement + transactionUnitCostPrice * transactionQuantity
 
-                positionRepository.save(position)
-
-                userRepository.save(user)
+                userRepository.updatePosition(user, position)
             }
             positionFound.size > 1 -> throw RuntimeException("Something pretty bad happened")
             else -> throw NotAllowedException()
@@ -83,15 +76,13 @@ class UserServiceImpl(
     }
 
     override fun deletePosition(userId: String, positionId: String, price: Double) {
-        val user = userRepository.findOne(userId)
-        val positionFound = user!!.positions.filter { it.id == positionId }.toList()
+        val user = userRepository.findOne(userId) ?: throw NotFoundException()
+        val positionFound = user.positions.filter { it.id == positionId }.toList()
         when {
             positionFound.size == 1 -> {
                 user.liquidityMovement = user.liquidityMovement - price
 
-                user.positions.remove(positionFound[0])
-                positionRepository.delete(positionId)
-                userRepository.save(user)
+                userRepository.deletePosition(user, positionFound[0])
             }
             positionFound.size > 1 -> throw RuntimeException("Something pretty bad happened")
             else -> throw NotAllowedException()
@@ -99,7 +90,7 @@ class UserServiceImpl(
     }
 
     override fun findAllShareValue(userId: String): List<ShareValue> {
-        val user = userRepository.findOne(userId)!!
+        val user = userRepository.findOne(userId) ?: throw NotFoundException()
         return shareValueRepository.findAllByUser(user)
     }
 
@@ -154,7 +145,7 @@ class UserServiceImpl(
         var totalValue = 0.0
         var totalOriginalValue = 0.0
         for (position in user.positions) {
-            val ticker = tickers.find { ticker -> ticker.id == position.currency1.code + "-" + position.currency2.code }!!
+            val ticker = tickers.find { ticker -> ticker.id == position.currency1.code + "-" + position.currency2.code } ?: throw NotFoundException()
             val originalValue = position.quantity * position.unitCostPrice
             val value = position.quantity * ticker.price
             val gain = value - originalValue
