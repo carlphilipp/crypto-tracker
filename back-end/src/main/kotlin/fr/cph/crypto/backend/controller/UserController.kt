@@ -1,10 +1,9 @@
 package fr.cph.crypto.backend.controller
 
+import fr.cph.crypto.core.api.UserService
 import fr.cph.crypto.core.api.entity.Position
 import fr.cph.crypto.core.api.entity.ShareValue
 import fr.cph.crypto.core.api.entity.User
-import fr.cph.crypto.backend.service.ShareValueService
-import fr.cph.crypto.backend.service.UserService
 import org.slf4j.LoggerFactory
 import org.springframework.security.access.prepost.PostAuthorize
 import org.springframework.security.access.prepost.PreAuthorize
@@ -45,8 +44,8 @@ constructor(private val userService: UserService) {
     fun updatePosition(@PathVariable("id") id: String,
                        @RequestBody position: Position,
                        @PathVariable("positionId") positionId: String,
-                       @RequestParam("transactionQuantity", required = false) transactionQuantity : Double?,
-                       @RequestParam("transactionUnitCostPrice", required = false) transactionUnitCostPrice : Double?) {
+                       @RequestParam("transactionQuantity", required = false) transactionQuantity: Double?,
+                       @RequestParam("transactionUnitCostPrice", required = false) transactionUnitCostPrice: Double?) {
         userService.updatePosition(id, position, transactionQuantity, transactionUnitCostPrice)
     }
 
@@ -58,8 +57,8 @@ constructor(private val userService: UserService) {
 
     @PreAuthorize("#id == authentication.details.decodedDetails['id']")
     @RequestMapping(value = ["/{id}/sharevalue"], method = [RequestMethod.GET], produces = ["application/json"])
-    fun findAllShareValue(@PathVariable("id") id: String) : List<ShareValue> {
-        return userService.findAllShareValue(id)
+    fun findAllShareValue(@PathVariable("id") userId: String): List<ShareValue> {
+        return userService.findAllShareValue(userId)
     }
 
     // TODO: delete that endpoint when share value dev is done

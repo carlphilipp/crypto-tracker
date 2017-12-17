@@ -5,15 +5,13 @@ import fr.cph.crypto.core.api.entity.Position
 import fr.cph.crypto.core.api.entity.ShareValue
 import fr.cph.crypto.core.api.entity.User
 import fr.cph.crypto.core.api.exception.NotAllowedException
-import fr.cph.crypto.core.spi.PasswordEncoder
-import fr.cph.crypto.core.spi.PositionRepository
-import fr.cph.crypto.core.spi.ShareValueRepository
-import fr.cph.crypto.core.spi.UserRepository
+import fr.cph.crypto.core.spi.*
 
 class UserServiceImpl(
         private val userRepository: UserRepository,
         private val shareValueRepository: ShareValueRepository,
         private val positionRepository: PositionRepository,
+        private val tickerRepository: TickerRepository,
         private val passwordEncoder: PasswordEncoder) : UserService {
 
     override fun create(user: User): User {
@@ -23,7 +21,7 @@ class UserServiceImpl(
     }
 
     override fun findOne(id: String): User {
-        return enrich(userRepository.findOne(id))
+        return enrich(userRepository.findOne(id)!!)
     }
 
     override fun findAll(): List<User> {
@@ -35,7 +33,6 @@ class UserServiceImpl(
 
     override fun addPosition(id: String, position: Position) {
         val savedPosition = positionRepository.save(position)
-
 
         val user = userRepository.findOne(id)
         user!!.positions.add(savedPosition)
@@ -101,8 +98,8 @@ class UserServiceImpl(
         }
     }
 
-    override fun findAllShareValue(id: String): List<ShareValue> {
-        val user = userRepository.findOne(id)!!
+    override fun findAllShareValue(userId: String): List<ShareValue> {
+        val user = userRepository.findOne(userId)!!
         return shareValueRepository.findAllByUser(user)
     }
 
@@ -151,9 +148,30 @@ class UserServiceImpl(
         shareValueRepository.save(shareValueToSave)
     }
 
-    private fun enrich(user: User?): User {
-        // TODO
-        return user!!
-    }
+    private fun enrich(user: User): User {
+        val ids = user.positions.map { position -> position.currency1.code + "-" + position.currency2.code }.toList()
+        val tickers = tickerRepository.findAllById(ids)
+        var totalValue = 0.0
+        var totalOriginalValue = 0.0
+        for (position in user.positions) {
+            val ticker = tickers.find { ticker -> ticker.id == position.currency1.code + "-" + position.currency2.code }!!
+            val originalValue = position.quantity * position.unitCostPrice
+            val value = position.quantity * ticker.price
+            val gain = value - originalValue
+            val gainPercentage = (value * 100 / originalValue - 100) / 100
+            position.originalValue = originalValue
+            position.value = value
+            position.gain = gain
+            position.gainPercentage = gainPercentage
+            position.lastUpdated = ticker.lastUpdated
 
+            totalValue += value
+            totalOriginalValue += originalValue
+        }
+        user.value = totalValue
+        user.originalValue = totalOriginalValue
+        user.gain = totalValue - totalOriginalValue
+        user.gainPercentage = (totalValue * 100 / totalOriginalValue - 100) / 100
+        return user
+    }
 }

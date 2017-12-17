@@ -1,4 +1,4 @@
-package fr.cph.crypto.backend.service
+package fr.cph.crypto.core.api
 
 import fr.cph.crypto.core.api.entity.Ticker
 

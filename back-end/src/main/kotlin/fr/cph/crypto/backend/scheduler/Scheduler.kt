@@ -1,7 +1,7 @@
 package fr.cph.crypto.backend.scheduler
 
-import fr.cph.crypto.backend.service.TickerService
-import fr.cph.crypto.backend.service.UserService
+import fr.cph.crypto.core.api.TickerService
+import fr.cph.crypto.core.api.UserService
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Profile
 import org.springframework.scheduling.annotation.Scheduled
@@ -47,6 +47,7 @@ class ShareValueSchedulerDev(private val userService: UserService) {
     }
 
     companion object {
+
         private val LOGGER = LoggerFactory.getLogger(ShareValueSchedulerDev::class.java)
     }
 }

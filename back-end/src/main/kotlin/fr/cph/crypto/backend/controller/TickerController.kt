@@ -1,6 +1,6 @@
 package fr.cph.crypto.backend.controller
 
-import fr.cph.crypto.backend.service.TickerService
+import fr.cph.crypto.core.api.TickerService
 import fr.cph.crypto.core.api.entity.Currency
 import fr.cph.crypto.core.api.entity.Ticker
 import org.springframework.security.access.prepost.PreAuthorize

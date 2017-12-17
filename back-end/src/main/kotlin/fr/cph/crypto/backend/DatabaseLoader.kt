@@ -1,7 +1,7 @@
 package fr.cph.crypto.backend
 
-import fr.cph.crypto.backend.service.TickerService
-import fr.cph.crypto.backend.service.UserService
+import fr.cph.crypto.core.api.TickerService
+import fr.cph.crypto.core.api.UserService
 import fr.cph.crypto.core.api.entity.Currency
 import fr.cph.crypto.core.api.entity.Position
 import fr.cph.crypto.core.api.entity.Role

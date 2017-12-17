@@ -2,6 +2,11 @@ package fr.cph.crypto.backend.config
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import fr.cph.crypto.core.api.TickerService
+import fr.cph.crypto.core.api.UserService
+import fr.cph.crypto.core.core.TickerServiceImpl
+import fr.cph.crypto.core.core.UserServiceImpl
+import fr.cph.crypto.core.spi.*
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -31,8 +36,24 @@ class WebConfig {
         return RestTemplate()
     }
 
-/*    @Bean
-    fun tickerClient() : TickerClient {
-        return CoinMarketCapAdapter(restTemplate())
-    }*/
+    @Bean
+    fun userService(userRepository: UserRepository,
+                    shareValueRepository: ShareValueRepository,
+                    positionRepository: PositionRepository,
+                    tickerRepository: TickerRepository,
+                    passwordEncoder: PasswordEncoder): UserService {
+        return UserServiceImpl(
+                userRepository = userRepository,
+                shareValueRepository = shareValueRepository,
+                positionRepository = positionRepository,
+                tickerRepository = tickerRepository,
+                passwordEncoder = passwordEncoder)
+    }
+
+    @Bean
+    fun tickerService(tickerClient: TickerClient, tickerRepository: TickerRepository): TickerService {
+        return TickerServiceImpl(
+                client = tickerClient,
+                tickerRepository = tickerRepository)
+    }
 }

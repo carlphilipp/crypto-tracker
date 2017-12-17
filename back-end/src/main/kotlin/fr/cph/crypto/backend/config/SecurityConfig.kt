@@ -1,6 +1,5 @@
 package fr.cph.crypto.backend.config
 
-import fr.cph.crypto.backend.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
@@ -14,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.http.SessionCreationPolicy
+import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices
 import org.springframework.security.oauth2.provider.token.TokenStore
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter
@@ -31,7 +31,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
     private lateinit var encoder: ShaPasswordEncoder
 
     @Autowired
-    private lateinit var userService: UserService
+    private lateinit var userService: UserDetailsService
 
     @Autowired
     private lateinit var jwtConverter: JwtConverter
@@ -42,7 +42,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
     }
 
     override fun configure(auth: AuthenticationManagerBuilder) {
-        auth.userDetailsService<UserService>(userService).passwordEncoder(encoder)
+        auth.userDetailsService<UserDetailsService>(userService).passwordEncoder(encoder)
     }
 
     override fun configure(http: HttpSecurity) {

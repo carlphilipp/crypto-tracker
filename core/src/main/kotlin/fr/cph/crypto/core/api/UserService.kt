@@ -13,11 +13,11 @@ interface UserService {
 
     fun addPosition(id: String, position: Position)
 
-    fun updatePosition(userId: String, position: Position, transactionQuantity : Double?, transactionUnitCostPrice : Double?)
+    fun updatePosition(userId: String, position: Position, transactionQuantity: Double?, transactionUnitCostPrice: Double?)
 
     fun deletePosition(userId: String, positionId: String, price: Double)
 
-    fun findAllShareValue(id: String): List<ShareValue>
+    fun findAllShareValue(userId: String): List<ShareValue>
 
     fun updateAllUsersShareValue()
 }

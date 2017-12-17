@@ -1,13 +1,11 @@
-package fr.cph.crypto.backend.service.impl
+package fr.cph.crypto.core.core
 
-import fr.cph.crypto.backend.service.TickerService
-import fr.cph.crypto.core.spi.TickerClient
+import fr.cph.crypto.core.api.TickerService
 import fr.cph.crypto.core.api.entity.Currency
 import fr.cph.crypto.core.api.entity.Ticker
+import fr.cph.crypto.core.spi.TickerClient
 import fr.cph.crypto.core.spi.TickerRepository
-import org.springframework.stereotype.Service
 
-@Service
 class TickerServiceImpl(private val client: TickerClient,
                         private val tickerRepository: TickerRepository) : TickerService {
 
