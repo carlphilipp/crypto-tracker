@@ -1,5 +1,5 @@
-include ':domain'
-project(':domain').projectDir = file('back-end/domain')
+include ':core'
+project(':core').projectDir = file('back-end/core')
 
 include 'client-coinmarketcap'
 project(':client-coinmarketcap').projectDir = file('back-end/infra/client/coinmarketcap')

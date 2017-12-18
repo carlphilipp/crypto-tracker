@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 class ServiceConfig {
+
     @Bean
     fun userService(userRepository: UserRepository,
                     shareValueRepository: ShareValueRepository,

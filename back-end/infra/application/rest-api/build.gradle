@@ -1,7 +1,7 @@
 apply plugin: 'org.springframework.boot'
 
 dependencies {
-    compile project(':domain')
+    compile project(':core')
     compile project(':client-coinmarketcap')
     compile project(':persistence-mongo')
     compile(

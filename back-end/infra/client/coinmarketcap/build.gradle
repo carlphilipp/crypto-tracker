@@ -1,5 +1,5 @@
 dependencies {
-    compile project(':domain')
+    compile project(':core')
     compile(
             [group: 'org.springframework', name: 'spring-web', version: '4.3.13.RELEASE'],
             [group: 'org.springframework.data', name: 'spring-data-mongodb', version: '1.10.9.RELEASE'],
