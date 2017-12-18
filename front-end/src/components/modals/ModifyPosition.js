@@ -87,7 +87,7 @@ class ModifyPosition extends React.Component {
           newUnitCostPrice = this.state.manualUnitCostPrice;
         }
         if (newQuantity != null && newUnitCostPrice != null) {
-          updateOnePosition(this.props.position.id, this.props.position.currency1.code, newQuantity, newUnitCostPrice, smartAddQuantity, smartAddUnitCostPrice)
+          updateOnePosition(this.props.position.id, this.props.position.currency1, this.props.position.currency2, newQuantity, newUnitCostPrice, smartAddQuantity, smartAddUnitCostPrice)
               .then(() => {
                   this.toggle();
                   this.props.onUpdateOrDelete(this.props.index);

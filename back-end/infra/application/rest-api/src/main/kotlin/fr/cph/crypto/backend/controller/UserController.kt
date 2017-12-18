@@ -1,9 +1,9 @@
 package fr.cph.crypto.backend.controller
 
+import fr.cph.crypto.backend.dto.PositionDTO
+import fr.cph.crypto.backend.dto.UserDTO
 import fr.cph.crypto.core.api.UserService
-import fr.cph.crypto.core.api.entity.Position
-import fr.cph.crypto.core.api.entity.ShareValue
-import fr.cph.crypto.core.api.entity.User
+import fr.cph.crypto.core.api.entity.ShareValueDTO
 import org.slf4j.LoggerFactory
 import org.springframework.security.access.prepost.PostAuthorize
 import org.springframework.security.access.prepost.PreAuthorize
@@ -16,49 +16,51 @@ constructor(private val userService: UserService) {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(method = [RequestMethod.GET], produces = ["application/json"])
-    fun getAllUsers(): List<User> {
-        return userService.findAll()
+    fun getAllUsers(): List<UserDTO> {
+        return userService.findAll().map { user -> UserDTO.from(user) }
     }
 
     @PreAuthorize("hasAuthority('ADMIN') or authentication.details.decodedDetails['id'] == null")
     @RequestMapping(method = [RequestMethod.POST], produces = ["application/json"])
-    fun createUser(@RequestBody user: User): User {
+    fun createUser(@RequestBody user: UserDTO): UserDTO {
         LOGGER.debug("Create user {}", user)
-        return userService.create(user)
+        return UserDTO.from(userService.create(user.toUser()))
     }
 
     @PostAuthorize("returnObject.email == authentication.name")
     @RequestMapping(value = ["/{id}"], method = [RequestMethod.GET], produces = ["application/json"])
-    fun getUser(@PathVariable("id") id: String): User {
-        return userService.findOne(id)
+    fun getUser(@PathVariable("id") id: String): UserDTO {
+        return UserDTO.from(userService.findOne(id))
     }
 
     @PreAuthorize("#id == authentication.details.decodedDetails['id']")
     @RequestMapping(value = ["/{id}/position"], method = [RequestMethod.POST], consumes = ["application/json"])
-    fun addPosition(@PathVariable("id") id: String, @RequestBody position: Position) {
-        userService.addPosition(id, position)
+    fun addPosition(@PathVariable("id") id: String, @RequestBody position: PositionDTO) {
+        userService.addPosition(id, position.toPosition())
     }
 
     @PreAuthorize("#id == authentication.details.decodedDetails['id'] and #positionId == #position.id")
     @RequestMapping(value = ["/{id}/position/{positionId}"], method = [RequestMethod.PUT])
     fun updatePosition(@PathVariable("id") id: String,
-                       @RequestBody position: Position,
+                       @RequestBody position: PositionDTO,
                        @PathVariable("positionId") positionId: String,
                        @RequestParam("transactionQuantity", required = false) transactionQuantity: Double?,
                        @RequestParam("transactionUnitCostPrice", required = false) transactionUnitCostPrice: Double?) {
-        userService.updatePosition(id, position, transactionQuantity, transactionUnitCostPrice)
+        userService.updatePosition(id, position.toPosition(), transactionQuantity, transactionUnitCostPrice)
     }
 
     @PreAuthorize("#id == authentication.details.decodedDetails['id']")
     @RequestMapping(value = ["/{id}/position/{positionId}/{price}"], method = [RequestMethod.DELETE])
-    fun deletePosition(@PathVariable("id") id: String, @PathVariable("positionId") positionId: String, @PathVariable("price") price: Double) {
+    fun deletePosition(@PathVariable("id") id: String,
+                       @PathVariable("positionId") positionId: String,
+                       @PathVariable("price") price: Double) {
         userService.deletePosition(id, positionId, price)
     }
 
     @PreAuthorize("#id == authentication.details.decodedDetails['id']")
     @RequestMapping(value = ["/{id}/sharevalue"], method = [RequestMethod.GET], produces = ["application/json"])
-    fun findAllShareValue(@PathVariable("id") id: String): List<ShareValue> {
-        return userService.findAllShareValue(id)
+    fun findAllShareValue(@PathVariable("id") id: String): List<ShareValueDTO> {
+        return userService.findAllShareValue(id).map { shareValue -> ShareValueDTO.from(shareValue) }
     }
 
     // TODO: delete that endpoint when share value dev is done

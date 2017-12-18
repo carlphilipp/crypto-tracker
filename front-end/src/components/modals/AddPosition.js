@@ -7,7 +7,7 @@ class AddPosition extends React.Component {
         super(props);
         this.state = {
             modal: false,
-            ticker: 'BTC',
+            currency: 'Bitcoin',
             quantity: null,
             quantityValid: null,
             unitCostPrice: null,
@@ -25,7 +25,7 @@ class AddPosition extends React.Component {
         }, () => {
           if(this.state.modal === false) {
             this.setState({
-              ticker: 'BTC',
+              currency: 'Bitcoin',
               quantity: null,
               quantityValid: null,
               unitCostPrice: null,
@@ -39,6 +39,10 @@ class AddPosition extends React.Component {
     handleUserInput(evt) {
       const name = evt.target.name;
       const value = evt.target.value;
+      console.log("Name: " + name + " value: " + value)
+      if(name === "currency") {
+        console.log(value.currencyName)
+      }
       this.setState({[name]: value}, () => this.validate(name, value));
     }
 
@@ -61,7 +65,8 @@ class AddPosition extends React.Component {
     }
 
     add() {
-        addPositionToCurrentUser(this.state.ticker, this.state.quantity, this.state.unitCostPrice)
+        let ticker = this.props.tickers.filter(ticker => ticker.currency1.currencyName === this.state.currency)[0]
+        addPositionToCurrentUser(ticker, this.state.quantity, this.state.unitCostPrice)
             .then(() => this.props.onAdd())
             .then(this.toggle())
             .catch(error => {
@@ -79,8 +84,8 @@ class AddPosition extends React.Component {
                         <Form>
                             <FormGroup>
                                 <Label for="ticker">Ticker</Label>
-                                <Input size="lg" type="select" name="ticker" id="ticker" onChange={evt => this.handleUserInput(evt)} autoFocus="true">
-                                {this.props.tickers.map(ticker => ticker.currency1.code).map((position, index) => (<option key={index}>{position}</option>))}
+                                <Input size="lg" type="select" name="currency" id="currency" onChange={evt => this.handleUserInput(evt)} autoFocus="true">
+                                {this.props.tickers.map(ticker => ticker.currency1).map((currency, index) => (<option key={index}>{currency.currencyName}</option>))}
                                 </Input>
                             </FormGroup>
                             <FormGroup>

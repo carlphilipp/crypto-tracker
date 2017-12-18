@@ -1,9 +1,7 @@
 package fr.cph.crypto.core.api.entity
 
-import com.fasterxml.jackson.annotation.JsonFormat
 import java.util.*
 
-@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 enum class Currency constructor(val code: String, val currencyName: String, val symbol: String, val type: Type) {
     BTC("BTC", "Bitcoin", "฿", Type.CRYPTO),
     ETH("ETH", "Ethereum", "Ξ", Type.CRYPTO),
@@ -24,9 +22,9 @@ enum class Currency constructor(val code: String, val currencyName: String, val 
     }
 
     companion object {
-        fun findCurrency(str: String): Currency {
+        fun findCurrency(code: String): Currency {
             return Arrays.stream(Currency.values())
-                    .filter { currency -> currency.code == str }
+                    .filter { currency -> currency.code == code }
                     .findAny()
                     .orElse(UNKNOWN)
         }

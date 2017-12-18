@@ -36,7 +36,7 @@ data class UserDB(
             return UserDB(
                     id = user.id,
                     email = user.email,
-                    password = user.password,
+                    password = user.password!!,
                     role = user.role,
                     currency = user.currency,
                     liquidityMovement = user.liquidityMovement,

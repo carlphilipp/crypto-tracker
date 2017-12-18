@@ -26,21 +26,22 @@ export function addPositionToCurrentUser(ticker, quantity, unitCostPrice) {
     const accessToken = getAccessToken();
     const userId = getUserId();
     return addPosition(accessToken, userId, {
-        currency1: ticker,
-        currency2: 'USD',
+        currency1: ticker.currency1,
+        currency2: ticker.currency2,
         quantity: quantity,
         unitCostPrice: unitCostPrice
       });
 }
 
-export function updateOnePosition(positionId, ticker, quantity, unitCostPrice, transactionQuantity, transactionUnitCostPrice) {
+export function updateOnePosition(positionId, currency1, currency2, quantity, unitCostPrice, transactionQuantity, transactionUnitCostPrice) {
+    // FIXME currency symbols are not properly encoded
     const accessToken = getAccessToken();
     const userId = getUserId();
     return updatePosition(accessToken, userId, transactionQuantity, transactionUnitCostPrice,
       {
         id: positionId,
-        currency1: ticker,
-        currency2: 'USD',
+        currency1: currency1,
+        currency2: currency2,
         quantity: quantity,
         unitCostPrice: unitCostPrice
       });

@@ -1,8 +1,7 @@
 package fr.cph.crypto.backend.controller
 
+import fr.cph.crypto.backend.dto.TickerDTO
 import fr.cph.crypto.core.api.TickerService
-import fr.cph.crypto.core.api.entity.Currency
-import fr.cph.crypto.core.api.entity.Ticker
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -16,14 +15,14 @@ constructor(private val tickerService: TickerService) {
 
     @PreAuthorize("hasAuthority('ADMIN') or authentication.details.decodedDetails['id'] == null")
     @RequestMapping(method = [RequestMethod.GET], produces = ["application/json"])
-    fun getAllTickers(): List<Ticker> {
-        return tickerService.findAll()
+    fun getAllTickers(): List<TickerDTO> {
+        return tickerService.findAll().map { ticker -> TickerDTO.from(ticker) }
     }
 
     @PreAuthorize("hasAuthority('ADMIN') or authentication.details.decodedDetails['id'] == null")
     @RequestMapping(value = ["/{currency1}/{currency2}"], method = [RequestMethod.GET], produces = ["application/json"])
-    fun getTicker(@PathVariable("currency1") currency1: Currency,
-                  @PathVariable("currency2") currency2: Currency): Ticker {
-        return tickerService.findOne(currency1.code + "-" + currency2.code)
+    fun getTicker(@PathVariable("currency1") currencyCode1: String,
+                  @PathVariable("currency2") currencyCode2: String): TickerDTO {
+        return TickerDTO.from(tickerService.findOne(currencyCode1 + "-" + currencyCode2))
     }
 }
