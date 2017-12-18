@@ -1,9 +1,9 @@
 package fr.cph.crypto.backend.controller
 
 import fr.cph.crypto.backend.dto.PositionDTO
+import fr.cph.crypto.backend.dto.ShareValueDTO
 import fr.cph.crypto.backend.dto.UserDTO
 import fr.cph.crypto.core.api.UserService
-import fr.cph.crypto.core.api.entity.ShareValueDTO
 import org.slf4j.LoggerFactory
 import org.springframework.security.access.prepost.PostAuthorize
 import org.springframework.security.access.prepost.PreAuthorize

@@ -29,25 +29,22 @@ constructor(private val tickerRepository: TickerRepository,
 
         tickerService.updateAll()
 
-        var user = User("cp.harmant@gmail.com", "PASSWORD", Role.ADMIN)
-        user.id = "1"
-        val passwordEncoded = passwordEncoder.encodePassword(user.password, null)
-        user.password = passwordEncoded
+        var user = User(id = "1", email = "cp.harmant@gmail.com", password = passwordEncoder.encodePassword("PASSWORD", null), role = Role.ADMIN)
         user = userRepository.save(user)
 
-        val positionBtc = Position(Currency.BTC, 0.06564277, 7616.98508457)
+        val positionBtc = Position(currency1 = Currency.BTC, quantity = 0.06564277, unitCostPrice = 7616.98508457)
         userService.addPosition(user.id!!, positionBtc)
-        val positionEth = Position(Currency.ETH, 1.57128061, 318.2)
+        val positionEth = Position(currency1 = Currency.ETH, quantity = 1.57128061, unitCostPrice = 318.2)
         userService.addPosition(user.id!!, positionEth)
-        val positionVtc = Position(Currency.VTC, 122.10096277, 4.3)
+        val positionVtc = Position(currency1 = Currency.VTC, quantity = 122.10096277, unitCostPrice = 4.3)
         userService.addPosition(user.id!!, positionVtc)
-        val positionGrs = Position(Currency.GRS, 1025.10079425, 1.25)
+        val positionGrs = Position(currency1 = Currency.GRS, quantity = 1025.10079425, unitCostPrice = 1.25)
         userService.addPosition(user.id!!, positionGrs)
-        val positionEthos = Position(Currency.ETHOS, 189.81, 1.52)
+        val positionEthos = Position(currency1 = Currency.ETHOS, quantity = 189.81, unitCostPrice = 1.52)
         userService.addPosition(user.id!!, positionEthos)
-        val positionCardano = Position(Currency.ADA, 3095.901, 0.12)
+        val positionCardano = Position(currency1 = Currency.ADA, quantity = 3095.901, unitCostPrice = 0.12)
         userService.addPosition(user.id!!, positionCardano)
-        val positionPower = Position(Currency.POWR, 443.556, 0.66)
+        val positionPower = Position(currency1 = Currency.POWR, quantity = 443.556, unitCostPrice = 0.66)
         userService.addPosition(user.id!!, positionPower)
 
         val userFound = userRepository.findOne(user.id!!)!!

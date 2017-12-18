@@ -1,16 +1,16 @@
-package fr.cph.crypto.core.api.entity
+package fr.cph.crypto.backend.dto
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
+import fr.cph.crypto.core.api.entity.ShareValue
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder("id", "timestamp", "shareQuantity", "shareValue", "originalValue", "gain", "gainPercentage", "positions")
-data class ShareValueDTO(
-        var id: String,
-        val timestamp: Long,
-        val shareQuantity: Double,
-        val shareValue: Double,
-        val portfolioValue: Double) {
+data class ShareValueDTO(var id: String,
+                         val timestamp: Long,
+                         val shareQuantity: Double,
+                         val shareValue: Double,
+                         val portfolioValue: Double) {
 
     companion object {
         fun from(shareValue: ShareValue): ShareValueDTO {

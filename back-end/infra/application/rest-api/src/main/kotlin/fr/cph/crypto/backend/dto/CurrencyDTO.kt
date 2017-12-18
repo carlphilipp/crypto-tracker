@@ -6,7 +6,11 @@ import fr.cph.crypto.core.api.entity.Currency
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder("code", "currencyName", "symbol", "type")
-data class CurrencyDTO constructor(val code: String, val currencyName: String, val symbol: String, val type: String) {
+data class CurrencyDTO(val code: String,
+                       val currencyName: String,
+                       val symbol: String,
+                       val type: String) {
+
     fun toCurrency(): Currency {
         return Currency.findCurrency(code)
     }

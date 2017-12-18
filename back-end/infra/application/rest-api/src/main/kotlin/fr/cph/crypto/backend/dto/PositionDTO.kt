@@ -7,27 +7,23 @@ import fr.cph.crypto.core.api.entity.Position
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder("id", "currency1", "currency2", "quantity", "value", "gain", "gainPercentage", "unitCostPrice", "originalValue", "lastUpdated")
-data class PositionDTO constructor(
-        var id: String? = null,
-        val currency1: CurrencyDTO,
-        val currency2: CurrencyDTO = CurrencyDTO.from(Currency.USD),
-        val quantity: Double,
-        val unitCostPrice: Double,
-        var originalValue: Double? = null,
-        var value: Double? = null,
-        var gain: Double? = null,
-        var gainPercentage: Double? = null,
-        var lastUpdated: Long? = null) {
+data class PositionDTO(var id: String? = null,
+                       val currency1: CurrencyDTO,
+                       val currency2: CurrencyDTO = CurrencyDTO.from(Currency.USD),
+                       val quantity: Double,
+                       val unitCostPrice: Double,
+                       var originalValue: Double? = null,
+                       var value: Double? = null,
+                       var gain: Double? = null,
+                       var gainPercentage: Double? = null,
+                       var lastUpdated: Long? = null) {
 
     fun toPosition(): Position {
-        val position = Position(
+        return Position(
+                id = this.id,
                 currency1 = Currency.findCurrency(this.currency1.code),
-                currency2 = Currency.findCurrency(this.currency2.code),
                 quantity = this.quantity,
-                unitCostPrice = this.unitCostPrice
-        )
-        position.id = this.id
-        return position
+                unitCostPrice = this.unitCostPrice)
     }
 
     companion object {
