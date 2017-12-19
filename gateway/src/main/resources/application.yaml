@@ -14,7 +14,7 @@ backend:
   security:
     jwt:
         client-id: website
-        client-secret: XY7kmzoNzl100
+        client-secret: ENC(dkkSxjBTChvlf4pPkOlkT3xaMBokYehJDODlXS+R5KqNqXzXgLc05yO8YQJBHr1z8SGheBIxX0Wm2EZ7uXycJbSoEM8fuM7D)
 
 ---
 

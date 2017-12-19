@@ -13,8 +13,8 @@ cd front-end && npm install
 #### Deploy & start
 
 ```
-java -jar -Dspring.profiles.active=dev back-end/build/libs/back-end-0.0.1-SNAPSHOT.jar
-java -jar gateway/build/libs/gateway-0.0.1-SNAPSHOT.jar
+java -jar -Dspring.profiles.active=dev -Djasypt.encryptor.password=yourpassword back-end/build/libs/back-end-0.0.1-SNAPSHOT.jar
+java -jar -Djasypt.encryptor.password=yourpassword gateway/build/libs/gateway-0.0.1-SNAPSHOT.jar
 cd front-end && npm install && npm start
 ```
 
@@ -34,13 +34,22 @@ npm run build
 #### Deploy & start
 
 ```
-java -jar back-end-XXX.jar
-java -jar gateway-XXX.jar
+java -jar -Djasypt.encryptor.password=yourpassword back-end-XXX.jar
+java -jar -Djasypt.encryptor.password=yourpassword gateway-XXX.jar
 cd front-end
 serve -s build
 ```
 
-Add jasypt:
-java -cp ~/.gradle/caches/modules-2/files-2.1/org.jasypt/jasypt/1.9.2/91eee489a389faba9fc57bfee75c87c615c19cd7/jasypt-1.9.2.jar  org.jasypt.intf.cli.JasyptPBEStringEncryptionCLI input=XY7kmzoNzl100 password=password algorithm=PBEWithMD5AndDES
+### Jasypt
 
-Start with --jasypt.encryptor.password=password
+Password are encrypted with Jasypt. To enrypt your password, use that command:
+
+```
+java -cp jasypt-1.9.2.jar org.jasypt.intf.cli.JasyptPBEStringEncryptionCLI input=YourDBPassword password=yourpassword algorithm=PBEWithMD5AndDES
+```
+
+Then you just have to start the app with:
+
+```
+-Djasypt.encryptor.password=yourpassword
+```

@@ -68,7 +68,7 @@ class User extends Component {
         const red = 'red'
         const green = 'green'
         let table = null;
-        if(user.positions != null) {
+        if(user != null && user.positions != null) {
           table = <Table hover>
               <thead>
                 <tr>
