@@ -57,7 +57,7 @@ class UserServiceImpl(
 
                 userRepository.updatePosition(user, position)
             }
-            positionFound.size > 1 -> throw RuntimeException("Something pretty bad happened")
+            positionFound.size > 1 -> throw NotFoundException()
             else -> throw NotAllowedException()
         }
     }
@@ -70,7 +70,7 @@ class UserServiceImpl(
 
                 userRepository.updatePosition(user, position)
             }
-            positionFound.size > 1 -> throw RuntimeException("Something pretty bad happened")
+            positionFound.size > 1 -> throw NotFoundException()
             else -> throw NotAllowedException()
         }
     }

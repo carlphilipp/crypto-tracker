@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.UriComponentsBuilder
-import java.util.*
 
 @Service
 class CoinMarketCapAdapter(private val restTemplate: RestTemplate) : TickerClient {
@@ -15,10 +14,6 @@ class CoinMarketCapAdapter(private val restTemplate: RestTemplate) : TickerClien
     override fun getTicker(currency: Currency, ticker: String): Ticker? {
         LOGGER.debug("Search ticker: {}", ticker)
         return getAllTickers(currency).firstOrNull { tick -> tick.currency1.code == ticker }
-    }
-
-    override fun getTickers(currency: Currency, vararg tickers: String): List<Ticker> {
-        return getTickers(currency, Arrays.asList(*tickers))
     }
 
     override fun getTickers(currency: Currency, tickers: List<String>): List<Ticker> {
