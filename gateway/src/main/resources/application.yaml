@@ -7,6 +7,15 @@ spring:
   profiles:
     active: prod
 
+backend:
+  scheme: http
+  host: localhost
+  port: 8280
+  security:
+    jwt:
+        client-id: testjwtclientid
+        client-secret: XY7kmzoNzl100
+
 ---
 
 spring:

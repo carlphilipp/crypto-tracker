@@ -1,6 +1,7 @@
 package fr.cph.crypto.gateway
 
 import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.context.annotation.Bean
@@ -12,6 +13,12 @@ import org.springframework.web.client.RestTemplate
 @Configuration
 @SpringBootApplication
 class GatewayApplication {
+
+    @Value("\${backend.security.jwt.client-id}")
+    private lateinit var clientId: String
+
+    @Value("\${backend.security.jwt.client-secret}")
+    private lateinit var clientSecret: String
 
     @Qualifier(value = "restTemplate")
     @Bean
@@ -26,7 +33,7 @@ class GatewayApplication {
     fun restTemplateAuth(): RestTemplate {
         val restTemplate = RestTemplate(HttpComponentsClientHttpRequestFactory())
         restTemplate.errorHandler = GatewayResponseErrorHandler()
-        restTemplate.interceptors.add(BasicAuthorizationInterceptor("testjwtclientid", "XY7kmzoNzl100"))
+        restTemplate.interceptors.add(BasicAuthorizationInterceptor(clientId, clientSecret))
         return restTemplate
     }
 }

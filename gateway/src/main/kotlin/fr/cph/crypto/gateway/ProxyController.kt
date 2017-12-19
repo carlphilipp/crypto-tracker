@@ -1,6 +1,7 @@
 package fr.cph.crypto.gateway
 
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.*
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.client.RestTemplate
@@ -11,8 +12,15 @@ import javax.servlet.http.HttpServletRequest
 @RestController
 class Controller(private val restTemplate: RestTemplate, private val restTemplateAuth: RestTemplate) {
 
-    private val server = "localhost"
-    private val port = 8280
+    @Value("\${backend.scheme}")
+    private lateinit var scheme: String
+
+    @Value("\${backend.host}")
+    private lateinit var host: String
+
+    @Value("\${backend.port}")
+    private lateinit var port: String
+
     private var currentToken: Token? = null
 
     @RequestMapping(
@@ -25,7 +33,7 @@ class Controller(private val restTemplate: RestTemplate, private val restTemplat
               method: HttpMethod,
               request: HttpServletRequest): ResponseEntity<String>? {
         LOGGER.debug("Request {}", request.requestURI)
-        val uri = URI("http", null, server, port, request.requestURI, request.queryString, null)
+        val uri = URI(scheme, null, host, port.toInt(), request.requestURI, request.queryString, null)
         val headers = buildHeaders(authorization)
         val entity = HttpEntity(body, headers)
         val result: ResponseEntity<String>? = restTemplate.exchange(uri, method, entity, String::class.java)
@@ -45,7 +53,7 @@ class Controller(private val restTemplate: RestTemplate, private val restTemplat
     @RequestMapping(value = ["/oauth/**"], produces = ["application/json"])
     fun proxyOAuth(method: HttpMethod, request: HttpServletRequest): ResponseEntity<String>? {
         LOGGER.debug("Request OAuth {}", request.requestURI)
-        val uri = URI("http", null, server, port, request.requestURI, request.queryString, null)
+        val uri = URI(scheme, null, host, port.toInt(), request.requestURI, request.queryString, null)
         val headers = HttpHeaders()
         headers.add("Content-Type", "application/json")
         val entity = HttpEntity(null, headers)
@@ -67,7 +75,7 @@ class Controller(private val restTemplate: RestTemplate, private val restTemplat
     }
 
     private fun getNewToken(): Token {
-        val uri = URI("http", null, server, port, "/oauth/token", "grant_type=client_credentials", null)
+        val uri = URI(scheme, null, host, port.toInt(), "/oauth/token", "grant_type=client_credentials", null)
         return restTemplateAuth.postForObject(uri, null, Token::class.java)
     }
 
