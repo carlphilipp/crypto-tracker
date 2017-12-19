@@ -13,7 +13,7 @@ backend:
   port: 8280
   security:
     jwt:
-        client-id: testjwtclientid
+        client-id: website
         client-secret: XY7kmzoNzl100
 
 ---

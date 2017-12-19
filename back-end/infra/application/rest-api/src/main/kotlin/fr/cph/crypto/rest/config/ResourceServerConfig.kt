@@ -1,7 +1,6 @@
 package fr.cph.crypto.rest.config
 
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer
@@ -16,11 +15,11 @@ class ResourceServerConfig : ResourceServerConfigurerAdapter() {
     @Autowired
     private lateinit var tokenServices: ResourceServerTokenServices
 
-    @Value("\${security.jwt.resource-ids}")
-    private lateinit var resourceIds: String
+    @Autowired
+    private lateinit var jwtProperties: JwtProperties
 
     override fun configure(resources: ResourceServerSecurityConfigurer) {
-        resources.resourceId(resourceIds).tokenServices(tokenServices)
+        resources.resourceId(jwtProperties.resourceId).tokenServices(tokenServices)
     }
 
     @Throws(Exception::class)
