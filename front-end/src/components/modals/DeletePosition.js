@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Modal, ModalBody, ModalFooter, ModalHeader, Form, FormGroup, Label, FormText, Input, FormFeedback} from 'reactstrap';
 import {FormattedNumber}  from 'react-intl'
-import LoginFailure from '../alerts/LoginFailure';
+import AlertFailure from '../alerts/AlertFailure';
 import {deletePositionFromCurrentUser} from '../../service/UserService';
 
 class DeletePosition extends React.Component {
@@ -51,7 +51,6 @@ class DeletePosition extends React.Component {
                 this.props.onUpdateOrDelete(this.props.index)
             })
             .catch((error) => {
-              // TODO handle failure state
               console.log("Error: " + error)
               this.setState({failure:true})
             })
@@ -82,8 +81,7 @@ class DeletePosition extends React.Component {
                         </FormGroup>
                       </Form>
                     </ModalBody>
-                      {/* FIXME: create a state failure*/}
-                    {(this.state.failure) ? <LoginFailure /> : ''}
+                    {(this.state.failure) ? <AlertFailure display="Sorry, something went wrong" color="danger"/> : ''}
                     <ModalFooter>
                         <Button color="danger" size="lg" onClick={this.delete} disabled={!this.state.formValid}>Delete</Button>
                         <Button color="secondary" size="lg" onClick={this.toggle}>Cancel</Button>

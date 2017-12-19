@@ -3,7 +3,7 @@ import {Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, Mo
 import {loginUser} from '../../service/UserService';
 import {storeToken} from '../../service/AuthService';
 import {delay} from '../../utils/Utils';
-import LoginFailure from '../alerts/LoginFailure';
+import AlertFailure from '../alerts/AlertFailure';
 
 class Login extends React.Component {
 
@@ -25,7 +25,8 @@ class Login extends React.Component {
 
     toggle() {
         this.setState({
-            modal: !this.state.modal
+            modal: !this.state.modal,
+            failure: false
         });
     }
 
@@ -92,7 +93,7 @@ class Login extends React.Component {
                             </FormGroup>
                         </Form>
                     </ModalBody>
-                    {(this.state.failure) ? <LoginFailure /> : ''}
+                    {(this.state.failure) ? <AlertFailure display="No login/password match" color="danger"/> : ''}
                     <ModalFooter>
                         <Button color="success" size="lg" onClick={this.loginUser} disabled={!this.state.formValid}>Login</Button>{' '}
                         <Button color="secondary" size="lg" onClick={this.toggle}>Cancel</Button>

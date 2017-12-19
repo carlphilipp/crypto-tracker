@@ -22,7 +22,6 @@ class ResourceServerConfig : ResourceServerConfigurerAdapter() {
         resources.resourceId(jwtProperties.resourceId).tokenServices(tokenServices)
     }
 
-    @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
         http
                 .requestMatchers()

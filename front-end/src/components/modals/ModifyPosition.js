@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, FormFeedback, Collapse, Table} from 'reactstrap';
 import {updateOnePosition} from '../../service/UserService';
-import LoginFailure from '../alerts/LoginFailure';
+import AlertFailure from '../alerts/AlertFailure';
 
 class ModifyPosition extends React.Component {
 
@@ -224,8 +224,7 @@ class ModifyPosition extends React.Component {
                         </FormGroup>
                       </Collapse>
                     </ModalBody>
-                    {/* FIXME: create a failure state*/}
-                    {(this.state.failure) ? <LoginFailure /> : ''}
+                    {(this.state.failure) ? <AlertFailure display="Sorry, something went wrong" color="danger"/> : ''}
                     <ModalFooter>
                         <Button color="success" size="lg" onClick={this.modifyPosition} disabled={!this.state.formValid}>Modify</Button>{' '}
                         <Button color="secondary" size="lg" onClick={this.toggle}>Cancel</Button>

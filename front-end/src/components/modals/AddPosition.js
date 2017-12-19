@@ -1,6 +1,7 @@
 import React from 'react';
 import {Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, FormFeedback} from 'reactstrap';
 import {addPositionToCurrentUser} from '../../service/UserService';
+import AlertFailure from '../alerts/AlertFailure';
 
 class AddPosition extends React.Component {
     constructor(props) {
@@ -13,6 +14,7 @@ class AddPosition extends React.Component {
             unitCostPrice: null,
             unitCostPriceValid: null,
             formValid: false,
+            failure: false,
         };
         this.toggle = this.toggle.bind(this);
         this.add = this.add.bind(this);
@@ -31,6 +33,7 @@ class AddPosition extends React.Component {
               unitCostPrice: null,
               unitCostPriceValid: null,
               formValid: false,
+              failure: false,
             });
           }
         });
@@ -67,10 +70,13 @@ class AddPosition extends React.Component {
     add() {
         let ticker = this.props.tickers.filter(ticker => ticker.currency1.currencyName === this.state.currency)[0]
         addPositionToCurrentUser(ticker, this.state.quantity, this.state.unitCostPrice)
-            .then(() => this.props.onAdd())
-            .then(this.toggle())
+            .then(() => {
+              this.props.onAdd()
+              this.toggle()
+            })
             .catch(error => {
                 console.log(error);
+                this.setState({failure:true})
             })
     }
 
@@ -100,7 +106,7 @@ class AddPosition extends React.Component {
                             </FormGroup>
                         </Form>
                     </ModalBody>
-                      {/* FIXME: create a failure state */}
+                    {(this.state.failure) ? <AlertFailure display="Sorry, something went wrong" color="danger"/> : ''}
                     <ModalFooter>
                         <Button color="primary" size="lg" onClick={this.add} disabled={!this.state.formValid}>Add</Button>{' '}
                         <Button color="secondary" size="lg" onClick={this.toggle}>Cancel</Button>
