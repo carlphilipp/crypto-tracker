@@ -39,3 +39,8 @@ java -jar gateway-XXX.jar
 cd front-end
 serve -s build
 ```
+
+Add jasypt:
+java -cp ~/.gradle/caches/modules-2/files-2.1/org.jasypt/jasypt/1.9.2/91eee489a389faba9fc57bfee75c87c615c19cd7/jasypt-1.9.2.jar  org.jasypt.intf.cli.JasyptPBEStringEncryptionCLI input=XY7kmzoNzl100 password=password algorithm=PBEWithMD5AndDES
+
+Start with --jasypt.encryptor.password=password

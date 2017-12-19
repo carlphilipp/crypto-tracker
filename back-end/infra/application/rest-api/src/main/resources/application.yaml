@@ -3,7 +3,7 @@ security:
   encoding-strength: 256
   jwt:
     client-id: website
-    client-secret: XY7kmzoNzl100
+    client-secret: ENC(vdEX+iQBcjDkDR3Mhou2YChUXfkDEHvT)
     resource-id: backendresource
     grant-types:
       - password

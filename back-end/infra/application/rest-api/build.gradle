@@ -11,6 +11,7 @@ dependencies {
             [group: 'org.springframework.security.oauth', name: 'spring-security-oauth2'],
             [group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'],
             [group: 'org.jetbrains.kotlin', name: 'kotlin-reflect'],
+            [group: 'com.github.ulisesbocchio', name: 'jasypt-spring-boot', version: '1.17'],
     )
 
     compile('com.fasterxml.jackson.module:jackson-module-kotlin:2.9.2') {
