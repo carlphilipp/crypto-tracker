@@ -49,7 +49,7 @@ private class CustomUserAuthenticationConverter(private val userRepository: User
 
     @Suppress("UNCHECKED_CAST")
     override fun convertUserAuthentication(authentication: Authentication): Map<String, *> {
-        val user = userRepository.findOneByEmail(authentication.name)
+        val user = userRepository.findOneUserByEmail(authentication.name)
         val response = super.convertUserAuthentication(authentication) as MutableMap<String, Any>
         response.put(ID, user?.id!!)
         return response

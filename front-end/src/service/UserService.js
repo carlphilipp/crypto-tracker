@@ -1,4 +1,4 @@
-import {createUser, getOneUser, addPosition, deletePosition, updatePosition, getAllShareValue, login} from '../utils/ApiClient';
+import {createUser, getOneUser, addPosition, deletePosition, updatePosition, getAllShareValue, login, addFeeToPosition} from '../utils/ApiClient';
 import {getUserId, getAccessToken} from './AuthService';
 
 
@@ -51,6 +51,12 @@ export function deletePositionFromCurrentUser(positionId, price) {
     const accessToken = getAccessToken();
     const userId = getUserId();
     return deletePosition(accessToken, userId, positionId, price);
+}
+
+export function addFeePositionToCurrentUser(positionId, feeAmount) {
+    const accessToken = getAccessToken();
+    const userId = getUserId();
+    return addFeeToPosition(accessToken, userId, positionId, feeAmount);
 }
 
 export function getCurrentUserShareValue() {

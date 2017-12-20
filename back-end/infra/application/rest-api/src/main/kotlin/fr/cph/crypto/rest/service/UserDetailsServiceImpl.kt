@@ -13,7 +13,7 @@ class UserDetailsServiceImpl
 constructor(private val userRepository: UserRepository) : UserDetailsService {
 
     override fun loadUserByUsername(username: String): UserDetails {
-        val user = userRepository.findOneByEmail(username) ?: throw NotAllowedException()
+        val user = userRepository.findOneUserByEmail(username) ?: throw NotAllowedException()
         val authorities = listOf<GrantedAuthority>(SimpleGrantedAuthority(user.role.name))
         return org.springframework.security.core.userdetails.User(user.email, user.password, authorities)
     }

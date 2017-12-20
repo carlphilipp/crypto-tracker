@@ -19,11 +19,12 @@ data class UserDTO(var id: String? = null,
                    var positions: List<PositionDTO> = listOf()) {
 
     fun toUser(): User {
-        return User(
-                id = this.id,
+        val user = User(
                 email = this.email,
                 password = this.password,
                 currency = this.currency.toCurrency())
+        user.id = this.id
+        return user
     }
 
     companion object {

@@ -19,11 +19,12 @@ data class PositionDTO(var id: String? = null,
                        var lastUpdated: Long? = null) {
 
     fun toPosition(): Position {
-        return Position(
-                id = this.id,
+        val position = Position(
                 currency1 = Currency.findCurrency(this.currency1.code),
                 quantity = this.quantity,
                 unitCostPrice = this.unitCostPrice)
+        position.id = this.id
+        return position
     }
 
     companion object {

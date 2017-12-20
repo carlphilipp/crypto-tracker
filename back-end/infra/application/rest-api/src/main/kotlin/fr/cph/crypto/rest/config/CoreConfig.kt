@@ -15,11 +15,13 @@ class CoreConfig {
     fun userService(userRepository: UserRepository,
                     shareValueRepository: ShareValueRepository,
                     tickerRepository: TickerRepository,
+                    idGenerator: IdGenerator,
                     passwordEncoder: PasswordEncoder): UserService {
         return UserServiceImpl(
                 userRepository = userRepository,
                 shareValueRepository = shareValueRepository,
                 tickerRepository = tickerRepository,
+                idGenerator = idGenerator,
                 passwordEncoder = passwordEncoder)
     }
 

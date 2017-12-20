@@ -7,27 +7,25 @@ import org.springframework.data.mongodb.core.mapping.Document
 
 @Document(collection = "position")
 data class PositionDB constructor(
-        @Id var id: String? = null,
+        @Id val id: String,
         val currency1: Currency,
         val currency2: Currency,
         val quantity: Double,
         val unitCostPrice: Double) {
 
     fun toPosition(): Position {
-        val position = Position(
-                currency1 = this.currency1,
-                currency2 = this.currency2,
-                quantity = this.quantity,
-                unitCostPrice = this.unitCostPrice
-        )
-        position.id = this.id
-        return position
+        return Position(
+                id = id,
+                currency1 = currency1,
+                currency2 = currency2,
+                quantity = quantity,
+                unitCostPrice = unitCostPrice)
     }
 
     companion object {
         fun from(position: Position): PositionDB {
             return PositionDB(
-                    id = position.id,
+                    id = position.id!!,
                     currency1 = position.currency1,
                     currency2 = position.currency2,
                     quantity = position.quantity,

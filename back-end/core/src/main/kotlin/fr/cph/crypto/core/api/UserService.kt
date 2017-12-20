@@ -5,6 +5,7 @@ import fr.cph.crypto.core.api.entity.ShareValue
 import fr.cph.crypto.core.api.entity.User
 
 interface UserService {
+
     fun create(user: User): User
 
     fun findOne(id: String): User
@@ -16,6 +17,8 @@ interface UserService {
     fun updatePosition(userId: String, position: Position, transactionQuantity: Double?, transactionUnitCostPrice: Double?)
 
     fun deletePosition(userId: String, positionId: String, price: Double)
+
+    fun addFeeToPosition(userId: String, positionId: String, fee: Double)
 
     fun findAllShareValue(userId: String): List<ShareValue>
 

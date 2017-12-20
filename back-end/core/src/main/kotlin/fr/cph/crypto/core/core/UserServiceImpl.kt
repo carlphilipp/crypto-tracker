@@ -6,42 +6,44 @@ import fr.cph.crypto.core.api.entity.ShareValue
 import fr.cph.crypto.core.api.entity.User
 import fr.cph.crypto.core.api.exception.NotAllowedException
 import fr.cph.crypto.core.api.exception.NotFoundException
-import fr.cph.crypto.core.spi.PasswordEncoder
-import fr.cph.crypto.core.spi.ShareValueRepository
-import fr.cph.crypto.core.spi.TickerRepository
-import fr.cph.crypto.core.spi.UserRepository
+import fr.cph.crypto.core.spi.*
 
 class UserServiceImpl(
         private val userRepository: UserRepository,
         private val shareValueRepository: ShareValueRepository,
         private val tickerRepository: TickerRepository,
+        private val idGenerator: IdGenerator,
         private val passwordEncoder: PasswordEncoder) : UserService {
 
     override fun create(user: User): User {
         val passwordEncoded = passwordEncoder.encodePassword(user.password)
+        user.id = idGenerator.getNewId()
         user.password = passwordEncoded
-        return userRepository.save(user)
+        return userRepository.saveUser(user)
     }
 
     override fun findOne(id: String): User {
-        return enrich(userRepository.findOne(id) ?: throw NotFoundException())
+        return enrich(userRepository.findOneUserById(id) ?: throw NotFoundException())
     }
 
     override fun findAll(): List<User> {
         return userRepository
-                .findAll()
+                .findAllUsers()
                 .map { user -> enrich(user) }
                 .toList()
     }
 
     override fun addPosition(userId: String, position: Position) {
-        val user = userRepository.findOne(userId) ?: throw NotFoundException()
+        val user = userRepository.findOneUserById(userId) ?: throw NotFoundException()
         user.liquidityMovement = user.liquidityMovement + position.quantity * position.unitCostPrice
-        userRepository.addPosition(user, position)
+        position.id = idGenerator.getNewId()
+        user.positions.add(position)
+        user.positions.sortWith(compareBy({ it.currency1.currencyName }))
+        userRepository.savePosition(user, position)
     }
 
     override fun updatePosition(userId: String, position: Position, transactionQuantity: Double?, transactionUnitCostPrice: Double?) {
-        val user = userRepository.findOne(userId) ?: throw NotFoundException()
+        val user = userRepository.findOneUserById(userId) ?: throw NotFoundException()
         if (transactionQuantity != null && transactionUnitCostPrice != null) {
             updatePositionSmart(user, position, transactionQuantity, transactionUnitCostPrice)
         } else {
@@ -55,7 +57,7 @@ class UserServiceImpl(
             positionFound.size == 1 -> {
                 user.liquidityMovement = user.liquidityMovement + ((position.unitCostPrice * position.quantity) - (positionFound[0].unitCostPrice * positionFound[0].quantity))
 
-                userRepository.updatePosition(user, position)
+                userRepository.savePosition(user, position)
             }
             positionFound.size > 1 -> throw NotFoundException()
             else -> throw NotAllowedException()
@@ -68,7 +70,7 @@ class UserServiceImpl(
             positionFound.size == 1 -> {
                 user.liquidityMovement = user.liquidityMovement + transactionUnitCostPrice * transactionQuantity
 
-                userRepository.updatePosition(user, position)
+                userRepository.savePosition(user, position)
             }
             positionFound.size > 1 -> throw NotFoundException()
             else -> throw NotAllowedException()
@@ -76,7 +78,7 @@ class UserServiceImpl(
     }
 
     override fun deletePosition(userId: String, positionId: String, price: Double) {
-        val user = userRepository.findOne(userId) ?: throw NotFoundException()
+        val user = userRepository.findOneUserById(userId) ?: throw NotFoundException()
         val positionFound = user.positions.filter { it.id == positionId }.toList()
         when {
             positionFound.size == 1 -> {
@@ -89,8 +91,23 @@ class UserServiceImpl(
         }
     }
 
+    override fun addFeeToPosition(userId: String, positionId: String, fee: Double) {
+        val user = userRepository.findOneUserById(userId) ?: throw NotFoundException()
+        val position = user.positions.find { position -> position.id == positionId } ?: throw NotFoundException()
+        val newPosition = Position(
+                id = position.id,
+                currency1 = position.currency1,
+                currency2 = position.currency2,
+                quantity = position.quantity - fee,
+                unitCostPrice = position.unitCostPrice)
+        user.positions.remove(position)
+        user.positions.add(newPosition)
+        user.positions.sortWith(compareBy({ it.currency1.currencyName }))
+        userRepository.savePosition(user, newPosition)
+    }
+
     override fun findAllShareValue(userId: String): List<ShareValue> {
-        val user = userRepository.findOne(userId) ?: throw NotFoundException()
+        val user = userRepository.findOneUserById(userId) ?: throw NotFoundException()
         return shareValueRepository.findAllByUser(user)
     }
 
@@ -99,7 +116,7 @@ class UserServiceImpl(
             run {
                 addNewShareValue(user)
                 user.liquidityMovement = 0.0
-                userRepository.save(user)
+                userRepository.saveUser(user)
             }
         }
     }

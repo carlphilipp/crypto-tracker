@@ -36,7 +36,6 @@ export function addPosition(accessToken, id, position) {
 
 export function updatePosition(accessToken, id, transactionQuantity, transactionUnitCostPrice, position) {
   const url = `${BASE_URL}/api/user/` + id + `/position/` + position.id;
-  //const config = createConfig(accessToken);
   const config = {headers: {'Authorization': 'Bearer ' + accessToken}, params: {transactionQuantity: transactionQuantity, transactionUnitCostPrice: transactionUnitCostPrice}};
   return axios.put(url, position, config);
 }
@@ -45,6 +44,12 @@ export function deletePosition(accessToken, id, positionId, price) {
   const url = `${BASE_URL}/api/user/` + id + `/position/` + positionId + `/` + price;
   const config = createConfig(accessToken);
   return axios.delete(url, config);
+}
+
+export function addFeeToPosition(accessToken, id, positionId, feeAmount) {
+  const url = `${BASE_URL}/api/user/` + id + `/position/` + positionId + `/fee/` + feeAmount;
+  const config = createConfig(accessToken);
+  return axios.post(url, null, config);
 }
 
 export function getAllShareValue(accessToken, userId) {

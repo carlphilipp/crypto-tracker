@@ -1,9 +1,9 @@
 package fr.cph.crypto.rest.controller
 
+import fr.cph.crypto.core.api.UserService
 import fr.cph.crypto.rest.dto.PositionDTO
 import fr.cph.crypto.rest.dto.ShareValueDTO
 import fr.cph.crypto.rest.dto.UserDTO
-import fr.cph.crypto.core.api.UserService
 import org.slf4j.LoggerFactory
 import org.springframework.security.access.prepost.PostAuthorize
 import org.springframework.security.access.prepost.PreAuthorize
@@ -55,6 +55,14 @@ constructor(private val userService: UserService) {
                        @PathVariable("positionId") positionId: String,
                        @PathVariable("price") price: Double) {
         userService.deletePosition(id, positionId, price)
+    }
+
+    @PreAuthorize("#id == authentication.details.decodedDetails['id']")
+    @RequestMapping(value = ["/{id}/position/{positionId}/fee/{feeAmount}"], method = [RequestMethod.POST])
+    fun addFeeToPosition(@PathVariable("id") id: String,
+                         @PathVariable("positionId") positionId: String,
+                         @PathVariable("feeAmount") feeAmount: Double) {
+        userService.addFeeToPosition(id, positionId, feeAmount)
     }
 
     @PreAuthorize("#id == authentication.details.decodedDetails['id']")

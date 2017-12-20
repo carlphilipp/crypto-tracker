@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 
 @Document(collection = "user")
 data class UserDB(
-        @Id var id: String? = null,
+        @Id val id: String,
         @Indexed(unique = true) val email: String,
         var password: String,
         val role: Role,
@@ -21,11 +21,11 @@ data class UserDB(
 
     fun toUser(): User {
         val user = User(
+                id = this.id,
                 email = this.email,
                 password = this.password,
                 role = this.role,
                 currency = this.currency)
-        user.id = this.id
         user.liquidityMovement = this.liquidityMovement
         user.positions = this.positions.map { position -> position.toPosition() }.toMutableList()
         return user
@@ -34,7 +34,7 @@ data class UserDB(
     companion object {
         fun from(user: User): UserDB {
             return UserDB(
-                    id = user.id,
+                    id = user.id!!,
                     email = user.email,
                     password = user.password,
                     role = user.role,
