@@ -37,7 +37,7 @@ class Tickers extends Component {
                           <FormattedNumber value={ticker.price} style={`currency`} currency="USD" minimumFractionDigits={getMinimumFractionDigits(ticker.price)}/>
                         </td>
                         <td className="text-right">
-                          <FormattedNumber value={ticker.marketCap} style={`currency`} currency="USD" minimumFractionDigits={0}/>
+                          {(ticker.marketCap === 0) ? '?' : <FormattedNumber value={ticker.marketCap} style={`currency`} currency="USD" minimumFractionDigits={0}/>}
                         </td>
                         <td className="text-right">
                           <FormattedNumber value={ticker.volume24h} style={`currency`} currency="USD" minimumFractionDigits={0}/>

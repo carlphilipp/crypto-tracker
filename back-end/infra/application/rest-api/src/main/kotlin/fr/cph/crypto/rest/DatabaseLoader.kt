@@ -44,9 +44,9 @@ constructor(private val tickerRepository: TickerRepository,
         userService.addPosition(user.id!!, positionGrs)
         val positionEthos = Position(id = idGenerator.getNewId(), currency1 = Currency.ETHOS, quantity = 189.81, unitCostPrice = 1.52)
         userService.addPosition(user.id!!, positionEthos)
-        val positionCardano = Position(id = idGenerator.getNewId(), currency1 = Currency.ADA, quantity = 3095.901, unitCostPrice = 0.12)
+        val positionCardano = Position(id = idGenerator.getNewId(), currency1 = Currency.CARDANO, quantity = 3095.901, unitCostPrice = 0.12)
         userService.addPosition(user.id!!, positionCardano)
-        val positionPower = Position(id = idGenerator.getNewId(), currency1 = Currency.POWR, quantity = 443.556, unitCostPrice = 0.66)
+        val positionPower = Position(id = idGenerator.getNewId(), currency1 = Currency.POWER_LEDGER, quantity = 443.556, unitCostPrice = 0.66)
         userService.addPosition(user.id!!, positionPower)
 
         val userFound = userRepository.findOneUserById(user.id!!)!!
