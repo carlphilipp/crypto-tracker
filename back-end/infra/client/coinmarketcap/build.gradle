@@ -1,8 +1,8 @@
 dependencies {
     compile project(':core')
     compile(
-            [group: 'org.springframework', name: 'spring-web', version: '4.3.13.RELEASE'],
-            [group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'],
+            [group: 'org.springframework', name: 'spring-web', version: spring_core_version],
+            [group: 'org.slf4j', name: 'slf4j-api', version: slf4j_version],
             [group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'],
             [group: 'org.jetbrains.kotlin', name: 'kotlin-reflect'],
     )

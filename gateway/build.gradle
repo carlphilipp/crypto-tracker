@@ -1,3 +1,4 @@
+apply plugin: 'kotlin-spring'
 apply plugin: 'org.springframework.boot'
 
 dependencies {
@@ -5,8 +6,8 @@ dependencies {
             [group: 'org.springframework.boot', name: 'spring-boot-starter-web'],
             [group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'],
             [group: 'org.jetbrains.kotlin', name: 'kotlin-reflect'],
-            [group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.4'],
-            [group: 'com.github.ulisesbocchio', name: 'jasypt-spring-boot', version: '1.17'],
+            [group: 'org.apache.httpcomponents', name: 'httpclient', version: http_client_version],
+            [group: 'com.github.ulisesbocchio', name: 'jasypt-spring-boot', version: spring_boot_jasypt_version],
     )
 
     compile('com.fasterxml.jackson.module:jackson-module-kotlin:2.9.2') {

@@ -1,9 +1,11 @@
+apply plugin: 'kotlin-spring'
+
 dependencies {
     compile project(':core')
     compile(
-            [group: 'org.springframework', name: 'spring-context-support', version: '4.3.13.RELEASE'],
-            [group: 'com.sun.mail', name: 'javax.mail', version: '1.6.0'],
-            [group: 'javax.mail', name: 'javax.mail-api', version: '1.6.0'],
+            [group: 'org.springframework', name: 'spring-context-support', version: spring_core_version],
+            [group: 'com.sun.mail', name: 'javax.mail', version: javax_mail_version],
+            [group: 'javax.mail', name: 'javax.mail-api', version: javax_mail_version],
             [group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'],
             [group: 'org.jetbrains.kotlin', name: 'kotlin-reflect'],
     )
