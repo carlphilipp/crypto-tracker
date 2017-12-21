@@ -16,13 +16,15 @@ class CoreConfig {
                     shareValueRepository: ShareValueRepository,
                     tickerRepository: TickerRepository,
                     idGenerator: IdGenerator,
-                    passwordEncoder: PasswordEncoder): UserService {
+                    passwordEncoder: PasswordEncoder,
+                    emailService: EmailService): UserService {
         return UserServiceImpl(
                 userRepository = userRepository,
                 shareValueRepository = shareValueRepository,
                 tickerRepository = tickerRepository,
                 idGenerator = idGenerator,
-                passwordEncoder = passwordEncoder)
+                passwordEncoder = passwordEncoder,
+                emailService = emailService)
     }
 
     @Bean

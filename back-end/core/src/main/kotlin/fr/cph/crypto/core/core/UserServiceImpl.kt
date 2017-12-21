@@ -13,13 +13,16 @@ class UserServiceImpl(
         private val shareValueRepository: ShareValueRepository,
         private val tickerRepository: TickerRepository,
         private val idGenerator: IdGenerator,
-        private val passwordEncoder: PasswordEncoder) : UserService {
+        private val passwordEncoder: PasswordEncoder,
+        private val emailService: EmailService) : UserService {
 
     override fun create(user: User): User {
         val passwordEncoded = passwordEncoder.encodePassword(user.password)
         user.id = idGenerator.getNewId()
         user.password = passwordEncoded
-        return userRepository.saveUser(user)
+        val savedUser = userRepository.saveUser(user)
+        emailService.sendWelcomeEmail(savedUser.email)
+        return savedUser
     }
 
     override fun findOne(id: String): User {
