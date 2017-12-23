@@ -10,7 +10,7 @@ dependencies {
             [group: 'com.github.ulisesbocchio', name: 'jasypt-spring-boot', version: spring_boot_jasypt_version],
     )
 
-    compile('com.fasterxml.jackson.module:jackson-module-kotlin:2.9.2') {
+    compile("com.fasterxml.jackson.module:jackson-module-kotlin:$jackson_version") {
         exclude group: 'org.jetbrains.kotlin', module: 'kotlin-reflect'
     }
 }

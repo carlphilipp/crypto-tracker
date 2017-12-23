@@ -1,0 +1,7 @@
+smtp:
+  host: smtp.mail.yahoo.com
+  port: 465
+from:
+  username: webmaster.stock
+  password: W322sEDU59b31aEGgv35ovVO3QkmLwR5
+  from: webmaster.stock@yahoo.com

@@ -10,7 +10,7 @@ project(':rest-api').projectDir = file('back-end/infra/application/rest-api')
 include 'persistence-mongo'
 project(':persistence-mongo').projectDir = file('back-end/infra/persistence/mongo')
 
-include 'email-spring'
-project(':email-spring').projectDir = file('back-end/infra/email/spring')
+include 'email-default'
+project(':email-default').projectDir = file('back-end/infra/email/default')
 
 include ':gateway'

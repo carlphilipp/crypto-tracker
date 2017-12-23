@@ -1,9 +1,17 @@
 apply plugin: 'kotlin-spring'
 
+jar {
+    baseName = 'email-default'
+    version = '0.0.1-SNAPSHOT'
+}
+
 dependencies {
     compile project(':core')
     compile(
             [group: 'org.springframework', name: 'spring-context-support', version: spring_core_version],
+            [group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: jackson_version],
+            [group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jackson_version],
+            [group: 'org.jasypt', name: 'jasypt', version: jasypt_version],
             [group: 'com.sun.mail', name: 'javax.mail', version: javax_mail_version],
             [group: 'javax.mail', name: 'javax.mail-api', version: javax_mail_version],
             [group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'],

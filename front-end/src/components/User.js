@@ -77,7 +77,7 @@ class User extends Component {
                     <th className="text-right">Price</th>
                     <th className="text-right">Average Cost</th>
                     <th className="text-right">Original Value</th>
-                    <th className="text-right">Current Value</th>
+                    <th className="text-right">Market Value</th>
                     <th className="text-center" colSpan="2">Total Return</th>
                     <th className="text-right">Last Updated</th>
                 </tr>
