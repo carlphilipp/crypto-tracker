@@ -31,6 +31,11 @@ server:
 
 ---
 
+context:
+  scheme: http
+  host: localhost
+  port: 8280
+
 spring:
     profiles: dev
 
@@ -40,6 +45,11 @@ logging:
     org.springframework.security: INFO
 
 ---
+
+context:
+  scheme: https
+  host: stocktracker.fr
+  port: 0
 
 spring:
     profiles: prod

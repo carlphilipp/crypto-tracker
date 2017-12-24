@@ -6,6 +6,7 @@ dependencies {
     compile project(':client-coinmarketcap')
     compile project(':persistence-mongo')
     compile project(':email-default')
+    compile project(':template-default')
     compile(
             [group: 'org.springframework.boot', name: 'spring-boot-starter-web'],
             [group: 'org.springframework.boot', name: 'spring-boot-starter-security'],

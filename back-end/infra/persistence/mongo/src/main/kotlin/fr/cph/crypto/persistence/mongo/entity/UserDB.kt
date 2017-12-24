@@ -16,19 +16,20 @@ data class UserDB(
         val role: Role,
         val currency: Currency,
         val liquidityMovement: Double,
+        val allowed: Boolean = false,
         @DBRef
         var positions: List<PositionDB>) {
 
     fun toUser(): User {
-        val user = User(
+        return User(
                 id = this.id,
                 email = this.email,
                 password = this.password,
                 role = this.role,
-                currency = this.currency)
-        user.liquidityMovement = this.liquidityMovement
-        user.positions = this.positions.map { position -> position.toPosition() }.toMutableList()
-        return user
+                currency = this.currency,
+                liquidityMovement = this.liquidityMovement,
+                allowed = this.allowed,
+                positions = this.positions.map { position -> position.toPosition() }.toMutableList())
     }
 
     companion object {
@@ -40,6 +41,7 @@ data class UserDB(
                     role = user.role,
                     currency = user.currency,
                     liquidityMovement = user.liquidityMovement,
+                    allowed = user.allowed,
                     positions = user.positions.map { position -> PositionDB.from(position) }.toList()
             )
         }

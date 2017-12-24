@@ -17,6 +17,8 @@ class CoreConfig {
                     tickerRepository: TickerRepository,
                     idGenerator: IdGenerator,
                     passwordEncoder: PasswordEncoder,
+                    templateService: TemplateService,
+                    contextService: ContextService,
                     emailService: EmailService): UserService {
         return UserServiceImpl(
                 userRepository = userRepository,
@@ -24,6 +26,8 @@ class CoreConfig {
                 tickerRepository = tickerRepository,
                 idGenerator = idGenerator,
                 passwordEncoder = passwordEncoder,
+                templateService = templateService,
+                contextService = contextService,
                 emailService = emailService)
     }
 

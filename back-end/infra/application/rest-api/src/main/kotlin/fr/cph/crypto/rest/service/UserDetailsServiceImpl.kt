@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service
 class UserDetailsServiceImpl
 constructor(private val userRepository: UserRepository) : UserDetailsService {
 
+    // FIXME business logic to move to core
     override fun loadUserByUsername(username: String): UserDetails {
         val user = userRepository.findOneUserByEmail(username) ?: throw NotAllowedException()
+        if (!user.allowed) throw NotAllowedException()
         val authorities = listOf<GrantedAuthority>(SimpleGrantedAuthority(user.role.name))
         return org.springframework.security.core.userdetails.User(user.email, user.password, authorities)
     }

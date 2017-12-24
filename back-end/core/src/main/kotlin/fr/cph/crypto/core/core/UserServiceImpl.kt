@@ -1,6 +1,7 @@
 package fr.cph.crypto.core.core
 
 import fr.cph.crypto.core.api.UserService
+import fr.cph.crypto.core.api.entity.Email
 import fr.cph.crypto.core.api.entity.Position
 import fr.cph.crypto.core.api.entity.ShareValue
 import fr.cph.crypto.core.api.entity.User
@@ -14,14 +15,18 @@ class UserServiceImpl(
         private val tickerRepository: TickerRepository,
         private val idGenerator: IdGenerator,
         private val passwordEncoder: PasswordEncoder,
+        private val templateService: TemplateService,
+        private val contextService: ContextService,
         private val emailService: EmailService) : UserService {
 
     override fun create(user: User): User {
-        val passwordEncoded = passwordEncoder.encodePassword(user.password)
+        val passwordEncoded = passwordEncoder.encode(user.password)
         user.id = idGenerator.getNewId()
         user.password = passwordEncoded
         val savedUser = userRepository.saveUser(user)
-        emailService.sendWelcomeEmail(savedUser.email)
+        val key = passwordEncoder.encode(user.id + passwordEncoded)
+        val email = Email(savedUser.email, "Welcome to crypto tracker!", templateService.welcomeContentEmail(contextService.getBaseUrl(), savedUser.id!!, key))
+        emailService.sendWelcomeEmail(email)
         return savedUser
     }
 

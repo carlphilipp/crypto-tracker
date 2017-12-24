@@ -1,16 +1,14 @@
-include ':core'
-project(':core').projectDir = file('back-end/core')
-
-include 'client-coinmarketcap'
-project(':client-coinmarketcap').projectDir = file('back-end/infra/client/coinmarketcap')
-
-include 'rest-api'
-project(':rest-api').projectDir = file('back-end/infra/application/rest-api')
-
-include 'persistence-mongo'
-project(':persistence-mongo').projectDir = file('back-end/infra/persistence/mongo')
-
-include 'email-default'
-project(':email-default').projectDir = file('back-end/infra/email/default')
-
 include ':gateway'
+include ':core'
+include 'client-coinmarketcap'
+include 'rest-api'
+include 'persistence-mongo'
+include 'email-default'
+include 'template-default'
+
+project(':core').projectDir = file('back-end/core')
+project(':client-coinmarketcap').projectDir = file('back-end/infra/client/coinmarketcap')
+project(':rest-api').projectDir = file('back-end/infra/application/rest-api')
+project(':persistence-mongo').projectDir = file('back-end/infra/persistence/mongo')
+project(':email-default').projectDir = file('back-end/infra/email/default')
+project(':template-default').projectDir = file('back-end/infra/template/default')
