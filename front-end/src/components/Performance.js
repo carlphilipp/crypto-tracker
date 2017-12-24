@@ -16,7 +16,7 @@
 import React, {Component} from 'react';
 import {getCurrentUserShareValue} from '../service/UserService';
 import SimpleLineChart from './charts/ShareValueChart'
-import {Table} from 'reactstrap';
+import {Table, Button} from 'reactstrap';
 import {FormattedNumber, IntlProvider}  from 'react-intl'
 
 var dateFormat = require('dateformat');
@@ -28,7 +28,8 @@ class User extends Component {
         this.state = {
           user: [],
           shareValues: [],
-          refreshFadeIn: false
+          refreshFadeIn: false,
+          showAll: false
         };
     }
 
@@ -46,6 +47,10 @@ class User extends Component {
           }})
           this.setState({shareValues: shareValues});
         })
+    }
+
+    showAll() {
+      this.setState({showAll: !this.state.showAll});
     }
 
     componentDidMount() { this.getAllShareValue(); }
@@ -72,9 +77,9 @@ class User extends Component {
                         {
                           // FIXME: do not shallow copy the array (perf)
                           shareValues.slice(0).reverse().map((shareValue, index) =>
-                            <tr key={index}>
+                            <tr key={index} className={(index < 9 || this.state.showAll) ? "" : "hidden"}>
                               <th>
-                                {shareValue.date}
+                                {shareValue.date} ({index})
                               </th>
                               <td className="text-right align-text-top"><FormattedNumber value={shareValue.shareValue} maximumFractionDigits={2} style={`decimal`}/></td>
                               <td className="text-right align-text-top"><FormattedNumber value={shareValue.shareQuantity} maximumFractionDigits={2} style={`decimal`}/></td>
@@ -84,6 +89,9 @@ class User extends Component {
                         }
                         </tbody>
                     </Table>
+                    <div className="text-center">
+                      <Button color="primary" size="lg" onClick={this.showAll.bind(this)}>Show / Hide All</Button>
+                    </div>
                 </div>
               </IntlProvider>
         );
