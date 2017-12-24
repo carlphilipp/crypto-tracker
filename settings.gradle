@@ -7,6 +7,7 @@ include 'email-default'
 include 'template-default'
 include 'uuid-generator-default'
 include 'uuid-generator-mongo'
+include 'uuid-generator-jug'
 
 project(':core').projectDir = file('back-end/core')
 project(':client-coinmarketcap').projectDir = file('back-end/infra/client/coinmarketcap')
@@ -16,3 +17,4 @@ project(':email-default').projectDir = file('back-end/infra/email/default')
 project(':template-default').projectDir = file('back-end/infra/template/default')
 project(':uuid-generator-default').projectDir = file('back-end/infra/uuid-generator/default')
 project(':uuid-generator-mongo').projectDir = file('back-end/infra/uuid-generator/mongo')
+project(':uuid-generator-jug').projectDir = file('back-end/infra/uuid-generator/jug')
