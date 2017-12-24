@@ -4,6 +4,7 @@ import Tickers from './Tickers';
 import User from './User';
 import Performance from './Performance';
 import Account from './Account';
+import Footer from './Footer';
 import CouldNotLoad from './alerts/CouldNotLoad'
 import SignUpSuccess from './alerts/SignUpSuccess'
 import SignUpFailure from './alerts/SignUpFailure'
@@ -81,7 +82,7 @@ class Home extends Component {
                 {
                   this.loadPage()
                 }
-                {/* TODO add Footer*/}
+                <Footer/>
             </div>
         );
     }

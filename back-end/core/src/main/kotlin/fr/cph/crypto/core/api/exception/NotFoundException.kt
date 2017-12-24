@@ -1,3 +1,6 @@
 package fr.cph.crypto.core.api.exception
 
-class NotFoundException : RuntimeException()
+internal class NotFoundException : RuntimeException {
+    constructor() : super()
+    constructor(message: String) : super(message)
+}

@@ -30,7 +30,7 @@ class UserServiceImpl(
     }
 
     override fun findOne(id: String): User {
-        return enrich(userRepository.findOneUserById(id) ?: throw NotFoundException())
+        return enrich(userRepository.findOneUserById(id) ?: throw NotFoundException("User id [$id] not found"))
     }
 
     override fun findAll(): List<User> {
@@ -130,7 +130,7 @@ class UserServiceImpl(
 
     override fun validateUser(userId: String, key: String) {
         val user = userRepository.findOneUserById(userId) ?: throw NotFoundException()
-        if(user.allowed) throw NotFoundException()
+        if (user.allowed) throw NotFoundException()
         val validKey = passwordEncoder.encode(user.id + user.password)
         if (validKey != key) throw NotFoundException()
         user.allowed = true
