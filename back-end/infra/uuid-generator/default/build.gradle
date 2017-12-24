@@ -1,0 +1,14 @@
+apply plugin: 'kotlin-spring'
+
+jar {
+    baseName = 'uuid-generator-default'
+    version = '0.0.1-SNAPSHOT'
+}
+
+dependencies {
+    compile project(':core')
+    compile(
+            [group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'],
+            [group: 'org.jetbrains.kotlin', name: 'kotlin-reflect'],
+    )
+}

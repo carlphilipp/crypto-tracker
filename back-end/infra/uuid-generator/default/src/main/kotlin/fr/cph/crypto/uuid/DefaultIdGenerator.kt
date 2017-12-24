@@ -1,10 +1,8 @@
-package fr.cph.crypto.rest.service
+package fr.cph.crypto.uuid
 
 import fr.cph.crypto.core.spi.IdGenerator
-import org.springframework.stereotype.Component
 import java.util.*
 
-@Component
 class DefaultIdGenerator : IdGenerator {
 
     override fun getNewId(): String {
