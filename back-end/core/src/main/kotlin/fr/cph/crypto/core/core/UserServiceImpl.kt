@@ -20,11 +20,10 @@ class UserServiceImpl(
         private val emailService: EmailService) : UserService {
 
     override fun create(user: User): User {
-        val passwordEncoded = passwordEncoder.encode(user.password)
         user.id = idGenerator.getNewId()
-        user.password = passwordEncoded
+        user.password = passwordEncoder.encode(user.password)
         val savedUser = userRepository.saveUser(user)
-        val key = passwordEncoder.encode(user.id + passwordEncoded)
+        val key = passwordEncoder.encode(user.id + user.password)
         val email = Email(savedUser.email, "Welcome to crypto tracker!", templateService.welcomeContentEmail(contextService.getBaseUrl(), savedUser.id!!, key))
         emailService.sendWelcomeEmail(email)
         return savedUser
