@@ -23,4 +23,6 @@ interface UserService {
     fun findAllShareValue(userId: String): List<ShareValue>
 
     fun updateAllUsersShareValue()
+
+    fun validateUser(userId: String, key: String)
 }

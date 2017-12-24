@@ -14,6 +14,7 @@ dependencies {
             [group: 'org.jasypt', name: 'jasypt', version: jasypt_version],
             [group: 'com.sun.mail', name: 'javax.mail', version: javax_mail_version],
             [group: 'javax.mail', name: 'javax.mail-api', version: javax_mail_version],
+            [group: 'org.slf4j', name: 'slf4j-api', version: slf4j_version],
             [group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'],
             [group: 'org.jetbrains.kotlin', name: 'kotlin-reflect'],
     )

@@ -2,6 +2,7 @@ package fr.cph.crypto.email
 
 import fr.cph.crypto.core.api.entity.Email
 import fr.cph.crypto.core.spi.EmailService
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.util.*
 import javax.mail.*
@@ -14,8 +15,6 @@ class DefaultEmailAdapter(private val emailProperties: EmailProperties) : EmailS
     private val sslFactory = "javax.net.ssl.SSLSocketFactory"
 
     override fun sendWelcomeEmail(email: Email) {
-
-        val debug = true
 
         val props = Properties()
         props.put("mail.smtp.host", emailProperties.server.host)
@@ -32,7 +31,7 @@ class DefaultEmailAdapter(private val emailProperties: EmailProperties) : EmailS
             }
         })
 
-        session.debug = debug
+        session.debug = false
 
         val msg = MimeMessage(session)
         val addressFrom = InternetAddress(emailProperties.email.from)
@@ -46,6 +45,11 @@ class DefaultEmailAdapter(private val emailProperties: EmailProperties) : EmailS
         msg.subject = email.subject
         msg.setContent(email.content, "text/html")
         msg.sentDate = Date()
+        LOGGER.debug("Sending email to [{}]", email.to)
         Transport.send(msg)
+    }
+
+    companion object {
+        private val LOGGER = LoggerFactory.getLogger(DefaultEmailAdapter::class.java)
     }
 }

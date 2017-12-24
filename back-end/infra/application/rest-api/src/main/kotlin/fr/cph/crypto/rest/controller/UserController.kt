@@ -77,6 +77,12 @@ constructor(private val userService: UserService) {
         userService.updateAllUsersShareValue()
     }
 
+    @PreAuthorize("authentication.details.decodedDetails['id'] == null")
+    @RequestMapping(value = ["{id}/validate/{key}"])
+    fun validateUser(@PathVariable("id") id: String, @PathVariable("key") key: String) {
+        userService.validateUser(id, key)
+    }
+
     companion object {
         private val LOGGER = LoggerFactory.getLogger(UserController::class.java)
     }

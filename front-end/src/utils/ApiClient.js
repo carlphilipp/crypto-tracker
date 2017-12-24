@@ -63,6 +63,11 @@ export function login(email, password) {
     return axios.post(url);
 }
 
+export function validateUser(userId, key) {
+    const url = `${BASE_URL}/api/user/` + userId + `/validate/` + key;
+    return axios.get(url);
+}
+
 function createConfig(accessToken) {
   return {headers: {'Authorization': 'Bearer ' + accessToken}};
 }

@@ -1,4 +1,4 @@
-import {createUser, getOneUser, addPosition, deletePosition, updatePosition, getAllShareValue, login, addFeeToPosition} from '../utils/ApiClient';
+import {createUser, getOneUser, addPosition, deletePosition, updatePosition, getAllShareValue, login, addFeeToPosition, validateUser} from '../utils/ApiClient';
 import {getUserId, getAccessToken} from './AuthService';
 
 
@@ -67,4 +67,8 @@ export function getCurrentUserShareValue() {
 
 export function loginUser(email, password) {
     return login(email, password).then(response => response.data)
+}
+
+export function validateGivenUser(userId, key) {
+    return validateUser(userId, key)
 }
