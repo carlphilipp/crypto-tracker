@@ -79,7 +79,7 @@ class User extends Component {
                           shareValues.slice(0).reverse().map((shareValue, index) =>
                             <tr key={index} className={(index < 9 || this.state.showAll) ? "" : "hidden"}>
                               <th>
-                                {shareValue.date} ({index})
+                                {shareValue.date}
                               </th>
                               <td className="text-right align-text-top"><FormattedNumber value={shareValue.shareValue} maximumFractionDigits={2} style={`decimal`}/></td>
                               <td className="text-right align-text-top"><FormattedNumber value={shareValue.shareQuantity} maximumFractionDigits={2} style={`decimal`}/></td>
