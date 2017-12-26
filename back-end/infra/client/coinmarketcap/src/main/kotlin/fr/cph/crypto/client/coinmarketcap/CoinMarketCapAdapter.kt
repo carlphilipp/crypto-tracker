@@ -48,6 +48,7 @@ class CoinMarketCapAdapter(private val restTemplate: RestTemplate) : TickerClien
         LOGGER.debug("HTTP request: {}", uriComponents.toUri())
         val responses = restTemplate.getForObject(uriComponents.toUri(), Array<Response>::class.java)
         return responses
+                .filter { response -> !response.id!!.contains("futures") } // TODO not sure why two coins can have the same code, so filter out for now
                 .map { response -> TickerMapper.responseToTicker(currency, response) }
                 .filter { ticker -> ticker.currency1 != Currency.UNKNOWN }
     }

@@ -29,7 +29,8 @@ class EmailConfig {
     @Bean
     fun getProperties(): EmailProperties {
         val mapper = ObjectMapper(YAMLFactory())
-        val emailProperties = mapper.readValue(File(EmailConfig::class.java.classLoader.getResource("email.yaml").path), EmailProperties::class.java)
+
+        val emailProperties = mapper.readValue(EmailConfig::class.java.classLoader.getResourceAsStream("email.yaml"), EmailProperties::class.java)
         val decryptedPassword = decryptPassword(emailProperties.email.password!!)
         emailProperties.email.password = decryptedPassword
         return emailProperties
