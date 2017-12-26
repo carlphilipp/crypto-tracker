@@ -1,6 +1,11 @@
 apply plugin: 'kotlin-spring'
 apply plugin: 'org.springframework.boot'
 
+configurations {
+    all*.exclude group: 'javax.mail', module: 'javax.mail-api'
+    all*.exclude group: 'com.sun.mail', module: 'javax.mail'
+}
+
 dependencies {
     compile project(':core')
     compile project(':client-coinmarketcap')

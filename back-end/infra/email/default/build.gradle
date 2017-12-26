@@ -9,7 +9,6 @@ dependencies {
     compile project(':core')
     compile(
             [group: 'org.springframework', name: 'spring-context-support', version: spring_core_version],
-            [group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: jackson_version],
             [group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jackson_version],
             [group: 'org.jasypt', name: 'jasypt', version: jasypt_version],
             [group: 'com.sun.mail', name: 'javax.mail', version: javax_mail_version],
@@ -17,5 +16,6 @@ dependencies {
             [group: 'org.slf4j', name: 'slf4j-api', version: slf4j_version],
             [group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'],
             [group: 'org.jetbrains.kotlin', name: 'kotlin-reflect'],
+            [group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: jackson_version],
     )
 }
