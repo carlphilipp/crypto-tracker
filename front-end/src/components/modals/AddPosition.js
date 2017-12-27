@@ -23,7 +23,8 @@ class AddPosition extends React.Component {
         super(props);
         this.state = {
             modal: false,
-            currency: 'Bitcoin',
+            currency: "",
+            currencyValid: null,
             quantity: null,
             quantityValid: null,
             unitCostPrice: null,
@@ -42,7 +43,7 @@ class AddPosition extends React.Component {
         }, () => {
           if(this.state.modal === false) {
             this.setState({
-              currency: 'Bitcoin',
+              currency: "",
               quantity: null,
               quantityValid: null,
               unitCostPrice: null,
@@ -57,14 +58,9 @@ class AddPosition extends React.Component {
     handleUserInput(evt) {
       const name = evt.target.name;
       const value = evt.target.value;
-      console.log("Name: " + name + " value: " + value)
-      if(name === "currency") {
-        console.log(value.currencyName)
-      }
       this.setState({[name]: value}, () => this.validate(name, value));
     }
 
-    // TODO Check how the API react between 423.0 vs 1,000.0
     validate(name, value) {
       switch(name) {
         case "quantity":
@@ -73,13 +69,16 @@ class AddPosition extends React.Component {
         case "unitCostPrice":
           this.setState({unitCostPriceValid: !isNaN(value)}, () => this.validateForm());
           break;
+        case "currency":
+          this.setState({currencyValid: this.state.currency !== ""}, () => this.validateForm());
+          break;
         default:
           break;
       }
     }
 
     validateForm() {
-      this.setState({formValid: this.state.quantityValid && this.state.unitCostPriceValid})
+      this.setState({formValid: this.state.quantityValid && this.state.unitCostPriceValid && this.state.currency !== ""})
     }
 
     add() {
@@ -105,9 +104,14 @@ class AddPosition extends React.Component {
                         <Form>
                             <FormGroup>
                                 <Label for="ticker">Ticker</Label>
-                                <Input size="lg" type="select" name="currency" id="currency" onChange={evt => this.handleUserInput(evt)} autoFocus="true">
-                                {this.props.tickers.map(ticker => ticker.currency1).map((currency, index) => (<option key={index}>{currency.currencyName}</option>))}
+                                <Input size="lg" type="select" name="currency" id="currency" onChange={evt => this.handleUserInput(evt)} autoFocus="true" valid={this.state.currencyValid}>
+                                <option></option>
+                                {this.props.tickers
+                                            .sort((a, b) => a.currency1.currencyName.toUpperCase() > b.currency1.currencyName.toUpperCase())
+                                            .map(ticker => ticker.currency1)
+                                            .map((currency, index) => (<option key={index} value={currency.currencyName}>{currency.currencyName} ({currency.code})</option>))}
                                 </Input>
+                                <FormFeedback>Must be a valid ticker</FormFeedback>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="quantity">Quantity</Label>
