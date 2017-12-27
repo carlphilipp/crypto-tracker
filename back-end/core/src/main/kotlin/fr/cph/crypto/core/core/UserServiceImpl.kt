@@ -210,7 +210,7 @@ class UserServiceImpl(
         user.value = totalValue
         user.originalValue = totalOriginalValue
         user.gain = totalValue - totalOriginalValue
-        user.gainPercentage = (totalValue * 100 / totalOriginalValue - 100) / 100
+        user.gainPercentage = if (user.gain != 0.0) (totalValue * 100 / totalOriginalValue - 100) / 100 else 0.0
         return user
     }
 }
