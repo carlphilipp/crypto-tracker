@@ -3,4 +3,10 @@ dependencies {
             [group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'],
             [group: 'org.jetbrains.kotlin', name: 'kotlin-reflect'],
     )
+
+    testCompile(
+            [group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.0.2'],
+            [group: 'org.mockito', name: 'mockito-core', version: '2.13.0'],
+    )
+
 }

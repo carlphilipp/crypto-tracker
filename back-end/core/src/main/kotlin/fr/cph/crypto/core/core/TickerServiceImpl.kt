@@ -18,6 +18,7 @@ package fr.cph.crypto.core.core
 import fr.cph.crypto.core.api.TickerService
 import fr.cph.crypto.core.api.entity.Currency
 import fr.cph.crypto.core.api.entity.Ticker
+import fr.cph.crypto.core.api.exception.NotFoundException
 import fr.cph.crypto.core.spi.TickerClient
 import fr.cph.crypto.core.spi.TickerRepository
 
@@ -25,7 +26,7 @@ class TickerServiceImpl(private val client: TickerClient,
                         private val tickerRepository: TickerRepository) : TickerService {
 
     override fun findOne(id: String): Ticker {
-        return tickerRepository.findOne(id)!!
+        return tickerRepository.findOne(id)?: throw NotFoundException()
     }
 
     override fun findAllById(ids: List<String>): List<Ticker> {
