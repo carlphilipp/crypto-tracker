@@ -6,7 +6,6 @@ import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import fr.cph.crypto.core.api.entity.Currency;
@@ -142,7 +141,7 @@ public class UserServiceImplTest {
 	}
 
 	@Test
-	public void  testAddPosition() {
+	public void testAddPosition() {
 		// given
 		ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
 		User user = getUser();
@@ -166,7 +165,6 @@ public class UserServiceImplTest {
 		assertEquals("positionId", actualUser.getPositions().get(0).getId());
 		assertEquals(Currency.ETH, actualUser.getPositions().get(1).getCurrency1());
 	}
-
 
 	private User getUser() {
 		return new User(null, "email", "password", Role.USER, Currency.USD, 0.0, true, null, null, null, null, new ArrayList<>());
