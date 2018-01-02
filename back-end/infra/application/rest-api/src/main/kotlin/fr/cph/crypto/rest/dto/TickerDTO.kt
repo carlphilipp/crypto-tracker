@@ -17,7 +17,7 @@ package fr.cph.crypto.rest.dto
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
-import fr.cph.crypto.core.api.entity.Ticker
+import fr.cph.crypto.core.entity.Ticker
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder("id", "currency1", "currency2", "price", "exchange", "volume24h", "marketCap", "percentChange1h", "percentChange24h", "percentChange7d", "lastUpdated")

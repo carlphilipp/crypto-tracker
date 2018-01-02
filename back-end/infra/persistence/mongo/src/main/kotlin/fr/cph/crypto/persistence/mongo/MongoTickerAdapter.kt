@@ -15,7 +15,7 @@
  */
 package fr.cph.crypto.persistence.mongo
 
-import fr.cph.crypto.core.api.entity.Ticker
+import fr.cph.crypto.core.entity.Ticker
 import fr.cph.crypto.persistence.mongo.entity.TickerDB
 import fr.cph.crypto.persistence.mongo.repository.TickerRepository
 import org.springframework.stereotype.Service

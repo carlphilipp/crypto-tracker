@@ -17,7 +17,7 @@ package fr.cph.crypto.rest.dto
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
-import fr.cph.crypto.core.api.entity.ShareValue
+import fr.cph.crypto.core.entity.ShareValue
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder("id", "timestamp", "shareQuantity", "shareValue", "originalValue", "gain", "gainPercentage", "positions")

@@ -17,27 +17,27 @@ package fr.cph.crypto.rest.dto
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
-import fr.cph.crypto.core.api.entity.Currency
-import fr.cph.crypto.core.api.entity.Position
+import fr.cph.crypto.core.entity.Currency
+import fr.cph.crypto.core.entity.Position
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder("id", "currency1", "currency2", "quantity", "value", "gain", "gainPercentage", "unitCostPrice", "originalValue", "lastUpdated")
 data class PositionDTO(var id: String? = null,
-                       val currency1: CurrencyDTO,
-                       val currency2: CurrencyDTO = CurrencyDTO.from(Currency.USD),
-                       val quantity: Double,
-                       val unitCostPrice: Double,
-                       var originalValue: Double? = null,
-                       var value: Double? = null,
-                       var gain: Double? = null,
-                       var gainPercentage: Double? = null,
-                       var lastUpdated: Long? = null) {
+					   val currency1: CurrencyDTO,
+					   val currency2: CurrencyDTO = CurrencyDTO.from(Currency.USD),
+					   val quantity: Double,
+					   val unitCostPrice: Double,
+					   var originalValue: Double? = null,
+					   var value: Double? = null,
+					   var gain: Double? = null,
+					   var gainPercentage: Double? = null,
+					   var lastUpdated: Long? = null) {
 
     fun toPosition(): Position {
         val position = Position(
-                currency1 = Currency.findCurrency(this.currency1.code),
-                quantity = this.quantity,
-                unitCostPrice = this.unitCostPrice)
+				currency1 = Currency.findCurrency(this.currency1.code),
+				quantity = this.quantity,
+				unitCostPrice = this.unitCostPrice)
         position.id = this.id
         return position
     }

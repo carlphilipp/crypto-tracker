@@ -15,26 +15,26 @@
  */
 package fr.cph.crypto.persistence.mongo.entity
 
-import fr.cph.crypto.core.api.entity.Currency
-import fr.cph.crypto.core.api.entity.Position
+import fr.cph.crypto.core.entity.Currency
+import fr.cph.crypto.core.entity.Position
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 
 @Document(collection = "position")
 data class PositionDB constructor(
-        @Id val id: String,
-        val currency1: Currency,
-        val currency2: Currency,
-        val quantity: Double,
-        val unitCostPrice: Double) {
+		@Id val id: String,
+		val currency1: Currency,
+		val currency2: Currency,
+		val quantity: Double,
+		val unitCostPrice: Double) {
 
     fun toPosition(): Position {
         return Position(
-                id = id,
-                currency1 = currency1,
-                currency2 = currency2,
-                quantity = quantity,
-                unitCostPrice = unitCostPrice)
+				id = id,
+				currency1 = currency1,
+				currency2 = currency2,
+				quantity = quantity,
+				unitCostPrice = unitCostPrice)
     }
 
     companion object {

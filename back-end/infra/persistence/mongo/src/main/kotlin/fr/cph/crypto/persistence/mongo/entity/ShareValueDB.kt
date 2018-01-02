@@ -15,7 +15,7 @@
  */
 package fr.cph.crypto.persistence.mongo.entity
 
-import fr.cph.crypto.core.api.entity.ShareValue
+import fr.cph.crypto.core.entity.ShareValue
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.index.Indexed
 import org.springframework.data.mongodb.core.mapping.DBRef
@@ -32,12 +32,12 @@ data class ShareValueDB(
 
     fun toShareValue(): ShareValue {
         val shareValue = ShareValue(
-                timestamp = this.timestamp,
-                user = this.user.toUser(),
-                shareQuantity = this.shareQuantity,
-                shareValue = this.shareValue,
-                portfolioValue = this.portfolioValue
-        )
+				timestamp = this.timestamp,
+				user = this.user.toUser(),
+				shareQuantity = this.shareQuantity,
+				shareValue = this.shareValue,
+				portfolioValue = this.portfolioValue
+		)
         shareValue.id = this.id
         return shareValue
     }

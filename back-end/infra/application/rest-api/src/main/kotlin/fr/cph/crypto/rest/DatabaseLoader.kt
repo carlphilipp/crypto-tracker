@@ -15,10 +15,10 @@
  */
 package fr.cph.crypto.rest
 
-import fr.cph.crypto.core.api.entity.Currency
-import fr.cph.crypto.core.api.entity.Position
-import fr.cph.crypto.core.api.entity.Role
-import fr.cph.crypto.core.api.entity.User
+import fr.cph.crypto.core.entity.Currency
+import fr.cph.crypto.core.entity.Position
+import fr.cph.crypto.core.entity.Role
+import fr.cph.crypto.core.entity.User
 import fr.cph.crypto.core.spi.IdGenerator
 import fr.cph.crypto.core.spi.TickerRepository
 import fr.cph.crypto.core.spi.UserRepository

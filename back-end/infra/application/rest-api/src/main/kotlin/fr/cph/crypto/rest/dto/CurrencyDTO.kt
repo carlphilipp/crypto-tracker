@@ -17,7 +17,7 @@ package fr.cph.crypto.rest.dto
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
-import fr.cph.crypto.core.api.entity.Currency
+import fr.cph.crypto.core.entity.Currency
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder("code", "currencyName", "symbol", "type")

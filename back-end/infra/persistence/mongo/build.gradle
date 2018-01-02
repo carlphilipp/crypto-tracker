@@ -1,7 +1,7 @@
 apply plugin: 'kotlin-spring'
 
 dependencies {
-    compile project(':domain')
+    compile project(':core')
     compile(
             [group: 'org.mongodb', name: 'mongo-java-driver', version: mongodb_version],
             [group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'],

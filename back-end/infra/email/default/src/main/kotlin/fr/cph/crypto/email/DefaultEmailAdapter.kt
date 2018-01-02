@@ -15,7 +15,7 @@
  */
 package fr.cph.crypto.email
 
-import fr.cph.crypto.core.api.entity.Email
+import fr.cph.crypto.core.entity.Email
 import fr.cph.crypto.core.spi.EmailService
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service

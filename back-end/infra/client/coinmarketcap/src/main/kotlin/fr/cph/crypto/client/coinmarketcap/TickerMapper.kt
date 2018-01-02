@@ -15,8 +15,8 @@
  */
 package fr.cph.crypto.client.coinmarketcap
 
-import fr.cph.crypto.core.api.entity.Currency
-import fr.cph.crypto.core.api.entity.Ticker
+import fr.cph.crypto.core.entity.Currency
+import fr.cph.crypto.core.entity.Ticker
 import org.slf4j.LoggerFactory
 
 object TickerMapper {
@@ -33,16 +33,16 @@ object TickerMapper {
             val percentChange7d = if (response.percentChange7d == null) 0.0 else response.percentChange7d!!.toDouble()
             val lastUpdated = if (response.lastUpdated == null) 0L else response.lastUpdated!!.toLong()
             val result = Ticker(
-                    currency1 = Currency.findCurrency(response.symbol!!),
-                    currency2 = currency,
-                    price = price,
-                    exchange = "coinmarketcap",
-                    volume24h = volume24h,
-                    marketCap = marketCap,
-                    percentChange1h = percentChange1h / 100,
-                    percentChange24h = percentChange24h / 100,
-                    percentChange7d = percentChange7d / 100,
-                    lastUpdated = lastUpdated)
+					currency1 = Currency.findCurrency(response.symbol!!),
+					currency2 = currency,
+					price = price,
+					exchange = "coinmarketcap",
+					volume24h = volume24h,
+					marketCap = marketCap,
+					percentChange1h = percentChange1h / 100,
+					percentChange24h = percentChange24h / 100,
+					percentChange7d = percentChange7d / 100,
+					lastUpdated = lastUpdated)
             result.id = response.symbol + "-" + currency.code
             return result
         } catch (e: Exception) {

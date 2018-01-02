@@ -26,6 +26,8 @@ import fr.cph.crypto.core.usecase.ticker.UpdateTicker
 import fr.cph.crypto.core.usecase.user.CreateUser
 import fr.cph.crypto.core.usecase.user.FindUser
 import fr.cph.crypto.core.usecase.user.ValidateUser
+import fr.cph.crypto.core.spi.ContextService
+import fr.cph.crypto.core.spi.EmailService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 

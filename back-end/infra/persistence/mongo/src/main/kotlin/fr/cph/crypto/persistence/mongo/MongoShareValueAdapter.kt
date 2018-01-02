@@ -15,8 +15,8 @@
  */
 package fr.cph.crypto.persistence.mongo
 
-import fr.cph.crypto.core.api.entity.ShareValue
-import fr.cph.crypto.core.api.entity.User
+import fr.cph.crypto.core.entity.ShareValue
+import fr.cph.crypto.core.entity.User
 import fr.cph.crypto.persistence.mongo.entity.ShareValueDB
 import fr.cph.crypto.persistence.mongo.entity.UserDB
 import fr.cph.crypto.persistence.mongo.repository.ShareValueRepository
