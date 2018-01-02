@@ -21,10 +21,6 @@ import fr.cph.crypto.core.api.entity.User
 
 interface UserService {
 
-    fun findOne(id: String): User
-
-    fun findAll(): List<User>
-
     fun addPosition(userId: String, position: Position)
 
     fun updatePosition(userId: String, position: Position, transactionQuantity: Double?, transactionUnitCostPrice: Double?)

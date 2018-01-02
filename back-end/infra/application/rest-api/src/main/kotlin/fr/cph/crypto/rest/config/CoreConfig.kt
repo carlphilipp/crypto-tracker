@@ -21,50 +21,55 @@ import fr.cph.crypto.core.core.TickerServiceImpl
 import fr.cph.crypto.core.core.UserServiceImpl
 import fr.cph.crypto.core.spi.*
 import fr.cph.crypto.core.usecase.CreateUser
+import fr.cph.crypto.core.usecase.FindUser
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
 class CoreConfig {
 
-    @Bean
-    fun createUser(userRepository: UserRepository,
-                   passwordEncoder: PasswordEncoder,
-                   idGenerator: IdGenerator,
-                   templateService: TemplateService,
-                   contextService: ContextService,
-                   emailService: EmailService) : CreateUser {
-        return CreateUser(
-                userRepository = userRepository,
-                idGenerator = idGenerator,
-                passwordEncoder = passwordEncoder,
-                templateService = templateService,
-                contextService = contextService,
-                emailService = emailService
-        )
-    }
+	@Bean
+	fun createUser(userRepository: UserRepository,
+				   passwordEncoder: PasswordEncoder,
+				   idGenerator: IdGenerator,
+				   templateService: TemplateService,
+				   contextService: ContextService,
+				   emailService: EmailService): CreateUser {
+		return CreateUser(
+				userRepository = userRepository,
+				idGenerator = idGenerator,
+				passwordEncoder = passwordEncoder,
+				templateService = templateService,
+				contextService = contextService,
+				emailService = emailService)
+	}
 
-    @Bean
-    fun userService(userRepository: UserRepository,
-                    shareValueRepository: ShareValueRepository,
-                    tickerRepository: TickerRepository,
-                    idGenerator: IdGenerator,
-                    passwordEncoder: PasswordEncoder,
-                    templateService: TemplateService,
-                    contextService: ContextService,
-                    emailService: EmailService): UserService {
-        return UserServiceImpl(
-                userRepository = userRepository,
-                shareValueRepository = shareValueRepository,
-                tickerRepository = tickerRepository,
-                idGenerator = idGenerator,
-                passwordEncoder = passwordEncoder)
-    }
+	@Bean
+	fun findUser(userRepository: UserRepository, tickerRepository: TickerRepository): FindUser {
+		return FindUser(userRepository = userRepository, tickerRepository = tickerRepository)
+	}
 
-    @Bean
-    fun tickerService(tickerClient: TickerClient, tickerRepository: TickerRepository): TickerService {
-        return TickerServiceImpl(
-                client = tickerClient,
-                tickerRepository = tickerRepository)
-    }
+	@Bean
+	fun userService(userRepository: UserRepository,
+					shareValueRepository: ShareValueRepository,
+					tickerRepository: TickerRepository,
+					idGenerator: IdGenerator,
+					passwordEncoder: PasswordEncoder,
+					templateService: TemplateService,
+					contextService: ContextService,
+					emailService: EmailService): UserService {
+		return UserServiceImpl(
+				userRepository = userRepository,
+				shareValueRepository = shareValueRepository,
+				tickerRepository = tickerRepository,
+				idGenerator = idGenerator,
+				passwordEncoder = passwordEncoder)
+	}
+
+	@Bean
+	fun tickerService(tickerClient: TickerClient, tickerRepository: TickerRepository): TickerService {
+		return TickerServiceImpl(
+				client = tickerClient,
+				tickerRepository = tickerRepository)
+	}
 }

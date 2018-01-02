@@ -54,7 +54,4 @@ class CreateUserTest {
 		then(contextService).should().getBaseUrl();
 		then(templateService).should().welcomeContentEmail("localhost", "ID", "key");
 	}
-
-	// TODO move to util test class
-
 }
