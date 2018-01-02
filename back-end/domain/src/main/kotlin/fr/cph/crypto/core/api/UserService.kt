@@ -15,13 +15,7 @@
  */
 package fr.cph.crypto.core.api
 
-import fr.cph.crypto.core.api.entity.ShareValue
-
 interface UserService {
-
-	fun addFeeToPosition(userId: String, positionId: String, fee: Double)
-
-	fun findAllShareValue(userId: String): List<ShareValue>
 
 	fun updateAllUsersShareValue()
 

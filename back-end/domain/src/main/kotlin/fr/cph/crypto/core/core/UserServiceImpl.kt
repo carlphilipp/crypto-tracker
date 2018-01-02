@@ -32,26 +32,6 @@ class UserServiceImpl(
 		private val tickerRepository: TickerRepository,
 		private val passwordEncoder: PasswordEncoder) : UserService {
 
-	override fun addFeeToPosition(userId: String, positionId: String, fee: Double) {
-		val user = userRepository.findOneUserById(userId) ?: throw NotFoundException()
-		val position = user.positions.find { position -> position.id == positionId } ?: throw NotFoundException()
-		val newPosition = Position(
-				id = position.id,
-				currency1 = position.currency1,
-				currency2 = position.currency2,
-				quantity = position.quantity - fee,
-				unitCostPrice = position.unitCostPrice)
-		user.positions.remove(position)
-		user.positions.add(newPosition)
-		user.positions.sortWith(compareBy({ it.currency1.currencyName }))
-		userRepository.savePosition(user, newPosition)
-	}
-
-	override fun findAllShareValue(userId: String): List<ShareValue> {
-		val user = userRepository.findOneUserById(userId) ?: throw NotFoundException()
-		return shareValueRepository.findAllByUser(user)
-	}
-
 	override fun updateAllUsersShareValue() {
 		// FIXME see how to deal with that
 /*        findAll().forEach { user ->

@@ -64,6 +64,11 @@ class CoreConfig {
 	}
 
 	@Bean
+	fun getShareValue(userRepository: UserRepository, shareValueRepository: ShareValueRepository): GetShareValue {
+		return GetShareValue(userRepository, shareValueRepository)
+	}
+
+	@Bean
 	fun userService(userRepository: UserRepository,
 					shareValueRepository: ShareValueRepository,
 					tickerRepository: TickerRepository,

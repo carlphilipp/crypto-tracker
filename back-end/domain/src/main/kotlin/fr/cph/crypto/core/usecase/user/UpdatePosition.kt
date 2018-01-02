@@ -17,6 +17,21 @@ class UpdatePosition(private val userRepository: UserRepository) {
 		}
 	}
 
+	fun addFeeToPosition(userId: String, positionId: String, fee: Double) {
+		val user = userRepository.findOneUserById(userId) ?: throw NotFoundException()
+		val position = user.positions.find { position -> position.id == positionId } ?: throw NotFoundException()
+		val newPosition = Position(
+				id = position.id,
+				currency1 = position.currency1,
+				currency2 = position.currency2,
+				quantity = position.quantity - fee,
+				unitCostPrice = position.unitCostPrice)
+		user.positions.remove(position)
+		user.positions.add(newPosition)
+		user.positions.sortWith(compareBy({ it.currency1.currencyName }))
+		userRepository.savePosition(user, newPosition)
+	}
+
 	private fun updatePositionManual(user: User, position: Position) {
 		val positionFound = user.positions.filter { it.id == position.id }.toList()
 		when {

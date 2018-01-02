@@ -33,7 +33,8 @@ constructor(private val userService: UserService,
 			private val findUser: FindUser,
 			private val addPosition: AddPosition,
 			private val updatePosition: UpdatePosition,
-			private val deletePosition: DeletePosition) {
+			private val deletePosition: DeletePosition,
+			private val getShareValue: GetShareValue) {
 
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(method = [RequestMethod.GET], produces = ["application/json"])
@@ -83,13 +84,13 @@ constructor(private val userService: UserService,
 	fun addFeeToPosition(@PathVariable("id") id: String,
 						 @PathVariable("positionId") positionId: String,
 						 @PathVariable("feeAmount") feeAmount: Double) {
-		userService.addFeeToPosition(id, positionId, feeAmount)
+		updatePosition.addFeeToPosition(id, positionId, feeAmount)
 	}
 
 	@PreAuthorize("#id == authentication.details.decodedDetails['id']")
 	@RequestMapping(value = ["/{id}/sharevalue"], method = [RequestMethod.GET], produces = ["application/json"])
 	fun findAllShareValue(@PathVariable("id") id: String): List<ShareValueDTO> {
-		return userService.findAllShareValue(id).map { shareValue -> ShareValueDTO.from(shareValue) }
+		return getShareValue.findAllShareValue(id).map { shareValue -> ShareValueDTO.from(shareValue) }
 	}
 
 	// TODO: delete that endpoint when share value dev is done
