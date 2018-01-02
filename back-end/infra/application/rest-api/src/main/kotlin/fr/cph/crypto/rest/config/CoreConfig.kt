@@ -20,11 +20,29 @@ import fr.cph.crypto.core.api.UserService
 import fr.cph.crypto.core.core.TickerServiceImpl
 import fr.cph.crypto.core.core.UserServiceImpl
 import fr.cph.crypto.core.spi.*
+import fr.cph.crypto.core.usecase.CreateUser
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
 class CoreConfig {
+
+    @Bean
+    fun createUser(userRepository: UserRepository,
+                   passwordEncoder: PasswordEncoder,
+                   idGenerator: IdGenerator,
+                   templateService: TemplateService,
+                   contextService: ContextService,
+                   emailService: EmailService) : CreateUser {
+        return CreateUser(
+                userRepository = userRepository,
+                idGenerator = idGenerator,
+                passwordEncoder = passwordEncoder,
+                templateService = templateService,
+                contextService = contextService,
+                emailService = emailService
+        )
+    }
 
     @Bean
     fun userService(userRepository: UserRepository,
@@ -40,10 +58,7 @@ class CoreConfig {
                 shareValueRepository = shareValueRepository,
                 tickerRepository = tickerRepository,
                 idGenerator = idGenerator,
-                passwordEncoder = passwordEncoder,
-                templateService = templateService,
-                contextService = contextService,
-                emailService = emailService)
+                passwordEncoder = passwordEncoder)
     }
 
     @Bean

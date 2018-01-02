@@ -15,6 +15,7 @@
  */
 package fr.cph.crypto.rest.controller
 
+import fr.cph.crypto.core.usecase.CreateUser
 import fr.cph.crypto.core.api.UserService
 import fr.cph.crypto.rest.dto.PositionDTO
 import fr.cph.crypto.rest.dto.ShareValueDTO
@@ -27,7 +28,7 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping(value = ["/api/user"])
 @RestController
 class UserController
-constructor(private val userService: UserService) {
+constructor(private val userService: UserService, private val createUser: CreateUser) {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(method = [RequestMethod.GET], produces = ["application/json"])
@@ -39,7 +40,7 @@ constructor(private val userService: UserService) {
     @RequestMapping(method = [RequestMethod.POST], produces = ["application/json"])
     fun createUser(@RequestBody user: UserDTO): UserDTO {
         LOGGER.debug("Create user {}", user)
-        return UserDTO.from(userService.create(user.toUser()))
+        return UserDTO.from(createUser.create(user.toUser()))
     }
 
     @PostAuthorize("returnObject.email == authentication.name")

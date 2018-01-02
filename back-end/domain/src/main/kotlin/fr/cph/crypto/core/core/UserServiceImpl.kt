@@ -16,7 +16,6 @@
 package fr.cph.crypto.core.core
 
 import fr.cph.crypto.core.api.UserService
-import fr.cph.crypto.core.api.entity.Email
 import fr.cph.crypto.core.api.entity.Position
 import fr.cph.crypto.core.api.entity.ShareValue
 import fr.cph.crypto.core.api.entity.User
@@ -29,20 +28,7 @@ class UserServiceImpl(
         private val shareValueRepository: ShareValueRepository,
         private val tickerRepository: TickerRepository,
         private val idGenerator: IdGenerator,
-        private val passwordEncoder: PasswordEncoder,
-        private val templateService: TemplateService,
-        private val contextService: ContextService,
-        private val emailService: EmailService) : UserService {
-
-    override fun create(user: User): User {
-        user.id = idGenerator.getNewId()
-        user.password = passwordEncoder.encode(user.password)
-        val savedUser = userRepository.saveUser(user)
-        val key = passwordEncoder.encode(user.id + user.password)
-        val email = Email(savedUser.email, "Welcome to crypto tracker!", templateService.welcomeContentEmail(contextService.getBaseUrl(), savedUser.id!!, key))
-        emailService.sendWelcomeEmail(email)
-        return savedUser
-    }
+        private val passwordEncoder: PasswordEncoder) : UserService {
 
     override fun findOne(id: String): User {
         return enrich(userRepository.findOneUserById(id) ?: throw NotFoundException("User id [$id] not found"))

@@ -21,8 +21,6 @@ import fr.cph.crypto.core.api.entity.User
 
 interface UserService {
 
-    fun create(user: User): User
-
     fun findOne(id: String): User
 
     fun findAll(): List<User>
