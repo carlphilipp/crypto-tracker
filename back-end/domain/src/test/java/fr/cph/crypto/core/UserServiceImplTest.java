@@ -1,27 +1,20 @@
 package fr.cph.crypto.core;
 
+import fr.cph.crypto.core.api.entity.Currency;
+import fr.cph.crypto.core.api.entity.Position;
+import fr.cph.crypto.core.api.entity.Ticker;
+import fr.cph.crypto.core.api.entity.User;
+import fr.cph.crypto.core.core.UserServiceImpl;
+import fr.cph.crypto.core.spi.*;
+import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
+import java.util.Arrays;
+import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
-
-import fr.cph.crypto.core.api.entity.Currency;
-import fr.cph.crypto.core.api.entity.Position;
-import fr.cph.crypto.core.api.entity.Role;
-import fr.cph.crypto.core.api.entity.Ticker;
-import fr.cph.crypto.core.api.entity.User;
-import fr.cph.crypto.core.core.UserServiceImpl;
-import fr.cph.crypto.core.spi.IdGenerator;
-import fr.cph.crypto.core.spi.PasswordEncoder;
-import fr.cph.crypto.core.spi.ShareValueRepository;
-import fr.cph.crypto.core.spi.TickerRepository;
-import fr.cph.crypto.core.spi.UserRepository;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mockito;
 
 class UserServiceImplTest {
 	private UserRepository userRepository = Mockito.mock(UserRepository.class);
@@ -44,7 +37,7 @@ class UserServiceImplTest {
 		Position btcPosition = new Position("BTC-USD", Currency.BTC, Currency.USD, 1.0, 5000.0, null, null, null, null, null);
 		Position ethPosition = new Position("ETH-USD", Currency.ETH, Currency.USD, 10.0, 200.0, null, null, null, null, null);
 		List<Position> positions = Arrays.asList(btcPosition, ethPosition);
-		User user = getUser();
+		User user = Utils.getUser();
 		user.setPositions(positions);
 		given(userRepository.findOneUserById("id")).willReturn(user);
 		given(tickerRepository.findAllById(Arrays.asList("BTC-USD", "ETH-USD"))).willReturn(Arrays.asList(btcTicker, ethTicker));
@@ -75,7 +68,7 @@ class UserServiceImplTest {
 	@Test
 	void testFindOneUserNoPositions() {
 		// given
-		User user = getUser();
+		User user = Utils.getUser();
 		given(userRepository.findOneUserById("id")).willReturn(user);
 
 		// when
@@ -93,7 +86,7 @@ class UserServiceImplTest {
 	@Test
 	void testFindAll() {
 		// given
-		User user = getUser();
+		User user = Utils.getUser();
 		given(userRepository.findAllUsers()).willReturn(Arrays.asList(user));
 
 		// when
@@ -112,7 +105,7 @@ class UserServiceImplTest {
 	void testAddPosition() {
 		// given
 		ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
-		User user = getUser();
+		User user = Utils.getUser();
 		Position ethPosition = new Position("ETH-USD", Currency.ETH, Currency.USD, 10.0, 200.0, null, null, null, null, null);
 		user.getPositions().add(ethPosition);
 
@@ -132,9 +125,5 @@ class UserServiceImplTest {
 		assertEquals(Currency.BTC, actualUser.getPositions().get(0).getCurrency1());
 		assertEquals("positionId", actualUser.getPositions().get(0).getId());
 		assertEquals(Currency.ETH, actualUser.getPositions().get(1).getCurrency1());
-	}
-
-	private User getUser() {
-		return new User(null, "email", "password", Role.USER, Currency.USD, 0.0, true, null, null, null, null, new ArrayList<>());
 	}
 }
