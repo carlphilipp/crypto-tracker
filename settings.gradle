@@ -1,5 +1,5 @@
 include ':gateway'
-include ':core'
+include 'domain'
 include 'client-coinmarketcap'
 include 'rest-api'
 include 'persistence-mongo'
@@ -9,7 +9,7 @@ include 'uuid-generator-default'
 include 'uuid-generator-mongo'
 include 'uuid-generator-jug'
 
-project(':core').projectDir = file('back-end/core')
+project(':domain').projectDir = file('back-end/domain')
 project(':client-coinmarketcap').projectDir = file('back-end/infra/client/coinmarketcap')
 project(':rest-api').projectDir = file('back-end/infra/application/rest-api')
 project(':persistence-mongo').projectDir = file('back-end/infra/persistence/mongo')

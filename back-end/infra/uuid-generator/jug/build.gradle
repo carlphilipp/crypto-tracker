@@ -1,7 +1,7 @@
 apply plugin: 'kotlin-spring'
 
 dependencies {
-    compile project(':core')
+    compile project(':domain')
     compile(
             [group: 'com.fasterxml.uuid', name: 'java-uuid-generator', version: java_uuid_generator_version],
             [group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'],

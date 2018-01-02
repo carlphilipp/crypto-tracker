@@ -16,14 +16,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
-public class TickerServiceImplTest {
+class TickerServiceImplTest {
 
 	private TickerClient tickerClient = Mockito.mock(TickerClient.class);
 	private TickerRepository tickerRepository = Mockito.mock(TickerRepository.class);
 	private TickerServiceImpl tickerService = new TickerServiceImpl(tickerClient, tickerRepository);
 
 	@Test
-	public void testFindOne() {
+	void testFindOne() {
 		// given
 		String tickerId = "BTC-USD";
 		Ticker ticker = new Ticker(null, Currency.BTC, Currency.USD, 1.0, "exchange", 0.0, 0.0, 0.0, 0.0, 0.0, 0L);
@@ -38,7 +38,7 @@ public class TickerServiceImplTest {
 	}
 
 	@Test
-	public void testFindAllById() {
+	void testFindAllById() {
 		// given
 		List<String> tickerIds = Collections.singletonList("BTC-USD");
 		Ticker ticker = new Ticker(null, Currency.BTC, Currency.USD, 1.0, "exchange", 0.0, 0.0, 0.0, 0.0, 0.0, 0L);
@@ -53,7 +53,7 @@ public class TickerServiceImplTest {
 	}
 
 	@Test
-	public void testFindAll() {
+	void testFindAll() {
 		// given
 		Ticker ticker = new Ticker(null, Currency.BTC, Currency.USD, 1.0, "exchange", 0.0, 0.0, 0.0, 0.0, 0.0, 0L);
 		given(tickerRepository.findAll()).willReturn(Collections.singletonList(ticker));
@@ -67,7 +67,7 @@ public class TickerServiceImplTest {
 	}
 
 	@Test
-	public void testUpdateAll() {
+	void testUpdateAll() {
 		// given
 		Ticker ticker = new Ticker(null, Currency.BTC, Currency.USD, 1.0, "exchange", 0.0, 0.0, 0.0, 0.0, 0.0, 0L);
 		given(tickerClient.getTickers(Currency.USD, Currency.Companion.cryptoCurrenciesAsListOfString())).willReturn(Collections.singletonList(ticker));

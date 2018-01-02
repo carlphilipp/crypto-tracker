@@ -1,7 +1,7 @@
 apply plugin: 'kotlin-spring'
 
 dependencies {
-    compile project(':core')
+    compile project(':domain')
     compile(
             [group: 'org.springframework', name: 'spring-context-support', version: spring_core_version],
             [group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jackson_version],

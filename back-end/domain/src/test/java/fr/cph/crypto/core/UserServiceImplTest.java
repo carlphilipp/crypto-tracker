@@ -30,7 +30,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
-public class UserServiceImplTest {
+class UserServiceImplTest {
 	private UserRepository userRepository = Mockito.mock(UserRepository.class);
 	private ShareValueRepository shareValueRepository = Mockito.mock(ShareValueRepository.class);
 	private TickerRepository tickerRepository = Mockito.mock(TickerRepository.class);
@@ -39,11 +39,10 @@ public class UserServiceImplTest {
 	private ContextService contextService = Mockito.mock(ContextService.class);
 	private EmailService emailService = Mockito.mock(EmailService.class);
 	private PasswordEncoder passwordEncoder = Mockito.mock(PasswordEncoder.class);
-	private UserServiceImpl tickerService = new UserServiceImpl(userRepository, shareValueRepository, tickerRepository, idGenerator, passwordEncoder,
-			templateService, contextService, emailService);
+	private UserServiceImpl tickerService = new UserServiceImpl(userRepository, shareValueRepository, tickerRepository, idGenerator, passwordEncoder, templateService, contextService, emailService);
 
 	@Test
-	public void testCreate() {
+	void testCreate() {
 		// given
 		User user = getUser();
 		Email email = new Email("email", "Welcome to crypto tracker!", "email content");
@@ -69,7 +68,7 @@ public class UserServiceImplTest {
 	}
 
 	@Test
-	public void testFindOneUserWithPositions() {
+	void testFindOneUserWithPositions() {
 		// given
 		Ticker btcTicker = new Ticker("BTC-USD", Currency.BTC, Currency.USD, 10000.0, "whatever", 0.0, 0.0, 0.0, 0.0, 0.0, 1L);
 		Ticker ethTicker = new Ticker("ETH-USD", Currency.ETH, Currency.USD, 100.0, "whatever", 0.0, 0.0, 0.0, 0.0, 0.0, 2L);
@@ -105,7 +104,7 @@ public class UserServiceImplTest {
 	}
 
 	@Test
-	public void testFindOneUserNoPositions() {
+	void testFindOneUserNoPositions() {
 		// given
 		User user = getUser();
 		given(userRepository.findOneUserById("id")).willReturn(user);
@@ -123,7 +122,7 @@ public class UserServiceImplTest {
 	}
 
 	@Test
-	public void testFindAll() {
+	void testFindAll() {
 		// given
 		User user = getUser();
 		given(userRepository.findAllUsers()).willReturn(Arrays.asList(user));
@@ -141,7 +140,7 @@ public class UserServiceImplTest {
 	}
 
 	@Test
-	public void testAddPosition() {
+	void testAddPosition() {
 		// given
 		ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
 		User user = getUser();

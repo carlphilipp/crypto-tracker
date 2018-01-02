@@ -8,7 +8,7 @@ configurations {
 }
 
 dependencies {
-    compile project(':core')
+    compile project(':domain')
     compile project(':client-coinmarketcap')
     compile project(':persistence-mongo')
     compile project(':email-default')
