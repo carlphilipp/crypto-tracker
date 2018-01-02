@@ -69,6 +69,11 @@ class CoreConfig {
 	}
 
 	@Bean
+	fun validateUser(userRepository: UserRepository, passwordEncoder: PasswordEncoder): ValidateUser {
+		return ValidateUser(userRepository, passwordEncoder)
+	}
+
+	@Bean
 	fun userService(userRepository: UserRepository,
 					shareValueRepository: ShareValueRepository,
 					tickerRepository: TickerRepository,

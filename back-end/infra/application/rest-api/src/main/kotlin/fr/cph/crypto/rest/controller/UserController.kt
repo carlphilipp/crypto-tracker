@@ -34,7 +34,8 @@ constructor(private val userService: UserService,
 			private val addPosition: AddPosition,
 			private val updatePosition: UpdatePosition,
 			private val deletePosition: DeletePosition,
-			private val getShareValue: GetShareValue) {
+			private val getShareValue: GetShareValue,
+			private val validateUser: ValidateUser) {
 
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(method = [RequestMethod.GET], produces = ["application/json"])
@@ -102,7 +103,7 @@ constructor(private val userService: UserService,
 	@PreAuthorize("authentication.details.decodedDetails['id'] == null")
 	@RequestMapping(value = ["{id}/validate/{key}"])
 	fun validateUser(@PathVariable("id") id: String, @PathVariable("key") key: String) {
-		userService.validateUser(id, key)
+		validateUser.validateUser(id, key)
 	}
 
 	companion object {

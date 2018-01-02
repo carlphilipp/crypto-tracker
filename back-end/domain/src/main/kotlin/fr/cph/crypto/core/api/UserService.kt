@@ -18,6 +18,4 @@ package fr.cph.crypto.core.api
 interface UserService {
 
 	fun updateAllUsersShareValue()
-
-	fun validateUser(userId: String, key: String)
 }
