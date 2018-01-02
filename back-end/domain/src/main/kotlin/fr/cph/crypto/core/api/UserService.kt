@@ -15,14 +15,9 @@
  */
 package fr.cph.crypto.core.api
 
-import fr.cph.crypto.core.api.entity.Position
 import fr.cph.crypto.core.api.entity.ShareValue
 
 interface UserService {
-
-	fun updatePosition(userId: String, position: Position, transactionQuantity: Double?, transactionUnitCostPrice: Double?)
-
-	fun deletePosition(userId: String, positionId: String, price: Double)
 
 	fun addFeeToPosition(userId: String, positionId: String, fee: Double)
 

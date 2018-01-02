@@ -16,9 +16,7 @@
 package fr.cph.crypto.rest.controller
 
 import fr.cph.crypto.core.api.UserService
-import fr.cph.crypto.core.usecase.user.AddPosition
-import fr.cph.crypto.core.usecase.user.CreateUser
-import fr.cph.crypto.core.usecase.user.FindUser
+import fr.cph.crypto.core.usecase.user.*
 import fr.cph.crypto.rest.dto.PositionDTO
 import fr.cph.crypto.rest.dto.ShareValueDTO
 import fr.cph.crypto.rest.dto.UserDTO
@@ -33,7 +31,9 @@ class UserController
 constructor(private val userService: UserService,
 			private val createUser: CreateUser,
 			private val findUser: FindUser,
-			private val addPosition: AddPosition) {
+			private val addPosition: AddPosition,
+			private val updatePosition: UpdatePosition,
+			private val deletePosition: DeletePosition) {
 
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(method = [RequestMethod.GET], produces = ["application/json"])
@@ -67,7 +67,7 @@ constructor(private val userService: UserService,
 					   @PathVariable("positionId") positionId: String,
 					   @RequestParam("transactionQuantity", required = false) transactionQuantity: Double?,
 					   @RequestParam("transactionUnitCostPrice", required = false) transactionUnitCostPrice: Double?) {
-		userService.updatePosition(id, position.toPosition(), transactionQuantity, transactionUnitCostPrice)
+		updatePosition.updatePosition(id, position.toPosition(), transactionQuantity, transactionUnitCostPrice)
 	}
 
 	@PreAuthorize("#id == authentication.details.decodedDetails['id']")
@@ -75,7 +75,7 @@ constructor(private val userService: UserService,
 	fun deletePosition(@PathVariable("id") id: String,
 					   @PathVariable("positionId") positionId: String,
 					   @PathVariable("price") price: Double) {
-		userService.deletePosition(id, positionId, price)
+		deletePosition.deletePosition(id, positionId, price)
 	}
 
 	@PreAuthorize("#id == authentication.details.decodedDetails['id']")

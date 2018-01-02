@@ -20,9 +20,7 @@ import fr.cph.crypto.core.api.UserService
 import fr.cph.crypto.core.core.TickerServiceImpl
 import fr.cph.crypto.core.core.UserServiceImpl
 import fr.cph.crypto.core.spi.*
-import fr.cph.crypto.core.usecase.user.AddPosition
-import fr.cph.crypto.core.usecase.user.CreateUser
-import fr.cph.crypto.core.usecase.user.FindUser
+import fr.cph.crypto.core.usecase.user.*
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -53,6 +51,16 @@ class CoreConfig {
 	@Bean
 	fun addPosition(userRepository: UserRepository, idGenerator: IdGenerator): AddPosition {
 		return AddPosition(userRepository = userRepository, idGenerator = idGenerator)
+	}
+
+	@Bean
+	fun updatePosition(userRepository: UserRepository): UpdatePosition {
+		return UpdatePosition(userRepository)
+	}
+
+	@Bean
+	fun deletePosition(userRepository: UserRepository): DeletePosition {
+		return DeletePosition(userRepository)
 	}
 
 	@Bean

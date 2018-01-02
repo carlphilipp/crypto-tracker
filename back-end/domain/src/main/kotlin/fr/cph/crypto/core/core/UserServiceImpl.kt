@@ -32,55 +32,6 @@ class UserServiceImpl(
 		private val tickerRepository: TickerRepository,
 		private val passwordEncoder: PasswordEncoder) : UserService {
 
-	override fun updatePosition(userId: String, position: Position, transactionQuantity: Double?, transactionUnitCostPrice: Double?) {
-		val user = userRepository.findOneUserById(userId) ?: throw NotFoundException()
-		if (transactionQuantity != null && transactionUnitCostPrice != null) {
-			updatePositionSmart(user, position, transactionQuantity, transactionUnitCostPrice)
-		} else {
-			updatePositionManual(user, position)
-		}
-	}
-
-	private fun updatePositionManual(user: User, position: Position) {
-		val positionFound = user.positions.filter { it.id == position.id }.toList()
-		when {
-			positionFound.size == 1 -> {
-				user.liquidityMovement = user.liquidityMovement + ((position.unitCostPrice * position.quantity) - (positionFound[0].unitCostPrice * positionFound[0].quantity))
-
-				userRepository.savePosition(user, position)
-			}
-			positionFound.size > 1 -> throw NotFoundException()
-			else -> throw NotAllowedException()
-		}
-	}
-
-	private fun updatePositionSmart(user: User, position: Position, transactionQuantity: Double, transactionUnitCostPrice: Double) {
-		val positionFound = user.positions.filter { it.id == position.id }.toList()
-		when {
-			positionFound.size == 1 -> {
-				user.liquidityMovement = user.liquidityMovement + transactionUnitCostPrice * transactionQuantity
-
-				userRepository.savePosition(user, position)
-			}
-			positionFound.size > 1 -> throw NotFoundException()
-			else -> throw NotAllowedException()
-		}
-	}
-
-	override fun deletePosition(userId: String, positionId: String, price: Double) {
-		val user = userRepository.findOneUserById(userId) ?: throw NotFoundException()
-		val positionFound = user.positions.filter { it.id == positionId }.toList()
-		when {
-			positionFound.size == 1 -> {
-				user.liquidityMovement = user.liquidityMovement - price
-
-				userRepository.deletePosition(user, positionFound[0])
-			}
-			positionFound.size > 1 -> throw RuntimeException("Something pretty bad happened")
-			else -> throw NotAllowedException()
-		}
-	}
-
 	override fun addFeeToPosition(userId: String, positionId: String, fee: Double) {
 		val user = userRepository.findOneUserById(userId) ?: throw NotFoundException()
 		val position = user.positions.find { position -> position.id == positionId } ?: throw NotFoundException()
