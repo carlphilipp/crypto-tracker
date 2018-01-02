@@ -1,26 +1,21 @@
-package fr.cph.crypto.core;
-
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-
-import java.util.Collections;
-import java.util.List;
+package fr.cph.crypto.core.usecase.ticker;
 
 import fr.cph.crypto.core.api.entity.Currency;
 import fr.cph.crypto.core.api.entity.Ticker;
-import fr.cph.crypto.core.core.TickerServiceImpl;
-import fr.cph.crypto.core.spi.TickerClient;
 import fr.cph.crypto.core.spi.TickerRepository;
-
+import fr.cph.crypto.core.usecase.ticker.FindTicker;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import java.util.Collections;
+import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
-class TickerServiceImplTest {
+public class FindTickerTest {
 
-	private TickerClient tickerClient = Mockito.mock(TickerClient.class);
 	private TickerRepository tickerRepository = Mockito.mock(TickerRepository.class);
-	private TickerServiceImpl tickerService = new TickerServiceImpl(tickerClient, tickerRepository);
+	private FindTicker findTicker = new FindTicker(tickerRepository);
 
 	@Test
 	void testFindOne() {
@@ -30,7 +25,7 @@ class TickerServiceImplTest {
 		given(tickerRepository.findOne(tickerId)).willReturn(ticker);
 
 		// when
-		Ticker actual = tickerService.findOne(tickerId);
+		Ticker actual = findTicker.findOne(tickerId);
 
 		// then
 		then(tickerRepository).should().findOne(tickerId);
@@ -45,7 +40,7 @@ class TickerServiceImplTest {
 		given(tickerRepository.findAllById(tickerIds)).willReturn(Collections.singletonList(ticker));
 
 		// when
-		List<Ticker> actual = tickerService.findAllById(tickerIds);
+		List<Ticker> actual = findTicker.findAllById(tickerIds);
 
 		// then
 		then(tickerRepository).should().findAllById(tickerIds);
@@ -59,24 +54,10 @@ class TickerServiceImplTest {
 		given(tickerRepository.findAll()).willReturn(Collections.singletonList(ticker));
 
 		// when
-		List<Ticker> actual = tickerService.findAll();
+		List<Ticker> actual = findTicker.findAll();
 
 		// then
 		then(tickerRepository).should().findAll();
 		assertEquals(actual.get(0), ticker);
-	}
-
-	@Test
-	void testUpdateAll() {
-		// given
-		Ticker ticker = new Ticker(null, Currency.BTC, Currency.USD, 1.0, "exchange", 0.0, 0.0, 0.0, 0.0, 0.0, 0L);
-		given(tickerClient.getTickers(Currency.USD, Currency.Companion.cryptoCurrenciesAsListOfString())).willReturn(Collections.singletonList(ticker));
-
-		// when
-		tickerService.updateAll();
-
-		// then
-		then(tickerClient).should().getTickers(Currency.USD, Currency.Companion.cryptoCurrenciesAsListOfString());
-		then(tickerRepository).should().save(ticker);
 	}
 }

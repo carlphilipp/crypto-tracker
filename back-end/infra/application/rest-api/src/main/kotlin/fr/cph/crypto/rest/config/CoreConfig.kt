@@ -15,12 +15,17 @@
  */
 package fr.cph.crypto.rest.config
 
-import fr.cph.crypto.core.api.TickerService
-import fr.cph.crypto.core.api.UserService
-import fr.cph.crypto.core.core.TickerServiceImpl
-import fr.cph.crypto.core.core.UserServiceImpl
 import fr.cph.crypto.core.spi.*
-import fr.cph.crypto.core.usecase.user.*
+import fr.cph.crypto.core.usecase.position.AddPosition
+import fr.cph.crypto.core.usecase.position.DeletePosition
+import fr.cph.crypto.core.usecase.position.UpdatePosition
+import fr.cph.crypto.core.usecase.sharevalue.GetShareValue
+import fr.cph.crypto.core.usecase.sharevalue.UpdateShareValue
+import fr.cph.crypto.core.usecase.ticker.FindTicker
+import fr.cph.crypto.core.usecase.ticker.UpdateTicker
+import fr.cph.crypto.core.usecase.user.CreateUser
+import fr.cph.crypto.core.usecase.user.FindUser
+import fr.cph.crypto.core.usecase.user.ValidateUser
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -64,35 +69,27 @@ class CoreConfig {
 	}
 
 	@Bean
-	fun getShareValue(userRepository: UserRepository, shareValueRepository: ShareValueRepository): GetShareValue {
-		return GetShareValue(userRepository, shareValueRepository)
-	}
-
-	@Bean
 	fun validateUser(userRepository: UserRepository, passwordEncoder: PasswordEncoder): ValidateUser {
 		return ValidateUser(userRepository, passwordEncoder)
 	}
 
 	@Bean
-	fun userService(userRepository: UserRepository,
-					shareValueRepository: ShareValueRepository,
-					tickerRepository: TickerRepository,
-					idGenerator: IdGenerator,
-					passwordEncoder: PasswordEncoder,
-					templateService: TemplateService,
-					contextService: ContextService,
-					emailService: EmailService): UserService {
-		return UserServiceImpl(
-				userRepository = userRepository,
-				shareValueRepository = shareValueRepository,
-				tickerRepository = tickerRepository,
-				passwordEncoder = passwordEncoder)
+	fun findTicker(tickerRepository: TickerRepository): FindTicker {
+		return FindTicker(tickerRepository)
 	}
 
 	@Bean
-	fun tickerService(tickerClient: TickerClient, tickerRepository: TickerRepository): TickerService {
-		return TickerServiceImpl(
-				client = tickerClient,
-				tickerRepository = tickerRepository)
+	fun updateTicker(tickerRepository: TickerRepository, client: TickerClient): UpdateTicker {
+		return UpdateTicker(tickerRepository, client)
+	}
+
+	@Bean
+	fun updateShareValue(shareValueRepository: ShareValueRepository, userRepository: UserRepository): UpdateShareValue {
+		return UpdateShareValue(shareValueRepository, userRepository)
+	}
+
+	@Bean
+	fun getShareValue(userRepository: UserRepository, shareValueRepository: ShareValueRepository): GetShareValue {
+		return GetShareValue(userRepository, shareValueRepository)
 	}
 }

@@ -15,7 +15,11 @@
  */
 package fr.cph.crypto.rest.controller
 
-import fr.cph.crypto.core.api.UserService
+import fr.cph.crypto.core.usecase.position.AddPosition
+import fr.cph.crypto.core.usecase.position.DeletePosition
+import fr.cph.crypto.core.usecase.position.UpdatePosition
+import fr.cph.crypto.core.usecase.sharevalue.GetShareValue
+import fr.cph.crypto.core.usecase.sharevalue.UpdateShareValue
 import fr.cph.crypto.core.usecase.user.*
 import fr.cph.crypto.rest.dto.PositionDTO
 import fr.cph.crypto.rest.dto.ShareValueDTO
@@ -27,15 +31,14 @@ import org.springframework.web.bind.annotation.*
 
 @RequestMapping(value = ["/api/user"])
 @RestController
-class UserController
-constructor(private val userService: UserService,
-			private val createUser: CreateUser,
-			private val findUser: FindUser,
-			private val addPosition: AddPosition,
-			private val updatePosition: UpdatePosition,
-			private val deletePosition: DeletePosition,
-			private val getShareValue: GetShareValue,
-			private val validateUser: ValidateUser) {
+class UserController(private val createUser: CreateUser,
+					 private val findUser: FindUser,
+					 private val addPosition: AddPosition,
+					 private val updatePosition: UpdatePosition,
+					 private val deletePosition: DeletePosition,
+					 private val getShareValue: GetShareValue,
+					 private val updateShareValue: UpdateShareValue,
+					 private val validateUser: ValidateUser) {
 
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(method = [RequestMethod.GET], produces = ["application/json"])
@@ -97,7 +100,7 @@ constructor(private val userService: UserService,
 	// TODO: delete that endpoint when share value dev is done
 	@RequestMapping(value = ["/share"])
 	fun updateAllUsersShareValue() {
-		userService.updateAllUsersShareValue()
+		updateShareValue.updateAllUsersShareValue()
 	}
 
 	@PreAuthorize("authentication.details.decodedDetails['id'] == null")

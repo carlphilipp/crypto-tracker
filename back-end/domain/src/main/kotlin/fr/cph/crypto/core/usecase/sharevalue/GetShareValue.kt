@@ -1,4 +1,4 @@
-package fr.cph.crypto.core.usecase.user
+package fr.cph.crypto.core.usecase.sharevalue
 
 import fr.cph.crypto.core.api.entity.ShareValue
 import fr.cph.crypto.core.api.exception.NotFoundException

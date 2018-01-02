@@ -6,7 +6,7 @@ import fr.cph.crypto.core.api.entity.Position;
 import fr.cph.crypto.core.api.entity.User;
 import fr.cph.crypto.core.spi.IdGenerator;
 import fr.cph.crypto.core.spi.UserRepository;
-import fr.cph.crypto.core.usecase.user.AddPosition;
+import fr.cph.crypto.core.usecase.position.AddPosition;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;

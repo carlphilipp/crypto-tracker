@@ -15,8 +15,6 @@
  */
 package fr.cph.crypto.rest
 
-import fr.cph.crypto.core.api.TickerService
-import fr.cph.crypto.core.api.UserService
 import fr.cph.crypto.core.api.entity.Currency
 import fr.cph.crypto.core.api.entity.Position
 import fr.cph.crypto.core.api.entity.Role
@@ -24,7 +22,8 @@ import fr.cph.crypto.core.api.entity.User
 import fr.cph.crypto.core.spi.IdGenerator
 import fr.cph.crypto.core.spi.TickerRepository
 import fr.cph.crypto.core.spi.UserRepository
-import fr.cph.crypto.core.usecase.user.AddPosition
+import fr.cph.crypto.core.usecase.position.AddPosition
+import fr.cph.crypto.core.usecase.ticker.UpdateTicker
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Profile
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder
@@ -36,17 +35,16 @@ class DatabaseLoader
 constructor(private val tickerRepository: TickerRepository,
 			private val userRepository: UserRepository,
 			private val passwordEncoder: ShaPasswordEncoder,
-			private val userService: UserService,
 			private val idGenerator: IdGenerator,
 			private val addPosition: AddPosition,
-			private val tickerService: TickerService) : CommandLineRunner {
+			private val updateTicker: UpdateTicker) : CommandLineRunner {
 
 	override fun run(vararg strings: String) {
 		tickerRepository.deleteAll()
 		userRepository.deleteAllUsers()
 		userRepository.deleteAllPositions()
 
-		tickerService.updateAll()
+		updateTicker.updateAll()
 
 		var user = User(id = "1", email = "cp.harmant@gmail.com", password = passwordEncoder.encodePassword("PASSWORD", null),
 				role = Role.ADMIN, allowed = true)

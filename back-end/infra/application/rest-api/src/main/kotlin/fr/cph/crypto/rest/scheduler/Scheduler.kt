@@ -15,54 +15,53 @@
  */
 package fr.cph.crypto.rest.scheduler
 
-import fr.cph.crypto.core.api.TickerService
-import fr.cph.crypto.core.api.UserService
+import fr.cph.crypto.core.usecase.sharevalue.UpdateShareValue
+import fr.cph.crypto.core.usecase.ticker.UpdateTicker
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Profile
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 
 @Component
-class TickerScheduler(private val tickerService: TickerService) {
+class TickerScheduler(private val updateTicker: UpdateTicker) {
 
-    @Scheduled(fixedRate = 300000, initialDelay = 5000)
-    fun updateAllTickers() {
-        LOGGER.info("Update all tickers")
-        tickerService.updateAll()
-    }
+	@Scheduled(fixedRate = 300000, initialDelay = 5000)
+	fun updateAllTickers() {
+		LOGGER.info("Update all tickers")
+		updateTicker.updateAll()
+	}
 
-    companion object {
-        private val LOGGER = LoggerFactory.getLogger(TickerScheduler::class.java)
-    }
+	companion object {
+		private val LOGGER = LoggerFactory.getLogger(TickerScheduler::class.java)
+	}
 }
 
 @Profile("prod")
 @Component
-class ShareValueSchedulerProd(private val userService: UserService) {
+class ShareValueSchedulerProd(private val updateShareValue: UpdateShareValue) {
 
-    @Scheduled(cron = "0 0 0 * * *", zone = "GMT")
-    fun updateAllUsersShareValue() {
-        LOGGER.info("Refresh all users share value")
-        userService.updateAllUsersShareValue()
-    }
+	@Scheduled(cron = "0 0 0 * * *", zone = "GMT")
+	fun updateAllUsersShareValue() {
+		LOGGER.info("Refresh all users share value")
+		updateShareValue.updateAllUsersShareValue()
+	}
 
-    companion object {
-        private val LOGGER = LoggerFactory.getLogger(ShareValueSchedulerProd::class.java)
-    }
+	companion object {
+		private val LOGGER = LoggerFactory.getLogger(ShareValueSchedulerProd::class.java)
+	}
 }
 
 @Profile("dev")
 @Component
-class ShareValueSchedulerDev(private val userService: UserService) {
+class ShareValueSchedulerDev(private val updateShareValue: UpdateShareValue) {
 
-    @Scheduled(cron = "0 0/30 * * * *", zone = "GMT")
-    fun updateAllUsersShareValue() {
-        LOGGER.info("Refresh all users share value")
-        userService.updateAllUsersShareValue()
-    }
+	@Scheduled(cron = "0 0/30 * * * *", zone = "GMT")
+	fun updateAllUsersShareValue() {
+		LOGGER.info("Refresh all users share value")
+		updateShareValue.updateAllUsersShareValue()
+	}
 
-    companion object {
-
-        private val LOGGER = LoggerFactory.getLogger(ShareValueSchedulerDev::class.java)
-    }
+	companion object {
+		private val LOGGER = LoggerFactory.getLogger(ShareValueSchedulerDev::class.java)
+	}
 }
