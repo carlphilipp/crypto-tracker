@@ -16,8 +16,9 @@
 package fr.cph.crypto.rest.controller
 
 import fr.cph.crypto.core.api.UserService
-import fr.cph.crypto.core.usecase.CreateUser
-import fr.cph.crypto.core.usecase.FindUser
+import fr.cph.crypto.core.usecase.user.AddPosition
+import fr.cph.crypto.core.usecase.user.CreateUser
+import fr.cph.crypto.core.usecase.user.FindUser
 import fr.cph.crypto.rest.dto.PositionDTO
 import fr.cph.crypto.rest.dto.ShareValueDTO
 import fr.cph.crypto.rest.dto.UserDTO
@@ -31,7 +32,8 @@ import org.springframework.web.bind.annotation.*
 class UserController
 constructor(private val userService: UserService,
 			private val createUser: CreateUser,
-			private val findUser: FindUser) {
+			private val findUser: FindUser,
+			private val addPosition: AddPosition) {
 
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(method = [RequestMethod.GET], produces = ["application/json"])
@@ -55,7 +57,7 @@ constructor(private val userService: UserService,
 	@PreAuthorize("#id == authentication.details.decodedDetails['id']")
 	@RequestMapping(value = ["/{id}/position"], method = [RequestMethod.POST], consumes = ["application/json"])
 	fun addPosition(@PathVariable("id") id: String, @RequestBody position: PositionDTO) {
-		userService.addPosition(id, position.toPosition())
+		addPosition.addPositionToUser(id, position.toPosition())
 	}
 
 	@PreAuthorize("#id == authentication.details.decodedDetails['id'] and #positionId == #position.id")

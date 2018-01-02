@@ -1,9 +1,10 @@
-package fr.cph.crypto.core.usecase;
+package fr.cph.crypto.core.usecase.user;
 
 import fr.cph.crypto.core.Utils;
 import fr.cph.crypto.core.api.entity.Email;
 import fr.cph.crypto.core.api.entity.User;
 import fr.cph.crypto.core.spi.*;
+import fr.cph.crypto.core.usecase.user.CreateUser;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

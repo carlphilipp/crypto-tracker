@@ -21,23 +21,16 @@ import fr.cph.crypto.core.api.entity.ShareValue
 import fr.cph.crypto.core.api.entity.User
 import fr.cph.crypto.core.api.exception.NotAllowedException
 import fr.cph.crypto.core.api.exception.NotFoundException
-import fr.cph.crypto.core.spi.*
+import fr.cph.crypto.core.spi.PasswordEncoder
+import fr.cph.crypto.core.spi.ShareValueRepository
+import fr.cph.crypto.core.spi.TickerRepository
+import fr.cph.crypto.core.spi.UserRepository
 
 class UserServiceImpl(
 		private val userRepository: UserRepository,
 		private val shareValueRepository: ShareValueRepository,
 		private val tickerRepository: TickerRepository,
-		private val idGenerator: IdGenerator,
 		private val passwordEncoder: PasswordEncoder) : UserService {
-
-	override fun addPosition(userId: String, position: Position) {
-		val user = userRepository.findOneUserById(userId) ?: throw NotFoundException()
-		user.liquidityMovement = user.liquidityMovement + position.quantity * position.unitCostPrice
-		position.id = idGenerator.getNewId()
-		user.positions.add(position)
-		user.positions.sortWith(compareBy({ it.currency1.currencyName }))
-		userRepository.savePosition(user, position)
-	}
 
 	override fun updatePosition(userId: String, position: Position, transactionQuantity: Double?, transactionUnitCostPrice: Double?) {
 		val user = userRepository.findOneUserById(userId) ?: throw NotFoundException()

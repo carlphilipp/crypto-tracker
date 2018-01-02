@@ -1,4 +1,4 @@
-package fr.cph.crypto.core.usecase
+package fr.cph.crypto.core.usecase.user
 
 import fr.cph.crypto.core.api.entity.Email
 import fr.cph.crypto.core.api.entity.User

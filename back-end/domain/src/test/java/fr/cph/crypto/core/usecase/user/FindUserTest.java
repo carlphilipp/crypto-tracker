@@ -1,4 +1,4 @@
-package fr.cph.crypto.core.usecase;
+package fr.cph.crypto.core.usecase.user;
 
 import fr.cph.crypto.core.Utils;
 import fr.cph.crypto.core.api.entity.Currency;
@@ -7,6 +7,7 @@ import fr.cph.crypto.core.api.entity.Ticker;
 import fr.cph.crypto.core.api.entity.User;
 import fr.cph.crypto.core.spi.TickerRepository;
 import fr.cph.crypto.core.spi.UserRepository;
+import fr.cph.crypto.core.usecase.user.FindUser;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import java.util.Arrays;

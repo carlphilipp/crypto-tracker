@@ -1,10 +1,12 @@
-package fr.cph.crypto.core;
+package fr.cph.crypto.core.usecase.user;
 
+import fr.cph.crypto.core.Utils;
 import fr.cph.crypto.core.api.entity.Currency;
 import fr.cph.crypto.core.api.entity.Position;
 import fr.cph.crypto.core.api.entity.User;
-import fr.cph.crypto.core.core.UserServiceImpl;
-import fr.cph.crypto.core.spi.*;
+import fr.cph.crypto.core.spi.IdGenerator;
+import fr.cph.crypto.core.spi.UserRepository;
+import fr.cph.crypto.core.usecase.user.AddPosition;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
@@ -13,19 +15,11 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
-class UserServiceImplTest {
-	private UserRepository userRepository = Mockito.mock(UserRepository.class);
-	private ShareValueRepository shareValueRepository = Mockito.mock(ShareValueRepository.class);
-	private TickerRepository tickerRepository = Mockito.mock(TickerRepository.class);
-	private IdGenerator idGenerator = Mockito.mock(IdGenerator.class);
-	private PasswordEncoder passwordEncoder = Mockito.mock(PasswordEncoder.class);
-	private UserServiceImpl tickerService = new UserServiceImpl(
-			userRepository = userRepository,
-			shareValueRepository = shareValueRepository,
-			tickerRepository = tickerRepository,
-			idGenerator = idGenerator,
-			passwordEncoder = passwordEncoder);
+class AddPositionTest {
 
+	private UserRepository userRepository = Mockito.mock(UserRepository.class);
+	private IdGenerator idGenerator = Mockito.mock(IdGenerator.class);
+	private AddPosition addPosition = new AddPosition(userRepository, idGenerator);
 
 	@Test
 	void testAddPosition() {
@@ -40,7 +34,7 @@ class UserServiceImplTest {
 		given(idGenerator.getNewId()).willReturn(("positionId"));
 
 		// when
-		tickerService.addPosition("id", btcPosition);
+		addPosition.addPositionToUser("id", btcPosition);
 
 		// then
 		then(userRepository).should().findOneUserById("id");
