@@ -6,7 +6,7 @@ dependencies {
 	compile(
 		[group: 'org.springframework', name: 'spring-web', version: spring_core_version],
 		[group: 'org.springframework', name: 'spring-webmvc', version: spring_core_version],
-		[group: 'org.springframework.security', name: 'spring-security-core', version: '4.2.3.RELEASE'],
+		[group: 'org.springframework.security', name: 'spring-security-core', version: spring_security_version],
 		[group: 'org.slf4j', name: 'slf4j-api', version: slf4j_version],
 		[group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'],
 		[group: 'org.jetbrains.kotlin', name: 'kotlin-reflect'],

@@ -20,9 +20,9 @@ import fr.cph.crypto.core.entity.User
 
 interface ShareValueRepository {
 
-    fun save(shareValue: ShareValue): ShareValue
+	fun save(shareValue: ShareValue): ShareValue
 
-    fun findAllByUser(user: User): List<ShareValue>
+	fun findAllByUser(user: User): List<ShareValue>
 
-    fun findTop1ByUserOrderByTimestampDesc(user: User): ShareValue?
+	fun findTop1ByUserOrderByTimestampDesc(user: User): ShareValue?
 }

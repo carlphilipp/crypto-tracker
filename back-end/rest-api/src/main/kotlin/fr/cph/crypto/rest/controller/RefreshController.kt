@@ -15,9 +15,6 @@
  */
 package fr.cph.crypto.rest.controller
 
-import fr.cph.crypto.core.entity.Currency
-import fr.cph.crypto.core.spi.TickerClient
-import fr.cph.crypto.core.spi.TickerRepository
 import fr.cph.crypto.core.usecase.ticker.UpdateTicker
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

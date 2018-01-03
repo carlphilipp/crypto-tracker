@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fr.cph.crypto.rest
+package fr.cph.crypto
 
 import fr.cph.crypto.core.entity.Currency
 import fr.cph.crypto.core.entity.Position
@@ -24,20 +24,19 @@ import fr.cph.crypto.core.spi.TickerRepository
 import fr.cph.crypto.core.spi.UserRepository
 import fr.cph.crypto.core.usecase.position.AddPosition
 import fr.cph.crypto.core.usecase.ticker.UpdateTicker
+import fr.cph.crypto.security.PasswordEncoderAdapter
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Profile
-import org.springframework.security.authentication.encoding.ShaPasswordEncoder
 import org.springframework.stereotype.Component
 
 @Profile("dev")
 @Component
-class DatabaseLoader
-constructor(private val tickerRepository: TickerRepository,
-			private val userRepository: UserRepository,
-			private val passwordEncoder: ShaPasswordEncoder,
-			private val idGenerator: IdGenerator,
-			private val addPosition: AddPosition,
-			private val updateTicker: UpdateTicker) : CommandLineRunner {
+class DatabaseLoader(private val tickerRepository: TickerRepository,
+					 private val userRepository: UserRepository,
+					 private val passwordEncoder: PasswordEncoderAdapter,
+					 private val idGenerator: IdGenerator,
+					 private val addPosition: AddPosition,
+					 private val updateTicker: UpdateTicker) : CommandLineRunner {
 
 	override fun run(vararg strings: String) {
 		tickerRepository.deleteAll()
@@ -46,7 +45,7 @@ constructor(private val tickerRepository: TickerRepository,
 
 		updateTicker.updateAll()
 
-		var user = User(id = "1", email = "cp.harmant@gmail.com", password = passwordEncoder.encodePassword("PASSWORD", null),
+		var user = User(id = "1", email = "cp.harmant@gmail.com", password = passwordEncoder.encode("PASSWORD"),
 			role = Role.ADMIN, allowed = true)
 		user = userRepository.saveUser(user)
 

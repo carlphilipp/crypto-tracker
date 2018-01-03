@@ -13,17 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fr.cph.crypto.rest.config
+package fr.cph.crypto.config
 
-import org.springframework.boot.context.properties.ConfigurationProperties
+import fr.cph.crypto.core.spi.IdGenerator
+import fr.cph.crypto.uuid.jug.Jug
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-@ConfigurationProperties("security.jwt")
-class JwtProperties {
-	var clientId: String? = null
-	var clientSecret: String? = null
-	var resourceId: String? = null
-	var grantTypes: Array<String> = emptyArray()
-	var scopes: Array<String> = emptyArray()
+class InfraConfig {
+
+	@Bean
+	fun uuidGenerator(): IdGenerator {
+		return Jug()
+	}
 }

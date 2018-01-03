@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fr.cph.crypto.rest.config
+package fr.cph.crypto.config
 
 import fr.cph.crypto.core.spi.*
 import fr.cph.crypto.core.usecase.position.AddPosition
@@ -90,7 +90,7 @@ class CoreConfig {
 	}
 
 	@Bean
-	fun updateShareValue(shareValueRepository: ShareValueRepository, userRepository: UserRepository): UpdateShareValue {
+	fun updateShareValue(userRepository: UserRepository, shareValueRepository: ShareValueRepository): UpdateShareValue {
 		return UpdateShareValue(shareValueRepository, userRepository)
 	}
 

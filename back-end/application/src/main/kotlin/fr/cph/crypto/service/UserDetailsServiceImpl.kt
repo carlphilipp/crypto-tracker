@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fr.cph.crypto.rest.service
+package fr.cph.crypto.service
 
 import fr.cph.crypto.core.usecase.user.LoginUser
 import org.springframework.security.core.GrantedAuthority

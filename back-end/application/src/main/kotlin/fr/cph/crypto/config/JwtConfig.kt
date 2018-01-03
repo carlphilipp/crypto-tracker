@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fr.cph.crypto.rest.config
+package fr.cph.crypto.config
 
 import fr.cph.crypto.core.spi.UserRepository
 import org.springframework.boot.autoconfigure.security.oauth2.resource.JwtAccessTokenConverterConfigurer

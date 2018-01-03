@@ -13,29 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fr.cph.crypto.rest.service
+package fr.cph.crypto.security
 
-import fr.cph.crypto.core.spi.ContextService
-import org.springframework.beans.factory.annotation.Value
+import fr.cph.crypto.core.spi.PasswordEncoder
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
-class ContextServiceAdapter : ContextService {
+class PasswordEncoderAdapter(private val shaPasswordEncoder: ShaPasswordEncoder) : PasswordEncoder {
 
-	@Value("\${context.scheme}")
-	private lateinit var scheme: String
-
-	@Value("\${context.host}")
-	private lateinit var host: String
-
-	@Value("\${context.port}")
-	private lateinit var port: String
-
-	override fun getBaseUrl(): String {
-		return if (scheme == "https") {
-			"$scheme://$host"
-		} else {
-			"$scheme://$host:$port"
-		}
+	override fun encode(str: String): String {
+		return shaPasswordEncoder.encodePassword(str, null)
 	}
 }

@@ -27,7 +27,7 @@ class TickerScheduler(private val updateTicker: UpdateTicker) {
 
 	@Scheduled(fixedRate = 300000, initialDelay = 5000)
 	fun updateAllTickers() {
-		LOGGER.info("Update all tickers")
+		LOGGER.info("Scheduler: Update all tickers")
 		updateTicker.updateAll()
 	}
 
@@ -42,7 +42,7 @@ class ShareValueSchedulerProd(private val updateShareValue: UpdateShareValue) {
 
 	@Scheduled(cron = "0 0 0 * * *", zone = "GMT")
 	fun updateAllUsersShareValue() {
-		LOGGER.info("Refresh all users share value")
+		LOGGER.info("Scheduler: Refresh all users share value")
 		updateShareValue.updateAllUsersShareValue()
 	}
 
@@ -57,7 +57,7 @@ class ShareValueSchedulerDev(private val updateShareValue: UpdateShareValue) {
 
 	@Scheduled(cron = "0 0/30 * * * *", zone = "GMT")
 	fun updateAllUsersShareValue() {
-		LOGGER.info("Refresh all users share value")
+		LOGGER.info("Scheduler: Refresh all users share value")
 		updateShareValue.updateAllUsersShareValue()
 	}
 

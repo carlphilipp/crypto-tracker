@@ -8,7 +8,7 @@ dependencies {
             [group: 'org.jetbrains.kotlin', name: 'kotlin-reflect'],
     )
 
-    compile("org.springframework.data:spring-data-mongodb:$spring_data_mongo") {
+    compile("org.springframework.data:spring-data-mongodb:$spring_data_mongo_version") {
         exclude group: 'org.mongodb', module: 'mongo-java-driver'
     }
 }

@@ -13,16 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fr.cph.crypto.rest.security
+package fr.cph.crypto.config
 
-import fr.cph.crypto.core.spi.PasswordEncoder
-import org.springframework.security.authentication.encoding.ShaPasswordEncoder
-import org.springframework.stereotype.Service
+import org.springframework.boot.context.properties.ConfigurationProperties
+import org.springframework.context.annotation.Configuration
 
-@Service
-class PasswordEncoderAdapter(private val shaPasswordEncoder: ShaPasswordEncoder) : PasswordEncoder {
-
-	override fun encode(str: String): String {
-		return shaPasswordEncoder.encodePassword(str, null)
-	}
+@Configuration
+@ConfigurationProperties("security.jwt")
+class JwtProperties {
+	var clientId: String? = null
+	var clientSecret: String? = null
+	var resourceId: String? = null
+	var grantTypes: Array<String> = emptyArray()
+	var scopes: Array<String> = emptyArray()
 }
