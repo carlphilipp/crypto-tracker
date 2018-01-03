@@ -7,7 +7,6 @@ import fr.cph.crypto.core.spi.TickerRepository
 class UpdateTicker(private val tickerRepository: TickerRepository, private val client: TickerClient) {
 
 	fun updateAll() {
-		client.getTickers(Currency.USD, Currency.cryptoCurrenciesAsListOfString())
-				.forEach { ticker -> tickerRepository.save(ticker) }
+		tickerRepository.save(client.getTickers(Currency.USD, Currency.cryptoCurrenciesAsListOfString()))
 	}
 }

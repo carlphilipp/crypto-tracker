@@ -19,13 +19,15 @@ import fr.cph.crypto.core.entity.Ticker
 
 interface TickerRepository {
 
-    fun findOne(id: String): Ticker?
+	fun findOne(id: String): Ticker?
 
-    fun findAllById(ids: List<String>): List<Ticker>
+	fun findAllById(ids: List<String>): List<Ticker>
 
-    fun findAll(): List<Ticker>
+	fun findAll(): List<Ticker>
 
-    fun save(ticker: Ticker): Ticker
+	fun save(ticker: Ticker): Ticker
 
-    fun deleteAll()
+	fun save(tickers: List<Ticker>)
+
+	fun deleteAll()
 }
