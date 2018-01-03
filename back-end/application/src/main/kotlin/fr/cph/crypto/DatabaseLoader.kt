@@ -63,6 +63,10 @@ class DatabaseLoader(private val tickerRepository: TickerRepository,
 		addPosition.addPositionToUser(user.id!!, positionCardano)
 		val positionPower = Position(id = idGenerator.getNewId(), currency1 = Currency.POWER_LEDGER, quantity = 443.556, unitCostPrice = 0.66)
 		addPosition.addPositionToUser(user.id!!, positionPower)
+		val positionIcon = Position(id = idGenerator.getNewId(), currency1 = Currency.ICON, quantity = 106.53, unitCostPrice = 5.19)
+		addPosition.addPositionToUser(user.id!!, positionIcon)
+		val positionMonero = Position(id = idGenerator.getNewId(), currency1 = Currency.MONERO, quantity = 1.2, unitCostPrice = 369.69)
+		addPosition.addPositionToUser(user.id!!, positionMonero)
 
 		val userFound = userRepository.findOneUserById(user.id!!)!!
 		userFound.liquidityMovement = 0.0
