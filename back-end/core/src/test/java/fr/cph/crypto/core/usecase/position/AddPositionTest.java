@@ -1,4 +1,4 @@
-package fr.cph.crypto.core.usecase.user;
+package fr.cph.crypto.core.usecase.position;
 
 import fr.cph.crypto.core.Utils;
 import fr.cph.crypto.core.entity.Currency;
