@@ -20,4 +20,4 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @EnableMongoRepositories(basePackages = ["fr.cph.crypto.persistence.mongo.repository"])
 @Configuration
-class Config
+open class Config

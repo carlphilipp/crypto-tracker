@@ -19,11 +19,9 @@ import fr.cph.crypto.core.entity.Currency
 import fr.cph.crypto.core.entity.Ticker
 import fr.cph.crypto.core.spi.TickerClient
 import org.slf4j.LoggerFactory
-import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.UriComponentsBuilder
 
-@Service
 class CoinMarketCapAdapter(private val restTemplate: RestTemplate) : TickerClient {
 
 	override fun getTicker(currency: Currency, ticker: String): Ticker? {

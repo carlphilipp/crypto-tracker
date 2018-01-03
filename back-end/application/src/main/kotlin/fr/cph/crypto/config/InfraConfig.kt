@@ -15,12 +15,17 @@
  */
 package fr.cph.crypto.config
 
+import fr.cph.crypto.client.coinmarketcap.CoinMarketCapAdapter
 import fr.cph.crypto.core.spi.EmailService
 import fr.cph.crypto.core.spi.IdGenerator
+import fr.cph.crypto.core.spi.TemplateService
+import fr.cph.crypto.core.spi.TickerClient
 import fr.cph.crypto.email.DefaultEmailAdapter
+import fr.cph.crypto.template.DefaultTemplateAdapter
 import fr.cph.crypto.uuid.jug.Jug
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.web.client.RestTemplate
 
 @Configuration
 class InfraConfig {
@@ -33,5 +38,15 @@ class InfraConfig {
 	@Bean
 	fun emailService(): EmailService {
 		return DefaultEmailAdapter()
+	}
+
+	@Bean
+	fun templateService(): TemplateService {
+		return DefaultTemplateAdapter()
+	}
+
+	@Bean
+	fun tickerClient(restTemplate: RestTemplate): TickerClient {
+		return CoinMarketCapAdapter(restTemplate)
 	}
 }

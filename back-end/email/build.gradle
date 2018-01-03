@@ -1,11 +1,8 @@
-apply plugin: 'kotlin-spring'
-
 dependencies {
 	compile project(':core')
 	compile(
 		[group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'],
 		[group: 'org.jetbrains.kotlin', name: 'kotlin-reflect'],
-		//[group: 'org.springframework', name: 'spring-context-support', version: spring_core_version],
 		[group: 'org.jasypt', name: 'jasypt', version: jasypt_version],
 		[group: 'javax.mail', name: 'mail', version: javax_mail_version],
 		[group: 'org.slf4j', name: 'slf4j-api', version: slf4j_version],

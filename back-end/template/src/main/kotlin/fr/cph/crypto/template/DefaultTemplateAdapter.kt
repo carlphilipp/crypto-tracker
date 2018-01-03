@@ -16,9 +16,7 @@
 package fr.cph.crypto.template
 
 import fr.cph.crypto.core.spi.TemplateService
-import org.springframework.stereotype.Service
 
-@Service
 class DefaultTemplateAdapter : TemplateService {
 
 	override fun welcomeContentEmail(baseUrl: String, userId: String, key: String): String {

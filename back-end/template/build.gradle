@@ -1,10 +1,7 @@
-apply plugin: 'kotlin-spring'
-
 dependencies {
-    compile project(':core')
-    compile(
-            [group: 'org.springframework', name: 'spring-context-support', version: spring_core_version],
-            [group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'],
-            [group: 'org.jetbrains.kotlin', name: 'kotlin-reflect'],
-    )
+	compile project(':core')
+	compile(
+		[group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'],
+		[group: 'org.jetbrains.kotlin', name: 'kotlin-reflect'],
+	)
 }
