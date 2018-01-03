@@ -15,7 +15,10 @@
  */
 package fr.cph.crypto.core.exception
 
-internal class NotFoundException : RuntimeException {
-    constructor() : super()
-    constructor(message: String) : super(message)
-}
+open class NotFoundException(message: String) : RuntimeException(message)
+
+class UserNotFoundException(userId: String) : NotFoundException("User id [$userId] not found")
+class PositionNotFoundException(positionId: String) : NotFoundException("Position id [$positionId] not found")
+class ShareValueNotFoundException(shareValueId: String) : NotFoundException("Share value id [$shareValueId] not found")
+class TickerNotFoundException(tickerId: String) : NotFoundException("Ticker id [$tickerId] not found")
+

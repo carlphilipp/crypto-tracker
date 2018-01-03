@@ -1,13 +1,13 @@
 package fr.cph.crypto.core.usecase.position
 
 import fr.cph.crypto.core.exception.NotAllowedException
-import fr.cph.crypto.core.exception.NotFoundException
+import fr.cph.crypto.core.exception.UserNotFoundException
 import fr.cph.crypto.core.spi.UserRepository
 
 class DeletePosition(private val userRepository: UserRepository) {
 
 	fun deletePosition(userId: String, positionId: String, price: Double) {
-		val user = userRepository.findOneUserById(userId) ?: throw NotFoundException()
+		val user = userRepository.findOneUserById(userId) ?: throw UserNotFoundException(userId)
 		val positionFound = user.positions.filter { it.id == positionId }.toList()
 		when {
 			positionFound.size == 1 -> {

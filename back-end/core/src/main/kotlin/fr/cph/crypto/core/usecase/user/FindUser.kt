@@ -1,21 +1,22 @@
 package fr.cph.crypto.core.usecase.user
 
 import fr.cph.crypto.core.entity.User
-import fr.cph.crypto.core.exception.NotFoundException
+import fr.cph.crypto.core.exception.TickerNotFoundException
+import fr.cph.crypto.core.exception.UserNotFoundException
 import fr.cph.crypto.core.spi.TickerRepository
 import fr.cph.crypto.core.spi.UserRepository
 
 class FindUser(private val userRepository: UserRepository, private val tickerRepository: TickerRepository) {
 
 	fun findOne(id: String): User {
-		return enrich(userRepository.findOneUserById(id) ?: throw NotFoundException("User id [$id] not found"))
+		return enrich(userRepository.findOneUserById(id) ?: throw UserNotFoundException(id))
 	}
 
 	fun findAll(): List<User> {
 		return userRepository
-				.findAllUsers()
-				.map { user -> enrich(user) }
-				.toList()
+			.findAllUsers()
+			.map { user -> enrich(user) }
+			.toList()
 	}
 
 	// TODO see how to deal with that
@@ -25,7 +26,7 @@ class FindUser(private val userRepository: UserRepository, private val tickerRep
 		var totalValue = 0.0
 		var totalOriginalValue = 0.0
 		for (position in user.positions) {
-			val ticker = tickers.find { ticker -> ticker.id == position.currency1.code + "-" + position.currency2.code } ?: throw NotFoundException()
+			val ticker = tickers.find { ticker -> ticker.id == position.currency1.code + "-" + position.currency2.code } ?: throw TickerNotFoundException(position.currency1.code + "-" + position.currency2.code)
 			val originalValue = position.quantity * position.unitCostPrice
 			val value = position.quantity * ticker.price
 			val gain = value - originalValue

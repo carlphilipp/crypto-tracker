@@ -3,13 +3,14 @@ package fr.cph.crypto.core.usecase.position
 import fr.cph.crypto.core.entity.Position
 import fr.cph.crypto.core.entity.User
 import fr.cph.crypto.core.exception.NotAllowedException
-import fr.cph.crypto.core.exception.NotFoundException
+import fr.cph.crypto.core.exception.PositionNotFoundException
+import fr.cph.crypto.core.exception.UserNotFoundException
 import fr.cph.crypto.core.spi.UserRepository
 
 class UpdatePosition(private val userRepository: UserRepository) {
 
 	fun updatePosition(userId: String, position: Position, transactionQuantity: Double?, transactionUnitCostPrice: Double?) {
-		val user = userRepository.findOneUserById(userId) ?: throw NotFoundException() // TODO create position not found exception
+		val user = userRepository.findOneUserById(userId) ?: throw UserNotFoundException(userId)
 		if (transactionQuantity != null && transactionUnitCostPrice != null) {
 			updatePositionSmart(user, position, transactionQuantity, transactionUnitCostPrice)
 		} else {
@@ -18,14 +19,14 @@ class UpdatePosition(private val userRepository: UserRepository) {
 	}
 
 	fun addFeeToPosition(userId: String, positionId: String, fee: Double) {
-		val user = userRepository.findOneUserById(userId) ?: throw NotFoundException()
-		val position = user.positions.find { position -> position.id == positionId } ?: throw NotFoundException()
+		val user = userRepository.findOneUserById(userId) ?: throw UserNotFoundException(userId)
+		val position = user.positions.find { position -> position.id == positionId } ?: throw PositionNotFoundException(positionId)
 		val newPosition = Position(
-				id = position.id,
-				currency1 = position.currency1,
-				currency2 = position.currency2,
-				quantity = position.quantity - fee,
-				unitCostPrice = position.unitCostPrice)
+			id = position.id,
+			currency1 = position.currency1,
+			currency2 = position.currency2,
+			quantity = position.quantity - fee,
+			unitCostPrice = position.unitCostPrice)
 		user.positions.remove(position)
 		user.positions.add(newPosition)
 		user.positions.sortWith(compareBy({ it.currency1.currencyName }))
@@ -40,7 +41,7 @@ class UpdatePosition(private val userRepository: UserRepository) {
 
 				userRepository.savePosition(user, position)
 			}
-			positionFound.size > 1 -> throw NotFoundException()
+			positionFound.size > 1 -> throw PositionNotFoundException(position.id!!)
 			else -> throw NotAllowedException()
 		}
 	}
@@ -53,7 +54,7 @@ class UpdatePosition(private val userRepository: UserRepository) {
 
 				userRepository.savePosition(user, position)
 			}
-			positionFound.size > 1 -> throw NotFoundException() // TODO create position not found exception
+			positionFound.size > 1 -> throw PositionNotFoundException(position.id!!)
 			else -> throw NotAllowedException() // TODO create position not allowed exception
 		}
 	}
