@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 Carl-Philipp Harmant
+ * Copyright 2018 Carl-Philipp Harmant
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ class Footer extends Component {
       <div>
         <br/>
         <hr/>
-        <h6 className="text-center">crypto tracker © <a href="http://www.apache.org/licenses/LICENSE-2.0">Copyright</a> 2017</h6>
+        <h6 className="text-center">crypto tracker © <a href="http://www.apache.org/licenses/LICENSE-2.0">Copyright</a> 2018</h6>
       </div>
     );
   }
