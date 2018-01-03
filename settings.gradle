@@ -1,17 +1,21 @@
 include ':gateway'
 include 'core'
 include 'client-coinmarketcap'
-include 'rest-api'
+include 'application'
 include 'persistence-mongo'
 include 'email-default'
 include 'template-default'
 include 'uuid-generator-default'
 include 'uuid-generator-mongo'
 include 'uuid-generator-jug'
+include 'rest-api'
+include 'scheduler'
 
 project(':core').projectDir = file('back-end/core')
 project(':client-coinmarketcap').projectDir = file('back-end/coinmarketcap')
+project(':application').projectDir = file('back-end/application')
 project(':rest-api').projectDir = file('back-end/rest-api')
+project(':scheduler').projectDir = file('back-end/scheduler')
 project(':persistence-mongo').projectDir = file('back-end/mongo')
 project(':email-default').projectDir = file('back-end/email')
 project(':template-default').projectDir = file('back-end/template')

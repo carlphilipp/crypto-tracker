@@ -15,7 +15,6 @@
  */
 package fr.cph.crypto.rest.exception
 
-import com.mongodb.DuplicateKeyException
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
@@ -27,11 +26,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 class RestResponseEntityExceptionHandler : ResponseEntityExceptionHandler() {
-
-	@ExceptionHandler(value = [DuplicateKeyException::class])
-	protected fun duplicateKeyException(ex: RuntimeException, request: WebRequest): ResponseEntity<Any> {
-		return handleExceptionInternal(ex, null, HttpHeaders(), HttpStatus.BAD_REQUEST, request)
-	}
 
 	@ExceptionHandler(value = [NotAllowedException::class])
 	protected fun notAllowedException(ex: RuntimeException, request: WebRequest): ResponseEntity<Any> {

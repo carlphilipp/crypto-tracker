@@ -79,7 +79,6 @@ class CoreConfig {
 		return DeletePosition(userRepository)
 	}
 
-
 	@Bean
 	fun findTicker(tickerRepository: TickerRepository): FindTicker {
 		return FindTicker(tickerRepository)

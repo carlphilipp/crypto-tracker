@@ -25,8 +25,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RequestMapping(value = ["/api/ticker"])
 @RestController
-class TickerController
-constructor(private val findTicker: FindTicker) {
+class TickerController(private val findTicker: FindTicker) {
 
 	@PreAuthorize("hasAuthority('ADMIN') or authentication.details.decodedDetails['id'] == null")
 	@RequestMapping(method = [RequestMethod.GET], produces = ["application/json"])

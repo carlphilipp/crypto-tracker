@@ -26,8 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class RefreshController
-constructor(private val tickerRepository: TickerRepository, private val client: TickerClient) {
+class RefreshController(private val tickerRepository: TickerRepository, private val client: TickerClient) {
 
 	@PreAuthorize("hasAuthority('ADMIN') or authentication.details.decodedDetails['id'] == null")
 	@RequestMapping(value = ["/api/refresh"], method = [RequestMethod.GET], produces = ["application/json"])

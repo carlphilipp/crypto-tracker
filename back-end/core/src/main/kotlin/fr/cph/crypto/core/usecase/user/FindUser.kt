@@ -19,7 +19,6 @@ class FindUser(private val userRepository: UserRepository, private val tickerRep
 			.toList()
 	}
 
-	// TODO see how to deal with that
 	private fun enrich(user: User): User {
 		val ids = user.positions.map { position -> position.currency1.code + "-" + position.currency2.code }.toList()
 		val tickers = tickerRepository.findAllById(ids)
