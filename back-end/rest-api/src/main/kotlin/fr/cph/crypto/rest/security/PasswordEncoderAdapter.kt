@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service
 @Service
 class PasswordEncoderAdapter(private val shaPasswordEncoder: ShaPasswordEncoder) : PasswordEncoder {
 
-    override fun encode(str: String): String {
-        return shaPasswordEncoder.encodePassword(str, null)
-    }
+	override fun encode(str: String): String {
+		return shaPasswordEncoder.encodePassword(str, null)
+	}
 }

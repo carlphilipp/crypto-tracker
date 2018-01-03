@@ -12,7 +12,7 @@ include 'uuid-generator-jug'
 project(':core').projectDir = file('back-end/core')
 project(':client-coinmarketcap').projectDir = file('back-end/coinmarketcap')
 project(':rest-api').projectDir = file('back-end/rest-api')
-project(':persistence-mongo').projectDir = file('back-end/persistence/mongo')
+project(':persistence-mongo').projectDir = file('back-end/mongo')
 project(':email-default').projectDir = file('back-end/email')
 project(':template-default').projectDir = file('back-end/template')
 project(':uuid-generator-default').projectDir = file('back-end/uuid-generator/default')

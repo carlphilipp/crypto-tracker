@@ -21,9 +21,9 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 @ConfigurationProperties("security.jwt")
 class JwtProperties {
-    var clientId: String? = null
-    var clientSecret: String? = null
-    var resourceId: String? = null
-    var grantTypes: Array<String> = emptyArray()
-    var scopes: Array<String> = emptyArray()
+	var clientId: String? = null
+	var clientSecret: String? = null
+	var resourceId: String? = null
+	var grantTypes: Array<String> = emptyArray()
+	var scopes: Array<String> = emptyArray()
 }

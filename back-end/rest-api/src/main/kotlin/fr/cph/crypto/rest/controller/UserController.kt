@@ -20,7 +20,9 @@ import fr.cph.crypto.core.usecase.position.DeletePosition
 import fr.cph.crypto.core.usecase.position.UpdatePosition
 import fr.cph.crypto.core.usecase.sharevalue.GetShareValue
 import fr.cph.crypto.core.usecase.sharevalue.UpdateShareValue
-import fr.cph.crypto.core.usecase.user.*
+import fr.cph.crypto.core.usecase.user.CreateUser
+import fr.cph.crypto.core.usecase.user.FindUser
+import fr.cph.crypto.core.usecase.user.ValidateUser
 import fr.cph.crypto.rest.dto.PositionDTO
 import fr.cph.crypto.rest.dto.ShareValueDTO
 import fr.cph.crypto.rest.dto.UserDTO

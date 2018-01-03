@@ -4,8 +4,6 @@ import fr.cph.crypto.core.Utils;
 import fr.cph.crypto.core.entity.Email;
 import fr.cph.crypto.core.entity.User;
 import fr.cph.crypto.core.spi.*;
-import fr.cph.crypto.core.spi.ContextService;
-import fr.cph.crypto.core.spi.EmailService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -23,12 +21,12 @@ class CreateUserTest {
 	private EmailService emailService = Mockito.mock(EmailService.class);
 	private PasswordEncoder passwordEncoder = Mockito.mock(PasswordEncoder.class);
 	private CreateUser createUser = new CreateUser(
-			userRepository = userRepository,
-			idGenerator = idGenerator,
-			passwordEncoder = passwordEncoder,
-			templateService = templateService,
-			contextService = contextService,
-			emailService = emailService);
+		userRepository = userRepository,
+		idGenerator = idGenerator,
+		passwordEncoder = passwordEncoder,
+		templateService = templateService,
+		contextService = contextService,
+		emailService = emailService);
 
 	@Test
 	void testCreate() {
@@ -41,7 +39,7 @@ class CreateUserTest {
 		given(userRepository.saveUser(user)).willReturn(user);
 		given(contextService.getBaseUrl()).willReturn("localhost");
 		given(templateService.welcomeContentEmail("localhost", "ID", "key"))
-				.willReturn("email content");
+			.willReturn("email content");
 
 		// when
 		User actual = createUser.create(user);

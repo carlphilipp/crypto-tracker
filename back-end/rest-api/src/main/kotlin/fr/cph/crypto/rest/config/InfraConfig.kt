@@ -23,8 +23,8 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class InfraConfig {
 
-    @Bean
-    fun uuidGenerator(): IdGenerator {
-        return Jug()
-    }
+	@Bean
+	fun uuidGenerator(): IdGenerator {
+		return Jug()
+	}
 }

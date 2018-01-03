@@ -12,7 +12,6 @@ class DeletePosition(private val userRepository: UserRepository) {
 		when {
 			positionFound.size == 1 -> {
 				user.liquidityMovement = user.liquidityMovement - price
-
 				userRepository.deletePosition(user, positionFound[0])
 			}
 			positionFound.size > 1 -> throw RuntimeException("Something pretty bad happened")

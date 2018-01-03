@@ -33,29 +33,29 @@ data class PositionDTO(var id: String? = null,
 					   var gainPercentage: Double? = null,
 					   var lastUpdated: Long? = null) {
 
-    fun toPosition(): Position {
-        val position = Position(
-				currency1 = Currency.findCurrency(this.currency1.code),
-				quantity = this.quantity,
-				unitCostPrice = this.unitCostPrice)
-        position.id = this.id
-        return position
-    }
+	fun toPosition(): Position {
+		val position = Position(
+			currency1 = Currency.findCurrency(this.currency1.code),
+			quantity = this.quantity,
+			unitCostPrice = this.unitCostPrice)
+		position.id = this.id
+		return position
+	}
 
-    companion object {
-        fun from(position: Position): PositionDTO {
-            return PositionDTO(
-                    id = position.id,
-                    currency1 = CurrencyDTO.from(position.currency1),
-                    currency2 = CurrencyDTO.from(position.currency2),
-                    quantity = position.quantity,
-                    unitCostPrice = position.unitCostPrice,
-                    originalValue = position.originalValue,
-                    value = position.value,
-                    gain = position.gain,
-                    gainPercentage = position.gainPercentage,
-                    lastUpdated = position.lastUpdated)
-        }
-    }
+	companion object {
+		fun from(position: Position): PositionDTO {
+			return PositionDTO(
+				id = position.id,
+				currency1 = CurrencyDTO.from(position.currency1),
+				currency2 = CurrencyDTO.from(position.currency2),
+				quantity = position.quantity,
+				unitCostPrice = position.unitCostPrice,
+				originalValue = position.originalValue,
+				value = position.value,
+				gain = position.gain,
+				gainPercentage = position.gainPercentage,
+				lastUpdated = position.lastUpdated)
+		}
+	}
 }
 

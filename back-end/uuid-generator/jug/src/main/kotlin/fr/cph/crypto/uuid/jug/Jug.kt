@@ -22,13 +22,13 @@ import fr.cph.crypto.core.spi.IdGenerator
 
 class Jug : IdGenerator {
 
-    override fun getNewId(): String {
-        return generator().generate().toString()
-    }
+	override fun getNewId(): String {
+		return generator().generate().toString()
+	}
 
-    companion object {
-        fun generator(): NoArgGenerator {
-            return Generators.timeBasedGenerator(EthernetAddress.fromInterface())
-        }
-    }
+	companion object {
+		fun generator(): NoArgGenerator {
+			return Generators.timeBasedGenerator(EthernetAddress.fromInterface())
+		}
+	}
 }

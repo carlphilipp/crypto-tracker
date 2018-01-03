@@ -30,34 +30,34 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 @EnableAuthorizationServer
 class AuthorizationServerConfig : AuthorizationServerConfigurerAdapter() {
 
-    @Autowired
-    private lateinit var jwtProperties: JwtProperties
+	@Autowired
+	private lateinit var jwtProperties: JwtProperties
 
-    @Autowired
-    private lateinit var tokenStore: TokenStore
+	@Autowired
+	private lateinit var tokenStore: TokenStore
 
-    @Autowired
-    private lateinit var accessTokenConverter: JwtAccessTokenConverter
+	@Autowired
+	private lateinit var accessTokenConverter: JwtAccessTokenConverter
 
-    @Autowired
-    private lateinit var authenticationManager: AuthenticationManager
+	@Autowired
+	private lateinit var authenticationManager: AuthenticationManager
 
-    override fun configure(configurer: ClientDetailsServiceConfigurer) {
-        configurer
-                .inMemory()
-                .withClient(jwtProperties.clientId)
-                .secret(jwtProperties.clientSecret)
-                .authorizedGrantTypes(*jwtProperties.grantTypes)
-                .scopes(*jwtProperties.scopes)
-                .resourceIds(jwtProperties.resourceId)
-    }
+	override fun configure(configurer: ClientDetailsServiceConfigurer) {
+		configurer
+			.inMemory()
+			.withClient(jwtProperties.clientId)
+			.secret(jwtProperties.clientSecret)
+			.authorizedGrantTypes(*jwtProperties.grantTypes)
+			.scopes(*jwtProperties.scopes)
+			.resourceIds(jwtProperties.resourceId)
+	}
 
-    override fun configure(endpoints: AuthorizationServerEndpointsConfigurer) {
-        val enhancerChain = TokenEnhancerChain()
-        enhancerChain.setTokenEnhancers(listOf(accessTokenConverter))
-        endpoints.tokenStore(tokenStore)
-                .accessTokenConverter(accessTokenConverter)
-                .tokenEnhancer(enhancerChain)
-                .authenticationManager(authenticationManager)
-    }
+	override fun configure(endpoints: AuthorizationServerEndpointsConfigurer) {
+		val enhancerChain = TokenEnhancerChain()
+		enhancerChain.setTokenEnhancers(listOf(accessTokenConverter))
+		endpoints.tokenStore(tokenStore)
+			.accessTokenConverter(accessTokenConverter)
+			.tokenEnhancer(enhancerChain)
+			.authenticationManager(authenticationManager)
+	}
 }

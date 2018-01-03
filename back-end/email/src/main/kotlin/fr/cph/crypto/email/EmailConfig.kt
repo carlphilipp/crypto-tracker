@@ -20,28 +20,27 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import java.io.File
 import java.lang.management.ManagementFactory
 
 @Configuration
 class EmailConfig {
 
-    @Bean
-    fun getProperties(): EmailProperties {
-        val mapper = ObjectMapper(YAMLFactory())
+	@Bean
+	fun getProperties(): EmailProperties {
+		val mapper = ObjectMapper(YAMLFactory())
 
-        val emailProperties = mapper.readValue(EmailConfig::class.java.classLoader.getResourceAsStream("email.yaml"), EmailProperties::class.java)
-        val decryptedPassword = decryptPassword(emailProperties.email.password!!)
-        emailProperties.email.password = decryptedPassword
-        return emailProperties
-    }
+		val emailProperties = mapper.readValue(EmailConfig::class.java.classLoader.getResourceAsStream("email.yaml"), EmailProperties::class.java)
+		val decryptedPassword = decryptPassword(emailProperties.email.password!!)
+		emailProperties.email.password = decryptedPassword
+		return emailProperties
+	}
 
-    private fun decryptPassword(password: String): String {
-        val stringEncryptor = StandardPBEStringEncryptor()
-        val runtimeMxBean = ManagementFactory.getRuntimeMXBean()
-        val argument = runtimeMxBean.inputArguments.find { s -> s.contains("jasypt.encryptor.password") } ?: throw RuntimeException("jasypt.encryptor.password not found")
-        val jasyptPassword = argument.substring(argument.indexOf("=") + 1)
-        stringEncryptor.setPassword(jasyptPassword)
-        return stringEncryptor.decrypt(password)
-    }
+	private fun decryptPassword(password: String): String {
+		val stringEncryptor = StandardPBEStringEncryptor()
+		val runtimeMxBean = ManagementFactory.getRuntimeMXBean()
+		val argument = runtimeMxBean.inputArguments.find { s -> s.contains("jasypt.encryptor.password") } ?: throw RuntimeException("jasypt.encryptor.password not found")
+		val jasyptPassword = argument.substring(argument.indexOf("=") + 1)
+		stringEncryptor.setPassword(jasyptPassword)
+		return stringEncryptor.decrypt(password)
+	}
 }

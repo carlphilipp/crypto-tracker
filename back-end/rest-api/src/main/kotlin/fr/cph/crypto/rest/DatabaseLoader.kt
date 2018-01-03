@@ -47,7 +47,7 @@ constructor(private val tickerRepository: TickerRepository,
 		updateTicker.updateAll()
 
 		var user = User(id = "1", email = "cp.harmant@gmail.com", password = passwordEncoder.encodePassword("PASSWORD", null),
-				role = Role.ADMIN, allowed = true)
+			role = Role.ADMIN, allowed = true)
 		user = userRepository.saveUser(user)
 
 		val positionBtc = Position(id = idGenerator.getNewId(), currency1 = Currency.BTC, quantity = 0.06564277, unitCostPrice = 7616.98508457)

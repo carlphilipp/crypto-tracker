@@ -8,6 +8,6 @@ import java.util.ArrayList;
 public class Utils {
 	public static User getUser() {
 		return new User(null, "email", "password", Role.USER, Currency.USD, 0.0, true, null, null, null,
-				null, new ArrayList<>());
+			null, new ArrayList<>());
 	}
 }

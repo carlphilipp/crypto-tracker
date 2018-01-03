@@ -26,34 +26,34 @@ import org.springframework.web.util.UriComponentsBuilder
 @Service
 class CoinMarketCapAdapter(private val restTemplate: RestTemplate) : TickerClient {
 
-    override fun getTicker(currency: Currency, ticker: String): Ticker? {
-        LOGGER.debug("Search ticker: {}", ticker)
-        return getAllTickers(currency).firstOrNull { tick -> tick.currency1.code == ticker }
-    }
+	override fun getTicker(currency: Currency, ticker: String): Ticker? {
+		LOGGER.debug("Search ticker: {}", ticker)
+		return getAllTickers(currency).firstOrNull { tick -> tick.currency1.code == ticker }
+	}
 
-    override fun getTickers(currency: Currency, tickers: List<String>): List<Ticker> {
-        LOGGER.debug("Search tickers: {}", tickers)
-        return getAllTickers(currency).filter { ticker -> tickers.contains(ticker.currency1.code) }
-    }
+	override fun getTickers(currency: Currency, tickers: List<String>): List<Ticker> {
+		LOGGER.debug("Search tickers: {}", tickers)
+		return getAllTickers(currency).filter { ticker -> tickers.contains(ticker.currency1.code) }
+	}
 
-    private fun getAllTickers(currency: Currency): List<Ticker> {
-        val uriComponents = UriComponentsBuilder.newInstance()
-                .scheme("https")
-                .host("api.coinmarketcap.com")
-                .path("/v1/ticker")
-                .queryParam("limit", "0")
-                .queryParam("convert", currency.code)
-                .build()
+	private fun getAllTickers(currency: Currency): List<Ticker> {
+		val uriComponents = UriComponentsBuilder.newInstance()
+			.scheme("https")
+			.host("api.coinmarketcap.com")
+			.path("/v1/ticker")
+			.queryParam("limit", "0")
+			.queryParam("convert", currency.code)
+			.build()
 
-        LOGGER.debug("HTTP request: {}", uriComponents.toUri())
-        val responses = restTemplate.getForObject(uriComponents.toUri(), Array<Response>::class.java)
-        return responses
-                .filter { response -> !response.id!!.contains("futures") } // TODO not sure why two coins can have the same code, so filter out for now
-                .map { response -> TickerMapper.responseToTicker(currency, response) }
-                .filter { ticker -> ticker.currency1 != Currency.UNKNOWN }
-    }
+		LOGGER.debug("HTTP request: {}", uriComponents.toUri())
+		val responses = restTemplate.getForObject(uriComponents.toUri(), Array<Response>::class.java)
+		return responses
+			.filter { response -> !response.id!!.contains("futures") } // TODO not sure why two coins can have the same code, so filter out for now
+			.map { response -> TickerMapper.responseToTicker(currency, response) }
+			.filter { ticker -> ticker.currency1 != Currency.UNKNOWN }
+	}
 
-    companion object {
-        private val LOGGER = LoggerFactory.getLogger(CoinMarketCapAdapter::class.java)
-    }
+	companion object {
+		private val LOGGER = LoggerFactory.getLogger(CoinMarketCapAdapter::class.java)
+	}
 }

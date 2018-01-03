@@ -33,27 +33,27 @@ data class UserDTO(var id: String? = null,
 				   var gainPercentage: Double? = null,
 				   var positions: List<PositionDTO> = listOf()) {
 
-    fun toUser(): User {
-        val user = User(
-				email = this.email,
-				password = this.password,
-				currency = this.currency.toCurrency())
-        user.id = this.id
-        return user
-    }
+	fun toUser(): User {
+		val user = User(
+			email = this.email,
+			password = this.password,
+			currency = this.currency.toCurrency())
+		user.id = this.id
+		return user
+	}
 
-    companion object {
-        fun from(user: User): UserDTO {
-            return UserDTO(
-                    id = user.id,
-                    email = user.email,
-                    password = user.password,
-                    value = user.value,
-                    originalValue = user.originalValue,
-                    gain = user.gain,
-                    gainPercentage = user.gainPercentage,
-                    positions = user.positions.map { position -> PositionDTO.from(position) },
-                    currency = CurrencyDTO.from(user.currency))
-        }
-    }
+	companion object {
+		fun from(user: User): UserDTO {
+			return UserDTO(
+				id = user.id,
+				email = user.email,
+				password = user.password,
+				value = user.value,
+				originalValue = user.originalValue,
+				gain = user.gain,
+				gainPercentage = user.gainPercentage,
+				positions = user.positions.map { position -> PositionDTO.from(position) },
+				currency = CurrencyDTO.from(user.currency))
+		}
+	}
 }

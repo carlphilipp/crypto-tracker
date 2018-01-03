@@ -39,58 +39,58 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 class SecurityConfig : WebSecurityConfigurerAdapter() {
 
-    @Value("\${security.signing-key}")
-    private lateinit var signingKey: String
+	@Value("\${security.signing-key}")
+	private lateinit var signingKey: String
 
-    @Autowired
-    private lateinit var encoder: ShaPasswordEncoder
+	@Autowired
+	private lateinit var encoder: ShaPasswordEncoder
 
-    @Autowired
-    private lateinit var userService: UserDetailsService
+	@Autowired
+	private lateinit var userService: UserDetailsService
 
-    @Autowired
-    private lateinit var jwtConverter: JwtConverter
+	@Autowired
+	private lateinit var jwtConverter: JwtConverter
 
-    @Bean
-    override fun authenticationManager(): AuthenticationManager {
-        return super.authenticationManager()
-    }
+	@Bean
+	override fun authenticationManager(): AuthenticationManager {
+		return super.authenticationManager()
+	}
 
-    override fun configure(auth: AuthenticationManagerBuilder) {
-        auth.userDetailsService<UserDetailsService>(userService).passwordEncoder(encoder)
-    }
+	override fun configure(auth: AuthenticationManagerBuilder) {
+		auth.userDetailsService<UserDetailsService>(userService).passwordEncoder(encoder)
+	}
 
-    override fun configure(http: HttpSecurity) {
-        http
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .httpBasic()
-                .realmName("security realm")
-                .and()
-                .csrf()
-                .disable()
-    }
+	override fun configure(http: HttpSecurity) {
+		http
+			.sessionManagement()
+			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			.and()
+			.httpBasic()
+			.realmName("security realm")
+			.and()
+			.csrf()
+			.disable()
+	}
 
-    @Bean
-    fun accessTokenConverter(): JwtAccessTokenConverter {
-        val converter = JwtAccessTokenConverter()
-        converter.setSigningKey(signingKey)
-        converter.accessTokenConverter = jwtConverter
-        return converter
-    }
+	@Bean
+	fun accessTokenConverter(): JwtAccessTokenConverter {
+		val converter = JwtAccessTokenConverter()
+		converter.setSigningKey(signingKey)
+		converter.accessTokenConverter = jwtConverter
+		return converter
+	}
 
-    @Bean
-    fun tokenStore(): TokenStore {
-        return JwtTokenStore(accessTokenConverter())
-    }
+	@Bean
+	fun tokenStore(): TokenStore {
+		return JwtTokenStore(accessTokenConverter())
+	}
 
-    @Bean
-    @Primary
-    fun tokenServices(): DefaultTokenServices {
-        val defaultTokenServices = DefaultTokenServices()
-        defaultTokenServices.setTokenStore(tokenStore())
-        defaultTokenServices.setSupportRefreshToken(true)
-        return defaultTokenServices
-    }
+	@Bean
+	@Primary
+	fun tokenServices(): DefaultTokenServices {
+		val defaultTokenServices = DefaultTokenServices()
+		defaultTokenServices.setTokenStore(tokenStore())
+		defaultTokenServices.setSupportRefreshToken(true)
+		return defaultTokenServices
+	}
 }

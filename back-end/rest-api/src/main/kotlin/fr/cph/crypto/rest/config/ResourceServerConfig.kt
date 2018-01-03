@@ -27,22 +27,22 @@ import org.springframework.security.oauth2.provider.token.ResourceServerTokenSer
 @EnableResourceServer
 class ResourceServerConfig : ResourceServerConfigurerAdapter() {
 
-    @Autowired
-    private lateinit var tokenServices: ResourceServerTokenServices
+	@Autowired
+	private lateinit var tokenServices: ResourceServerTokenServices
 
-    @Autowired
-    private lateinit var jwtProperties: JwtProperties
+	@Autowired
+	private lateinit var jwtProperties: JwtProperties
 
-    override fun configure(resources: ResourceServerSecurityConfigurer) {
-        resources.resourceId(jwtProperties.resourceId).tokenServices(tokenServices)
-    }
+	override fun configure(resources: ResourceServerSecurityConfigurer) {
+		resources.resourceId(jwtProperties.resourceId).tokenServices(tokenServices)
+	}
 
-    override fun configure(http: HttpSecurity) {
-        http
-                .requestMatchers()
-                .and()
-                .authorizeRequests()
-                .antMatchers("/actuator/**", "/api-docs/**").permitAll()
-                .antMatchers("/api/**").authenticated()
-    }
+	override fun configure(http: HttpSecurity) {
+		http
+			.requestMatchers()
+			.and()
+			.authorizeRequests()
+			.antMatchers("/actuator/**", "/api-docs/**").permitAll()
+			.antMatchers("/api/**").authenticated()
+	}
 }

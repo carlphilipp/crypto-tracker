@@ -23,35 +23,35 @@ import org.springframework.data.mongodb.core.mapping.Document
 
 @Document(collection = "share_value")
 data class ShareValueDB(
-        @Id var id: String? = null,
-        val timestamp: Long,
-        @Indexed @DBRef val user: UserDB,
-        val shareQuantity: Double,
-        val shareValue: Double,
-        val portfolioValue: Double) {
+	@Id var id: String? = null,
+	val timestamp: Long,
+	@Indexed @DBRef val user: UserDB,
+	val shareQuantity: Double,
+	val shareValue: Double,
+	val portfolioValue: Double) {
 
-    fun toShareValue(): ShareValue {
-        val shareValue = ShareValue(
-				timestamp = this.timestamp,
-				user = this.user.toUser(),
-				shareQuantity = this.shareQuantity,
-				shareValue = this.shareValue,
-				portfolioValue = this.portfolioValue
+	fun toShareValue(): ShareValue {
+		val shareValue = ShareValue(
+			timestamp = this.timestamp,
+			user = this.user.toUser(),
+			shareQuantity = this.shareQuantity,
+			shareValue = this.shareValue,
+			portfolioValue = this.portfolioValue
 		)
-        shareValue.id = this.id
-        return shareValue
-    }
+		shareValue.id = this.id
+		return shareValue
+	}
 
-    companion object {
-        fun from(shareValue: ShareValue): ShareValueDB {
-            return ShareValueDB(
-                    id = shareValue.id,
-                    timestamp = shareValue.timestamp,
-                    user = UserDB.from(shareValue.user),
-                    shareQuantity = shareValue.shareQuantity,
-                    shareValue = shareValue.shareValue,
-                    portfolioValue = shareValue.portfolioValue
-            )
-        }
-    }
+	companion object {
+		fun from(shareValue: ShareValue): ShareValueDB {
+			return ShareValueDB(
+				id = shareValue.id,
+				timestamp = shareValue.timestamp,
+				user = UserDB.from(shareValue.user),
+				shareQuantity = shareValue.shareQuantity,
+				shareValue = shareValue.shareValue,
+				portfolioValue = shareValue.portfolioValue
+			)
+		}
+	}
 }

@@ -28,17 +28,17 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 @Configuration
 class JwtConfig {
 
-    @Bean
-    fun defaultUserAuthenticationConverter(userRepository: UserRepository): DefaultUserAuthenticationConverter {
-        return CustomUserAuthenticationConverter(userRepository)
-    }
+	@Bean
+	fun defaultUserAuthenticationConverter(userRepository: UserRepository): DefaultUserAuthenticationConverter {
+		return CustomUserAuthenticationConverter(userRepository)
+	}
 
-    @Bean
-    fun jwtConverter(defaultUserAuthenticationConverter: DefaultUserAuthenticationConverter): JwtConverter {
-        val jwtConverter = JwtConverter()
-        jwtConverter.setUserTokenConverter(defaultUserAuthenticationConverter)
-        return jwtConverter
-    }
+	@Bean
+	fun jwtConverter(defaultUserAuthenticationConverter: DefaultUserAuthenticationConverter): JwtConverter {
+		val jwtConverter = JwtConverter()
+		jwtConverter.setUserTokenConverter(defaultUserAuthenticationConverter)
+		return jwtConverter
+	}
 }
 
 /**
@@ -46,15 +46,15 @@ class JwtConfig {
  */
 class JwtConverter : DefaultAccessTokenConverter(), JwtAccessTokenConverterConfigurer {
 
-    override fun configure(converter: JwtAccessTokenConverter) {
-        converter.accessTokenConverter = this
-    }
+	override fun configure(converter: JwtAccessTokenConverter) {
+		converter.accessTokenConverter = this
+	}
 
-    override fun extractAuthentication(map: Map<String, *>): OAuth2Authentication {
-        val auth = super.extractAuthentication(map)
-        auth.details = map
-        return auth
-    }
+	override fun extractAuthentication(map: Map<String, *>): OAuth2Authentication {
+		val auth = super.extractAuthentication(map)
+		auth.details = map
+		return auth
+	}
 }
 
 /**
@@ -62,15 +62,15 @@ class JwtConverter : DefaultAccessTokenConverter(), JwtAccessTokenConverterConfi
  */
 private class CustomUserAuthenticationConverter(private val userRepository: UserRepository) : DefaultUserAuthenticationConverter() {
 
-    @Suppress("UNCHECKED_CAST")
-    override fun convertUserAuthentication(authentication: Authentication): Map<String, *> {
-        val user = userRepository.findOneUserByEmail(authentication.name)
-        val response = super.convertUserAuthentication(authentication) as MutableMap<String, Any>
-        response.put(ID, user?.id!!)
-        return response
-    }
+	@Suppress("UNCHECKED_CAST")
+	override fun convertUserAuthentication(authentication: Authentication): Map<String, *> {
+		val user = userRepository.findOneUserByEmail(authentication.name)
+		val response = super.convertUserAuthentication(authentication) as MutableMap<String, Any>
+		response.put(ID, user?.id!!)
+		return response
+	}
 
-    companion object {
-        private val ID = "id"
-    }
+	companion object {
+		private val ID = "id"
+	}
 }

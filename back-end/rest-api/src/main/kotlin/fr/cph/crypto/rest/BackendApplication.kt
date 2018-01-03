@@ -28,5 +28,5 @@ import org.springframework.scheduling.annotation.EnableScheduling
 class BackendApplication
 
 fun main(args: Array<String>) {
-    SpringApplication.run(BackendApplication::class.java, *args)
+	SpringApplication.run(BackendApplication::class.java, *args)
 }

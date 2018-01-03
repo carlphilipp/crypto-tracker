@@ -27,22 +27,22 @@ import org.springframework.web.client.RestTemplate
 @Configuration
 class WebConfig {
 
-    @Value("\${security.encoding-strength}")
-    private lateinit var encodingStrength: String
+	@Value("\${security.encoding-strength}")
+	private lateinit var encodingStrength: String
 
-    @Bean
-    fun shaPasswordEncoder(): ShaPasswordEncoder {
-        return ShaPasswordEncoder(encodingStrength.toInt())
-    }
+	@Bean
+	fun shaPasswordEncoder(): ShaPasswordEncoder {
+		return ShaPasswordEncoder(encodingStrength.toInt())
+	}
 
-    @Bean
-    @Primary
-    fun objectMapper() = ObjectMapper().apply {
-        registerModule(KotlinModule())
-    }
+	@Bean
+	@Primary
+	fun objectMapper() = ObjectMapper().apply {
+		registerModule(KotlinModule())
+	}
 
-    @Bean
-    fun restTemplate(): RestTemplate {
-        return RestTemplate()
-    }
+	@Bean
+	fun restTemplate(): RestTemplate {
+		return RestTemplate()
+	}
 }
