@@ -25,6 +25,7 @@ import fr.cph.crypto.core.usecase.ticker.FindTicker
 import fr.cph.crypto.core.usecase.ticker.UpdateTicker
 import fr.cph.crypto.core.usecase.user.CreateUser
 import fr.cph.crypto.core.usecase.user.FindUser
+import fr.cph.crypto.core.usecase.user.LoginUser
 import fr.cph.crypto.core.usecase.user.ValidateUser
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -54,6 +55,16 @@ class CoreConfig {
 	}
 
 	@Bean
+	fun validateUser(userRepository: UserRepository, passwordEncoder: PasswordEncoder): ValidateUser {
+		return ValidateUser(userRepository, passwordEncoder)
+	}
+
+	@Bean
+	fun loginUser(userRepository: UserRepository): LoginUser {
+		return LoginUser(userRepository)
+	}
+
+	@Bean
 	fun addPosition(userRepository: UserRepository, idGenerator: IdGenerator): AddPosition {
 		return AddPosition(userRepository = userRepository, idGenerator = idGenerator)
 	}
@@ -68,10 +79,6 @@ class CoreConfig {
 		return DeletePosition(userRepository)
 	}
 
-	@Bean
-	fun validateUser(userRepository: UserRepository, passwordEncoder: PasswordEncoder): ValidateUser {
-		return ValidateUser(userRepository, passwordEncoder)
-	}
 
 	@Bean
 	fun findTicker(tickerRepository: TickerRepository): FindTicker {

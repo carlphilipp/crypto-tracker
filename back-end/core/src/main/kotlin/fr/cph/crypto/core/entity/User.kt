@@ -29,6 +29,6 @@ data class User(var id: String? = null,
 				var positions: MutableList<Position> = mutableListOf())
 
 enum class Role {
-    USER,
-    ADMIN
+	USER,
+	ADMIN
 }
