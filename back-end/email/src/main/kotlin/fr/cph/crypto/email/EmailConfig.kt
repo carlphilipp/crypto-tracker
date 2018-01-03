@@ -18,21 +18,18 @@ package fr.cph.crypto.email
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
 import java.lang.management.ManagementFactory
 
-@Configuration
-class EmailConfig {
+object EmailConfig {
 
-	@Bean
-	fun getProperties(): EmailProperties {
+	val emailProperties: EmailProperties;
+
+	init {
 		val mapper = ObjectMapper(YAMLFactory())
 
-		val emailProperties = mapper.readValue(EmailConfig::class.java.classLoader.getResourceAsStream("email.yaml"), EmailProperties::class.java)
+		emailProperties = mapper.readValue(EmailConfig::class.java.classLoader.getResourceAsStream("email.yaml"), EmailProperties::class.java)
 		val decryptedPassword = decryptPassword(emailProperties.email.password!!)
 		emailProperties.email.password = decryptedPassword
-		return emailProperties
 	}
 
 	private fun decryptPassword(password: String): String {

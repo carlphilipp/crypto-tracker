@@ -15,7 +15,9 @@
  */
 package fr.cph.crypto.config
 
+import fr.cph.crypto.core.spi.EmailService
 import fr.cph.crypto.core.spi.IdGenerator
+import fr.cph.crypto.email.DefaultEmailAdapter
 import fr.cph.crypto.uuid.jug.Jug
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -26,5 +28,10 @@ class InfraConfig {
 	@Bean
 	fun uuidGenerator(): IdGenerator {
 		return Jug()
+	}
+
+	@Bean
+	fun emailService(): EmailService {
+		return DefaultEmailAdapter()
 	}
 }

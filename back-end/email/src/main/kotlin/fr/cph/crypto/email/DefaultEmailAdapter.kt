@@ -18,14 +18,12 @@ package fr.cph.crypto.email
 import fr.cph.crypto.core.entity.Email
 import fr.cph.crypto.core.spi.EmailService
 import org.slf4j.LoggerFactory
-import org.springframework.stereotype.Service
 import java.util.*
 import javax.mail.*
 import javax.mail.internet.InternetAddress
 import javax.mail.internet.MimeMessage
 
-@Service
-class DefaultEmailAdapter(private val emailProperties: EmailProperties) : EmailService {
+class DefaultEmailAdapter(private val emailProperties: EmailProperties = EmailConfig.emailProperties) : EmailService {
 
 	private val sslFactory = "javax.net.ssl.SSLSocketFactory"
 
