@@ -2,15 +2,10 @@ apply plugin: 'kotlin-spring'
 apply plugin: 'org.springframework.boot'
 
 dependencies {
-    compile(
-            [group: 'org.springframework.boot', name: 'spring-boot-starter-web'],
-            [group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'],
-            [group: 'org.jetbrains.kotlin', name: 'kotlin-reflect'],
-            [group: 'org.apache.httpcomponents', name: 'httpclient', version: http_client_version],
-            [group: 'com.github.ulisesbocchio', name: 'jasypt-spring-boot', version: spring_boot_jasypt_version],
-    )
-
-    compile("com.fasterxml.jackson.module:jackson-module-kotlin:$jackson_version") {
-        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-reflect'
-    }
+	compile(
+		[group: 'org.springframework.boot', name: 'spring-boot-starter-web'],
+		[group: 'org.apache.httpcomponents', name: 'httpclient', version: http_client_version],
+		[group: 'com.github.ulisesbocchio', name: 'jasypt-spring-boot', version: spring_boot_jasypt_version],
+		[group: 'com.fasterxml.jackson.module', name: 'jackson-module-kotlin', version: jackson_version],
+	)
 }
