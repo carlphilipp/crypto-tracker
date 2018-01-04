@@ -1,3 +1,14 @@
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+		classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
+		classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring_boot_version"
+	}
+}
+
 apply plugin: 'kotlin-spring'
 apply plugin: 'org.springframework.boot'
 
@@ -7,21 +18,31 @@ configurations {
 }
 
 dependencies {
-	compile project(':core')
-	compile project(':rest-api')
-	compile project(':scheduler')
-	compile project(':client-coinmarketcap')
-	compile project(':persistence-mongo')
-	compile project(':email-default')
-	compile project(':template-default')
-	compile project(':uuid-generator-jug')
+	compile project(':back-end:core')
+	compile project(':back-end:rest-api')
+	compile project(':back-end:scheduler')
+	compile project(':back-end:client-coinmarketcap')
+	compile project(':back-end:persistence-mongo')
+	compile project(':back-end:email-default')
+	compile project(':back-end:template-default')
+	compile project(':back-end:uuid-generator-jug')
 	compile(
-		//[group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'],
-		//[group: 'org.jetbrains.kotlin', name: 'kotlin-reflect'],
+		[group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'],
+		[group: 'org.jetbrains.kotlin', name: 'kotlin-reflect'],
 		[group: 'org.springframework.boot', name: 'spring-boot-starter-web'],
 		[group: 'org.springframework.boot', name: 'spring-boot-starter-security'],
 		[group: 'org.springframework.security', name: 'spring-security-jwt'],
 		[group: 'org.springframework.security.oauth', name: 'spring-security-oauth2'],
 		[group: 'com.github.ulisesbocchio', name: 'jasypt-spring-boot', version: spring_boot_jasypt_version],
+		[group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: jackson_version],
+		[group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jackson_version],
+		[group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jackson_version],
+		[group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: jackson_version],
+		[group: 'org.yaml', name: 'snakeyaml', version: '1.18'],
 	)
+	compile("com.fasterxml.jackson.module:jackson-module-kotlin:$jackson_version") {
+		exclude group: 'org.jetbrains.kotlin', module: 'kotlin-reflect'
+		exclude group: 'com.fasterxml.jackson.core', module: 'jackson-databind'
+		exclude group: 'com.fasterxml.jackson.core', module: 'jackson-annotations'
+	}
 }

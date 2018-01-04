@@ -1,24 +1,26 @@
-include ':gateway'
-include 'core'
-include 'client-coinmarketcap'
-include 'application'
-include 'persistence-mongo'
-include 'email-default'
-include 'template-default'
-include 'uuid-generator-default'
-include 'uuid-generator-mongo'
-include 'uuid-generator-jug'
-include 'rest-api'
-include 'scheduler'
+include 'gateway'
+include 'back-end'
+include ':back-end:core'
+include ':back-end:client-coinmarketcap'
+include ':back-end:application'
+include ':back-end:persistence-mongo'
+include ':back-end:email-default'
+include ':back-end:template-default'
+include ':back-end:uuid-generator-default'
+include ':back-end:uuid-generator-mongo'
+include ':back-end:uuid-generator-jug'
+include ':back-end:rest-api'
+include ':back-end:scheduler'
 
-project(':core').projectDir = file('back-end/core')
-project(':client-coinmarketcap').projectDir = file('back-end/coinmarketcap')
-project(':application').projectDir = file('back-end/application')
-project(':rest-api').projectDir = file('back-end/rest-api')
-project(':scheduler').projectDir = file('back-end/scheduler')
-project(':persistence-mongo').projectDir = file('back-end/mongo')
-project(':email-default').projectDir = file('back-end/email')
-project(':template-default').projectDir = file('back-end/template')
-project(':uuid-generator-default').projectDir = file('back-end/uuid-generator/default')
-project(':uuid-generator-mongo').projectDir = file('back-end/uuid-generator/mongo')
-project(':uuid-generator-jug').projectDir = file('back-end/uuid-generator/jug')
+project(':back-end').projectDir = file('back-end')
+project(':back-end:core').projectDir = file('back-end/core')
+project(':back-end:client-coinmarketcap').projectDir = file('back-end/coinmarketcap')
+project(':back-end:application').projectDir = file('back-end/application')
+project(':back-end:rest-api').projectDir = file('back-end/rest-api')
+project(':back-end:scheduler').projectDir = file('back-end/scheduler')
+project(':back-end:persistence-mongo').projectDir = file('back-end/mongo')
+project(':back-end:email-default').projectDir = file('back-end/email')
+project(':back-end:template-default').projectDir = file('back-end/template')
+project(':back-end:uuid-generator-default').projectDir = file('back-end/uuid-generator/default')
+project(':back-end:uuid-generator-mongo').projectDir = file('back-end/uuid-generator/mongo')
+project(':back-end:uuid-generator-jug').projectDir = file('back-end/uuid-generator/jug')
