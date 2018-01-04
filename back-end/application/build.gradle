@@ -12,6 +12,11 @@ buildscript {
 apply plugin: 'kotlin-spring'
 apply plugin: 'org.springframework.boot'
 
+jar {
+	archiveName = "back-end-" + project.version + ".jar"
+	destinationDir = project(":back-end").getBuildDir()
+}
+
 configurations {
 	all*.exclude group: 'javax.mail', module: 'javax.mail-api'
 	all*.exclude group: 'com.sun.mail', module: 'javax.mail'
@@ -38,7 +43,7 @@ dependencies {
 		[group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jackson_version],
 		[group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jackson_version],
 		[group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: jackson_version],
-		[group: 'org.yaml', name: 'snakeyaml', version: '1.18'],
+		[group: 'org.yaml', name: 'snakeyaml', version: snakeyaml_version],
 	)
 	compile("com.fasterxml.jackson.module:jackson-module-kotlin:$jackson_version") {
 		exclude group: 'org.jetbrains.kotlin', module: 'kotlin-reflect'
