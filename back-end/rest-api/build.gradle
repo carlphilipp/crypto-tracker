@@ -3,8 +3,8 @@ apply plugin: 'kotlin-spring'
 dependencies {
 	compile project(':core')
 	compile(
-		[group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'],
-		[group: 'org.jetbrains.kotlin', name: 'kotlin-reflect'],
+		//[group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'],
+		//[group: 'org.jetbrains.kotlin', name: 'kotlin-reflect'],
 		[group: 'org.springframework', name: 'spring-web', version: spring_core_version],
 		[group: 'org.springframework', name: 'spring-webmvc', version: spring_core_version],
 		[group: 'org.springframework.security', name: 'spring-security-core', version: spring_security_version],
@@ -12,6 +12,6 @@ dependencies {
 	)
 
 	compile("com.fasterxml.jackson.module:jackson-module-kotlin:$jackson_version") {
-		exclude group: 'org.jetbrains.kotlin', module: 'kotlin-reflect'
+		//exclude group: 'org.jetbrains.kotlin', module: 'kotlin-reflect'
 	}
 }

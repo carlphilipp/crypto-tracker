@@ -16,8 +16,8 @@ dependencies {
 	compile project(':template-default')
 	compile project(':uuid-generator-jug')
 	compile(
-		[group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'],
-		[group: 'org.jetbrains.kotlin', name: 'kotlin-reflect'],
+		//[group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'],
+		//[group: 'org.jetbrains.kotlin', name: 'kotlin-reflect'],
 		[group: 'org.springframework.boot', name: 'spring-boot-starter-web'],
 		[group: 'org.springframework.boot', name: 'spring-boot-starter-security'],
 		[group: 'org.springframework.security', name: 'spring-security-jwt'],
