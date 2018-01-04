@@ -27,6 +27,6 @@ public class UpdateTickerTest {
 
 		// then
 		then(tickerClient).should().getTickers(Currency.USD, Currency.Companion.cryptoCurrenciesAsListOfString());
-		then(tickerRepository).should().save(ticker);
+		then(tickerRepository).should().save(Collections.singletonList(ticker));
 	}
 }
