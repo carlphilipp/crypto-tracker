@@ -11,8 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
@@ -101,7 +100,6 @@ class UpdatePositionTest {
 	@Test
 	void testUpdatePositionSmartNotFound() {
 		// given
-		ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
 		User user = Utils.getUser();
 		user.setLiquidityMovement(1000);
 		Position newPosition = new Position("ETH-USD", Currency.ETH, Currency.USD, 20.0, 250, null, null, null, null, null);
@@ -112,6 +110,71 @@ class UpdatePositionTest {
 
 		// then
 		assertThrows(PositionNotFoundException.class, actualExecutable, "Position id [ETH-USD] not found");
+		then(userRepository).should().findOneUserById("userId");
+	}
+
+	@Test
+	void testAddFeeToPosition() {
+		// given
+		ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
+		ArgumentCaptor<Position> positionCaptor = ArgumentCaptor.forClass(Position.class);
+		User user = Utils.getUser();
+		user.setLiquidityMovement(1000);
+		Position positionBtc = new Position("BTC-USD", Currency.BTC, Currency.USD, 1, 4000, null, null, null, null, null);
+		Position positionEth = new Position("ETH-USD", Currency.ETH, Currency.USD, 20, 250, null, null, null, null, null);
+		user.getPositions().add(positionBtc);
+		user.getPositions().add(positionEth);
+		given(userRepository.findOneUserById("userId")).willReturn((user));
+
+		// when
+		updatePosition.addFeeToPosition("userId", "BTC-USD", 0.1);
+
+		// then
+		then(userRepository).should().findOneUserById("userId");
+		then(userRepository).should().savePosition(userCaptor.capture(), positionCaptor.capture());
+		User actualUser = userCaptor.getValue();
+		assertAll("user positions",
+			() -> assertEquals("BTC-USD", actualUser.getPositions().get(0).getId()),
+			() -> assertEquals(0.9, actualUser.getPositions().get(0).getQuantity()),
+			() -> assertEquals(4000, actualUser.getPositions().get(0).getUnitCostPrice()),
+			() -> assertEquals("ETH-USD", actualUser.getPositions().get(1).getId()));
+
+		Position actualPosition = positionCaptor.getValue();
+		assertAll("position to save",
+			() -> assertEquals(0.9, actualPosition.getQuantity()),
+			() -> assertEquals(4000, actualPosition.getUnitCostPrice()));
+	}
+
+	@Test
+	void testAddFeeToPositionUserNotFound() {
+		// given
+		User user = Utils.getUser();
+		user.setLiquidityMovement(1000);
+		Position positionBtc = new Position("BTC-USD", Currency.BTC, Currency.USD, 1, 4000, null, null, null, null, null);
+		Position positionEth = new Position("ETH-USD", Currency.ETH, Currency.USD, 20, 250, null, null, null, null, null);
+		user.getPositions().add(positionBtc);
+		user.getPositions().add(positionEth);
+		given(userRepository.findOneUserById("userId")).willReturn((null));
+
+		// when
+		Executable actualExecutable = () ->updatePosition.addFeeToPosition("userId", "BTC-USD", 0.1);
+
+		// then
+		assertThrows(UserNotFoundException.class, actualExecutable, "User id [userId] not found");
+		then(userRepository).should().findOneUserById("userId");
+	}
+
+	@Test
+	void testAddFeeToPositionNotFound() {
+		// given
+		User user = Utils.getUser();
+		given(userRepository.findOneUserById("userId")).willReturn((user));
+
+		// when
+		Executable actualExecutable = () ->updatePosition.addFeeToPosition("userId", "BTC-USD", 0.1);
+
+		// then
+		assertThrows(PositionNotFoundException.class, actualExecutable, "Position id [BTC-USD] not found");
 		then(userRepository).should().findOneUserById("userId");
 	}
 }
