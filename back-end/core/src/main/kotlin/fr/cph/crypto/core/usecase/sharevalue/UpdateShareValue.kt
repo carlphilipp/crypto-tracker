@@ -3,14 +3,20 @@ package fr.cph.crypto.core.usecase.sharevalue
 import fr.cph.crypto.core.entity.ShareValue
 import fr.cph.crypto.core.entity.User
 import fr.cph.crypto.core.spi.ShareValueRepository
+import fr.cph.crypto.core.spi.TickerRepository
 import fr.cph.crypto.core.spi.UserRepository
+import fr.cph.crypto.core.usecase.user.UserUtils
 
-class UpdateShareValue(private val shareValueRepository: ShareValueRepository, private val userRepository: UserRepository) {
+class UpdateShareValue(private val shareValueRepository: ShareValueRepository,
+					   private val userRepository: UserRepository,
+					   private val tickerRepository: TickerRepository) {
 
 	fun updateAllUsersShareValue() {
 		userRepository.findAllUsers().forEach { user ->
 			run {
-				addNewShareValue(user)
+				val ids = user.positions.map { position -> position.currency1.code + "-" + position.currency2.code }.toList()
+				val tickers = tickerRepository.findAllById(ids)
+				addNewShareValue(UserUtils.enrichUser(user, tickers))
 				user.liquidityMovement = 0.0
 				userRepository.saveUser(user)
 			}

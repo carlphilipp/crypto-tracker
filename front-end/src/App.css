@@ -45,7 +45,7 @@
   .Col4 {
     display: none;
   }
-  .Col6 {
+  .Col5 {
     display: none;
   }
   .Col7 {
@@ -63,10 +63,7 @@
   .Col4 {
     display: none;
   }
-  .Col6 {
-    display: none;
-  }
-  .Col7 {
+  .Col5 {
     display: none;
   }
   .Col8 {
@@ -78,10 +75,10 @@
   .Col3 {
     display: none;
   }
-  .Col6 {
+  .Col4 {
     display: none;
   }
-  .Col7 {
+  .Col5 {
     display: none;
   }
   .Col8 {
@@ -90,10 +87,7 @@
 }
 
 @media only screen and (min-width : 750px) and (max-width : 1000px) {
-  .Col6 {
-    display: none;
-  }
-  .Col7 {
+  .Col5 {
     display: none;
   }
   .Col8 {

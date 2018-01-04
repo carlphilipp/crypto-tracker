@@ -90,8 +90,8 @@ class CoreConfig {
 	}
 
 	@Bean
-	fun updateShareValue(userRepository: UserRepository, shareValueRepository: ShareValueRepository): UpdateShareValue {
-		return UpdateShareValue(shareValueRepository, userRepository)
+	fun updateShareValue(userRepository: UserRepository, shareValueRepository: ShareValueRepository, tickerRepository: TickerRepository): UpdateShareValue {
+		return UpdateShareValue(shareValueRepository, userRepository, tickerRepository)
 	}
 
 	@Bean
