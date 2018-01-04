@@ -41,8 +41,7 @@ class UpdatePosition(private val userRepository: UserRepository) {
 
 				userRepository.savePosition(user, position)
 			}
-			positionFound.size > 1 -> throw PositionNotFoundException(position.id!!)
-			else -> throw NotAllowedException()
+			else -> throw PositionNotFoundException(position.id!!)
 		}
 	}
 
@@ -54,8 +53,7 @@ class UpdatePosition(private val userRepository: UserRepository) {
 
 				userRepository.savePosition(user, position)
 			}
-			positionFound.size > 1 -> throw PositionNotFoundException(position.id!!)
-			else -> throw NotAllowedException() // TODO create position not allowed exception
+			else -> throw PositionNotFoundException(position.id!!)
 		}
 	}
 }

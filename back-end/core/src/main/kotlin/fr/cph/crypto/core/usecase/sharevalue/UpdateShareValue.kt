@@ -5,7 +5,7 @@ import fr.cph.crypto.core.entity.User
 import fr.cph.crypto.core.spi.ShareValueRepository
 import fr.cph.crypto.core.spi.TickerRepository
 import fr.cph.crypto.core.spi.UserRepository
-import fr.cph.crypto.core.usecase.user.UserUtils
+import fr.cph.crypto.core.utils.UserUtils
 
 class UpdateShareValue(private val shareValueRepository: ShareValueRepository,
 					   private val userRepository: UserRepository,

@@ -4,6 +4,7 @@ import fr.cph.crypto.core.entity.User
 import fr.cph.crypto.core.exception.UserNotFoundException
 import fr.cph.crypto.core.spi.TickerRepository
 import fr.cph.crypto.core.spi.UserRepository
+import fr.cph.crypto.core.utils.UserUtils
 
 class FindUser(private val userRepository: UserRepository, private val tickerRepository: TickerRepository) {
 

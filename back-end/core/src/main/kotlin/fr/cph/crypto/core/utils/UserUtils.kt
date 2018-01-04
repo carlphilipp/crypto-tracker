@@ -1,4 +1,4 @@
-package fr.cph.crypto.core.usecase.user
+package fr.cph.crypto.core.utils
 
 import fr.cph.crypto.core.entity.Ticker
 import fr.cph.crypto.core.entity.User
