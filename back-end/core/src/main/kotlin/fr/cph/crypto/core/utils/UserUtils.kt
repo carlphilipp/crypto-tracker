@@ -13,7 +13,7 @@ object UserUtils {
 			val originalValue = position.quantity * position.unitCostPrice
 			val value = position.quantity * ticker.price
 			val gain = value - originalValue
-			val gainPercentage = (value * 100 / originalValue - 100) / 100
+			val gainPercentage = (value - originalValue) / originalValue
 			position.originalValue = originalValue
 			position.value = value
 			position.gain = gain
@@ -26,7 +26,7 @@ object UserUtils {
 		user.value = totalValue
 		user.originalValue = totalOriginalValue
 		user.gain = totalValue - totalOriginalValue
-		user.gainPercentage = if (user.gain != 0.0) (totalValue * 100 / totalOriginalValue - 100) / 100 else 0.0
+		user.gainPercentage = if (user.gain != 0.0) (totalValue - totalOriginalValue) / totalOriginalValue else 0.0
 		return user
 	}
 }
