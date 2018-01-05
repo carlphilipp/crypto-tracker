@@ -30,7 +30,7 @@ data class ShareValueDTO(var id: String,
 	companion object {
 		fun from(shareValue: ShareValue): ShareValueDTO {
 			return ShareValueDTO(
-				id = shareValue.id!!,
+				id = shareValue.id,
 				timestamp = shareValue.timestamp,
 				shareQuantity = shareValue.shareQuantity,
 				shareValue = shareValue.shareValue,

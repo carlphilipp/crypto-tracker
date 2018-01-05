@@ -23,7 +23,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 
 @Document(collection = "share_value")
 data class ShareValueDB(
-	@Id var id: String? = null,
+	@Id var id: String,
 	val timestamp: Long,
 	@Indexed @DBRef val user: UserDB,
 	val shareQuantity: Double,
@@ -31,15 +31,14 @@ data class ShareValueDB(
 	val portfolioValue: Double) {
 
 	fun toShareValue(): ShareValue {
-		val shareValue = ShareValue(
-			timestamp = this.timestamp,
-			user = this.user.toUser(),
-			shareQuantity = this.shareQuantity,
+		return ShareValue(
+			id = id,
+			timestamp = timestamp,
+			user = user.toUser(),
+			shareQuantity = shareQuantity,
 			shareValue = this.shareValue,
-			portfolioValue = this.portfolioValue
+			portfolioValue = portfolioValue
 		)
-		shareValue.id = this.id
-		return shareValue
 	}
 
 	companion object {

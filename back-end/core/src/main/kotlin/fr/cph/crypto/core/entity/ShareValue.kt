@@ -15,7 +15,7 @@
  */
 package fr.cph.crypto.core.entity
 
-data class ShareValue(var id: String? = null,
+data class ShareValue(var id: String,
 					  val timestamp: Long,
 					  val user: User,
 					  val shareQuantity: Double,
