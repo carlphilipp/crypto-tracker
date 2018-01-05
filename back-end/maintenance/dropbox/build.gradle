@@ -1,0 +1,9 @@
+dependencies {
+	compile project(':back-end:core')
+	compile(
+		[group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'],
+		[group: 'org.jetbrains.kotlin', name: 'kotlin-reflect'],
+		[group: 'org.slf4j', name: 'slf4j-api', version: slf4j_version],
+		[group: 'com.dropbox.core', name: 'dropbox-core-sdk', version: dropbox_version],
+	)
+}

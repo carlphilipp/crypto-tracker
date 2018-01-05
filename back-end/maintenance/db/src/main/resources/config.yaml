@@ -1,0 +1,4 @@
+mongo:
+  mongodumppath: /Users/carlphilipp.harmant/Documents/mongodb-osx-x86_64-3.4.10/bin/mongodump
+  exportfolder: /Users/carlphilipp.harmant/test
+  dbname: cryptodb

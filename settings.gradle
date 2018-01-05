@@ -11,6 +11,8 @@ include ':back-end:uuid-generator-mongo'
 include ':back-end:uuid-generator-jug'
 include ':back-end:rest-api'
 include ':back-end:scheduler'
+include ':back-end:maintenance:dropbox'
+include ':back-end:maintenance:db'
 
 project(':back-end').projectDir = file('back-end')
 project(':back-end:core').projectDir = file('back-end/core')
@@ -24,3 +26,5 @@ project(':back-end:template-default').projectDir = file('back-end/template')
 project(':back-end:uuid-generator-default').projectDir = file('back-end/uuid-generator/default')
 project(':back-end:uuid-generator-mongo').projectDir = file('back-end/uuid-generator/mongo')
 project(':back-end:uuid-generator-jug').projectDir = file('back-end/uuid-generator/jug')
+project(':back-end:maintenance:dropbox').projectDir = file('back-end/maintenance/dropbox')
+project(':back-end:maintenance:db').projectDir = file('back-end/maintenance/db')
