@@ -53,8 +53,6 @@ class AddPositionTest {
 	@Test
 	void testAddPositionUserNotFound() {
 		// given
-		ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
-
 		Position btcPosition = new Position("BTC-USD", Currency.BTC, Currency.USD, 1.0, 5000.0, null, null, null, null, null);
 		given(userRepository.findOneUserById("id")).willReturn((null));
 

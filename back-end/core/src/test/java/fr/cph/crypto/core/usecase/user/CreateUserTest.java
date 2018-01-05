@@ -1,11 +1,18 @@
 package fr.cph.crypto.core.usecase.user;
 
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
 import fr.cph.crypto.core.Utils;
 import fr.cph.crypto.core.entity.Email;
 import fr.cph.crypto.core.entity.User;
-import fr.cph.crypto.core.spi.*;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import fr.cph.crypto.core.spi.ContextService;
+import fr.cph.crypto.core.spi.EmailService;
+import fr.cph.crypto.core.spi.IdGenerator;
+import fr.cph.crypto.core.spi.PasswordEncoder;
+import fr.cph.crypto.core.spi.TemplateService;
+import fr.cph.crypto.core.spi.UserRepository;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
@@ -13,20 +20,12 @@ import static org.mockito.BDDMockito.then;
 class CreateUserTest {
 
 	private UserRepository userRepository = Mockito.mock(UserRepository.class);
-	private ShareValueRepository shareValueRepository = Mockito.mock(ShareValueRepository.class);
-	private TickerRepository tickerRepository = Mockito.mock(TickerRepository.class);
 	private IdGenerator idGenerator = Mockito.mock(IdGenerator.class);
 	private TemplateService templateService = Mockito.mock(TemplateService.class);
 	private ContextService contextService = Mockito.mock(ContextService.class);
 	private EmailService emailService = Mockito.mock(EmailService.class);
 	private PasswordEncoder passwordEncoder = Mockito.mock(PasswordEncoder.class);
-	private CreateUser createUser = new CreateUser(
-		userRepository = userRepository,
-		idGenerator = idGenerator,
-		passwordEncoder = passwordEncoder,
-		templateService = templateService,
-		contextService = contextService,
-		emailService = emailService);
+	private CreateUser createUser = new CreateUser(userRepository, idGenerator, passwordEncoder, templateService, contextService, emailService);
 
 	@Test
 	void testCreate() {
@@ -38,8 +37,7 @@ class CreateUserTest {
 		given(passwordEncoder.encode("IDencodedPassword")).willReturn("key");
 		given(userRepository.saveUser(user)).willReturn(user);
 		given(contextService.getBaseUrl()).willReturn("localhost");
-		given(templateService.welcomeContentEmail("localhost", "ID", "key"))
-			.willReturn("email content");
+		given(templateService.welcomeContentEmail("localhost", "ID", "key")).willReturn("email content");
 
 		// when
 		User actual = createUser.create(user);
