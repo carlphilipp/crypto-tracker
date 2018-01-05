@@ -29,7 +29,7 @@ class DeletePositionTest {
 		Position position1 = new Position("positionId", Currency.BTC, Currency.USD, 1, 1, null, null, null, null, null);
 		user.getPositions().add(position1);
 		user.getPositions().add(new Position("positionId2", Currency.BTC, Currency.USD, 1, 1, null, null, null, null, null));
-		given(userRepository.findOneUserById("id")).willReturn((user));
+		given(userRepository.findOneUserById("id")).willReturn(user);
 
 		// when
 		deletePosition.deletePosition("id", "positionId", 10);
@@ -47,7 +47,7 @@ class DeletePositionTest {
 		Position position1 = new Position("positionId", Currency.BTC, Currency.USD, 1, 1, null, null, null, null, null);
 		user.getPositions().add(position1);
 		user.getPositions().add(new Position("positionId2", Currency.BTC, Currency.USD, 1, 1, null, null, null, null, null));
-		given(userRepository.findOneUserById("id")).willReturn((user));
+		given(userRepository.findOneUserById("id")).willReturn(user);
 
 		// when
 		deletePosition.deletePosition("id", "positionId", 0);
@@ -61,7 +61,7 @@ class DeletePositionTest {
 	void testDeletePositionUserNotFound() {
 		// given
 		User user = Utils.getUser();
-		given(userRepository.findOneUserById("id")).willReturn((null));
+		given(userRepository.findOneUserById("id")).willReturn(null);
 
 		// when
 		Executable actualExecutable = () -> deletePosition.deletePosition("id", "positionId", 0);
@@ -75,7 +75,7 @@ class DeletePositionTest {
 	void testDeletePositionNotFound() {
 		// given
 		User user = Utils.getUser();
-		given(userRepository.findOneUserById("id")).willReturn((user));
+		given(userRepository.findOneUserById("id")).willReturn(user);
 
 		// when
 		Executable actualExecutable = () -> deletePosition.deletePosition("id", "positionId", 0);

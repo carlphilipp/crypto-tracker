@@ -9,7 +9,7 @@ class ValidateUser(private val userRepository: UserRepository, private val passw
 
 	fun validateUser(userId: String, key: String) {
 		val user = userRepository.findOneUserById(userId) ?: throw UserNotFoundException(userId)
-		if (user.allowed) throw NotFoundException(userId)
+		if (user.allowed) throw UserNotFoundException(userId)
 		val validKey = passwordEncoder.encode(user.id + user.password)
 		if (validKey != key) throw NotFoundException(userId)
 		user.allowed = true

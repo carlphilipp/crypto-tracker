@@ -28,7 +28,7 @@ class UpdatePositionTest {
 		User user = Utils.getUser();
 		user.setLiquidityMovement(1000);
 		Position newPosition = new Position("ETH-USD", Currency.ETH, Currency.USD, 20.0, 250, null, null, null, null, null);
-		given(userRepository.findOneUserById("userId")).willReturn((null));
+		given(userRepository.findOneUserById("userId")).willReturn(null);
 
 		// when
 		Executable actualExecutable = () -> updatePosition.updatePosition("userId", newPosition, null, null);
@@ -47,7 +47,7 @@ class UpdatePositionTest {
 		user.getPositions().add(oldPosition);
 		user.setLiquidityMovement(1000);
 		Position newPosition = new Position("ETH-USD", Currency.ETH, Currency.USD, 20.0, 250, null, null, null, null, null);
-		given(userRepository.findOneUserById("userId")).willReturn((user));
+		given(userRepository.findOneUserById("userId")).willReturn(user);
 
 		// when
 		updatePosition.updatePosition("userId", newPosition, null, null);
@@ -66,7 +66,7 @@ class UpdatePositionTest {
 		User user = Utils.getUser();
 		user.setLiquidityMovement(1000);
 		Position newPosition = new Position("ETH-USD", Currency.ETH, Currency.USD, 20.0, 250, null, null, null, null, null);
-		given(userRepository.findOneUserById("userId")).willReturn((user));
+		given(userRepository.findOneUserById("userId")).willReturn(user);
 
 		// when
 		Executable actualExecutable = () -> updatePosition.updatePosition("userId", newPosition, null, null);
@@ -85,7 +85,7 @@ class UpdatePositionTest {
 		user.getPositions().add(oldPosition);
 		user.setLiquidityMovement(1000);
 		Position newPosition = new Position("ETH-USD", Currency.ETH, Currency.USD, 20.0, 250, null, null, null, null, null);
-		given(userRepository.findOneUserById("userId")).willReturn((user));
+		given(userRepository.findOneUserById("userId")).willReturn(user);
 
 		// when
 		updatePosition.updatePosition("userId", newPosition, 20.0, 250.0);
@@ -103,7 +103,7 @@ class UpdatePositionTest {
 		User user = Utils.getUser();
 		user.setLiquidityMovement(1000);
 		Position newPosition = new Position("ETH-USD", Currency.ETH, Currency.USD, 20.0, 250, null, null, null, null, null);
-		given(userRepository.findOneUserById("userId")).willReturn((user));
+		given(userRepository.findOneUserById("userId")).willReturn(user);
 
 		// when
 		Executable actualExecutable = () -> updatePosition.updatePosition("userId", newPosition, 20.0, 150.0);
@@ -124,7 +124,7 @@ class UpdatePositionTest {
 		Position positionEth = new Position("ETH-USD", Currency.ETH, Currency.USD, 20, 250, null, null, null, null, null);
 		user.getPositions().add(positionBtc);
 		user.getPositions().add(positionEth);
-		given(userRepository.findOneUserById("userId")).willReturn((user));
+		given(userRepository.findOneUserById("userId")).willReturn(user);
 
 		// when
 		updatePosition.addFeeToPosition("userId", "BTC-USD", 0.1);
@@ -154,7 +154,7 @@ class UpdatePositionTest {
 		Position positionEth = new Position("ETH-USD", Currency.ETH, Currency.USD, 20, 250, null, null, null, null, null);
 		user.getPositions().add(positionBtc);
 		user.getPositions().add(positionEth);
-		given(userRepository.findOneUserById("userId")).willReturn((null));
+		given(userRepository.findOneUserById("userId")).willReturn(null);
 
 		// when
 		Executable actualExecutable = () ->updatePosition.addFeeToPosition("userId", "BTC-USD", 0.1);
@@ -168,7 +168,7 @@ class UpdatePositionTest {
 	void testAddFeeToPositionNotFound() {
 		// given
 		User user = Utils.getUser();
-		given(userRepository.findOneUserById("userId")).willReturn((user));
+		given(userRepository.findOneUserById("userId")).willReturn(user);
 
 		// when
 		Executable actualExecutable = () ->updatePosition.addFeeToPosition("userId", "BTC-USD", 0.1);
