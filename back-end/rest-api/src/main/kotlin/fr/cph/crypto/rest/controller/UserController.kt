@@ -86,7 +86,7 @@ class UserController(private val createUser: CreateUser,
 	}
 
 	@PreAuthorize("#id == authentication.details.decodedDetails['id']")
-	@RequestMapping(value = ["/{id}/position/{positionId}/fee/{feeAmount}"], method = [RequestMethod.POST])
+	@RequestMapping(value = ["/{id}/position/{positionId}/fee/{feeAmount:.+}"], method = [RequestMethod.POST])
 	fun addFeeToPosition(@PathVariable("id") id: String,
 						 @PathVariable("positionId") positionId: String,
 						 @PathVariable("feeAmount") feeAmount: Double) {
