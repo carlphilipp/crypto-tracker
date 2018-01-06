@@ -165,7 +165,7 @@ class User extends Component {
         return (
               <IntlProvider locale="en">
                 <div>
-                    <h3 className="text-center">Portfolio</h3>
+                    <h5 className="text-center">Portfolio</h5>
                     <table>
                       <tbody>
                         <tr>
@@ -175,7 +175,7 @@ class User extends Component {
                                 <div className="row">
                                     <AddPosition buttonLabel="Add" user={user} onAdd={this.onAdd} tickers={this.props.tickers}/>
                                   <div className="col-md-1">
-                                      <Button size="lg" color="info" onClick={this.refreshTickers.bind(this)}>Refresh</Button>
+                                      <Button  color="info" onClick={this.refreshTickers.bind(this)}>Refresh</Button>
                                   </div>
                                 </div>
                               </div>

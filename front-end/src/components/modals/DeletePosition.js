@@ -74,7 +74,7 @@ class DeletePosition extends React.Component {
     render() {
         return (
             <div>
-                <Button color="danger" size="lg" onClick={this.toggle}>Delete</Button>
+                <Button color="danger"  onClick={this.toggle}>Delete</Button>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>Delete</ModalHeader>
                     <ModalBody>
@@ -89,7 +89,7 @@ class DeletePosition extends React.Component {
                         </FormGroup>
                         <FormGroup>
                           <Label for="value">Value</Label><br />
-                          <Input size="lg" placeholder={0.0} onBlur={(evt) => this.updatePrice(evt)}  valid={this.state.priceValid}/>
+                          <Input  placeholder={0.0} onBlur={(evt) => this.updatePrice(evt)}  valid={this.state.priceValid}/>
                           <FormFeedback>Must be a valid number</FormFeedback>
                           <FormText>Current market value: <FormattedNumber value={this.props.position.value} style={`currency`} currency="USD"/></FormText>
                           <FormText>Original value: <FormattedNumber value={this.props.position.originalValue} style={`currency`} currency="USD"/></FormText>
@@ -98,8 +98,8 @@ class DeletePosition extends React.Component {
                     </ModalBody>
                     {(this.state.failure) ? <AlertFailure display="Sorry, something went wrong" color="danger"/> : ''}
                     <ModalFooter>
-                        <Button color="danger" size="lg" onClick={this.delete} disabled={!this.state.formValid}>Delete</Button>
-                        <Button color="secondary" size="lg" onClick={this.toggle}>Cancel</Button>
+                        <Button color="danger"  onClick={this.delete} disabled={!this.state.formValid}>Delete</Button>
+                        <Button color="secondary"  onClick={this.toggle}>Cancel</Button>
                     </ModalFooter>
                 </Modal>
             </div>

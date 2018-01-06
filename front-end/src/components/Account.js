@@ -45,12 +45,12 @@ class Account extends Component {
         return (
               <IntlProvider locale="en">
                 <div>
-                    <h3 className="text-center">Account</h3>
+                    <h5 className="text-center">Account</h5>
                     <hr />
                     <div className="text-center">
                       Email: {user.email} <br />
                       Currency: {(user.currency != null)? <label>{user.currency.code}</label> : '' }<br />
-                      <Button size="lg">Update password</Button>
+                      <Button>Update password</Button>
                     </div>
                 </div>
               </IntlProvider>

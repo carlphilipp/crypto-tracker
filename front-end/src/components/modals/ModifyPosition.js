@@ -204,19 +204,19 @@ class ModifyPosition extends React.Component {
     render() {
         return (
             <div>
-                <Button color="secondary" size="lg" onClick={this.toggle}>Modify</Button>
+                <Button color="secondary"  onClick={this.toggle}>Modify</Button>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>Modify</ModalHeader>
                     <ModalBody>
                       <div className="container-fluid">
                         <div className="col-lg-4">
-                            <Button outline color="primary" size="lg" name="smart" id="smart" block onClick={(evt) => this.showHideForm(evt)}>Smart</Button>
+                            <Button outline color="primary"  name="smart" id="smart" block onClick={(evt) => this.showHideForm(evt)}>Smart</Button>
                         </div>
                         <div className="col-lg-4">
-                          <Button outline color="primary" size="lg" name="manual" id="manual" block onClick={(evt) => this.showHideForm(evt)}>Manual</Button>
+                          <Button outline color="primary"  name="manual" id="manual" block onClick={(evt) => this.showHideForm(evt)}>Manual</Button>
                         </div>
                         <div className="col-lg-4">
-                          <Button outline color="primary" size="lg" name="fee" id="fee" block onClick={(evt) => this.showHideForm(evt)}>Add fee</Button>
+                          <Button outline color="primary"  name="fee" id="fee" block onClick={(evt) => this.showHideForm(evt)}>Add fee</Button>
                         </div>
                       </div>
                       <Collapse isOpen={this.state.smartMod}>
@@ -240,12 +240,12 @@ class ModifyPosition extends React.Component {
                         </Table>
                         <FormGroup>
                             <Label for="quantity">Add or Remove quantity</Label>
-                            <Input size="lg" type="text" name="smartAddQuantity" id="smartAddQuantity" valid={this.state.smartQuantityValid} defaultValue={this.state.smartAddQuantity} onBlur={(evt) => this.handleUseNewValues(evt)}/>
+                            <Input  type="text" name="smartAddQuantity" id="smartAddQuantity" valid={this.state.smartQuantityValid} defaultValue={this.state.smartAddQuantity} onBlur={(evt) => this.handleUseNewValues(evt)}/>
                             <FormFeedback>Must be a valid number</FormFeedback>
                         </FormGroup>
                         <FormGroup>
                             <Label for="unitCostPrice">Unit Cost Price</Label>
-                            <Input size="lg" type="text" name="smartAddUnitCostPrice" id="smartAddUnitCostPrice" valid={this.state.smartAddUnitCostPriceValid} defaultValue={this.state.smartAddUnitCostPrice} onBlur={(evt) => this.handleUseNewValues(evt)}/>
+                            <Input  type="text" name="smartAddUnitCostPrice" id="smartAddUnitCostPrice" valid={this.state.smartAddUnitCostPriceValid} defaultValue={this.state.smartAddUnitCostPrice} onBlur={(evt) => this.handleUseNewValues(evt)}/>
                             <FormFeedback>Must be a valid number</FormFeedback>
                         </FormGroup>
                         <Table bordered>
@@ -274,12 +274,12 @@ class ModifyPosition extends React.Component {
                         </FormGroup>
                         <FormGroup>
                             <Label for="quantity">Quantity</Label>
-                            <Input size="lg" type="text" name="manualQuantity" id="manualQuantity" onBlur={evt => this.handleUserInput(evt)} defaultValue={this.state.manualQuantity} valid={this.state.manualQuantityValid} autoFocus="true"/>
+                            <Input  type="text" name="manualQuantity" id="manualQuantity" onBlur={evt => this.handleUserInput(evt)} defaultValue={this.state.manualQuantity} valid={this.state.manualQuantityValid} autoFocus="true"/>
                             <FormFeedback>Must be a valid number</FormFeedback>
                         </FormGroup>
                         <FormGroup>
                             <Label for="unitCostPrice">Unit Cost Price</Label>
-                            <Input size="lg" type="text" name="manualUnitCostPrice" id="manualUnitCostPrice" onBlur={evt => this.handleUserInput(evt)} defaultValue={this.state.manualUnitCostPrice} valid={this.state.manualUnitCostPriceValid}/>
+                            <Input  type="text" name="manualUnitCostPrice" id="manualUnitCostPrice" onBlur={evt => this.handleUserInput(evt)} defaultValue={this.state.manualUnitCostPrice} valid={this.state.manualUnitCostPriceValid}/>
                             <FormFeedback>Must be a valid number</FormFeedback>
                         </FormGroup>
                       </Collapse>
@@ -292,7 +292,7 @@ class ModifyPosition extends React.Component {
                         </FormGroup>
                         <FormGroup>
                             <Label for="fee">Fee amount</Label>
-                            <Input size="lg" type="text" name="fee" id="fee" onBlur={evt => this.updateNewFewQuantity(evt)} defaultValue={this.state.feeAmount} valid={this.state.feeAmountValid} autoFocus="true"/>
+                            <Input  type="text" name="fee" id="fee" onBlur={evt => this.updateNewFewQuantity(evt)} defaultValue={this.state.feeAmount} valid={this.state.feeAmountValid} autoFocus="true"/>
                             <FormFeedback>Must be a valid number</FormFeedback>
                         </FormGroup>
                         <FormGroup>
@@ -303,8 +303,8 @@ class ModifyPosition extends React.Component {
                     </ModalBody>
                     {(this.state.failure) ? <AlertFailure display="Sorry, something went wrong" color="danger"/> : ''}
                     <ModalFooter>
-                        <Button color="success" size="lg" onClick={this.modifyPosition} disabled={!this.state.formValid}>Modify</Button>{' '}
-                        <Button color="secondary" size="lg" onClick={this.toggle}>Cancel</Button>
+                        <Button color="success"  onClick={this.modifyPosition} disabled={!this.state.formValid}>Modify</Button>{' '}
+                        <Button color="secondary"  onClick={this.toggle}>Cancel</Button>
                     </ModalFooter>
                 </Modal>
             </div>

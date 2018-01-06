@@ -8,14 +8,10 @@ body {
     padding: 0.6rem 1.6rem;
 }
 
-.navbar-brand {
-    padding-top: 1.4rem;
-    font-size: 2rem;
+.navbar-menu {
+    padding-top: 0.7em;
 }
 
-.navbar-menu {
-    padding-top: 0.5em;
-}
 
 .hidden {
   display:none;

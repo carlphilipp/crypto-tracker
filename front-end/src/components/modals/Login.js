@@ -91,27 +91,27 @@ class Login extends React.Component {
     render() {
         return (
             <div>
-                <Button color="success" size="lg" onClick={this.toggle}>{this.props.buttonLabel}</Button>
+                <Button color="success"  onClick={this.toggle}>{this.props.buttonLabel}</Button>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>Login</ModalHeader>
                     <ModalBody>
                         <Form>
                             <FormGroup>
                                 <Label for="email">Email</Label>
-                                <Input size="lg" type="email" name="email" id="email" onChange={evt => this.handleUserInput(evt)} placeholder="your email" autoFocus="true"/>
+                                <Input type="email" name="email" id="email" onChange={evt => this.handleUserInput(evt)} placeholder="your email" autoFocus="true"/>
                                 <FormFeedback>Invalid email</FormFeedback>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="password">Password</Label>
-                                <Input size="lg" type="password" name="password" id="password"  onChange={evt => this.handleUserInput(evt)} placeholder="your password"/>
+                                <Input  type="password" name="password" id="password"  onChange={evt => this.handleUserInput(evt)} placeholder="your password"/>
                                   <FormFeedback>The password can not be empty</FormFeedback>
                             </FormGroup>
                         </Form>
                     </ModalBody>
                     {(this.state.failure) ? <AlertFailure display="No login/password match" color="danger"/> : ''}
                     <ModalFooter>
-                        <Button color="success" size="lg" onClick={this.loginUser} disabled={!this.state.formValid}>Login</Button>{' '}
-                        <Button color="secondary" size="lg" onClick={this.toggle}>Cancel</Button>
+                        <Button color="success" onClick={this.loginUser} disabled={!this.state.formValid}>Login</Button>{' '}
+                        <Button color="secondary" onClick={this.toggle}>Cancel</Button>
                     </ModalFooter>
                 </Modal>
             </div>

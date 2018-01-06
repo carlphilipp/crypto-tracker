@@ -60,8 +60,8 @@ class User extends Component {
         return (
               <IntlProvider locale="en">
                 <div>
-                    <h3 className="text-center">Share Value</h3>
-                    <hr/>
+                    <h6 className="text-center">Share Value</h6>
+                    <hr />
                      <SimpleLineChart shareValues={this.state.shareValues}/>
                     <hr />
                     <Table hover>
@@ -90,7 +90,7 @@ class User extends Component {
                         </tbody>
                     </Table>
                     <div className="text-center">
-                      <Button color="primary" size="lg" onClick={this.showAll.bind(this)}>Show / Hide All</Button>
+                      <Button color="primary"  onClick={this.showAll.bind(this)}>Show / Hide All</Button>
                     </div>
                 </div>
               </IntlProvider>

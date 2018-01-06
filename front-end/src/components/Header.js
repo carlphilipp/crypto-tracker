@@ -59,31 +59,45 @@ class Header extends Component {
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
-                            <NavItem className="navbar-menu">
-                              {(isLoggedIn()) ? <Link to="#" activeStyle={{color:'#53acff'}} onClick={this.home.bind(this)}>Market</Link>: ''}
-                            </NavItem>
+                            {(isLoggedIn()) ?
+                              <NavItem className="navbar-menu">
+                                <Link to="#" activeStyle={{color:'#53acff'}} onClick={this.home.bind(this)}>Market</Link>
+                              </NavItem>
+                            : ''}
                             &nbsp;&nbsp;&nbsp;
-                            <NavItem className="navbar-menu">
-                              {(isLoggedIn()) ? <Link to="#" activeStyle={{color:'#53acff'}} onClick={this.user.bind(this)}>Portfolio</Link> : ''}
-                            </NavItem>
+                            {(isLoggedIn()) ?
+                              <NavItem className="navbar-menu">
+                                 <Link to="#" activeStyle={{color:'#53acff'}} onClick={this.user.bind(this)}>Portfolio</Link>
+                              </NavItem>
+                            : ''}
                             &nbsp;&nbsp;&nbsp;
-                            <NavItem className="navbar-menu">
-                              {(isLoggedIn()) ? <Link to="#" activeStyle={{color:'#53acff'}} onClick={this.performance.bind(this)}>Performance</Link> : ''}
-                            </NavItem>
+                            {(isLoggedIn()) ?
+                              <NavItem className="navbar-menu">
+                                 <Link to="#" activeStyle={{color:'#53acff'}} onClick={this.performance.bind(this)}>Performance</Link>
+                              </NavItem>
+                            : ''}
                             &nbsp;&nbsp;&nbsp;
-                            <NavItem className="navbar-menu">
-                              {(isLoggedIn()) ? <Link to="#" activeStyle={{color:'#53acff'}} onClick={this.account.bind(this)}>Account</Link> : ''}
-                            </NavItem>
-                            <NavItem>
-                                {(!isLoggedIn()) ? <Login onLogin={this.onLogin.bind(this)} buttonLabel="Login"/> : ''}
-                            </NavItem>
+                            {(isLoggedIn()) ?
+                              <NavItem className="navbar-menu">
+                                 <Link to="#" activeStyle={{color:'#53acff'}} onClick={this.account.bind(this)}>Account</Link>
+                              </NavItem>
+                            : ''}
+                            {(!isLoggedIn()) ?
+                              <NavItem>
+                                <Login onLogin={this.onLogin.bind(this)} buttonLabel="Login"/>
+                              </NavItem>
+                             : ''}
                             &nbsp;&nbsp;&nbsp;
-                            <NavItem>
-                                  {(!isLoggedIn()) ? <SignUp buttonLabel="Sign Up" onRegister={this.onRegister.bind(this)}/> : ''}
-                            </NavItem>
-                            <NavItem>
-                                  {(isLoggedIn()) ? <Button size="lg" color="success" onClick={this.logout}>Log out</Button> : ''}
-                            </NavItem>
+                            {(!isLoggedIn()) ?
+                              <NavItem>
+                                  <SignUp buttonLabel="Sign Up" onRegister={this.onRegister.bind(this)}/>
+                              </NavItem>
+                            : ''}
+                            {(isLoggedIn()) ?
+                              <NavItem>
+                                     <Button color="success" onClick={this.logout}>Log out</Button>
+                              </NavItem>
+                            : ''}
                         </Nav>
                     </Collapse>
                 </Navbar>

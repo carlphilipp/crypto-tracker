@@ -97,14 +97,14 @@ class AddPosition extends React.Component {
     render() {
         return (
             <div>
-                <Button color="primary" size="lg" onClick={this.toggle}>{this.props.buttonLabel}</Button>
+                <Button color="primary" onClick={this.toggle}>{this.props.buttonLabel}</Button>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>Add a position</ModalHeader>
                     <ModalBody>
                         <Form>
                             <FormGroup>
                                 <Label for="ticker">Ticker</Label>
-                                <Input size="lg" type="select" name="currency" id="currency" onChange={evt => this.handleUserInput(evt)} autoFocus="true" valid={this.state.currencyValid}>
+                                <Input type="select" name="currency" id="currency" onChange={evt => this.handleUserInput(evt)} autoFocus="true" valid={this.state.currencyValid}>
                                 <option></option>
                                 {this.props.tickers
                                             .sort((a, b) => a.currency1.currencyName.toUpperCase() > b.currency1.currencyName.toUpperCase())
@@ -115,20 +115,20 @@ class AddPosition extends React.Component {
                             </FormGroup>
                             <FormGroup>
                                 <Label for="quantity">Quantity</Label>
-                                <Input size="lg" type="text" name="quantity" id="quantity" onBlur={evt => this.handleUserInput(evt)} placeholder="1.0" valid={this.state.quantityValid}/>
+                                <Input type="text" name="quantity" id="quantity" onBlur={evt => this.handleUserInput(evt)} placeholder="1.0" valid={this.state.quantityValid}/>
                                 <FormFeedback>Must be a valid number</FormFeedback>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="unitCostPrice">Unit Cost Price</Label>
-                                <Input size="lg" type="text" name="unitCostPrice" id="unitCostPrice" onBlur={evt => this.handleUserInput(evt)} placeholder="100" valid={this.state.unitCostPriceValid}/>
+                                <Input  type="text" name="unitCostPrice" id="unitCostPrice" onBlur={evt => this.handleUserInput(evt)} placeholder="100" valid={this.state.unitCostPriceValid}/>
                                 <FormFeedback>Must be a valid number</FormFeedback>
                             </FormGroup>
                         </Form>
                     </ModalBody>
                     {(this.state.failure) ? <AlertFailure display="Sorry, something went wrong" color="danger"/> : ''}
                     <ModalFooter>
-                        <Button color="primary" size="lg" onClick={this.add} disabled={!this.state.formValid}>Add</Button>{' '}
-                        <Button color="secondary" size="lg" onClick={this.toggle}>Cancel</Button>
+                        <Button color="primary"  onClick={this.add} disabled={!this.state.formValid}>Add</Button>{' '}
+                        <Button color="secondary"  onClick={this.toggle}>Cancel</Button>
                     </ModalFooter>
                 </Modal>
             </div>
