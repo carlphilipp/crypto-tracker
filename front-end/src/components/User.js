@@ -25,6 +25,9 @@ import ModifyPosition from './modals/ModifyPosition';
 import DeletePosition from './modals/DeletePosition';
 import {delay, getMinimumFractionDigits} from '../utils/Utils';
 
+
+import { Nav, NavItem, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, NavLink } from 'reactstrap';
+
 class User extends Component {
 
     constructor(props) {
@@ -166,26 +169,17 @@ class User extends Component {
               <IntlProvider locale="en">
                 <div>
                     <h5 className="text-center">Portfolio</h5>
-                    <table>
-                      <tbody>
-                        <tr>
-                          <td>
-                          {/* TODO understand this css layout and make it better. Update where same technic is used */}
-                            <div className="container-fluid">
-                                <div className="row">
-                                    <AddPosition buttonLabel="Add" user={user} onAdd={this.onAdd} tickers={this.props.tickers}/>
-                                  <div className="col-md-1">
-                                      <Button  color="info" onClick={this.refreshTickers.bind(this)}>Refresh</Button>
-                                  </div>
-                                </div>
-                              </div>
-                            </td>
-                        </tr>
-                        <tr>
-                          <td className="pt-2">{refresh}</td>
-                        </tr>
-                      </tbody>
-                    </table>
+                    <Nav pills>
+                      <NavItem>
+                        <AddPosition buttonLabel="Add" user={user} onAdd={this.onAdd} tickers={this.props.tickers}/>
+                      </NavItem>
+                      <NavItem>
+                        <Button color="info" onClick={this.refreshTickers.bind(this)}>Refresh</Button>
+                      </NavItem>
+                      <NavItem>
+                        {refresh}
+                      </NavItem>
+                    </Nav>
                     {table}
                 </div>
               </IntlProvider>

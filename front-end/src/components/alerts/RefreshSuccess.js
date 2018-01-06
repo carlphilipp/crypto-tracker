@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import React, {Component} from 'react';
-import { Alert } from 'reactstrap';
+import { Alert, Badge } from 'reactstrap';
 
 class RefreshSuccess extends Component {
   constructor(props) {
@@ -28,9 +28,7 @@ class RefreshSuccess extends Component {
 
   render() {
       return (
-        <Alert color="success" isOpen={this.state.visible}>
-          Done!
-        </Alert>
+        <h5><Badge color="success" isOpen={this.state.visible}>Done!</Badge></h5>
       );
   }
 }

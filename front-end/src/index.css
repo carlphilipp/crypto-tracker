@@ -12,11 +12,22 @@ body {
     padding-top: 0.7em;
 }
 
+.nav-item {
+    padding-left: 0.5em;
+}
+
+.navbar-menu {
+    padding-right: 0.5em;
+}
 
 .hidden {
-  display:none;
+    display:none;
 }
 
 .show {
-  display:block;
+    display:block;
+}
+
+.table th, .table td {
+    padding: 0.50rem;
 }

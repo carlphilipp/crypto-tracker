@@ -18,7 +18,7 @@ import {Link} from 'react-router';
 import {isLoggedIn} from '../service/AuthService';
 import Login from './modals/Login'
 import SignUp from './modals/SignUp'
-import { Button, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem } from 'reactstrap';
+import { Button, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 import '../App.css';
 
 class Header extends Component {
@@ -64,19 +64,16 @@ class Header extends Component {
                                 <Link to="#" activeStyle={{color:'#53acff'}} onClick={this.home.bind(this)}>Market</Link>
                               </NavItem>
                             : ''}
-                            &nbsp;&nbsp;&nbsp;
                             {(isLoggedIn()) ?
                               <NavItem className="navbar-menu">
                                  <Link to="#" activeStyle={{color:'#53acff'}} onClick={this.user.bind(this)}>Portfolio</Link>
                               </NavItem>
                             : ''}
-                            &nbsp;&nbsp;&nbsp;
                             {(isLoggedIn()) ?
                               <NavItem className="navbar-menu">
                                  <Link to="#" activeStyle={{color:'#53acff'}} onClick={this.performance.bind(this)}>Performance</Link>
                               </NavItem>
                             : ''}
-                            &nbsp;&nbsp;&nbsp;
                             {(isLoggedIn()) ?
                               <NavItem className="navbar-menu">
                                  <Link to="#" activeStyle={{color:'#53acff'}} onClick={this.account.bind(this)}>Account</Link>
@@ -85,17 +82,20 @@ class Header extends Component {
                             {(!isLoggedIn()) ?
                               <NavItem>
                                 <Login onLogin={this.onLogin.bind(this)} buttonLabel="Login"/>
+                                {/*<NavLink href="#" active>Link1</NavLink>*/}
                               </NavItem>
                              : ''}
-                            &nbsp;&nbsp;&nbsp;
+
                             {(!isLoggedIn()) ?
                               <NavItem>
                                   <SignUp buttonLabel="Sign Up" onRegister={this.onRegister.bind(this)}/>
+                                  {/*<NavLink href="#" active>Link2</NavLink>*/}
                               </NavItem>
                             : ''}
                             {(isLoggedIn()) ?
                               <NavItem>
                                      <Button color="success" onClick={this.logout}>Log out</Button>
+                                     {/*<NavLink href="#" active>Link3</NavLink>*/}
                               </NavItem>
                             : ''}
                         </Nav>
