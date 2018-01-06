@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import React, {Component} from 'react';
-import { Alert, Badge } from 'reactstrap';
+import { Badge } from 'reactstrap';
 
 class RefreshSuccess extends Component {
   constructor(props) {

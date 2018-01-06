@@ -17,16 +17,13 @@ import React, {Component} from 'react';
 import {Link} from 'react-router';
 import {getCurrentUser} from '../service/UserService';
 import {refreshCurrentTickers} from '../service/TickerService';
-import {Table, Button} from 'reactstrap';
+import {Table, Button, Nav, NavItem} from 'reactstrap';
 import {FormattedNumber, FormattedTime, IntlProvider}  from 'react-intl'
 import RefreshSuccess from './alerts/RefreshSuccess';
 import AddPosition from './modals/AddPosition';
 import ModifyPosition from './modals/ModifyPosition';
 import DeletePosition from './modals/DeletePosition';
 import {delay, getMinimumFractionDigits} from '../utils/Utils';
-
-
-import { Nav, NavItem, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, NavLink } from 'reactstrap';
 
 class User extends Component {
 

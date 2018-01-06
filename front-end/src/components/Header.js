@@ -18,7 +18,7 @@ import {Link} from 'react-router';
 import {isLoggedIn} from '../service/AuthService';
 import Login from './modals/Login'
 import SignUp from './modals/SignUp'
-import { Button, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import { Button, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem } from 'reactstrap';
 import '../App.css';
 
 class Header extends Component {
