@@ -8,6 +8,9 @@ import java.io.FileInputStream
 
 class DropboxImpl : Dropbox {
 
+	val config = DbxRequestConfig("clientId")
+	val client = DbxClientV2(config, "token")
+
 	override fun uploadFile(file: File) {
 		try {
 			FileInputStream(file.name).use({ `in` -> client.files().uploadBuilder("/" + file.name).uploadAndFinish(`in`) })
@@ -23,9 +26,6 @@ class DropboxImpl : Dropbox {
 			LOGGER.error("Error while deleting DropBox file", ex);
 		}
 	}
-
-	val config = DbxRequestConfig("clientId")
-	val client = DbxClientV2(config, "token")
 
 	companion object {
 		private val LOGGER = LoggerFactory.getLogger(DropboxImpl::class.java)

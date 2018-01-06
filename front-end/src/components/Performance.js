@@ -63,7 +63,6 @@ class User extends Component {
                     <h6 className="text-center">Share Value</h6>
                     <hr />
                      <SimpleLineChart shareValues={this.state.shareValues}/>
-                    <hr />
                     <Table hover>
                         <thead>
                           <tr>

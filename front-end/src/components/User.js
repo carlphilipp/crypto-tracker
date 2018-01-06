@@ -167,16 +167,11 @@ class User extends Component {
                 <div>
                     <h5 className="text-center">Portfolio</h5>
                     <Nav pills>
-                      <NavItem>
-                        <AddPosition buttonLabel="Add" user={user} onAdd={this.onAdd} tickers={this.props.tickers}/>
-                      </NavItem>
-                      <NavItem>
-                        <Button color="info" onClick={this.refreshTickers.bind(this)}>Refresh</Button>
-                      </NavItem>
-                      <NavItem>
-                        {refresh}
-                      </NavItem>
+                      <NavItem><AddPosition buttonLabel="Add" user={user} onAdd={this.onAdd} tickers={this.props.tickers}/></NavItem>
+                      <NavItem><Button color="info" onClick={this.refreshTickers.bind(this)}>Refresh</Button></NavItem>
+                      <NavItem>{refresh}</NavItem>
                     </Nav>
+                    <br />
                     {table}
                 </div>
               </IntlProvider>

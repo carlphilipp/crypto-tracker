@@ -88,7 +88,6 @@ class Tickers extends Component {
               <div>
                   <h5 className="text-center">Market</h5>
                   {table}
-                  {/*<Footer />*/}
               </div>
             </IntlProvider>
         );
