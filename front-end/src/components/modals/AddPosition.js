@@ -107,7 +107,8 @@ class AddPosition extends React.Component {
                                 <Input type="select" name="currency" id="currency" onChange={evt => this.handleUserInput(evt)} autoFocus="true" valid={this.state.currencyValid}>
                                 <option></option>
                                 {this.props.tickers
-                                            .sort((a, b) => a.currency1.currencyName.toUpperCase() > b.currency1.currencyName.toUpperCase())
+                                            // FIXME find a smart way to sort without modifying the original list
+                                            //.sort((a, b) => a.currency1.currencyName.toUpperCase() > b.currency1.currencyName.toUpperCase())
                                             .map(ticker => ticker.currency1)
                                             .map((currency, index) => (<option key={index} value={currency.currencyName}>{currency.currencyName} ({currency.code})</option>))}
                                 </Input>
