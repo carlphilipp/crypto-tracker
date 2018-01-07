@@ -28,13 +28,13 @@ import java.net.ConnectException
 @ControllerAdvice
 class RestResponseEntityExceptionHandler : ResponseEntityExceptionHandler() {
 
-    @ExceptionHandler(value = [ConnectException::class])
-    protected fun connectException(ex: ConnectException, request: WebRequest): ResponseEntity<Any> {
-        LOGGER.warn("Connection exception {}", request)
-        return handleExceptionInternal(ex, null, HttpHeaders(), HttpStatus.BAD_GATEWAY, request)
-    }
+	@ExceptionHandler(value = [ConnectException::class])
+	protected fun connectException(ex: ConnectException, request: WebRequest): ResponseEntity<Any> {
+		LOGGER.warn("Connection exception {}", request)
+		return handleExceptionInternal(ex, null, HttpHeaders(), HttpStatus.BAD_GATEWAY, request)
+	}
 
-    companion object {
-        private val LOGGER = LoggerFactory.getLogger(RestResponseEntityExceptionHandler::class.java)
-    }
+	companion object {
+		private val LOGGER = LoggerFactory.getLogger(RestResponseEntityExceptionHandler::class.java)
+	}
 }

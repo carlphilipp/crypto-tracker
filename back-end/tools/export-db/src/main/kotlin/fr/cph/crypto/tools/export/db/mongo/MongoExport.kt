@@ -2,6 +2,7 @@ package fr.cph.crypto.tools.export.db.mongo
 
 import fr.cph.crypto.tools.export.db.ExportDb
 import fr.cph.crypto.tools.file.FileSystem
+import org.slf4j.LoggerFactory
 import java.io.File
 
 class MongoExport(
@@ -13,6 +14,8 @@ class MongoExport(
 
 	override fun export(): File {
 		val dumpCommand = mongoProperties.mongo.mongodumppath + " --out " + exportFolder + " --db " + mongoProperties.mongo.dbname
+		// TODO turn back to debug
+		LOGGER.info("Running: {}", dumpCommand)
 		val process = runtime.exec(dumpCommand)
 		val exitVal = process.waitFor()
 		if (exitVal == 0) {
@@ -20,5 +23,9 @@ class MongoExport(
 		} else {
 			throw RuntimeException()
 		}
+	}
+
+	companion object {
+		private val LOGGER = LoggerFactory.getLogger(MongoExport::class.java)
 	}
 }

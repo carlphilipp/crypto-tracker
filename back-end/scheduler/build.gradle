@@ -1,5 +1,6 @@
 dependencies {
 	compile project(':back-end:core')
+	compile project(':back-end:backup')
 	compile(
 		[group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'],
 		[group: 'org.jetbrains.kotlin', name: 'kotlin-reflect'],

@@ -15,6 +15,7 @@
  */
 package fr.cph.crypto.scheduler
 
+import fr.cph.crypto.backup.Backup
 import fr.cph.crypto.core.usecase.sharevalue.UpdateShareValue
 import fr.cph.crypto.core.usecase.ticker.UpdateTicker
 import org.slf4j.LoggerFactory
@@ -63,5 +64,20 @@ class ShareValueSchedulerDev(private val updateShareValue: UpdateShareValue) {
 
 	companion object {
 		private val LOGGER = LoggerFactory.getLogger(ShareValueSchedulerDev::class.java)
+	}
+}
+
+@Profile("prod")
+@Component
+class BackupDB(private val backup: Backup) {
+
+	@Scheduled(cron = "0 30 0 * * *", zone = "GMT")
+	fun updateAllUsersShareValue() {
+		LOGGER.info("Scheduler: Backup DB")
+		backup.backup()
+	}
+
+	companion object {
+		private val LOGGER = LoggerFactory.getLogger(ShareValueSchedulerProd::class.java)
 	}
 }
