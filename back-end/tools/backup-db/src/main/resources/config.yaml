@@ -1,4 +1,0 @@
-mongo:
-  mongodumppath: /opt/mongodb/bin/mongodump
-  exportfolder: /tmp/backup-crypto
-  dbname: cryptodb

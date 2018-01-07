@@ -1,0 +1,3 @@
+mongo:
+  mongodumppath: /opt/mongodb/bin/mongodump
+  dbname: cryptodb
