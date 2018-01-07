@@ -1,5 +1,11 @@
 package fr.cph.crypto.core.usecase.user;
 
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
+import java.util.Arrays;
+import java.util.List;
+
 import fr.cph.crypto.core.Utils;
 import fr.cph.crypto.core.entity.Currency;
 import fr.cph.crypto.core.entity.Position;
@@ -7,18 +13,15 @@ import fr.cph.crypto.core.entity.Ticker;
 import fr.cph.crypto.core.entity.User;
 import fr.cph.crypto.core.spi.TickerRepository;
 import fr.cph.crypto.core.spi.UserRepository;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import java.util.Arrays;
-import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
-public class FindUserTest {
+class FindUserTest {
 	private UserRepository userRepository = Mockito.mock(UserRepository.class);
 	private TickerRepository tickerRepository = Mockito.mock(TickerRepository.class);
-	private FindUser findUser = new FindUser(userRepository = userRepository, tickerRepository = tickerRepository);
+	private FindUser findUser = new FindUser(userRepository, tickerRepository);
 
 	@Test
 	void testFindOneUserWithPositions() {

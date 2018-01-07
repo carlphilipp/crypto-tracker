@@ -49,7 +49,7 @@ class ValidateUserTest {
 		given(userRepository.findOneUserById("userId")).willReturn(null);
 
 		// when
-		Executable actualExecutable = () ->validateUser.validateUser("userId", "key");
+		Executable actualExecutable = () -> validateUser.validateUser("userId", "key");
 
 		// then
 		assertThrows(UserNotFoundException.class, actualExecutable, "User id [userId] not found");
@@ -63,7 +63,7 @@ class ValidateUserTest {
 		given(userRepository.findOneUserById("userId")).willReturn(user);
 
 		// when
-		Executable actualExecutable = () ->validateUser.validateUser("userId", "key");
+		Executable actualExecutable = () -> validateUser.validateUser("userId", "key");
 
 		// then
 		assertThrows(UserNotFoundException.class, actualExecutable, "User id [userId] not found");

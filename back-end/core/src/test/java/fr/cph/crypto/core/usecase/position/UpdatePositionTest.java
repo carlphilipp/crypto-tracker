@@ -1,5 +1,10 @@
 package fr.cph.crypto.core.usecase.position;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
+
 import fr.cph.crypto.core.Utils;
 import fr.cph.crypto.core.entity.Currency;
 import fr.cph.crypto.core.entity.Position;
@@ -7,11 +12,10 @@ import fr.cph.crypto.core.entity.User;
 import fr.cph.crypto.core.exception.PositionNotFoundException;
 import fr.cph.crypto.core.exception.UserNotFoundException;
 import fr.cph.crypto.core.spi.UserRepository;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mockito;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
@@ -157,7 +161,7 @@ class UpdatePositionTest {
 		given(userRepository.findOneUserById("userId")).willReturn(null);
 
 		// when
-		Executable actualExecutable = () ->updatePosition.addFeeToPosition("userId", "BTC-USD", 0.1);
+		Executable actualExecutable = () -> updatePosition.addFeeToPosition("userId", "BTC-USD", 0.1);
 
 		// then
 		assertThrows(UserNotFoundException.class, actualExecutable, "User id [userId] not found");
@@ -171,7 +175,7 @@ class UpdatePositionTest {
 		given(userRepository.findOneUserById("userId")).willReturn(user);
 
 		// when
-		Executable actualExecutable = () ->updatePosition.addFeeToPosition("userId", "BTC-USD", 0.1);
+		Executable actualExecutable = () -> updatePosition.addFeeToPosition("userId", "BTC-USD", 0.1);
 
 		// then
 		assertThrows(PositionNotFoundException.class, actualExecutable, "Position id [BTC-USD] not found");

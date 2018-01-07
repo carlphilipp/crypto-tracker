@@ -50,7 +50,7 @@ class GetShareValueTest {
 		given(userRepository.findOneUserById("userId")).willReturn(null);
 
 		// when
-		Executable actualExecutable = () ->getShareValue.findAllShareValue("userId");
+		Executable actualExecutable = () -> getShareValue.findAllShareValue("userId");
 
 		// then
 		assertThrows(UserNotFoundException.class, actualExecutable, "User id [userId] not found");
