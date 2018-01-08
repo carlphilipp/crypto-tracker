@@ -10,22 +10,10 @@ class InMemoryTickerAdapter : fr.cph.crypto.core.spi.TickerRepository {
 	}
 
 	override fun findAllById(ids: List<String>): List<Ticker> {
-		val result = mutableListOf<Ticker>()
-		for (id in ids) {
-			if (inMemoryDb.containsKey(id)) {
-				result.add(inMemoryDb.get(id)!!)
-			} else {
-				// TODO log warn
-			}
-		}
-		return result.toList()
+		return ids.map { id -> inMemoryDb[id] ?: throw RuntimeException() }
 	}
 
-	override fun findAll(): List<Ticker> {
-		return inMemoryDb.values.toList()
-	}
-
-	override fun findAllByOrderByMarketCapDesc(): List<Ticker> {
+	override fun findAllOrderByMarketCapDesc(): List<Ticker> {
 		return inMemoryDb.values.sortedBy { ticker -> -ticker.marketCap }
 	}
 

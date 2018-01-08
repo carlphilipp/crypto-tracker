@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
-public class FindTickerTest {
+class FindTickerTest {
 
 	private TickerRepository tickerRepository = Mockito.mock(TickerRepository.class);
 	private FindTicker findTicker = new FindTicker(tickerRepository);
@@ -47,16 +47,16 @@ public class FindTickerTest {
 	}
 
 	@Test
-	void testFindAll() {
+	void testFindAllOrderByMarketCapDesc() {
 		// given
 		Ticker ticker = new Ticker(null, Currency.BTC, Currency.USD, 1.0, "exchange", 0.0, 0.0, 0.0, 0.0, 0.0, 0L);
-		given(tickerRepository.findAll()).willReturn(Collections.singletonList(ticker));
+		given(tickerRepository.findAllOrderByMarketCapDesc()).willReturn(Collections.singletonList(ticker));
 
 		// when
-		List<Ticker> actual = findTicker.findAll();
+		List<Ticker> actual = findTicker.findAllOrderByMarketCapDesc();
 
 		// then
-		then(tickerRepository).should().findAll();
+		then(tickerRepository).should().findAllOrderByMarketCapDesc();
 		assertEquals(actual.get(0), ticker);
 	}
 }

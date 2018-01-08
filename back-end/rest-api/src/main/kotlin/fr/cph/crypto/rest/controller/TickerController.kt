@@ -30,7 +30,7 @@ class TickerController(private val findTicker: FindTicker) {
 	@PreAuthorize("hasAuthority('ADMIN') or authentication.details.decodedDetails['id'] == null")
 	@RequestMapping(method = [RequestMethod.GET], produces = ["application/json"])
 	fun getAllTickers(): List<TickerDTO> {
-		return findTicker.findAll().map { ticker -> TickerDTO.from(ticker) }
+		return findTicker.findAllOrderByMarketCapDesc().map { ticker -> TickerDTO.from(ticker) }
 	}
 
 	@PreAuthorize("hasAuthority('ADMIN') or authentication.details.decodedDetails['id'] == null")

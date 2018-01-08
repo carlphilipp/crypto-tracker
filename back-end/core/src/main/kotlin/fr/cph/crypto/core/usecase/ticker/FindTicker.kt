@@ -14,7 +14,7 @@ class FindTicker(private val tickerRepository: TickerRepository) {
 		return tickerRepository.findAllById(ids)
 	}
 
-	fun findAll(): List<Ticker> {
-		return tickerRepository.findAllByOrderByMarketCapDesc()
+	fun findAllOrderByMarketCapDesc(): List<Ticker> {
+		return tickerRepository.findAllOrderByMarketCapDesc()
 	}
 }

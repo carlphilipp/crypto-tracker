@@ -23,9 +23,7 @@ interface TickerRepository {
 
 	fun findAllById(ids: List<String>): List<Ticker>
 
-	fun findAll(): List<Ticker>
-
-	fun findAllByOrderByMarketCapDesc(): List<Ticker>
+	fun findAllOrderByMarketCapDesc(): List<Ticker>
 
 	fun save(ticker: Ticker): Ticker
 

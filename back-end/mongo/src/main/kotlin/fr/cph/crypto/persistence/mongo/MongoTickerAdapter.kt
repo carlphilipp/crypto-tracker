@@ -29,12 +29,7 @@ class MongoTickerAdapter(private val repository: TickerRepository) : fr.cph.cryp
 		return repository.findByIdIn(ids).map { ticker -> ticker.toTicker() }
 	}
 
-	override fun findAll(): List<Ticker> {
-		return repository.findAll()
-			.map { ticker -> ticker.toTicker() }
-	}
-
-	override fun findAllByOrderByMarketCapDesc(): List<Ticker> {
+	override fun findAllOrderByMarketCapDesc(): List<Ticker> {
 		return repository.findAllByOrderByMarketCapDesc()
 			.map { ticker -> ticker.toTicker() }
 	}
