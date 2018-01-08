@@ -18,9 +18,7 @@ package fr.cph.crypto.persistence.mongo
 import fr.cph.crypto.core.entity.Ticker
 import fr.cph.crypto.persistence.mongo.entity.TickerDB
 import fr.cph.crypto.persistence.mongo.repository.TickerRepository
-import org.springframework.stereotype.Service
 
-@Service
 class MongoTickerAdapter(private val repository: TickerRepository) : fr.cph.crypto.core.spi.TickerRepository {
 
 	override fun findOne(id: String): Ticker? {
@@ -32,6 +30,11 @@ class MongoTickerAdapter(private val repository: TickerRepository) : fr.cph.cryp
 	}
 
 	override fun findAll(): List<Ticker> {
+		return repository.findAll()
+			.map { ticker -> ticker.toTicker() }
+	}
+
+	override fun findAllByOrderByMarketCapDesc(): List<Ticker> {
 		return repository.findAllByOrderByMarketCapDesc()
 			.map { ticker -> ticker.toTicker() }
 	}

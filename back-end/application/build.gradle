@@ -28,6 +28,7 @@ dependencies {
 	compile project(':back-end:scheduler')
 	compile project(':back-end:client-coinmarketcap')
 	compile project(':back-end:persistence-mongo')
+	compile project(':back-end:persistence-in-memory')
 	compile project(':back-end:email-default')
 	compile project(':back-end:template-default')
 	compile project(':back-end:uuid-generator-jug')

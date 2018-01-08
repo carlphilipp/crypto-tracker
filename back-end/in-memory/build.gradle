@@ -1,0 +1,7 @@
+dependencies {
+	compile project(':back-end:core')
+	compile(
+		[group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'],
+		[group: 'org.jetbrains.kotlin', name: 'kotlin-reflect'],
+	)
+}

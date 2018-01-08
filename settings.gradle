@@ -4,6 +4,7 @@ include ':back-end:core'
 include ':back-end:client-coinmarketcap'
 include ':back-end:application'
 include ':back-end:persistence-mongo'
+include ':back-end:persistence-in-memory'
 include ':back-end:email-default'
 include ':back-end:template-default'
 include ':back-end:uuid-generator-default'
@@ -23,6 +24,7 @@ project(':back-end:application').projectDir = file('back-end/application')
 project(':back-end:rest-api').projectDir = file('back-end/rest-api')
 project(':back-end:scheduler').projectDir = file('back-end/scheduler')
 project(':back-end:persistence-mongo').projectDir = file('back-end/mongo')
+project(':back-end:persistence-in-memory').projectDir = file('back-end/in-memory')
 project(':back-end:email-default').projectDir = file('back-end/email')
 project(':back-end:template-default').projectDir = file('back-end/template')
 project(':back-end:uuid-generator-default').projectDir = file('back-end/uuid-generator/default')
