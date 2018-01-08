@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import React from 'react';
-import {Button, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, FormFeedback, Collapse, Table} from 'reactstrap';
+import {Button, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, FormFeedback, Collapse, Table, Container, Row, Col} from 'reactstrap';
 import {updateOnePosition, addFeePositionToCurrentUser} from '../../service/UserService';
 import AlertFailure from '../alerts/AlertFailure';
 
@@ -208,20 +208,16 @@ class ModifyPosition extends React.Component {
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>Modify</ModalHeader>
                     <ModalBody>
-                      <div className="container-fluid">
-                        <div className="col-lg-4">
-                            <Button outline color="primary"  name="smart" id="smart" block onClick={(evt) => this.showHideForm(evt)}>Smart</Button>
-                        </div>
-                        <div className="col-lg-4">
-                          <Button outline color="primary"  name="manual" id="manual" block onClick={(evt) => this.showHideForm(evt)}>Manual</Button>
-                        </div>
-                        <div className="col-lg-4">
-                          <Button outline color="primary"  name="fee" id="fee" block onClick={(evt) => this.showHideForm(evt)}>Add fee</Button>
-                        </div>
-                      </div>
+                      <Container>
+                        <Row>
+                          <Col xs="6" sm="4"><Button outline color="primary"  name="smart" id="smart" block onClick={(evt) => this.showHideForm(evt)}>Smart</Button></Col>
+                          <Col xs="6" sm="4"><Button outline color="primary"  name="manual" id="manual" block onClick={(evt) => this.showHideForm(evt)}>Manual</Button></Col>
+                          <Col sm="4"><Button outline color="primary"  name="fee" id="fee" block onClick={(evt) => this.showHideForm(evt)}>Add fee</Button></Col>
+                        </Row>
+                      </Container>
                       <Collapse isOpen={this.state.smartMod}>
                         <hr/>
-                        <h4 className="text-center">Smart change</h4>
+                        <h6 className="text-center">Smart change</h6>
                         <Table bordered>
                           <thead>
                             <tr>
@@ -267,7 +263,7 @@ class ModifyPosition extends React.Component {
                       </Collapse>
                       <Collapse isOpen={this.state.manualMod}>
                         <hr/>
-                        <h4 className="text-center">Manual change</h4>
+                        <h6 className="text-center">Manual change</h6>
                         <FormGroup>
                             <Label for="ticker">Ticker</Label><br />
                             {this.props.position.currency1.code}
@@ -285,7 +281,7 @@ class ModifyPosition extends React.Component {
                       </Collapse>
                       <Collapse isOpen={this.state.feeMod}>
                         <hr/>
-                        <h4 className="text-center">Add a fee</h4>
+                        <h6 className="text-center">Add a fee</h6>
                         <FormGroup>
                             <Label for="ticker">Ticker</Label><br />
                             {this.props.position.currency1.code}
