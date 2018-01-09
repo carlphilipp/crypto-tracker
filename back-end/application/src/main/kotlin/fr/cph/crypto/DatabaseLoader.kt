@@ -55,7 +55,7 @@ class DatabaseLoader(private val tickerRepository: TickerRepository,
 		addPosition.addPositionToUser(user.id!!, positionEth)
 		val positionVtc = Position(id = idGenerator.getNewId(), currency1 = Currency.VTC, quantity = 122.10096277, unitCostPrice = 4.3)
 		addPosition.addPositionToUser(user.id!!, positionVtc)
-		val positionGrs = Position(id = idGenerator.getNewId(), currency1 = Currency.GRS, quantity = 1025.10079425, unitCostPrice = 1.25)
+		val positionGrs = Position(id = idGenerator.getNewId(), currency1 = Currency.GRS, quantity = 736.85557018, unitCostPrice = 1.24)
 		addPosition.addPositionToUser(user.id!!, positionGrs)
 		val positionEthos = Position(id = idGenerator.getNewId(), currency1 = Currency.ETHOS, quantity = 189.81, unitCostPrice = 1.52)
 		addPosition.addPositionToUser(user.id!!, positionEthos)
@@ -67,6 +67,8 @@ class DatabaseLoader(private val tickerRepository: TickerRepository,
 		addPosition.addPositionToUser(user.id!!, positionIcon)
 		val positionMonero = Position(id = idGenerator.getNewId(), currency1 = Currency.MONERO, quantity = 1.2, unitCostPrice = 369.69)
 		addPosition.addPositionToUser(user.id!!, positionMonero)
+		val positionUtrust = Position(id = idGenerator.getNewId(), currency1 = Currency.UTRUST, quantity = 637.1885736, unitCostPrice = 0.811722)
+		addPosition.addPositionToUser(user.id!!, positionUtrust)
 
 		val userFound = userRepository.findOneUserById(user.id!!)!!
 		userFound.liquidityMovement = 0.0
