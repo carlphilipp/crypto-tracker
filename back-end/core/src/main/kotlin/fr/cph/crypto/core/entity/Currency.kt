@@ -36,6 +36,8 @@ enum class Currency constructor(val code: String, val currencyName: String, val 
 	WALTON("WTC", "Walton", "WTC", Type.CRYPTO),
 	NAV("NAV", "Nav Coin", "NAV", Type.CRYPTO),
 	UTRUST("UTK", "Utrust", "UTK", Type.CRYPTO),
+	XRB("XRB", "RaiBlocks", "XRB", Type.CRYPTO),
+	XLM("XLM", "Stellar", "XLM", Type.CRYPTO),
 
 	USD("USD", "United States Dollar", "$", Type.FIAT),
 	EUR("EUR", "Euro", "€", Type.FIAT),
